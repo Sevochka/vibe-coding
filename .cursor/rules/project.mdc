@@ -12,4 +12,4 @@ alwaysApply: true
 - Readme should be in Russian.
 - All const content should be js files in the {project-name}/data/ folder. For example if you generate questions for quiz then it should be stored in data/questions.js.
 - Dont use modules. Import data files before main script in index.html file.
-- When generating structure 
+- When importing files in index.html use relative path (./) like <script src="./data/questions.js"></script> or  <link rel="stylesheet" href="./styles.css">
