@@ -238,6 +238,12 @@ function loadQuestion() {
     // Добавляем все варианты сразу в DOM
     optionsContainer.appendChild(fragment);
     
+    // Отображаем вопрос с анимацией
+    setTimeout(() => {
+        questionElement.style.transition = 'opacity 0.3s ease';
+        questionElement.style.opacity = '1';
+    }, 10);
+    
     // Анимируем варианты с небольшой задержкой между ними
     const options = optionsContainer.querySelectorAll('.option');
     options.forEach((option, index) => {
