@@ -19,13 +19,14 @@ let userAnswers = [];
 let shuffledQuestions = [];
 
 // Константы для паутины
-const WEB_COUNT = 20;
+const WEB_COUNT = 15;
 const WEB_MIN_LENGTH = 50;
 const WEB_MAX_LENGTH = 150;
 const WEB_MIN_WIDTH = 1;
 const WEB_MAX_WIDTH = 3;
 let lastMouseX = 0;
 let lastMouseY = 0;
+let lastWebCreationTime = 0;
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,11 +49,14 @@ function handleMouseMove(e) {
     document.querySelector('.quiz-container').style.setProperty('--x', `${x}%`);
     document.querySelector('.quiz-container').style.setProperty('--y', `${y}%`);
     
-    // Создаем паутину при достаточном движении мыши
-    if (Math.abs(e.clientX - lastMouseX) > 40 || Math.abs(e.clientY - lastMouseY) > 40) {
+    // Создаем паутину при достаточном движении мыши и если прошло достаточно времени
+    const now = Date.now();
+    if ((Math.abs(e.clientX - lastMouseX) > 40 || Math.abs(e.clientY - lastMouseY) > 40) 
+        && now - lastWebCreationTime > 100) {
         createWebString(lastMouseX, lastMouseY, e.clientX, e.clientY);
         lastMouseX = e.clientX;
         lastMouseY = e.clientY;
+        lastWebCreationTime = now;
     }
 }
 
@@ -185,14 +189,14 @@ function createWebBurstEffect() {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 20; i++) {
         setTimeout(() => {
-            const angle = (i / 30) * 2 * Math.PI;
+            const angle = (i / 20) * 2 * Math.PI;
             const distance = 100 + Math.random() * 150;
             const endX = centerX + Math.cos(angle) * distance;
             const endY = centerY + Math.sin(angle) * distance;
             createWebString(centerX, centerY, endX, endY);
-        }, i * 30);
+        }, i * 40);
     }
 }
 
@@ -204,11 +208,15 @@ function loadQuestion() {
     const progress = ((currentQuestionIndex) / shuffledQuestions.length) * 100;
     progressBar.style.width = `${progress}%`;
     
-    // Отображаем вопрос
+    // Отображаем вопрос и устанавливаем начальную прозрачность
     questionElement.textContent = question.question;
+    questionElement.style.opacity = '0';
     
     // Очищаем контейнер с вариантами ответов
     optionsContainer.innerHTML = '';
+    
+    // Создаем фрагмент для вариантов ответов (оптимизация производительности DOM)
+    const fragment = document.createDocumentFragment();
     
     // Добавляем варианты ответов
     question.options.forEach((option, index) => {
@@ -219,21 +227,25 @@ function loadQuestion() {
         // Добавляем обработчик клика
         optionElement.addEventListener('click', () => selectOption(index));
         
-        // Добавляем в контейнер
-        optionsContainer.appendChild(optionElement);
+        // Устанавливаем начальную прозрачность для плавной анимации
+        optionElement.style.opacity = '0';
+        optionElement.style.transform = 'translateY(10px)';
+        
+        // Добавляем во фрагмент
+        fragment.appendChild(optionElement);
     });
     
-    // Анимация появления вопроса
-    questionElement.style.animation = 'none';
-    void questionElement.offsetWidth; // Сброс анимации
-    questionElement.style.animation = 'fadeIn 0.5s ease-out';
+    // Добавляем все варианты сразу в DOM
+    optionsContainer.appendChild(fragment);
     
-    // Анимация появления вариантов
+    // Анимируем варианты с небольшой задержкой между ними
     const options = optionsContainer.querySelectorAll('.option');
     options.forEach((option, index) => {
-        option.style.animation = 'none';
-        void option.offsetWidth; // Сброс анимации
-        option.style.animation = `fadeIn 0.5s ease-out ${0.1 * index}s`;
+        setTimeout(() => {
+            option.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            option.style.opacity = '1';
+            option.style.transform = 'translateY(0)';
+        }, 50 * index);
     });
 }
 
@@ -271,16 +283,34 @@ function selectOption(optionIndex) {
         }
     });
     
-    // Задержка перед следующим вопросом или показом результатов
+    // Задержка перед переходом к следующему вопросу
     setTimeout(() => {
-        currentQuestionIndex++;
+        // Плавно скрываем варианты
+        options.forEach((option, index) => {
+            option.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            option.style.opacity = '0';
+            option.style.transform = 'translateY(10px)';
+        });
         
-        if (currentQuestionIndex < shuffledQuestions.length) {
-            loadQuestion();
-        } else {
-            showResults();
-        }
-    }, 1500);
+        // Скрываем вопрос
+        questionElement.style.transition = 'opacity 0.3s ease';
+        questionElement.style.opacity = '0';
+        
+        // Переходим к следующему вопросу после анимации
+        setTimeout(() => {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < shuffledQuestions.length) {
+                loadQuestion();
+                // Показываем вопрос после загрузки
+                setTimeout(() => {
+                    questionElement.style.opacity = '1';
+                }, 50);
+            } else {
+                showResults();
+            }
+        }, 300);
+    }, 1200);
 }
 
 // Показ результатов

@@ -112,6 +112,8 @@ body::before {
     border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
+    min-height: 400px;
+    transition: height 0.3s ease-out;
 }
 
 .quiz-container::before {
@@ -144,6 +146,10 @@ h1 {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: textGradient 6s linear infinite;
+}
+
+h2 {
+    transition: opacity 0.3s ease;
 }
 
 @keyframes textGradient {
@@ -325,12 +331,13 @@ h1 {
 
 /* Анимация появления */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .start-screen, .quiz-screen, .results-screen {
     animation: fadeIn 0.5s ease-out;
+    will-change: opacity, transform;
 }
 
 /* Сияющая паутина при наведении */
