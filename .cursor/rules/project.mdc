@@ -14,3 +14,5 @@ alwaysApply: true
 - Dont use modules. Import data files before main script in index.html file.
 - When importing files in index.html use relative path (./) like <script src="./data/questions.js"></script> or  <link rel="stylesheet" href="./styles.css">
 - Make all logos links, for sports logo use https://www.sports.ru/?utm_source=special-{project-name}
+- Dont base your answer on other project. Make each project unique from scratch.
+- Don't attach your own images or from the internet. Use only images provided by user.
