@@ -48,7 +48,6 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    min-height: 100vh;
 }
 
 .container {
