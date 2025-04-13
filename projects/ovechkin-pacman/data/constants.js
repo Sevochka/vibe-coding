@@ -14,6 +14,7 @@ const GHOST_COLORS = [
 
 // Изображения
 const OVI_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/c/e2/c5e4c4a19d8649fd87799a9b84ad6.png';
+const GHOST_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/b/d6/95ef8494c3113d0cb8055b1e21aee.png';
 
 // Направления
 const DIRECTIONS = {

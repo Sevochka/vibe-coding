@@ -25,8 +25,9 @@ let ghosts = [];
 let pucksCount = 0;
 let pucksCollected = 0;
 let playerImage = new Image();
+let ghostImage = new Image();
 
-// Добавляем обработку ошибок для изображения
+// Добавляем обработку ошибок для изображения игрока
 playerImage.onload = function() {
   console.log('Изображение Овечкина загружено успешно');
 };
@@ -37,8 +38,18 @@ playerImage.onerror = function() {
   this.src = './img/backup-ovi.png';
 };
 
+// Загружаем изображение для призраков
+ghostImage.onload = function() {
+  console.log('Изображение противника загружено успешно');
+};
+
+ghostImage.onerror = function() {
+  console.error('Ошибка загрузки изображения противника:', GHOST_IMAGE_SRC);
+};
+
 playerImage.src = OVI_IMAGE_SRC;
-console.log('Попытка загрузить изображение:', OVI_IMAGE_SRC);
+ghostImage.src = GHOST_IMAGE_SRC;
+console.log('Попытка загрузить изображения...');
 
 // Класс для игрока
 class Player {
@@ -281,9 +292,15 @@ class Ghost {
     this.direction = DIRECTIONS.RIGHT;
     this.speed = SPEEDS.GHOST_NORMAL;
     this.state = 'normal'; // normal, frightened, returning
-    this.size = CELL_SIZE * 0.8;
+    this.size = CELL_SIZE * 0.9;
     this.eyeDirection = DIRECTIONS.RIGHT;
     this.index = index;
+    this.lastDecisionTime = 0; // Время последнего принятия решения
+    this.decisionInterval = 500 + index * 200; // Интервал принятия решений (разный для каждого призрака)
+    this.targetX = 0; // Целевая координата X
+    this.targetY = 0; // Целевая координата Y
+    this.stuckCounter = 0; // Счетчик для определения застревания
+    this.lastPosition = { x: this.x, y: this.y }; // Последняя позиция
   }
 
   update(deltaTime) {
@@ -307,63 +324,52 @@ class Ghost {
       }
     }
 
-    // Определяем возможные направления движения
-    const possibleDirections = [];
+    // Проверяем, застрял ли призрак
+    const distanceMoved = Math.sqrt(
+      Math.pow(this.x - this.lastPosition.x, 2) + 
+      Math.pow(this.y - this.lastPosition.y, 2)
+    );
     
-    // Проверяем все направления, кроме противоположного текущему
-    for (const dir of Object.values(DIRECTIONS)) {
-      if (dir === DIRECTIONS.NONE) continue;
-      
-      // Пропускаем противоположное направление
-      if (this.direction.x !== 0 && dir.x === -this.direction.x) continue;
-      if (this.direction.y !== 0 && dir.y === -this.direction.y) continue;
-      
-      const nextX = Math.floor((this.x + dir.x * CELL_SIZE) / CELL_SIZE);
-      const nextY = Math.floor((this.y + dir.y * CELL_SIZE) / CELL_SIZE);
-      
-      if (!isWall(nextX, nextY)) {
-        possibleDirections.push(dir);
+    if (distanceMoved < this.speed * 0.5) {
+      this.stuckCounter++;
+      if (this.stuckCounter > 10) {
+        // Если призрак застрял, выбираем случайное направление
+        const dirs = [DIRECTIONS.UP, DIRECTIONS.DOWN, DIRECTIONS.LEFT, DIRECTIONS.RIGHT];
+        this.direction = dirs[Math.floor(Math.random() * dirs.length)];
+        this.stuckCounter = 0;
       }
+    } else {
+      this.stuckCounter = 0;
     }
     
-    // Выбираем случайное направление, если текущее направление невозможно или есть перекресток
-    if (possibleDirections.length > 0) {
-      if (possibleDirections.length > 1 || 
-          !possibleDirections.includes(this.direction)) {
+    // Запоминаем текущую позицию
+    this.lastPosition = { x: this.x, y: this.y };
+
+    // Обновляем целевую точку и принимаем решение о направлении движения
+    const currentTime = Date.now();
+    if (currentTime - this.lastDecisionTime > this.decisionInterval) {
+      this.lastDecisionTime = currentTime;
+      
+      // Определяем цель в зависимости от состояния
+      if (this.state === 'frightened') {
+        // В испуганном состоянии цель - убежать от игрока
+        const playerGridX = Math.floor(player.x / CELL_SIZE);
+        const playerGridY = Math.floor(player.y / CELL_SIZE);
+        const ghostGridX = Math.floor(this.x / CELL_SIZE);
+        const ghostGridY = Math.floor(this.y / CELL_SIZE);
         
-        if (this.state === 'frightened') {
-          // В напуганном состоянии двигаемся случайно
-          this.direction = possibleDirections[Math.floor(Math.random() * possibleDirections.length)];
-        } else {
-          // В нормальном состоянии пытаемся двигаться к игроку
-          const playerGridX = Math.floor(player.x / CELL_SIZE);
-          const playerGridY = Math.floor(player.y / CELL_SIZE);
-          const ghostGridX = Math.floor(this.x / CELL_SIZE);
-          const ghostGridY = Math.floor(this.y / CELL_SIZE);
-          
-          // Функция для вычисления расстояния
-          const getDistance = (dir) => {
-            const newX = ghostGridX + dir.x;
-            const newY = ghostGridY + dir.y;
-            return Math.sqrt(Math.pow(newX - playerGridX, 2) + Math.pow(newY - playerGridY, 2));
-          };
-          
-          // Сортируем направления по расстоянию к игроку
-          possibleDirections.sort((a, b) => {
-            return getDistance(a) - getDistance(b);
-          });
-          
-          // С некоторой вероятностью выбираем случайное направление
-          const randomFactor = this.index * 0.1; // Разные призраки имеют разную "случайность"
-          if (Math.random() < randomFactor) {
-            this.direction = possibleDirections[Math.floor(Math.random() * possibleDirections.length)];
-          } else {
-            this.direction = possibleDirections[0]; // Ближайшее к игроку направление
-          }
-        }
+        // Двигаемся в направлении, противоположном игроку
+        this.targetX = ghostGridX + (ghostGridX - playerGridX) * 2;
+        this.targetY = ghostGridY + (ghostGridY - playerGridY) * 2;
+      } else {
+        // В обычном состоянии цель - игрок
+        this.targetX = Math.floor(player.x / CELL_SIZE);
+        this.targetY = Math.floor(player.y / CELL_SIZE);
       }
+      
+      this.chooseDirection();
     }
-    
+
     // Двигаемся в выбранном направлении
     this.x += this.direction.x * this.speed;
     this.y += this.direction.y * this.speed;
@@ -387,65 +393,158 @@ class Ghost {
     checkPlayerGhostCollision(this);
   }
 
+  chooseDirection() {
+    // Определяем возможные направления движения
+    const possibleDirections = [];
+    const ghostGridX = Math.floor(this.x / CELL_SIZE);
+    const ghostGridY = Math.floor(this.y / CELL_SIZE);
+    
+    // Проверяем все направления, кроме противоположного текущему
+    for (const dir of Object.values(DIRECTIONS)) {
+      if (dir === DIRECTIONS.NONE) continue;
+      
+      // Пропускаем противоположное направление (если только призрак не застрял)
+      if (this.stuckCounter < 10) {
+        if (this.direction.x !== 0 && dir.x === -this.direction.x) continue;
+        if (this.direction.y !== 0 && dir.y === -this.direction.y) continue;
+      }
+      
+      const nextX = ghostGridX + dir.x;
+      const nextY = ghostGridY + dir.y;
+      
+      if (!isWall(nextX, nextY)) {
+        possibleDirections.push(dir);
+      }
+    }
+    
+    if (possibleDirections.length === 0) {
+      // Если нет доступных направлений, разворачиваемся
+      this.direction = {
+        x: -this.direction.x,
+        y: -this.direction.y
+      };
+      return;
+    }
+    
+    if (this.state === 'frightened') {
+      // В напуганном состоянии двигаемся случайно с некоторым уклоном в сторону от игрока
+      this.direction = possibleDirections[Math.floor(Math.random() * possibleDirections.length)];
+    } else {
+      // Используем алгоритм A* для нахождения лучшего направления к цели
+      const scoredDirections = possibleDirections.map(dir => {
+        const newX = ghostGridX + dir.x;
+        const newY = ghostGridY + dir.y;
+        
+        // Вычисляем манхэттенское расстояние до цели
+        const distanceToTarget = Math.abs(newX - this.targetX) + Math.abs(newY - this.targetY);
+        
+        // Добавляем случайность для разнообразия движения 
+        // Каждый призрак имеет свой уровень случайности на основе индекса
+        const randomFactor = (Math.random() * 3 * (this.index + 1));
+        
+        return {
+          direction: dir,
+          score: distanceToTarget + randomFactor
+        };
+      });
+      
+      // Сортируем направления по оценке (меньше - лучше)
+      scoredDirections.sort((a, b) => a.score - b.score);
+      
+      // Выбираем направление с наилучшей оценкой
+      this.direction = scoredDirections[0].direction;
+    }
+  }
+
   draw() {
     ctx.save();
     
     const centerX = this.x + CELL_SIZE / 2;
     const centerY = this.y + CELL_SIZE / 2;
     
-    // Рисуем тело призрака
-    ctx.beginPath();
+    // Определяем угол поворота на основе направления
+    let angle = 0;
+    if (this.direction === DIRECTIONS.RIGHT) angle = 0;
+    else if (this.direction === DIRECTIONS.DOWN) angle = Math.PI / 2;
+    else if (this.direction === DIRECTIONS.LEFT) angle = Math.PI;
+    else if (this.direction === DIRECTIONS.UP) angle = Math.PI * 3 / 2;
+    
+    ctx.translate(centerX, centerY);
+    ctx.rotate(angle);
     
     if (this.state === 'frightened') {
-      ctx.fillStyle = '#0040fc'; // Синий цвет для напуганных призраков
+      // В испуганном состоянии рисуем синего призрака
+      ctx.fillStyle = '#0040fc';
+      
       // Мигаем перед окончанием режима power-up
       if (powerModeTimer && powerModeTimer < 3000 && Math.floor(Date.now() / 200) % 2 === 0) {
         ctx.fillStyle = 'white';
       }
-    } else if (this.state === 'returning') {
-      ctx.fillStyle = 'transparent'; // Прозрачный при возвращении
-    } else {
-      ctx.fillStyle = this.color;
-    }
-    
-    // Тело в виде круга (шайбы)
-    ctx.arc(centerX, centerY, this.size / 2, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Рисуем глаза, если не в состоянии возвращения
-    if (this.state !== 'returning') {
-      // Определяем позицию глаз
-      const eyeOffset = this.size / 4;
-      const pupilOffset = this.size / 12;
-      const eyeSize = this.size / 5;
-      const pupilSize = eyeSize / 2;
       
-      // Левый глаз
-      ctx.fillStyle = 'white';
       ctx.beginPath();
-      ctx.arc(centerX - eyeOffset, centerY - eyeOffset, eyeSize, 0, Math.PI * 2);
+      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
       ctx.fill();
       
-      // Правый глаз
+      // Глаза испуганного призрака
+      ctx.fillStyle = 'white';
       ctx.beginPath();
-      ctx.arc(centerX + eyeOffset, centerY - eyeOffset, eyeSize, 0, Math.PI * 2);
+      ctx.arc(-this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
+      ctx.arc(this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
       ctx.fill();
       
       // Зрачки
       ctx.fillStyle = 'black';
-      
-      // Позиция зрачков зависит от направления
-      const pupilX = this.eyeDirection.x * pupilOffset;
-      const pupilY = this.eyeDirection.y * pupilOffset;
-      
-      // Левый зрачок
       ctx.beginPath();
-      ctx.arc(centerX - eyeOffset + pupilX, centerY - eyeOffset + pupilY, pupilSize, 0, Math.PI * 2);
+      ctx.arc(-this.size / 4, -this.size / 8, this.size / 16, 0, Math.PI * 2);
+      ctx.arc(this.size / 4, -this.size / 8, this.size / 16, 0, Math.PI * 2);
       ctx.fill();
       
-      // Правый зрачок
+      // Рисуем рот в виде волнистой линии
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = this.size / 10;
       ctx.beginPath();
-      ctx.arc(centerX + eyeOffset + pupilX, centerY - eyeOffset + pupilY, pupilSize, 0, Math.PI * 2);
+      ctx.moveTo(-this.size / 3, this.size / 5);
+      ctx.lineTo(-this.size / 6, this.size / 10);
+      ctx.lineTo(this.size / 6, this.size / 5);
+      ctx.lineTo(this.size / 3, this.size / 10);
+      ctx.stroke();
+    } else if (this.state === 'returning') {
+      // Если призрак возвращается, рисуем его прозрачным
+      ctx.globalAlpha = 0.5;
+    }
+    
+    // Рисуем спрайт призрака если он загружен и призрак не в состоянии испуга
+    if (ghostImage.complete && this.state !== 'frightened') {
+      ctx.drawImage(
+        ghostImage,
+        -this.size / 2,
+        -this.size / 2,
+        this.size,
+        this.size
+      );
+    } else if (this.state !== 'frightened') {
+      // Запасной вариант - цветной круг
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Глаза
+      ctx.fillStyle = 'white';
+      ctx.beginPath();
+      ctx.arc(-this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
+      ctx.arc(this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Зрачки (смотрят в направлении движения)
+      ctx.fillStyle = 'black';
+      ctx.beginPath();
+      ctx.arc(-this.size / 4 + this.eyeDirection.x * this.size / 16, 
+              -this.size / 8 + this.eyeDirection.y * this.size / 16, 
+              this.size / 16, 0, Math.PI * 2);
+      ctx.arc(this.size / 4 + this.eyeDirection.x * this.size / 16, 
+              -this.size / 8 + this.eyeDirection.y * this.size / 16, 
+              this.size / 16, 0, Math.PI * 2);
       ctx.fill();
     }
     
@@ -458,6 +557,7 @@ class Ghost {
     this.direction = DIRECTIONS.RIGHT;
     this.state = 'normal';
     this.speed = SPEEDS.GHOST_NORMAL;
+    this.stuckCounter = 0;
   }
 
   frighten() {
@@ -1017,26 +1117,58 @@ function initEventListeners() {
 function waitForResources(callback) {
   console.log('Проверка загрузки ресурсов...');
   
-  // Если изображение уже загружено
-  if (playerImage.complete) {
-    console.log('Изображение уже загружено');
-    callback();
-  } else {
-    console.log('Ожидание загрузки изображения...');
-    // Если не загружено, ждем события загрузки
-    playerImage.onload = function() {
-      console.log('Изображение загружено во время ожидания');
+  let resourcesLoaded = 0;
+  const totalResources = 2; // Два изображения для загрузки
+  
+  function checkComplete() {
+    resourcesLoaded++;
+    if (resourcesLoaded >= totalResources) {
+      console.log('Все ресурсы загружены');
       callback();
+    }
+  }
+  
+  // Проверяем изображение игрока
+  if (playerImage.complete) {
+    console.log('Изображение игрока уже загружено');
+    checkComplete();
+  } else {
+    console.log('Ожидание загрузки изображения игрока...');
+    playerImage.onload = function() {
+      console.log('Изображение игрока загружено');
+      checkComplete();
     };
     
-    // Добавляем таймаут для случаев, когда изображение не загружается
-    setTimeout(function() {
-      if (!playerImage.complete) {
-        console.warn('Превышено время ожидания загрузки изображения, продолжаем без него');
-        callback();
-      }
-    }, 5000);
+    playerImage.onerror = function() {
+      console.warn('Ошибка загрузки изображения игрока');
+      checkComplete();
+    };
   }
+  
+  // Проверяем изображение призрака
+  if (ghostImage.complete) {
+    console.log('Изображение призрака уже загружено');
+    checkComplete();
+  } else {
+    console.log('Ожидание загрузки изображения призрака...');
+    ghostImage.onload = function() {
+      console.log('Изображение призрака загружено');
+      checkComplete();
+    };
+    
+    ghostImage.onerror = function() {
+      console.warn('Ошибка загрузки изображения призрака');
+      checkComplete();
+    };
+  }
+  
+  // Добавляем таймаут для безопасности
+  setTimeout(function() {
+    if (resourcesLoaded < totalResources) {
+      console.warn('Превышено время ожидания загрузки изображений, продолжаем без них');
+      callback();
+    }
+  }, 5000);
 }
 
 // Инициализация после загрузки страницы
