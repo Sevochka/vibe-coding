@@ -1342,4 +1342,4 @@ window.onload = function() {
   } catch (err) {
     console.error('Критическая ошибка при загрузке игры:', err);
   }
-}; 
+}; // Тестовый комментарий
