@@ -12,6 +12,30 @@ const downBtn = document.getElementById('downBtn');
 const leftBtn = document.getElementById('leftBtn');
 const rightBtn = document.getElementById('rightBtn');
 
+// Настраиваем высокое разрешение канваса
+function setupHighDPICanvas(canvas) {
+  const dpr = window.devicePixelRatio || 1;
+  
+  // Получаем размеры из CSS
+  const rect = canvas.getBoundingClientRect();
+  
+  // Устанавливаем атрибуты размеров канваса с учетом DPR
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  
+  // Масштабируем контекст
+  ctx.scale(dpr, dpr);
+  
+  // Устанавливаем размеры CSS обратно
+  canvas.style.width = rect.width + 'px';
+  canvas.style.height = rect.height + 'px';
+  
+  return dpr;
+}
+
+// Применяем высокое разрешение
+const dpr = setupHighDPICanvas(canvas);
+
 // Игровые переменные
 let gameState = GAME_STATES.IDLE;
 let currentLevel = 0;
@@ -813,28 +837,28 @@ function drawMap() {
 
 function drawGameOver() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   ctx.fillStyle = 'white';
   ctx.font = '48px "Sports", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width / 2, canvas.height / 2 - 24);
+  ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
   
   ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / 2, canvas.height / 2 + 24);
+  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
 }
 
 function drawLevelComplete() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   ctx.fillStyle = 'white';
   ctx.font = '48px "Sports", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('УРОВЕНЬ ПРОЙДЕН!', canvas.width / 2, canvas.height / 2 - 24);
+  ctx.fillText('УРОВЕНЬ ПРОЙДЕН!', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
   
   ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / 2, canvas.height / 2 + 24);
+  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
 }
 
 // Главный цикл игры
@@ -847,8 +871,9 @@ function gameLoop(timestamp) {
   const deltaTime = timestamp - lastFrameTime;
   lastFrameTime = timestamp;
   
-  // Очищаем экран
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // Очищаем экран и устанавливаем белый фон
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   // Обновляем и отрисовываем в зависимости от состояния игры
   if (gameState === GAME_STATES.PLAYING) {
@@ -880,14 +905,14 @@ function gameLoop(timestamp) {
     
     // Отображаем сообщение о паузе
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
     
     ctx.fillStyle = 'white';
     ctx.font = '36px "Sports", sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('ПАУЗА', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('ПАУЗА', canvas.width / (2 * dpr), canvas.height / (2 * dpr));
     ctx.font = '18px "Neoris", "Roboto", sans-serif';
-    ctx.fillText('Нажмите пробел для продолжения', canvas.width / 2, canvas.height / 2 + 40);
+    ctx.fillText('Нажмите пробел для продолжения', canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 40);
   } else if (gameState === GAME_STATES.GAME_OVER) {
     // Отрисовываем карту
     drawMap();
@@ -1178,34 +1203,34 @@ window.onload = function() {
         startButton.style.display = 'block';
         
         // Отрисовываем начальный экран
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'black';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
         
         ctx.fillStyle = '#00c78b';
         ctx.font = '48px "Sports", sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('ОВЕЧКИН-ПАКМЕН', canvas.width / 2, canvas.height / 2 - 50);
+        ctx.fillText('ОВЕЧКИН-ПАКМЕН', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 50);
         
         ctx.font = '24px "Neoris", "Roboto", sans-serif';
-        ctx.fillStyle = 'white';
-        ctx.fillText('Нажмите кнопку "Начать игру"', canvas.width / 2, canvas.height / 2 + 20);
+        ctx.fillStyle = '#000000';
+        ctx.fillText('Нажмите кнопку "Начать игру"', canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 20);
         
         // Небольшая анимация для Овечкина
         if (playerImage.complete) {
           const size = CELL_SIZE * 3;
           ctx.drawImage(
             playerImage, 
-            canvas.width / 2 - size / 2, 
-            canvas.height / 2 + 40, 
+            canvas.width / (2 * dpr) - size / 2, 
+            canvas.height / (2 * dpr) + 40, 
             size, 
             size
           );
         } else {
           console.warn('Невозможно отобразить Овечкина, изображение не загружено');
-          ctx.fillStyle = 'white';
+          ctx.fillStyle = '#000000';
           ctx.font = '16px "Neoris", "Roboto", sans-serif';
-          ctx.fillText('Изображение загружается...', canvas.width / 2, canvas.height / 2 + 70);
+          ctx.fillText('Изображение загружается...', canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 70);
         }
         
         console.log('Инициализация завершена, игра готова к запуску');
@@ -1214,13 +1239,13 @@ window.onload = function() {
         // Отображаем сообщение об ошибке на экране
         ctx.fillStyle = 'red';
         ctx.font = '20px "Neoris", "Roboto", sans-serif';
-        ctx.fillText('Ошибка инициализации игры', canvas.width / 2, canvas.height / 2 + 100);
+        ctx.fillText('Ошибка инициализации игры', canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 100);
       }
     });
   } catch (err) {
     console.error('Критическая ошибка при загрузке игры:', err);
   }
-}; // Тестовый комментарий
+};
 
 // Функция для проверки столкновения со стеной
 function checkWallCollision(x, y, size, offsetX, offsetY) {
