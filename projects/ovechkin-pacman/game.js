@@ -176,17 +176,21 @@ class Player {
       } else {
         // Если перед нами стена, останавливаемся на границе ячейки
         if (this.direction.x > 0) {
-          // Вправо
-          this.x = currentGridX * CELL_SIZE;
+          // Вправо - останавливаемся у левой границы следующей ячейки
+          this.x = currentGridX * CELL_SIZE + CELL_SIZE - 0.01;
+          this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.x < 0) {
-          // Влево
-          this.x = (currentGridX + 1) * CELL_SIZE - 1;
+          // Влево - останавливаемся у правой границы предыдущей ячейки
+          this.x = currentGridX * CELL_SIZE + 0.01;
+          this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y > 0) {
-          // Вниз
-          this.y = currentGridY * CELL_SIZE;
+          // Вниз - останавливаемся у верхней границы следующей ячейки
+          this.y = currentGridY * CELL_SIZE + CELL_SIZE - 0.01;
+          this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y < 0) {
-          // Вверх
-          this.y = (currentGridY + 1) * CELL_SIZE - 1;
+          // Вверх - останавливаемся у нижней границы предыдущей ячейки
+          this.y = currentGridY * CELL_SIZE + 0.01;
+          this.direction = DIRECTIONS.NONE; // Останавливаем движение
         }
       }
     }
