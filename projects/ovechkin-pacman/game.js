@@ -332,8 +332,19 @@ class Ghost {
       } else {
         // Двигаемся к дому напрямую
         const angle = Math.atan2(homeY - this.y, homeX - this.x);
-        this.x += Math.cos(angle) * this.speed;
-        this.y += Math.sin(angle) * this.speed;
+        
+        // Проверяем следующую позицию на наличие стены
+        const nextX = this.x + Math.cos(angle) * this.speed;
+        const nextY = this.y + Math.sin(angle) * this.speed;
+        
+        // Если нет стены, двигаемся
+        if (!this.willCollideWithWall(nextX, nextY)) {
+          this.x = nextX;
+          this.y = nextY;
+        } else {
+          // Если есть стена, выбираем случайное направление
+          this.chooseDirection();
+        }
         return;
       }
     }
@@ -388,45 +399,8 @@ class Ghost {
     const nextX = this.x + this.direction.x * this.speed;
     const nextY = this.y + this.direction.y * this.speed;
     
-    // Текущие координаты в сетке
-    const currentGridX = Math.floor(this.x / CELL_SIZE);
-    const currentGridY = Math.floor(this.y / CELL_SIZE);
-    
-    // Проверяем, нет ли стены на пути
-    let canMove = true;
-    
-    // Проверяем столкновение со стеной с учетом размеров модели
-    if (this.direction.x > 0) {
-      // Проверяем правый край модели
-      const rightEdge = nextX + this.centerOffsetX + this.size;
-      const rightGridX = Math.floor(rightEdge / CELL_SIZE);
-      if (rightGridX > currentGridX) {
-        canMove = !isWall(rightGridX, currentGridY);
-      }
-    } else if (this.direction.x < 0) {
-      // Проверяем левый край модели
-      const leftEdge = nextX + this.centerOffsetX;
-      const leftGridX = Math.floor(leftEdge / CELL_SIZE);
-      if (leftGridX < currentGridX) {
-        canMove = !isWall(leftGridX, currentGridY);
-      }
-    } else if (this.direction.y > 0) {
-      // Проверяем нижний край модели
-      const bottomEdge = nextY + this.centerOffsetY + this.size;
-      const bottomGridY = Math.floor(bottomEdge / CELL_SIZE);
-      if (bottomGridY > currentGridY) {
-        canMove = !isWall(currentGridX, bottomGridY);
-      }
-    } else if (this.direction.y < 0) {
-      // Проверяем верхний край модели
-      const topEdge = nextY + this.centerOffsetY;
-      const topGridY = Math.floor(topEdge / CELL_SIZE);
-      if (topGridY < currentGridY) {
-        canMove = !isWall(currentGridX, topGridY);
-      }
-    }
-    
-    if (canMove) {
+    // Проверяем столкновение со стеной
+    if (!this.willCollideWithWall(nextX, nextY)) {
       // Если нет стены, обновляем позицию
       this.x = nextX;
       this.y = nextY;
@@ -454,6 +428,80 @@ class Ghost {
     checkPlayerGhostCollision(this);
   }
 
+  // Метод для проверки столкновения со стеной в следующей позиции
+  willCollideWithWall(nextX, nextY) {
+    // Текущие координаты в сетке
+    const currentGridX = Math.floor(this.x / CELL_SIZE);
+    const currentGridY = Math.floor(this.y / CELL_SIZE);
+    
+    // Координаты следующей позиции в сетке
+    const nextGridX = Math.floor(nextX / CELL_SIZE);
+    const nextGridY = Math.floor(nextY / CELL_SIZE);
+    
+    // Если переходим в новую ячейку, проверяем наличие стены
+    if (nextGridX !== currentGridX || nextGridY !== currentGridY) {
+      // Проверяем края модели
+      // Правый край
+      const rightEdge = nextX + this.centerOffsetX + this.size;
+      const rightGridX = Math.floor(rightEdge / CELL_SIZE);
+      if (rightGridX !== currentGridX && isWall(rightGridX, currentGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной справа: (${rightGridX}, ${currentGridY})`);
+        return true;
+      }
+      
+      // Левый край
+      const leftEdge = nextX + this.centerOffsetX;
+      const leftGridX = Math.floor(leftEdge / CELL_SIZE);
+      if (leftGridX !== currentGridX && isWall(leftGridX, currentGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной слева: (${leftGridX}, ${currentGridY})`);
+        return true;
+      }
+      
+      // Нижний край
+      const bottomEdge = nextY + this.centerOffsetY + this.size;
+      const bottomGridY = Math.floor(bottomEdge / CELL_SIZE);
+      if (bottomGridY !== currentGridY && isWall(currentGridX, bottomGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной снизу: (${currentGridX}, ${bottomGridY})`);
+        return true;
+      }
+      
+      // Верхний край
+      const topEdge = nextY + this.centerOffsetY;
+      const topGridY = Math.floor(topEdge / CELL_SIZE);
+      if (topGridY !== currentGridY && isWall(currentGridX, topGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной сверху: (${currentGridX}, ${topGridY})`);
+        return true;
+      }
+      
+      // Проверяем углы модели (для диагональных столкновений)
+      // Верхний левый угол
+      if (leftGridX !== currentGridX && topGridY !== currentGridY && isWall(leftGridX, topGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной в верхнем левом углу: (${leftGridX}, ${topGridY})`);
+        return true;
+      }
+      
+      // Верхний правый угол
+      if (rightGridX !== currentGridX && topGridY !== currentGridY && isWall(rightGridX, topGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной в верхнем правом углу: (${rightGridX}, ${topGridY})`);
+        return true;
+      }
+      
+      // Нижний левый угол
+      if (leftGridX !== currentGridX && bottomGridY !== currentGridY && isWall(leftGridX, bottomGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной в нижнем левом углу: (${leftGridX}, ${bottomGridY})`);
+        return true;
+      }
+      
+      // Нижний правый угол
+      if (rightGridX !== currentGridX && bottomGridY !== currentGridY && isWall(rightGridX, bottomGridY)) {
+        console.log(`Призрак ${this.index} столкнулся со стеной в нижнем правом углу: (${rightGridX}, ${bottomGridY})`);
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
   chooseDirection() {
     // Определяем возможные направления движения
     const possibleDirections = [];
@@ -470,10 +518,11 @@ class Ghost {
         if (this.direction.y !== 0 && dir.y === -this.direction.y) continue;
       }
       
-      const nextX = ghostGridX + dir.x;
-      const nextY = ghostGridY + dir.y;
+      // Проверяем, не будет ли столкновения со стеной при движении в этом направлении
+      const testX = this.x + dir.x * this.speed;
+      const testY = this.y + dir.y * this.speed;
       
-      if (!isWall(nextX, nextY)) {
+      if (!this.willCollideWithWall(testX, testY)) {
         possibleDirections.push(dir);
       }
     }
@@ -484,6 +533,7 @@ class Ghost {
         x: -this.direction.x,
         y: -this.direction.y
       };
+      console.log(`Призрак ${this.index} развернулся в противоположном направлении: (${this.direction.x}, ${this.direction.y})`);
       return;
     }
     
@@ -515,6 +565,8 @@ class Ghost {
       // Выбираем направление с наилучшей оценкой
       this.direction = scoredDirections[0].direction;
     }
+    
+    console.log(`Призрак ${this.index} выбрал направление: (${this.direction.x}, ${this.direction.y})`);
   }
 
   draw() {
