@@ -12,6 +12,10 @@ const GHOST_COLORS = [
   '#964ba0'  // фиолетовый
 ];
 
+// Размеры моделей
+const MODEL_SIZE = CELL_SIZE * 0.8; // 80% от размера ячейки
+const MODEL_OFFSET = (CELL_SIZE - MODEL_SIZE) / 2; // Центрирование
+
 // Изображения
 const OVI_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/c/e2/c5e4c4a19d8649fd87799a9b84ad6.png';
 const GHOST_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/b/d6/95ef8494c3113d0cb8055b1e21aee.png';

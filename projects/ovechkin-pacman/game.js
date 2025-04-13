@@ -61,12 +61,12 @@ class Player {
     this.direction = DIRECTIONS.NONE;
     this.nextDirection = DIRECTIONS.NONE;
     this.speed = SPEEDS.PLAYER;
-    this.size = CELL_SIZE * 0.9;
+    this.size = MODEL_SIZE;
     this.mouthOpen = 0;
     this.mouthDir = 0.1;
     // Центрируем персонажа в ячейке
-    this.centerOffsetX = (CELL_SIZE - this.size) / 2;
-    this.centerOffsetY = (CELL_SIZE - this.size) / 2;
+    this.centerOffsetX = MODEL_OFFSET;
+    this.centerOffsetY = MODEL_OFFSET;
   }
 
   update(deltaTime) {
@@ -92,9 +92,13 @@ class Player {
           const cellCenterX = currentGridX * CELL_SIZE + CELL_SIZE / 2;
           const cellCenterY = currentGridY * CELL_SIZE + CELL_SIZE / 2;
           
+          // Центр игрока
+          const playerCenterX = this.x + this.centerOffsetX + this.size / 2;
+          const playerCenterY = this.y + this.centerOffsetY + this.size / 2;
+          
           // Расстояние от центра текущей ячейки
-          const distanceFromCenterX = Math.abs(this.x + CELL_SIZE/2 - cellCenterX);
-          const distanceFromCenterY = Math.abs(this.y + CELL_SIZE/2 - cellCenterY);
+          const distanceFromCenterX = Math.abs(playerCenterX - cellCenterX);
+          const distanceFromCenterY = Math.abs(playerCenterY - cellCenterY);
           
           // Если игрок достаточно близко к центру ячейки, можно повернуть
           const turnThreshold = CELL_SIZE * 0.4; 
@@ -149,32 +153,40 @@ class Player {
       let canMove = true;
       
       // Для движения вправо
-      if (this.direction.x > 0 && nextGridX > currentGridX) {
-        // Проверяем с учетом размера персонажа
-        const rightEdge = nextX + playerHalfSize;
+      if (this.direction.x > 0) {
+        // Проверяем правый край модели
+        const rightEdge = nextX + this.centerOffsetX + this.size;
         const rightGridX = Math.floor(rightEdge / CELL_SIZE);
-        canMove = !isWall(rightGridX, currentGridY);
+        if (rightGridX > currentGridX) {
+          canMove = !isWall(rightGridX, currentGridY);
+        }
       } 
       // Для движения влево
-      else if (this.direction.x < 0 && nextGridX < currentGridX) {
-        // Проверяем с учетом размера персонажа
-        const leftEdge = nextX - playerHalfSize;
+      else if (this.direction.x < 0) {
+        // Проверяем левый край модели
+        const leftEdge = nextX + this.centerOffsetX;
         const leftGridX = Math.floor(leftEdge / CELL_SIZE);
-        canMove = !isWall(leftGridX, currentGridY);
+        if (leftGridX < currentGridX) {
+          canMove = !isWall(leftGridX, currentGridY);
+        }
       }
       // Для движения вниз
-      else if (this.direction.y > 0 && nextGridY > currentGridY) {
-        // Проверяем с учетом размера персонажа
-        const bottomEdge = nextY + playerHalfSize;
+      else if (this.direction.y > 0) {
+        // Проверяем нижний край модели
+        const bottomEdge = nextY + this.centerOffsetY + this.size;
         const bottomGridY = Math.floor(bottomEdge / CELL_SIZE);
-        canMove = !isWall(currentGridX, bottomGridY);
+        if (bottomGridY > currentGridY) {
+          canMove = !isWall(currentGridX, bottomGridY);
+        }
       }
       // Для движения вверх
-      else if (this.direction.y < 0 && nextGridY < currentGridY) {
-        // Проверяем с учетом размера персонажа
-        const topEdge = nextY - playerHalfSize;
+      else if (this.direction.y < 0) {
+        // Проверяем верхний край модели
+        const topEdge = nextY + this.centerOffsetY;
         const topGridY = Math.floor(topEdge / CELL_SIZE);
-        canMove = !isWall(currentGridX, topGridY);
+        if (topGridY < currentGridY) {
+          canMove = !isWall(currentGridX, topGridY);
+        }
       }
       
       if (canMove) {
@@ -205,20 +217,20 @@ class Player {
       } else {
         // Если перед нами стена, останавливаемся на безопасном расстоянии
         if (this.direction.x > 0) {
-          // Вправо - останавливаемся на расстоянии от стены
+          // Вправо - останавливаемся перед стеной
           this.x = nextGridX * CELL_SIZE - this.size - this.centerOffsetX;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.x < 0) {
-          // Влево - останавливаемся на расстоянии от стены
-          this.x = currentGridX * CELL_SIZE + this.centerOffsetX;
+          // Влево - останавливаемся перед стеной
+          this.x = currentGridX * CELL_SIZE;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y > 0) {
-          // Вниз - останавливаемся на расстоянии от стены
+          // Вниз - останавливаемся перед стеной
           this.y = nextGridY * CELL_SIZE - this.size - this.centerOffsetY;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y < 0) {
-          // Вверх - останавливаемся на расстоянии от стены
-          this.y = currentGridY * CELL_SIZE + this.centerOffsetY;
+          // Вверх - останавливаемся перед стеной
+          this.y = currentGridY * CELL_SIZE;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         }
       }
@@ -236,8 +248,8 @@ class Player {
     else if (this.direction === DIRECTIONS.UP) angle = Math.PI * 3 / 2;
     
     // Рассчитываем точную позицию центра с учетом смещения
-    const centerX = this.x + this.size / 2 + this.centerOffsetX;
-    const centerY = this.y + this.size / 2 + this.centerOffsetY;
+    const centerX = this.x + this.centerOffsetX + this.size / 2;
+    const centerY = this.y + this.centerOffsetY + this.size / 2;
     
     ctx.translate(centerX, centerY);
     ctx.rotate(angle);
@@ -292,7 +304,7 @@ class Ghost {
     this.direction = DIRECTIONS.RIGHT;
     this.speed = SPEEDS.GHOST_NORMAL;
     this.state = 'normal'; // normal, frightened, returning
-    this.size = CELL_SIZE * 0.9;
+    this.size = MODEL_SIZE;
     this.eyeDirection = DIRECTIONS.RIGHT;
     this.index = index;
     this.lastDecisionTime = 0; // Время последнего принятия решения
@@ -301,6 +313,8 @@ class Ghost {
     this.targetY = 0; // Целевая координата Y
     this.stuckCounter = 0; // Счетчик для определения застревания
     this.lastPosition = { x: this.x, y: this.y }; // Последняя позиция
+    this.centerOffsetX = MODEL_OFFSET;
+    this.centerOffsetY = MODEL_OFFSET;
   }
 
   update(deltaTime) {
@@ -378,41 +392,59 @@ class Ghost {
     const currentGridX = Math.floor(this.x / CELL_SIZE);
     const currentGridY = Math.floor(this.y / CELL_SIZE);
     
-    // Координаты следующей позиции в сетке
-    const nextGridX = Math.floor(nextX / CELL_SIZE);
-    const nextGridY = Math.floor(nextY / CELL_SIZE);
-    
     // Проверяем, нет ли стены на пути
     let canMove = true;
     
-    // Проверяем столкновение со стеной только если переходим в другую ячейку
-    if ((this.direction.x > 0 && nextGridX > currentGridX) || 
-        (this.direction.x < 0 && nextGridX < currentGridX)) {
-        canMove = !isWall(nextGridX, currentGridY);
-    } else if ((this.direction.y > 0 && nextGridY > currentGridY) ||
-               (this.direction.y < 0 && nextGridY < currentGridY)) {
-        canMove = !isWall(currentGridX, nextGridY);
+    // Проверяем столкновение со стеной с учетом размеров модели
+    if (this.direction.x > 0) {
+      // Проверяем правый край модели
+      const rightEdge = nextX + this.centerOffsetX + this.size;
+      const rightGridX = Math.floor(rightEdge / CELL_SIZE);
+      if (rightGridX > currentGridX) {
+        canMove = !isWall(rightGridX, currentGridY);
+      }
+    } else if (this.direction.x < 0) {
+      // Проверяем левый край модели
+      const leftEdge = nextX + this.centerOffsetX;
+      const leftGridX = Math.floor(leftEdge / CELL_SIZE);
+      if (leftGridX < currentGridX) {
+        canMove = !isWall(leftGridX, currentGridY);
+      }
+    } else if (this.direction.y > 0) {
+      // Проверяем нижний край модели
+      const bottomEdge = nextY + this.centerOffsetY + this.size;
+      const bottomGridY = Math.floor(bottomEdge / CELL_SIZE);
+      if (bottomGridY > currentGridY) {
+        canMove = !isWall(currentGridX, bottomGridY);
+      }
+    } else if (this.direction.y < 0) {
+      // Проверяем верхний край модели
+      const topEdge = nextY + this.centerOffsetY;
+      const topGridY = Math.floor(topEdge / CELL_SIZE);
+      if (topGridY < currentGridY) {
+        canMove = !isWall(currentGridX, topGridY);
+      }
     }
     
     if (canMove) {
-        // Если нет стены, обновляем позицию
-        this.x = nextX;
-        this.y = nextY;
-        
-        // Проверка на туннель (переход с одной стороны на другую)
-        if (this.x < 0) {
-          this.x = canvas.width - CELL_SIZE;
-        } else if (this.x >= canvas.width) {
-          this.x = 0;
-        }
-        if (this.y < 0) {
-          this.y = canvas.height - CELL_SIZE;
-        } else if (this.y >= canvas.height) {
-          this.y = 0;
-        }
+      // Если нет стены, обновляем позицию
+      this.x = nextX;
+      this.y = nextY;
+      
+      // Проверка на туннель (переход с одной стороны на другую)
+      if (this.x < 0) {
+        this.x = canvas.width - CELL_SIZE;
+      } else if (this.x >= canvas.width) {
+        this.x = 0;
+      }
+      if (this.y < 0) {
+        this.y = canvas.height - CELL_SIZE;
+      } else if (this.y >= canvas.height) {
+        this.y = 0;
+      }
     } else {
-        // Если есть стена, меняем направление
-        this.chooseDirection();
+      // Если есть стена, меняем направление
+      this.chooseDirection();
     }
     
     // Обновляем направление глаз
@@ -488,8 +520,9 @@ class Ghost {
   draw() {
     ctx.save();
     
-    const centerX = this.x + CELL_SIZE / 2;
-    const centerY = this.y + CELL_SIZE / 2;
+    // Рассчитываем точную позицию центра с учетом смещения
+    const centerX = this.x + this.centerOffsetX + this.size / 2;
+    const centerY = this.y + this.centerOffsetY + this.size / 2;
     
     // Определяем угол поворота на основе направления
     let angle = 0;
