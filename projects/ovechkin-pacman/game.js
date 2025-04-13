@@ -381,49 +381,20 @@ class Ghost {
     ctx.translate(centerX, centerY);
     ctx.rotate(angle);
     
-    if (this.state === 'frightened') {
-      // В испуганном состоянии рисуем синего призрака
-      ctx.fillStyle = '#0040fc';
-      
-      // Мигаем перед окончанием режима power-up
-      if (powerModeTimer && powerModeTimer < 3000 && Math.floor(Date.now() / 200) % 2 === 0) {
-        ctx.fillStyle = 'white';
-      }
-      
-      ctx.beginPath();
-      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Глаза испуганного призрака
-      ctx.fillStyle = 'white';
-      ctx.beginPath();
-      ctx.arc(-this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
-      ctx.arc(this.size / 4, -this.size / 8, this.size / 8, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Зрачки
-      ctx.fillStyle = 'black';
-      ctx.beginPath();
-      ctx.arc(-this.size / 4, -this.size / 8, this.size / 16, 0, Math.PI * 2);
-      ctx.arc(this.size / 4, -this.size / 8, this.size / 16, 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Рисуем рот в виде волнистой линии
-      ctx.strokeStyle = 'white';
-      ctx.lineWidth = this.size / 10;
-      ctx.beginPath();
-      ctx.moveTo(-this.size / 3, this.size / 5);
-      ctx.lineTo(-this.size / 6, this.size / 10);
-      ctx.lineTo(this.size / 6, this.size / 5);
-      ctx.lineTo(this.size / 3, this.size / 10);
-      ctx.stroke();
-    } else if (this.state === 'returning') {
-      // Если призрак возвращается, рисуем его прозрачным
+    // Если призрак возвращается домой, делаем его полупрозрачным
+    if (this.state === 'returning') {
       ctx.globalAlpha = 0.5;
     }
     
-    // Рисуем спрайт призрака если он загружен и призрак не в состоянии испуга
-    if (ghostImage.complete && this.state !== 'frightened') {
+    // Мигание в испуганном состоянии при окончании режима power-up
+    if (this.state === 'frightened' && powerModeTimer && powerModeTimer < 3000) {
+      if (Math.floor(Date.now() / 200) % 2 === 0) {
+        ctx.globalAlpha = 0.5; // Только меняем прозрачность, НЕ меняем цвет!
+      }
+    }
+    
+    // Всегда рисуем оригинальную картинку призрака
+    if (ghostImage.complete) {
       ctx.drawImage(
         ghostImage,
         -this.size / 2,
@@ -431,8 +402,19 @@ class Ghost {
         this.size,
         this.size
       );
-    } else if (this.state !== 'frightened') {
-      // Запасной вариант - цветной круг
+      
+      // Если призрак в испуганном состоянии, рисуем вокруг него красную пунктирную рамку
+      if (this.state === 'frightened') {
+        ctx.strokeStyle = '#ff003c'; // Красный цвет
+        ctx.lineWidth = 2;
+        ctx.setLineDash([3, 3]); // Пунктирная линия
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size / 2 + 2, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]); // Сбрасываем стиль линии
+      }
+    } else {
+      // Запасной вариант - используем цвет призрака
       ctx.fillStyle = this.color;
       ctx.beginPath();
       ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
@@ -455,6 +437,17 @@ class Ghost {
               -this.size / 8 + this.eyeDirection.y * this.size / 16, 
               this.size / 16, 0, Math.PI * 2);
       ctx.fill();
+      
+      // Если призрак в испуганном состоянии, рисуем вокруг него красную пунктирную рамку
+      if (this.state === 'frightened') {
+        ctx.strokeStyle = '#ff003c'; // Красный цвет
+        ctx.lineWidth = 2;
+        ctx.setLineDash([3, 3]); // Пунктирная линия
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size / 2 + 2, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.setLineDash([]); // Сбрасываем стиль линии
+      }
     }
     
     ctx.restore();
@@ -758,9 +751,25 @@ function activatePowerMode() {
   // Включаем режим power-up
   powerMode = true;
   
-  // Призраки становятся испуганными
+  // Замедляем призраков БЕЗ изменения их внешнего вида
   for (const ghost of ghosts) {
-    ghost.frighten();
+    if (ghost.state !== 'returning') {
+      // Меняем только их скорость и состояние, но НЕ внешний вид
+      ghost.speed = SPEEDS.GHOST_FRIGHTENED;
+      ghost.state = 'frightened';
+      
+      // Разворачиваем призрака в противоположном направлении
+      ghost.direction = {
+        x: -ghost.direction.x,
+        y: -ghost.direction.y
+      };
+      
+      // Если направление нулевое, выбираем случайное
+      if (ghost.direction.x === 0 && ghost.direction.y === 0) {
+        const dirs = [DIRECTIONS.UP, DIRECTIONS.DOWN, DIRECTIONS.LEFT, DIRECTIONS.RIGHT];
+        ghost.direction = dirs[Math.floor(Math.random() * dirs.length)];
+      }
+    }
   }
   
   // Сбрасываем таймер, если он уже был запущен
