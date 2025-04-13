@@ -79,8 +79,8 @@ class Player {
           const cellCenterY = currentGridY * CELL_SIZE + CELL_SIZE / 2;
           
           // Расстояние от центра текущей ячейки
-          const distanceFromCenterX = Math.abs(this.x - cellCenterX);
-          const distanceFromCenterY = Math.abs(this.y - cellCenterY);
+          const distanceFromCenterX = Math.abs(this.x + CELL_SIZE/2 - cellCenterX);
+          const distanceFromCenterY = Math.abs(this.y + CELL_SIZE/2 - cellCenterY);
           
           // Если игрок достаточно близко к центру ячейки, можно повернуть
           const turnThreshold = CELL_SIZE * 0.4; 
@@ -120,6 +120,9 @@ class Player {
       const currentGridX = Math.floor(this.x / CELL_SIZE);
       const currentGridY = Math.floor(this.y / CELL_SIZE);
       
+      // Учитываем размеры персонажа при проверке столкновений
+      const playerHalfSize = this.size / 2;
+      
       // Рассчитываем следующие координаты для предварительной проверки стен
       const nextX = this.x + this.direction.x * this.speed;
       const nextY = this.y + this.direction.y * this.speed;
@@ -133,19 +136,31 @@ class Player {
       
       // Для движения вправо
       if (this.direction.x > 0 && nextGridX > currentGridX) {
-        canMove = !isWall(nextGridX, currentGridY);
+        // Проверяем с учетом размера персонажа
+        const rightEdge = nextX + playerHalfSize;
+        const rightGridX = Math.floor(rightEdge / CELL_SIZE);
+        canMove = !isWall(rightGridX, currentGridY);
       } 
       // Для движения влево
       else if (this.direction.x < 0 && nextGridX < currentGridX) {
-        canMove = !isWall(nextGridX, currentGridY);
+        // Проверяем с учетом размера персонажа
+        const leftEdge = nextX - playerHalfSize;
+        const leftGridX = Math.floor(leftEdge / CELL_SIZE);
+        canMove = !isWall(leftGridX, currentGridY);
       }
       // Для движения вниз
       else if (this.direction.y > 0 && nextGridY > currentGridY) {
-        canMove = !isWall(currentGridX, nextGridY);
+        // Проверяем с учетом размера персонажа
+        const bottomEdge = nextY + playerHalfSize;
+        const bottomGridY = Math.floor(bottomEdge / CELL_SIZE);
+        canMove = !isWall(currentGridX, bottomGridY);
       }
       // Для движения вверх
       else if (this.direction.y < 0 && nextGridY < currentGridY) {
-        canMove = !isWall(currentGridX, nextGridY);
+        // Проверяем с учетом размера персонажа
+        const topEdge = nextY - playerHalfSize;
+        const topGridY = Math.floor(topEdge / CELL_SIZE);
+        canMove = !isWall(currentGridX, topGridY);
       }
       
       if (canMove) {
@@ -174,22 +189,22 @@ class Player {
         // Сбор шайб
         checkPuckCollection();
       } else {
-        // Если перед нами стена, останавливаемся на границе ячейки
+        // Если перед нами стена, останавливаемся на безопасном расстоянии
         if (this.direction.x > 0) {
-          // Вправо - останавливаемся у левой границы следующей ячейки
-          this.x = currentGridX * CELL_SIZE + CELL_SIZE - 0.01;
+          // Вправо - останавливаемся на расстоянии от стены
+          this.x = (nextGridX * CELL_SIZE) - playerHalfSize - 1;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.x < 0) {
-          // Влево - останавливаемся у правой границы предыдущей ячейки
-          this.x = currentGridX * CELL_SIZE + 0.01;
+          // Влево - останавливаемся на расстоянии от стены
+          this.x = ((currentGridX) * CELL_SIZE) + playerHalfSize + 1;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y > 0) {
-          // Вниз - останавливаемся у верхней границы следующей ячейки
-          this.y = currentGridY * CELL_SIZE + CELL_SIZE - 0.01;
+          // Вниз - останавливаемся на расстоянии от стены
+          this.y = (nextGridY * CELL_SIZE) - playerHalfSize - 1;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y < 0) {
-          // Вверх - останавливаемся у нижней границы предыдущей ячейки
-          this.y = currentGridY * CELL_SIZE + 0.01;
+          // Вверх - останавливаемся на расстоянии от стены
+          this.y = ((currentGridY) * CELL_SIZE) + playerHalfSize + 1;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         }
       }
