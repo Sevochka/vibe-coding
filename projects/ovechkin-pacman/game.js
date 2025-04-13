@@ -58,48 +58,95 @@ class Player {
   update(deltaTime) {
     // Проверяем следующее направление
     if (this.nextDirection !== DIRECTIONS.NONE) {
-      const nextX = Math.floor((this.x + this.nextDirection.x * CELL_SIZE) / CELL_SIZE);
-      const nextY = Math.floor((this.y + this.nextDirection.y * CELL_SIZE) / CELL_SIZE);
-
-      if (!isWall(nextX, nextY)) {
-        // Убедимся, что игрок находится на целой ячейке перед поворотом для предотвращения ухода в стены
-        const cellAlignedX = Math.round(this.x / CELL_SIZE) * CELL_SIZE;
-        const cellAlignedY = Math.round(this.y / CELL_SIZE) * CELL_SIZE;
-        const distanceX = Math.abs(this.x - cellAlignedX);
-        const distanceY = Math.abs(this.y - cellAlignedY);
+      // Получаем текущие координаты в ячейках
+      const currentGridX = Math.floor(this.x / CELL_SIZE);
+      const currentGridY = Math.floor(this.y / CELL_SIZE);
+      
+      // Вычисляем следующую ячейку в зависимости от желаемого направления
+      const nextGridX = currentGridX + this.nextDirection.x;
+      const nextGridY = currentGridY + this.nextDirection.y;
+      
+      // Проверяем, нет ли стены в направлении движения
+      if (!isWall(nextGridX, nextGridY)) {
+        // Убедимся, что игрок находится близко к центру ячейки перед поворотом
+        // для предотвращения ухода в стены
+        const cellCenterX = currentGridX * CELL_SIZE + CELL_SIZE / 2;
+        const cellCenterY = currentGridY * CELL_SIZE + CELL_SIZE / 2;
         
-        // Если игрок близко к центру ячейки или движется в том же направлении
-        if ((distanceX < this.speed && distanceY < this.speed) ||
-            (this.nextDirection.x !== 0 && this.direction.y !== 0) ||
-            (this.nextDirection.y !== 0 && this.direction.x !== 0)) {
-          // Выравниваем позицию на сетке для предотвращения движения через стены
+        // Расстояние от центра текущей ячейки
+        const distanceFromCenterX = Math.abs(this.x - cellCenterX);
+        const distanceFromCenterY = Math.abs(this.y - cellCenterY);
+        
+        // Если игрок достаточно близко к центру ячейки, можно повернуть
+        const turnThreshold = CELL_SIZE * 0.4; // Увеличиваем порог для лучшей отзывчивости
+        
+        const canTurn = (
+          // Близко к центру по обеим осям
+          (distanceFromCenterX < turnThreshold && distanceFromCenterY < turnThreshold) ||
+          // Или смена с горизонтального на вертикальное движение (и наоборот)
+          (this.nextDirection.x !== 0 && this.direction.y !== 0) ||
+          (this.nextDirection.y !== 0 && this.direction.x !== 0)
+        );
+        
+        if (canTurn) {
+          // При смене направления с горизонтального на вертикальное (и наоборот)
+          // выравниваем персонажа по сетке для предотвращения прохода сквозь стены
           if (this.nextDirection.x !== 0 && this.direction.y !== 0) {
-            this.y = cellAlignedY;
+            // Выравниваем по Y при переходе к горизонтальному движению
+            this.y = Math.round(this.y / CELL_SIZE) * CELL_SIZE;
           } else if (this.nextDirection.y !== 0 && this.direction.x !== 0) {
-            this.x = cellAlignedX;
+            // Выравниваем по X при переходе к вертикальному движению
+            this.x = Math.round(this.x / CELL_SIZE) * CELL_SIZE;
           }
           
+          // Меняем направление
           this.direction = this.nextDirection;
           this.nextDirection = DIRECTIONS.NONE;
+          
+          console.log(`Смена направления на: ${JSON.stringify(this.direction)}`);
         }
       }
     }
 
     // Движение
     if (this.direction !== DIRECTIONS.NONE) {
-      // Рассчитываем следующие координаты для проверки стен
+      // Текущая позиция в ячейках сетки
+      const currentGridX = Math.floor(this.x / CELL_SIZE);
+      const currentGridY = Math.floor(this.y / CELL_SIZE);
+      
+      // Рассчитываем следующие координаты для предварительной проверки стен
       const nextX = this.x + this.direction.x * this.speed;
       const nextY = this.y + this.direction.y * this.speed;
       
-      // Получаем координаты ячейки, в которую мы хотим переместиться
-      const gridNextX = Math.floor(nextX / CELL_SIZE);
-      const gridNextY = Math.floor(nextY / CELL_SIZE);
+      // Получаем координаты следующей ячейки
+      const nextGridX = Math.floor(nextX / CELL_SIZE);
+      const nextGridY = Math.floor(nextY / CELL_SIZE);
       
-      // Если следующая ячейка не стена, то двигаемся
-      if (!isWall(gridNextX, gridNextY)) {
+      // Проверяем, можно ли двигаться в следующую ячейку
+      let canMove = true;
+      
+      // Для движения вправо
+      if (this.direction.x > 0 && nextGridX > currentGridX) {
+        canMove = !isWall(nextGridX, currentGridY);
+      } 
+      // Для движения влево
+      else if (this.direction.x < 0 && nextGridX < currentGridX) {
+        canMove = !isWall(nextGridX, currentGridY);
+      }
+      // Для движения вниз
+      else if (this.direction.y > 0 && nextGridY > currentGridY) {
+        canMove = !isWall(currentGridX, nextGridY);
+      }
+      // Для движения вверх
+      else if (this.direction.y < 0 && nextGridY < currentGridY) {
+        canMove = !isWall(currentGridX, nextGridY);
+      }
+      
+      if (canMove) {
+        // Если можно двигаться, обновляем позицию
         this.x = nextX;
         this.y = nextY;
-
+        
         // Проверка на туннель (переход с одной стороны на другую)
         if (this.x < 0) {
           this.x = canvas.width - CELL_SIZE;
@@ -111,25 +158,29 @@ class Player {
         } else if (this.y >= canvas.height) {
           this.y = 0;
         }
-
+        
         // Анимация рта
         this.mouthOpen += this.mouthDir;
         if (this.mouthOpen >= 0.5 || this.mouthOpen <= 0) {
           this.mouthDir *= -1;
         }
-
+        
         // Сбор шайб
         checkPuckCollection();
       } else {
         // Если перед нами стена, останавливаемся на границе ячейки
         if (this.direction.x > 0) {
-          this.x = gridNextX * CELL_SIZE - 1;
+          // Вправо
+          this.x = currentGridX * CELL_SIZE + (CELL_SIZE - 1);
         } else if (this.direction.x < 0) {
-          this.x = (gridNextX + 1) * CELL_SIZE;
+          // Влево
+          this.x = currentGridX * CELL_SIZE;
         } else if (this.direction.y > 0) {
-          this.y = gridNextY * CELL_SIZE - 1;
+          // Вниз
+          this.y = currentGridY * CELL_SIZE + (CELL_SIZE - 1);
         } else if (this.direction.y < 0) {
-          this.y = (gridNextY + 1) * CELL_SIZE;
+          // Вверх
+          this.y = currentGridY * CELL_SIZE;
         }
       }
     }
@@ -452,14 +503,35 @@ function initLevel(levelIndex) {
 
 function isWall(x, y) {
   try {
+    // Добавляем дополнительные проверки для безопасности
+    if (typeof x !== 'number' || typeof y !== 'number' || isNaN(x) || isNaN(y)) {
+      console.error('Некорректные координаты для проверки стены:', x, y);
+      return true; // Возвращаем true для безопасности
+    }
+    
+    // Округляем координаты до целых чисел для надежности
+    x = Math.floor(x);
+    y = Math.floor(y);
+    
     // Проверяем, находится ли координата в пределах карты
-    if (x < 0 || y < 0 || y >= LEVELS[currentLevel].map.length || x >= LEVELS[currentLevel].map[y].length) {
+    if (x < 0 || y < 0 || 
+        !LEVELS[currentLevel] || 
+        !LEVELS[currentLevel].map || 
+        y >= LEVELS[currentLevel].map.length || 
+        x >= LEVELS[currentLevel].map[y].length) {
       return false; // За пределами карты не считается стеной (для туннелей)
     }
     
     // Проверяем, является ли ячейка стеной
     const cellType = LEVELS[currentLevel].map[y][x];
-    return cellType === CELL_TYPES.WALL;
+    const isWallCell = cellType === CELL_TYPES.WALL;
+    
+    // Добавляем отладочную информацию
+    if (isWallCell) {
+      console.log(`Обнаружена стена на координатах x:${x}, y:${y}`);
+    }
+    
+    return isWallCell;
   } catch (err) {
     console.error('Ошибка при проверке стены:', err, 'x:', x, 'y:', y);
     // В случае ошибки возвращаем true, чтобы игрок не прошел через непроверенную область
