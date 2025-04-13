@@ -564,6 +564,10 @@ function initLevel(levelIndex) {
   pucksCollected = 0;
   ghosts = [];
   
+  // Счетчики для разных типов шайб
+  let regularPuckCount = 0;
+  let powerPuckCount = 0;
+  
   // Позиция игрока
   let playerX = 0;
   let playerY = 0;
@@ -577,7 +581,11 @@ function initLevel(levelIndex) {
     for (let x = 0; x < map[y].length; x++) {
       const cell = map[y][x];
       
-      if (cell === CELL_TYPES.PUCK || cell === CELL_TYPES.POWER_PUCK) {
+      if (cell === CELL_TYPES.PUCK) {
+        regularPuckCount++;
+        pucksCount++;
+      } else if (cell === CELL_TYPES.POWER_PUCK) {
+        powerPuckCount++;
         pucksCount++;
       } else if (cell === CELL_TYPES.PLAYER_START) {
         playerX = x;
@@ -587,6 +595,24 @@ function initLevel(levelIndex) {
         ghostPositions.push({ x, y });
       }
     }
+  }
+  
+  // Рассчитываем очки за каждую шайбу, чтобы сумма была ровно 895
+  if (pucksCount > 0) {
+    // Считаем, что энергетическая шайба стоит в 4 раза больше обычной
+    const powerPuckMultiplier = 4;
+    
+    // Вычисляем, сколько "условных шайб" всего на карте
+    const effectivePuckCount = regularPuckCount + powerPuckCount * powerPuckMultiplier;
+    
+    // Вычисляем базовую стоимость обычной шайбы
+    const baseScore = MAX_SCORE / effectivePuckCount;
+    
+    // Устанавливаем значения в SCORE_VALUES
+    SCORE_VALUES.PUCK = Math.floor(baseScore);
+    SCORE_VALUES.POWER_PUCK = Math.floor(baseScore * powerPuckMultiplier);
+    
+    console.log(`Очки рассчитаны: ${regularPuckCount} обычных шайб по ${SCORE_VALUES.PUCK} очков и ${powerPuckCount} энергетических по ${SCORE_VALUES.POWER_PUCK} очков. Всего ${pucksCount} шайб.`);
   }
   
   // Создаем игрока
@@ -659,7 +685,16 @@ function checkPuckCollection() {
     if (cell === CELL_TYPES.PUCK) {
       // Обычная шайба
       LEVELS[currentLevel].map[gridY][gridX] = CELL_TYPES.EMPTY;
-      score += SCORE_VALUES.PUCK;
+      
+      // Проверяем, является ли эта шайба последней
+      if (pucksCollected + 1 >= pucksCount) {
+        // Если это последняя шайба, устанавливаем счет ровно в 895
+        score = MAX_SCORE;
+      } else {
+        // Иначе добавляем стандартные очки за шайбу
+        score += SCORE_VALUES.PUCK;
+      }
+      
       scoreElement.textContent = score;
       pucksCollected++;
       
@@ -670,7 +705,16 @@ function checkPuckCollection() {
     } else if (cell === CELL_TYPES.POWER_PUCK) {
       // Power-up шайба
       LEVELS[currentLevel].map[gridY][gridX] = CELL_TYPES.EMPTY;
-      score += SCORE_VALUES.POWER_PUCK;
+      
+      // Проверяем, является ли эта шайба последней
+      if (pucksCollected + 1 >= pucksCount) {
+        // Если это последняя шайба, устанавливаем счет ровно в 895
+        score = MAX_SCORE;
+      } else {
+        // Иначе добавляем стандартные очки за энергетическую шайбу
+        score += SCORE_VALUES.POWER_PUCK;
+      }
+      
       scoreElement.textContent = score;
       pucksCollected++;
       
@@ -694,7 +738,13 @@ function checkPlayerGhostCollision(ghost) {
   if (distance < CELL_SIZE * 0.7) {
     if (ghost.state === 'frightened') {
       // Призрак съеден
-      score += SCORE_VALUES.GHOST;
+      // Не позволяем счету превысить 895
+      if (score + SCORE_VALUES.GHOST <= MAX_SCORE) {
+        score += SCORE_VALUES.GHOST;
+      } else {
+        // Ограничиваем счет значением 895
+        score = MAX_SCORE;
+      }
       scoreElement.textContent = score;
       ghost.returnHome();
     } else if (ghost.state === 'normal') {
@@ -763,14 +813,15 @@ function gameOver() {
 }
 
 function levelComplete() {
-  if (currentLevel < LEVELS.length - 1) {
-    currentLevel++;
-    initLevel(currentLevel);
-  } else {
-    // Все уровни пройдены
+  // Когда игрок прошел последний уровень
+  if (currentLevel >= LEVELS.length - 1) {
+    // Все уровни пройдены, счет уже должен быть равен 895
     gameState = GAME_STATES.IDLE;
     startButton.textContent = 'Играть снова';
     startButton.style.display = 'block';
+  } else {
+    currentLevel++;
+    initLevel(currentLevel);
   }
 }
 
@@ -845,7 +896,15 @@ function drawGameOver() {
   ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
   
   ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  
+  // Особое сообщение при достижении 895 очков (рекорд Овечкина)
+  if (score >= MAX_SCORE) {
+    ctx.fillStyle = '#ffc300'; // Золотой цвет для рекорда
+    ctx.fillText(`Поздравляем! Вы повторили рекорд Овечкина: ${score} шайб!`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  } else {
+    ctx.fillStyle = 'white';
+    ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  }
 }
 
 function drawLevelComplete() {
@@ -855,10 +914,21 @@ function drawLevelComplete() {
   ctx.fillStyle = 'white';
   ctx.font = '48px "Sports", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('УРОВЕНЬ ПРОЙДЕН!', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
   
-  ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  // Особое сообщение при достижении 895 очков (рекорд Овечкина)
+  if (score >= MAX_SCORE) {
+    ctx.fillStyle = '#ffc300'; // Золотой цвет для рекорда
+    ctx.fillText('РЕКОРД ОВЕЧКИНА!', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = '24px "Neoris", "Roboto", sans-serif';
+    ctx.fillText(`Вы набрали ${score} шайб - как великий Александр Овечкин!`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  } else {
+    ctx.fillText('УРОВЕНЬ ПРОЙДЕН!', canvas.width / (2 * dpr), canvas.height / (2 * dpr) - 24);
+    
+    ctx.font = '24px "Neoris", "Roboto", sans-serif';
+    ctx.fillText(`Количество собранных шайб: ${score}/${MAX_SCORE}`, canvas.width / (2 * dpr), canvas.height / (2 * dpr) + 24);
+  }
 }
 
 // Главный цикл игры

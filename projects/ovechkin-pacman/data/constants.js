@@ -55,9 +55,9 @@ const CELL_TYPES = {
 
 // Очки
 const SCORE_VALUES = {
-  PUCK: 10,
+  PUCK: 8,
   POWER_PUCK: 50,
-  GHOST: 200
+  GHOST: 100
 };
 
 // Длительность эффекта power-up (в миллисекундах)
