@@ -13,7 +13,7 @@ const GHOST_COLORS = [
 ];
 
 // Изображения
-const OVI_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/b/01/a0446c96262bf627643979d401805.png';
+const OVI_IMAGE_SRC = 'https://dumpster.cdn.sports.ru/c/e2/c5e4c4a19d8649fd87799a9b84ad6.png';
 
 // Направления
 const DIRECTIONS = {

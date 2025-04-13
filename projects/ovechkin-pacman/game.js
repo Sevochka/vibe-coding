@@ -62,22 +62,43 @@ class Player {
       const nextY = Math.floor((this.y + this.nextDirection.y * CELL_SIZE) / CELL_SIZE);
 
       if (!isWall(nextX, nextY)) {
-        this.direction = this.nextDirection;
-        this.nextDirection = DIRECTIONS.NONE;
+        // Убедимся, что игрок находится на целой ячейке перед поворотом для предотвращения ухода в стены
+        const cellAlignedX = Math.round(this.x / CELL_SIZE) * CELL_SIZE;
+        const cellAlignedY = Math.round(this.y / CELL_SIZE) * CELL_SIZE;
+        const distanceX = Math.abs(this.x - cellAlignedX);
+        const distanceY = Math.abs(this.y - cellAlignedY);
+        
+        // Если игрок близко к центру ячейки или движется в том же направлении
+        if ((distanceX < this.speed && distanceY < this.speed) ||
+            (this.nextDirection.x !== 0 && this.direction.y !== 0) ||
+            (this.nextDirection.y !== 0 && this.direction.x !== 0)) {
+          // Выравниваем позицию на сетке для предотвращения движения через стены
+          if (this.nextDirection.x !== 0 && this.direction.y !== 0) {
+            this.y = cellAlignedY;
+          } else if (this.nextDirection.y !== 0 && this.direction.x !== 0) {
+            this.x = cellAlignedX;
+          }
+          
+          this.direction = this.nextDirection;
+          this.nextDirection = DIRECTIONS.NONE;
+        }
       }
     }
 
     // Движение
     if (this.direction !== DIRECTIONS.NONE) {
-      this.targetX = this.x + this.direction.x * this.speed;
-      this.targetY = this.y + this.direction.y * this.speed;
-
-      const gridX = Math.floor(this.targetX / CELL_SIZE);
-      const gridY = Math.floor(this.targetY / CELL_SIZE);
-
-      if (!isWall(gridX, gridY)) {
-        this.x = this.targetX;
-        this.y = this.targetY;
+      // Рассчитываем следующие координаты для проверки стен
+      const nextX = this.x + this.direction.x * this.speed;
+      const nextY = this.y + this.direction.y * this.speed;
+      
+      // Получаем координаты ячейки, в которую мы хотим переместиться
+      const gridNextX = Math.floor(nextX / CELL_SIZE);
+      const gridNextY = Math.floor(nextY / CELL_SIZE);
+      
+      // Если следующая ячейка не стена, то двигаемся
+      if (!isWall(gridNextX, gridNextY)) {
+        this.x = nextX;
+        this.y = nextY;
 
         // Проверка на туннель (переход с одной стороны на другую)
         if (this.x < 0) {
@@ -99,6 +120,17 @@ class Player {
 
         // Сбор шайб
         checkPuckCollection();
+      } else {
+        // Если перед нами стена, останавливаемся на границе ячейки
+        if (this.direction.x > 0) {
+          this.x = gridNextX * CELL_SIZE - 1;
+        } else if (this.direction.x < 0) {
+          this.x = (gridNextX + 1) * CELL_SIZE;
+        } else if (this.direction.y > 0) {
+          this.y = gridNextY * CELL_SIZE - 1;
+        } else if (this.direction.y < 0) {
+          this.y = (gridNextY + 1) * CELL_SIZE;
+        }
       }
     }
   }
@@ -120,14 +152,31 @@ class Player {
     ctx.translate(centerX, centerY);
     ctx.rotate(angle);
     
-    // Рисуем картинку Овечкина
-    ctx.drawImage(
-      playerImage, 
-      -this.size / 2, 
-      -this.size / 2, 
-      this.size, 
-      this.size
-    );
+    try {
+      // Рисуем картинку Овечкина
+      if (playerImage.complete) {
+        ctx.drawImage(
+          playerImage, 
+          -this.size / 2, 
+          -this.size / 2, 
+          this.size, 
+          this.size
+        );
+      } else {
+        // Если изображение не загружено, рисуем круг
+        ctx.fillStyle = '#00c78b';
+        ctx.beginPath();
+        ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } catch (err) {
+      console.error('Ошибка при отрисовке игрока:', err);
+      // Рисуем запасной вариант в случае ошибки
+      ctx.fillStyle = '#00c78b';
+      ctx.beginPath();
+      ctx.arc(0, 0, this.size / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
     
     ctx.restore();
   }
@@ -402,12 +451,20 @@ function initLevel(levelIndex) {
 }
 
 function isWall(x, y) {
-  // Проверяем, находится ли координата в пределах карты
-  if (x < 0 || y < 0 || y >= LEVELS[currentLevel].map.length || x >= LEVELS[currentLevel].map[y].length) {
-    return false; // За пределами карты не считается стеной (для туннелей)
+  try {
+    // Проверяем, находится ли координата в пределах карты
+    if (x < 0 || y < 0 || y >= LEVELS[currentLevel].map.length || x >= LEVELS[currentLevel].map[y].length) {
+      return false; // За пределами карты не считается стеной (для туннелей)
+    }
+    
+    // Проверяем, является ли ячейка стеной
+    const cellType = LEVELS[currentLevel].map[y][x];
+    return cellType === CELL_TYPES.WALL;
+  } catch (err) {
+    console.error('Ошибка при проверке стены:', err, 'x:', x, 'y:', y);
+    // В случае ошибки возвращаем true, чтобы игрок не прошел через непроверенную область
+    return true;
   }
-  
-  return LEVELS[currentLevel].map[y][x] === CELL_TYPES.WALL;
 }
 
 function checkPuckCollection() {
@@ -625,6 +682,24 @@ function gameLoop(timestamp) {
     for (const ghost of ghosts) {
       ghost.draw();
     }
+  } else if (gameState === GAME_STATES.PAUSED) {
+    // В режиме паузы отрисовываем текущее состояние игры
+    drawMap();
+    player.draw();
+    for (const ghost of ghosts) {
+      ghost.draw();
+    }
+    
+    // Отображаем сообщение о паузе
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = 'white';
+    ctx.font = '36px "Sports", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('ПАУЗА', canvas.width / 2, canvas.height / 2);
+    ctx.font = '18px "Neoris", "Roboto", sans-serif';
+    ctx.fillText('Нажмите пробел для продолжения', canvas.width / 2, canvas.height / 2 + 40);
   } else if (gameState === GAME_STATES.GAME_OVER) {
     // Отрисовываем карту
     drawMap();
@@ -642,8 +717,8 @@ function gameLoop(timestamp) {
     drawLevelComplete();
   }
   
-  // Продолжаем цикл, если игра не остановлена
-  if (gameState !== GAME_STATES.IDLE) {
+  // Продолжаем цикл, если игра не остановлена или не на паузе
+  if (gameState === GAME_STATES.PLAYING || gameState === GAME_STATES.LEVEL_COMPLETE || gameState === GAME_STATES.GAME_OVER) {
     requestAnimationFrame(gameLoop);
   }
 }
@@ -743,59 +818,83 @@ function handleKeyDown(e) {
 
 // Инициализация обработчиков событий
 function initEventListeners() {
-  // Клавиатура - используем и keydown, и keyup для лучшей отзывчивости
+  // Клавиатура - используем и keydown
   window.addEventListener('keydown', handleKeyDown);
+  
+  // Добавляем обработчик для нажатия на пробел (пауза)
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.key === ' ') {
+      if (gameState === GAME_STATES.PLAYING) {
+        gameState = GAME_STATES.PAUSED;
+        console.log('Игра на паузе');
+      } else if (gameState === GAME_STATES.PAUSED) {
+        gameState = GAME_STATES.PLAYING;
+        requestAnimationFrame(gameLoop);
+        console.log('Игра продолжена');
+      }
+      e.preventDefault();
+    }
+  });
   
   // Кнопка запуска игры
   startButton.addEventListener('click', initGame);
   
+  // Отображаем мобильное управление на сенсорных устройствах
+  if ('ontouchstart' in window || navigator.maxTouchPoints) {
+    mobileControls.style.display = 'flex';
+  }
+  
   // Мобильные кнопки управления - используем как touchstart, так и mousedown
-  upBtn.addEventListener('touchstart', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.UP;
-    }
+  const setupDirectionButton = (btn, direction) => {
+    const setDirection = () => {
+      if (gameState === GAME_STATES.PLAYING && player) {
+        player.nextDirection = direction;
+      }
+    };
+    
+    btn.addEventListener('touchstart', setDirection);
+    btn.addEventListener('mousedown', setDirection);
+    
+    // Предотвращаем двойное срабатывание события на мобильных устройствах
+    btn.addEventListener('touchend', (e) => e.preventDefault());
+  };
+  
+  setupDirectionButton(upBtn, DIRECTIONS.UP);
+  setupDirectionButton(downBtn, DIRECTIONS.DOWN);
+  setupDirectionButton(leftBtn, DIRECTIONS.LEFT);
+  setupDirectionButton(rightBtn, DIRECTIONS.RIGHT);
+  
+  // Добавляем жесты свайпа для мобильных устройств
+  let touchStartX = 0;
+  let touchStartY = 0;
+  
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
   });
   
-  downBtn.addEventListener('touchstart', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.DOWN;
-    }
-  });
-  
-  leftBtn.addEventListener('touchstart', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.LEFT;
-    }
-  });
-  
-  rightBtn.addEventListener('touchstart', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.RIGHT;
-    }
-  });
-  
-  // Обработчики для обычных кликов (для десктопов)
-  upBtn.addEventListener('mousedown', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.UP;
-    }
-  });
-  
-  downBtn.addEventListener('mousedown', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.DOWN;
-    }
-  });
-  
-  leftBtn.addEventListener('mousedown', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.LEFT;
-    }
-  });
-  
-  rightBtn.addEventListener('mousedown', () => {
-    if (gameState === GAME_STATES.PLAYING) {
-      player.nextDirection = DIRECTIONS.RIGHT;
+  document.addEventListener('touchmove', (e) => {
+    if (gameState !== GAME_STATES.PLAYING || !player) return;
+    
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    
+    const diffX = touchX - touchStartX;
+    const diffY = touchY - touchStartY;
+    
+    // Если свайп был достаточно длинным
+    if (Math.abs(diffX) > 30 || Math.abs(diffY) > 30) {
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Горизонтальный свайп
+        player.nextDirection = diffX > 0 ? DIRECTIONS.RIGHT : DIRECTIONS.LEFT;
+      } else {
+        // Вертикальный свайп
+        player.nextDirection = diffY > 0 ? DIRECTIONS.DOWN : DIRECTIONS.UP;
+      }
+      
+      // Обновляем точку начала свайпа
+      touchStartX = touchX;
+      touchStartY = touchY;
     }
   });
 }
