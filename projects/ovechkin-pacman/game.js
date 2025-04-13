@@ -25,7 +25,20 @@ let ghosts = [];
 let pucksCount = 0;
 let pucksCollected = 0;
 let playerImage = new Image();
+
+// Добавляем обработку ошибок для изображения
+playerImage.onload = function() {
+  console.log('Изображение Овечкина загружено успешно');
+};
+
+playerImage.onerror = function() {
+  console.error('Ошибка загрузки изображения Овечкина:', OVI_IMAGE_SRC);
+  // Устанавливаем запасной источник, если основной не загрузился
+  this.src = './img/backup-ovi.png';
+};
+
 playerImage.src = OVI_IMAGE_SRC;
+console.log('Попытка загрузить изображение:', OVI_IMAGE_SRC);
 
 // Класс для игрока
 class Player {
@@ -660,46 +673,83 @@ function initGame() {
 
 // Обработчики ввода
 function handleKeyDown(e) {
-  if (gameState !== GAME_STATES.PLAYING) return;
+  console.log('Нажата клавиша:', e.key, 'Код:', e.keyCode); // Диагностика
+  
+  if (gameState !== GAME_STATES.PLAYING) {
+    console.log('Игра не в режиме PLAYING, состояние:', gameState);
+    return;
+  }
+  
+  // Проверяем, что игрок существует
+  if (!player) {
+    console.error('Ошибка: объект игрока не инициализирован!');
+    return;
+  }
   
   // Задаем следующее направление в зависимости от нажатой клавиши
   switch (e.key) {
     case 'ArrowUp':
+    case 'Up': // Для старых браузеров
     case 'w':
     case 'W':
       player.nextDirection = DIRECTIONS.UP;
       e.preventDefault();
       break;
     case 'ArrowDown':
+    case 'Down': // Для старых браузеров
     case 's':
     case 'S':
       player.nextDirection = DIRECTIONS.DOWN;
       e.preventDefault();
       break;
     case 'ArrowLeft':
+    case 'Left': // Для старых браузеров
     case 'a':
     case 'A':
       player.nextDirection = DIRECTIONS.LEFT;
       e.preventDefault();
       break;
     case 'ArrowRight':
+    case 'Right': // Для старых браузеров
     case 'd':
     case 'D':
       player.nextDirection = DIRECTIONS.RIGHT;
       e.preventDefault();
       break;
   }
+  
+  // Проверка на keyCode для кроссбраузерности
+  if (!e.key) {
+    switch (e.keyCode) {
+      case 38: // Стрелка вверх
+        player.nextDirection = DIRECTIONS.UP;
+        e.preventDefault();
+        break;
+      case 40: // Стрелка вниз
+        player.nextDirection = DIRECTIONS.DOWN;
+        e.preventDefault();
+        break;
+      case 37: // Стрелка влево
+        player.nextDirection = DIRECTIONS.LEFT;
+        e.preventDefault();
+        break;
+      case 39: // Стрелка вправо
+        player.nextDirection = DIRECTIONS.RIGHT;
+        e.preventDefault();
+        break;
+    }
+  }
 }
 
 // Инициализация обработчиков событий
 function initEventListeners() {
-  // Клавиатура
+  // Клавиатура - используем и keydown, и keyup для лучшей отзывчивости
   window.addEventListener('keydown', handleKeyDown);
   
   // Кнопка запуска игры
   startButton.addEventListener('click', initGame);
   
-  // Мобильные кнопки управления
+  // Мобильные кнопки управления - используем как touchstart, так и mousedown
   upBtn.addEventListener('touchstart', () => {
     if (gameState === GAME_STATES.PLAYING) {
       player.nextDirection = DIRECTIONS.UP;
@@ -724,26 +774,26 @@ function initEventListeners() {
     }
   });
   
-  // Также добавляем обработчики для обычных кликов (для десктопов)
-  upBtn.addEventListener('click', () => {
+  // Обработчики для обычных кликов (для десктопов)
+  upBtn.addEventListener('mousedown', () => {
     if (gameState === GAME_STATES.PLAYING) {
       player.nextDirection = DIRECTIONS.UP;
     }
   });
   
-  downBtn.addEventListener('click', () => {
+  downBtn.addEventListener('mousedown', () => {
     if (gameState === GAME_STATES.PLAYING) {
       player.nextDirection = DIRECTIONS.DOWN;
     }
   });
   
-  leftBtn.addEventListener('click', () => {
+  leftBtn.addEventListener('mousedown', () => {
     if (gameState === GAME_STATES.PLAYING) {
       player.nextDirection = DIRECTIONS.LEFT;
     }
   });
   
-  rightBtn.addEventListener('click', () => {
+  rightBtn.addEventListener('mousedown', () => {
     if (gameState === GAME_STATES.PLAYING) {
       player.nextDirection = DIRECTIONS.RIGHT;
     }
@@ -752,45 +802,85 @@ function initEventListeners() {
 
 // Проверка загрузки всех ресурсов
 function waitForResources(callback) {
+  console.log('Проверка загрузки ресурсов...');
+  
+  // Если изображение уже загружено
   if (playerImage.complete) {
+    console.log('Изображение уже загружено');
     callback();
   } else {
-    playerImage.onload = callback;
+    console.log('Ожидание загрузки изображения...');
+    // Если не загружено, ждем события загрузки
+    playerImage.onload = function() {
+      console.log('Изображение загружено во время ожидания');
+      callback();
+    };
+    
+    // Добавляем таймаут для случаев, когда изображение не загружается
+    setTimeout(function() {
+      if (!playerImage.complete) {
+        console.warn('Превышено время ожидания загрузки изображения, продолжаем без него');
+        callback();
+      }
+    }, 5000);
   }
 }
 
 // Инициализация после загрузки страницы
 window.onload = function() {
-  // Ждем загрузки всех ресурсов
-  waitForResources(() => {
-    // Инициализируем обработчики событий
-    initEventListeners();
-    
-    // Отображаем кнопку старта
-    startButton.style.display = 'block';
-    
-    // Отрисовываем начальный экран
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.fillStyle = '#00c78b';
-    ctx.font = '48px "Sports", sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('ОВЕЧКИН-ПАКМЕН', canvas.width / 2, canvas.height / 2 - 50);
-    
-    ctx.font = '24px "Neoris", "Roboto", sans-serif';
-    ctx.fillStyle = 'white';
-    ctx.fillText('Нажмите кнопку "Начать игру"', canvas.width / 2, canvas.height / 2 + 20);
-    
-    // Небольшая анимация для Овечкина
-    const size = CELL_SIZE * 3;
-    ctx.drawImage(
-      playerImage, 
-      canvas.width / 2 - size / 2, 
-      canvas.height / 2 + 40, 
-      size, 
-      size
-    );
-  });
+  console.log('Страница загружена, инициализация игры...');
+  
+  try {
+    // Ждем загрузки всех ресурсов
+    waitForResources(() => {
+      try {
+        // Инициализируем обработчики событий
+        initEventListeners();
+        
+        // Отображаем кнопку старта
+        startButton.style.display = 'block';
+        
+        // Отрисовываем начальный экран
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#00c78b';
+        ctx.font = '48px "Sports", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('ОВЕЧКИН-ПАКМЕН', canvas.width / 2, canvas.height / 2 - 50);
+        
+        ctx.font = '24px "Neoris", "Roboto", sans-serif';
+        ctx.fillStyle = 'white';
+        ctx.fillText('Нажмите кнопку "Начать игру"', canvas.width / 2, canvas.height / 2 + 20);
+        
+        // Небольшая анимация для Овечкина
+        if (playerImage.complete) {
+          const size = CELL_SIZE * 3;
+          ctx.drawImage(
+            playerImage, 
+            canvas.width / 2 - size / 2, 
+            canvas.height / 2 + 40, 
+            size, 
+            size
+          );
+        } else {
+          console.warn('Невозможно отобразить Овечкина, изображение не загружено');
+          ctx.fillStyle = 'white';
+          ctx.font = '16px "Neoris", "Roboto", sans-serif';
+          ctx.fillText('Изображение загружается...', canvas.width / 2, canvas.height / 2 + 70);
+        }
+        
+        console.log('Инициализация завершена, игра готова к запуску');
+      } catch (err) {
+        console.error('Ошибка инициализации игры:', err);
+        // Отображаем сообщение об ошибке на экране
+        ctx.fillStyle = 'red';
+        ctx.font = '20px "Neoris", "Roboto", sans-serif';
+        ctx.fillText('Ошибка инициализации игры', canvas.width / 2, canvas.height / 2 + 100);
+      }
+    });
+  } catch (err) {
+    console.error('Критическая ошибка при загрузке игры:', err);
+  }
 }; 
