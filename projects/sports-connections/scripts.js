@@ -354,13 +354,30 @@ function showMessage(text) {
     overlay.classList.remove('hidden');
     
     // Обеспечиваем корректную работу кнопки закрытия сообщения
-    closeMessage.addEventListener('click', hideMessage, { once: true });
+    // Удаляем предыдущие обработчики, если они есть
+    closeMessage.removeEventListener('click', hideMessage);
+    
+    // Добавляем новый обработчик
+    closeMessage.addEventListener('click', hideMessage);
+    
+    // Также позволяем закрыть сообщение при нажатии клавиши Escape
+    document.addEventListener('keydown', handleEscapeKey);
+}
+
+// Обработчик для закрытия сообщения по клавише Escape
+function handleEscapeKey(e) {
+    if (e.key === 'Escape' && !messageBox.classList.contains('hidden')) {
+        hideMessage();
+    }
 }
 
 // Скрытие сообщения
 function hideMessage() {
     messageBox.classList.add('hidden');
     overlay.classList.add('hidden');
+    
+    // Удаляем обработчик Escape
+    document.removeEventListener('keydown', handleEscapeKey);
     
     // Сбрасываем выбранные карточки после сообщения об ошибке
     document.querySelectorAll('.card.selected').forEach(card => {
