@@ -53,6 +53,9 @@ class Player {
     this.size = CELL_SIZE * 0.9;
     this.mouthOpen = 0;
     this.mouthDir = 0.1;
+    // Центрируем персонажа в ячейке
+    this.centerOffsetX = (CELL_SIZE - this.size) / 2;
+    this.centerOffsetY = (CELL_SIZE - this.size) / 2;
   }
 
   update(deltaTime) {
@@ -192,19 +195,19 @@ class Player {
         // Если перед нами стена, останавливаемся на безопасном расстоянии
         if (this.direction.x > 0) {
           // Вправо - останавливаемся на расстоянии от стены
-          this.x = (nextGridX * CELL_SIZE) - playerHalfSize - 1;
+          this.x = nextGridX * CELL_SIZE - this.size - this.centerOffsetX;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.x < 0) {
           // Влево - останавливаемся на расстоянии от стены
-          this.x = ((currentGridX) * CELL_SIZE) + playerHalfSize + 1;
+          this.x = currentGridX * CELL_SIZE + this.centerOffsetX;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y > 0) {
           // Вниз - останавливаемся на расстоянии от стены
-          this.y = (nextGridY * CELL_SIZE) - playerHalfSize - 1;
+          this.y = nextGridY * CELL_SIZE - this.size - this.centerOffsetY;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         } else if (this.direction.y < 0) {
           // Вверх - останавливаемся на расстоянии от стены
-          this.y = ((currentGridY) * CELL_SIZE) + playerHalfSize + 1;
+          this.y = currentGridY * CELL_SIZE + this.centerOffsetY;
           this.direction = DIRECTIONS.NONE; // Останавливаем движение
         }
       }
@@ -221,9 +224,9 @@ class Player {
     else if (this.direction === DIRECTIONS.LEFT) angle = Math.PI;
     else if (this.direction === DIRECTIONS.UP) angle = Math.PI * 3 / 2;
     
-    // Центр игрока
-    const centerX = this.x + CELL_SIZE / 2;
-    const centerY = this.y + CELL_SIZE / 2;
+    // Рассчитываем точную позицию центра с учетом смещения
+    const centerX = this.x + this.size / 2 + this.centerOffsetX;
+    const centerY = this.y + this.size / 2 + this.centerOffsetY;
     
     ctx.translate(centerX, centerY);
     ctx.rotate(angle);
