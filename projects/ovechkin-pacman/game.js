@@ -370,20 +370,49 @@ class Ghost {
       this.chooseDirection();
     }
 
-    // Двигаемся в выбранном направлении
-    this.x += this.direction.x * this.speed;
-    this.y += this.direction.y * this.speed;
+    // Расчитываем следующую позицию с учетом выбранного направления
+    const nextX = this.x + this.direction.x * this.speed;
+    const nextY = this.y + this.direction.y * this.speed;
     
-    // Проверка на туннель
-    if (this.x < 0) {
-      this.x = canvas.width - CELL_SIZE;
-    } else if (this.x >= canvas.width) {
-      this.x = 0;
+    // Текущие координаты в сетке
+    const currentGridX = Math.floor(this.x / CELL_SIZE);
+    const currentGridY = Math.floor(this.y / CELL_SIZE);
+    
+    // Координаты следующей позиции в сетке
+    const nextGridX = Math.floor(nextX / CELL_SIZE);
+    const nextGridY = Math.floor(nextY / CELL_SIZE);
+    
+    // Проверяем, нет ли стены на пути
+    let canMove = true;
+    
+    // Проверяем столкновение со стеной только если переходим в другую ячейку
+    if ((this.direction.x > 0 && nextGridX > currentGridX) || 
+        (this.direction.x < 0 && nextGridX < currentGridX)) {
+        canMove = !isWall(nextGridX, currentGridY);
+    } else if ((this.direction.y > 0 && nextGridY > currentGridY) ||
+               (this.direction.y < 0 && nextGridY < currentGridY)) {
+        canMove = !isWall(currentGridX, nextGridY);
     }
-    if (this.y < 0) {
-      this.y = canvas.height - CELL_SIZE;
-    } else if (this.y >= canvas.height) {
-      this.y = 0;
+    
+    if (canMove) {
+        // Если нет стены, обновляем позицию
+        this.x = nextX;
+        this.y = nextY;
+        
+        // Проверка на туннель (переход с одной стороны на другую)
+        if (this.x < 0) {
+          this.x = canvas.width - CELL_SIZE;
+        } else if (this.x >= canvas.width) {
+          this.x = 0;
+        }
+        if (this.y < 0) {
+          this.y = canvas.height - CELL_SIZE;
+        } else if (this.y >= canvas.height) {
+          this.y = 0;
+        }
+    } else {
+        // Если есть стена, меняем направление
+        this.chooseDirection();
     }
     
     // Обновляем направление глаз
