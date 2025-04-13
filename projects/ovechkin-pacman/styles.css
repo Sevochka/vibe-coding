@@ -92,6 +92,7 @@ h1 {
 }
 
 .score-label, .lives-label {
+  color: var(--sports-green-900);
   margin-right: 5px;
 }
 

@@ -872,7 +872,7 @@ function gameLoop(timestamp) {
   lastFrameTime = timestamp;
   
   // Очищаем экран и устанавливаем белый фон
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = GAME_FIELD_COLOR;
   ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
   
   // Обновляем и отрисовываем в зависимости от состояния игры

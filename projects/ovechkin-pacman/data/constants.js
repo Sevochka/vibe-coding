@@ -2,7 +2,7 @@
 const CELL_SIZE = 30;
 const GRID_WIDTH = 22;
 const GRID_HEIGHT = 22;
-const WALL_COLOR = '#1f6650';
+const WALL_COLOR = '#00c78b';
 const PUCK_COLOR = '#00a0f0';
 const POWER_PUCK_COLOR = '#ffc300';
 const GHOST_COLORS = [
@@ -11,6 +11,7 @@ const GHOST_COLORS = [
   '#00a0f0', // голубой
   '#964ba0'  // фиолетовый
 ];
+const GAME_FIELD_COLOR = 'white';
 
 // Размеры моделей
 const MODEL_SIZE = CELL_SIZE * 0.8; // 80% от размера ячейки
