@@ -352,12 +352,22 @@ function showMessage(text) {
     messageText.textContent = text;
     messageBox.classList.remove('hidden');
     overlay.classList.remove('hidden');
+    
+    // Обеспечиваем корректную работу кнопки закрытия сообщения
+    closeMessage.addEventListener('click', hideMessage, { once: true });
 }
 
 // Скрытие сообщения
 function hideMessage() {
     messageBox.classList.add('hidden');
     overlay.classList.add('hidden');
+    
+    // Сбрасываем выбранные карточки после сообщения об ошибке
+    document.querySelectorAll('.card.selected').forEach(card => {
+        card.classList.remove('selected');
+    });
+    selectedCards = [];
+    submitButton.disabled = true;
 }
 
 // Получение случайного сообщения из категории
