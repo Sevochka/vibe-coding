@@ -1,0 +1,548 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+  /* Branded Colors for Sports */
+  --sports-primary-color: #00c78b;
+  --sports-primary-color-hover: #21a67e;
+  --sports-primary-light-color-hover: #d8f7e5;
+  --sports-green-850: #1f6650;
+  --sports-green-900: #003d2b;
+  --sports-green-50: #d8f7e5;
+  --sports-yellow-A700: #ffc300;
+  --sports-yellow-100: #f2f2f0;
+  --sports-yellow-50: #f9f9f7;
+  --sports-red-a700: #ff003c;
+  --sports-red-50: #ffe7eb;
+  --sports-orange-900: #d26e00;
+  --sports-orange-50: #fff1d9;
+  --sports-cyan-A700: #00a0f0;
+  --sports-cyan-900: #006496;
+  --sports-blue-A700: #0040fc;
+  --sports-blue-A400: #235bff;
+  --sports-blue-50: #dfe7ff;
+  --sports-purple-500: #964ba0;
+  --sports-purple-50: #aaa9aa;
+  --sports-black: #000;
+  --sports-grey-1050: #1a1a1a;
+  --sports-grey-1000: #171717;
+  --sports-grey-900: #222;
+  --sports-grey-850: #323232;
+  --sports-grey-800: #4a4a4a;
+  --sports-grey-700: #4c4c4c;
+  --sports-grey-600: #757575;
+  --sports-grey-500: #7f7f7f;
+  --sports-grey-400: #9b9b9b;
+  --sports-grey-100: #d8d8d8;
+  --sports-grey-50: #efefef;
+
+  /* UI elements and typography */
+  --ui-bg: #fff;
+  --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+  --ui-font-family-heading: "Sports", sans-serif;
+  --ui-font-family-heading-primary: "Sports", sans-serif;
+  --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+
+  /* Game-specific variables */
+  --letter-correct: var(--sports-primary-color);
+  --letter-correct-bg: var(--sports-green-50);
+  --letter-present: var(--sports-yellow-A700);
+  --letter-present-bg: var(--sports-orange-50);
+  --letter-absent: var(--sports-grey-600);
+  --letter-absent-bg: var(--sports-grey-100);
+  --keyboard-bg: var(--sports-grey-50);
+  --stadium-bg: #3a7e15;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  font-family: var(--ui-font-family-body);
+  background-color: var(--ui-bg);
+  color: var(--sports-black);
+  height: 100%;
+  max-width: 660px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--ui-font-family-heading);
+  font-weight: bold;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid var(--sports-grey-100);
+}
+
+.logo {
+  height: 40px;
+}
+
+.game-title {
+  font-size: 1.5rem;
+  color: var(--sports-primary-color);
+  text-align: center;
+  flex-grow: 1;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--sports-grey-600);
+}
+
+.icon-button:hover {
+  color: var(--sports-primary-color);
+}
+
+.game-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.stadium {
+  background-color: var(--stadium-bg);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.scoreboard {
+  background-color: var(--sports-black);
+  color: #fff;
+  border-radius: 5px;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.team-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-label {
+  font-size: 0.8rem;
+  color: var(--sports-grey-400);
+}
+
+.score-value {
+  font-size: 1.5rem;
+  font-family: var(--ui-font-family-heading);
+  color: var(--sports-primary-color);
+}
+
+.vs {
+  font-size: 1.2rem;
+  color: var(--sports-grey-400);
+}
+
+.game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+}
+
+.current-level {
+  font-weight: bold;
+  color: var(--sports-primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.player-status {
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--sports-grey-100);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--sports-primary-color);
+  transition: width 0.3s ease;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.letter-box {
+  width: 50px;
+  height: 50px;
+  border: 2px solid var(--sports-grey-100);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.letter-correct {
+  background-color: var(--letter-correct-bg);
+  border-color: var(--letter-correct);
+  color: var(--letter-correct);
+}
+
+.letter-present {
+  background-color: var(--letter-present-bg);
+  border-color: var(--letter-present);
+  color: var(--letter-present);
+}
+
+.letter-absent {
+  background-color: var(--letter-absent-bg);
+  border-color: var(--letter-absent);
+  color: var(--letter-absent);
+}
+
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+.key {
+  background-color: var(--keyboard-bg);
+  border: 1px solid var(--sports-grey-100);
+  border-radius: 4px;
+  min-width: 30px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.1s ease;
+}
+
+.key:hover {
+  background-color: var(--sports-grey-100);
+}
+
+.key.wide {
+  min-width: 60px;
+}
+
+.key-correct {
+  background-color: var(--letter-correct-bg);
+  border-color: var(--letter-correct);
+  color: var(--letter-correct);
+}
+
+.key-present {
+  background-color: var(--letter-present-bg);
+  border-color: var(--letter-present);
+  color: var(--letter-present);
+}
+
+.key-absent {
+  background-color: var(--letter-absent-bg);
+  border-color: var(--letter-absent);
+  color: var(--letter-absent);
+}
+
+.hint-container {
+  background-color: var(--sports-grey-50);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.tactical-hint {
+  font-style: italic;
+  color: var(--sports-grey-800);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background-color: var(--ui-bg);
+  border-radius: 10px;
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  color: var(--sports-primary-color);
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--sports-grey-600);
+}
+
+.button {
+  padding: 0.5rem 1rem;
+  background-color: var(--sports-primary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--sports-primary-color-hover);
+}
+
+.button.secondary {
+  background-color: var(--sports-grey-100);
+  color: var(--sports-grey-800);
+}
+
+.button.secondary:hover {
+  background-color: var(--sports-grey-400);
+  color: white;
+}
+
+.achievement {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  background-color: var(--sports-grey-50);
+}
+
+.achievement-icon {
+  font-size: 2rem;
+}
+
+.achievement-info {
+  flex-grow: 1;
+}
+
+.achievement-locked {
+  opacity: 0.5;
+}
+
+.achievement-name {
+  font-weight: bold;
+  color: var(--sports-grey-900);
+}
+
+.achievement-description {
+  font-size: 0.8rem;
+  color: var(--sports-grey-600);
+}
+
+.theme-day {
+  background-color: var(--sports-yellow-50);
+  border-left: 4px solid var(--sports-yellow-A700);
+  padding: 0.5rem;
+  margin: 1rem 0;
+}
+
+.theme-title {
+  font-weight: bold;
+  color: var(--sports-orange-900);
+}
+
+.theme-description {
+  font-size: 0.9rem;
+  color: var(--sports-grey-600);
+}
+
+.multiplayer-section {
+  border-top: 1px solid var(--sports-grey-100);
+  margin-top: 2rem;
+  padding-top: 1rem;
+}
+
+.player-turn {
+  background-color: var(--sports-blue-50);
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.current-player {
+  font-weight: bold;
+  color: var(--sports-blue-A400);
+}
+
+/* Animations */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes goal {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(-50px) rotate(10deg); opacity: 0; }
+}
+
+@keyframes save {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-30px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(30px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.pop {
+  animation: pop 0.3s ease-in-out;
+}
+
+.goal-animation {
+  animation: goal 1s ease-out;
+}
+
+.save-animation {
+  animation: save 1s ease-in-out;
+}
+
+/* Ball animation */
+.ball {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="white" stroke="black" stroke-width="2"/><path d="M50 5 L70 30 L60 70 L30 60 L20 30 Z" fill="black" fill-opacity="0.15"/></svg>');
+  background-size: contain;
+  transition: all 0.5s ease;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--sports-primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+  .letter-box {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .key {
+    min-width: 25px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  
+  .key.wide {
+    min-width: 50px;
+  }
+  
+  .stadium {
+    height: 150px;
+  }
+} 
