@@ -177,16 +177,16 @@ class Player {
         // Если перед нами стена, останавливаемся на границе ячейки
         if (this.direction.x > 0) {
           // Вправо
-          this.x = currentGridX * CELL_SIZE + (CELL_SIZE - 1);
+          this.x = currentGridX * CELL_SIZE;
         } else if (this.direction.x < 0) {
           // Влево
-          this.x = currentGridX * CELL_SIZE;
+          this.x = (currentGridX + 1) * CELL_SIZE - 1;
         } else if (this.direction.y > 0) {
           // Вниз
-          this.y = currentGridY * CELL_SIZE + (CELL_SIZE - 1);
+          this.y = currentGridY * CELL_SIZE;
         } else if (this.direction.y < 0) {
           // Вверх
-          this.y = currentGridY * CELL_SIZE;
+          this.y = (currentGridY + 1) * CELL_SIZE - 1;
         }
       }
     }
