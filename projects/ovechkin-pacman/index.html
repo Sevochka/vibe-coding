@@ -19,8 +19,16 @@
     
     <div class="game-container">
       <div class="game-info">
-        <div class="score">Счёт: <span id="score">0</span></div>
-        <div class="lives">Жизни: <span id="lives">3</span></div>
+        <div class="game-stats">
+          <div class="score-container">
+            <span class="score-label">Шайб забил Овечкин:</span>
+            <span id="score">0</span>/<span id="maxScore">895</span>
+          </div>
+          <div class="lives-container">
+            <span class="lives-label">Жизни:</span>
+            <span id="lives">3</span>
+          </div>
+        </div>
       </div>
       <canvas id="gameCanvas" width="660" height="660"></canvas>
       <div class="controls">

@@ -26,6 +26,7 @@ let pucksCount = 0;
 let pucksCollected = 0;
 let playerImage = new Image();
 let ghostImage = new Image();
+let puckImage = new Image();
 
 // Добавляем обработку ошибок для изображения игрока
 playerImage.onload = function() {
@@ -47,8 +48,18 @@ ghostImage.onerror = function() {
   console.error('Ошибка загрузки изображения противника:', GHOST_IMAGE_SRC);
 };
 
+// Загружаем изображение для шайбы
+puckImage.onload = function() {
+  console.log('Изображение шайбы загружено успешно');
+};
+
+puckImage.onerror = function() {
+  console.error('Ошибка загрузки изображения шайбы:', PUCK_IMAGE_SRC);
+};
+
 playerImage.src = OVI_IMAGE_SRC;
 ghostImage.src = GHOST_IMAGE_SRC;
+puckImage.src = PUCK_IMAGE_SRC;
 console.log('Попытка загрузить изображения...');
 
 // Класс для игрока
@@ -754,16 +765,47 @@ function drawMap() {
         ctx.fillRect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
       } else if (cell === CELL_TYPES.PUCK) {
         // Шайба
-        ctx.fillStyle = PUCK_COLOR;
-        ctx.beginPath();
-        ctx.arc(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE / 6, 0, Math.PI * 2);
-        ctx.fill();
+        if (puckImage.complete) {
+          const puckSize = CELL_SIZE / 2.5;
+          ctx.drawImage(
+            puckImage,
+            x * CELL_SIZE + (CELL_SIZE - puckSize) / 2,
+            y * CELL_SIZE + (CELL_SIZE - puckSize) / 2,
+            puckSize,
+            puckSize
+          );
+        } else {
+          // Запасной вариант - цветной круг
+          ctx.fillStyle = PUCK_COLOR;
+          ctx.beginPath();
+          ctx.arc(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE / 6, 0, Math.PI * 2);
+          ctx.fill();
+        }
       } else if (cell === CELL_TYPES.POWER_PUCK) {
         // Усиленная шайба
-        ctx.fillStyle = POWER_PUCK_COLOR;
-        ctx.beginPath();
-        ctx.arc(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE / 4, 0, Math.PI * 2);
-        ctx.fill();
+        if (puckImage.complete) {
+          const powerPuckSize = CELL_SIZE / 1.8;
+          ctx.drawImage(
+            puckImage,
+            x * CELL_SIZE + (CELL_SIZE - powerPuckSize) / 2,
+            y * CELL_SIZE + (CELL_SIZE - powerPuckSize) / 2,
+            powerPuckSize,
+            powerPuckSize
+          );
+          
+          // Добавляем ореол для обозначения усиленной шайбы
+          ctx.strokeStyle = POWER_PUCK_COLOR;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE / 3, 0, Math.PI * 2);
+          ctx.stroke();
+        } else {
+          // Запасной вариант - цветной круг
+          ctx.fillStyle = POWER_PUCK_COLOR;
+          ctx.beginPath();
+          ctx.arc(x * CELL_SIZE + CELL_SIZE / 2, y * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE / 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
     }
   }
@@ -779,7 +821,7 @@ function drawGameOver() {
   ctx.fillText('ИГРА ОКОНЧЕНА', canvas.width / 2, canvas.height / 2 - 24);
   
   ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Очки: ${score}`, canvas.width / 2, canvas.height / 2 + 24);
+  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / 2, canvas.height / 2 + 24);
 }
 
 function drawLevelComplete() {
@@ -792,7 +834,7 @@ function drawLevelComplete() {
   ctx.fillText('УРОВЕНЬ ПРОЙДЕН!', canvas.width / 2, canvas.height / 2 - 24);
   
   ctx.font = '24px "Neoris", "Roboto", sans-serif';
-  ctx.fillText(`Очки: ${score}`, canvas.width / 2, canvas.height / 2 + 24);
+  ctx.fillText(`Шайб забил Овечкин: ${score}/${MAX_SCORE}`, canvas.width / 2, canvas.height / 2 + 24);
 }
 
 // Главный цикл игры
@@ -1051,7 +1093,7 @@ function waitForResources(callback) {
   console.log('Проверка загрузки ресурсов...');
   
   let resourcesLoaded = 0;
-  const totalResources = 2; // Два изображения для загрузки
+  const totalResources = 3; // Три изображения для загрузки
   
   function checkComplete() {
     resourcesLoaded++;
@@ -1091,6 +1133,23 @@ function waitForResources(callback) {
     
     ghostImage.onerror = function() {
       console.warn('Ошибка загрузки изображения призрака');
+      checkComplete();
+    };
+  }
+  
+  // Проверяем изображение шайбы
+  if (puckImage.complete) {
+    console.log('Изображение шайбы уже загружено');
+    checkComplete();
+  } else {
+    console.log('Ожидание загрузки изображения шайбы...');
+    puckImage.onload = function() {
+      console.log('Изображение шайбы загружено');
+      checkComplete();
+    };
+    
+    puckImage.onerror = function() {
+      console.warn('Ошибка загрузки изображения шайбы');
       checkComplete();
     };
   }

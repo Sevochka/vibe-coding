@@ -65,26 +65,46 @@ h1 {
 }
 
 .game-container {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  max-width: 660px;
 }
 
 .game-info {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
-  background-color: var(--sports-primary-color);
+  margin-bottom: 10px;
   color: white;
-  font-family: "Sports", sans-serif;
   font-size: 18px;
+  font-weight: bold;
 }
 
-canvas {
+.game-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.score-container, .lives-container {
+  padding: 5px 10px;
+  background-color: var(--sports-grey-900);
+  border-radius: 5px;
+}
+
+.score-label, .lives-label {
+  margin-right: 5px;
+}
+
+#score, #maxScore, #lives {
+  font-weight: bold;
+  color: var(--sports-primary-color);
+}
+
+#gameCanvas {
   display: block;
-  margin: 0 auto;
   background-color: black;
+  margin: 0 auto;
+  border-radius: 5px;
 }
 
 .controls {
