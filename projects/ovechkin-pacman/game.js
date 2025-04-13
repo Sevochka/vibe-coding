@@ -68,42 +68,48 @@ class Player {
       
       // Проверяем, нет ли стены в направлении движения
       if (!isWall(nextGridX, nextGridY)) {
-        // Убедимся, что игрок находится близко к центру ячейки перед поворотом
-        // для предотвращения ухода в стены
-        const cellCenterX = currentGridX * CELL_SIZE + CELL_SIZE / 2;
-        const cellCenterY = currentGridY * CELL_SIZE + CELL_SIZE / 2;
-        
-        // Расстояние от центра текущей ячейки
-        const distanceFromCenterX = Math.abs(this.x - cellCenterX);
-        const distanceFromCenterY = Math.abs(this.y - cellCenterY);
-        
-        // Если игрок достаточно близко к центру ячейки, можно повернуть
-        const turnThreshold = CELL_SIZE * 0.4; // Увеличиваем порог для лучшей отзывчивости
-        
-        const canTurn = (
-          // Близко к центру по обеим осям
-          (distanceFromCenterX < turnThreshold && distanceFromCenterY < turnThreshold) ||
-          // Или смена с горизонтального на вертикальное движение (и наоборот)
-          (this.nextDirection.x !== 0 && this.direction.y !== 0) ||
-          (this.nextDirection.y !== 0 && this.direction.x !== 0)
-        );
-        
-        if (canTurn) {
-          // При смене направления с горизонтального на вертикальное (и наоборот)
-          // выравниваем персонажа по сетке для предотвращения прохода сквозь стены
-          if (this.nextDirection.x !== 0 && this.direction.y !== 0) {
-            // Выравниваем по Y при переходе к горизонтальному движению
-            this.y = Math.round(this.y / CELL_SIZE) * CELL_SIZE;
-          } else if (this.nextDirection.y !== 0 && this.direction.x !== 0) {
-            // Выравниваем по X при переходе к вертикальному движению
-            this.x = Math.round(this.x / CELL_SIZE) * CELL_SIZE;
-          }
-          
-          // Меняем направление
+        // Если игрок еще не двигается (игра только началась), сразу принимаем направление
+        if (this.direction === DIRECTIONS.NONE) {
+          console.log('Начальное движение:', this.nextDirection);
           this.direction = this.nextDirection;
           this.nextDirection = DIRECTIONS.NONE;
+        } else {
+          // Проверяем необходимость выравнивания при смене направления
+          const cellCenterX = currentGridX * CELL_SIZE + CELL_SIZE / 2;
+          const cellCenterY = currentGridY * CELL_SIZE + CELL_SIZE / 2;
           
-          console.log(`Смена направления на: ${JSON.stringify(this.direction)}`);
+          // Расстояние от центра текущей ячейки
+          const distanceFromCenterX = Math.abs(this.x - cellCenterX);
+          const distanceFromCenterY = Math.abs(this.y - cellCenterY);
+          
+          // Если игрок достаточно близко к центру ячейки, можно повернуть
+          const turnThreshold = CELL_SIZE * 0.4; 
+          
+          const canTurn = (
+            // Близко к центру по обеим осям
+            (distanceFromCenterX < turnThreshold && distanceFromCenterY < turnThreshold) ||
+            // Или смена с горизонтального на вертикальное движение (и наоборот)
+            (this.nextDirection.x !== 0 && this.direction.y !== 0) ||
+            (this.nextDirection.y !== 0 && this.direction.x !== 0)
+          );
+          
+          if (canTurn) {
+            // При смене направления с горизонтального на вертикальное (и наоборот)
+            // выравниваем персонажа по сетке для предотвращения прохода сквозь стены
+            if (this.nextDirection.x !== 0 && this.direction.y !== 0) {
+              // Выравниваем по Y при переходе к горизонтальному движению
+              this.y = Math.round(this.y / CELL_SIZE) * CELL_SIZE;
+            } else if (this.nextDirection.y !== 0 && this.direction.x !== 0) {
+              // Выравниваем по X при переходе к вертикальному движению
+              this.x = Math.round(this.x / CELL_SIZE) * CELL_SIZE;
+            }
+            
+            // Меняем направление
+            this.direction = this.nextDirection;
+            this.nextDirection = DIRECTIONS.NONE;
+            
+            console.log(`Смена направления на: ${JSON.stringify(this.direction)}`);
+          }
         }
       }
     }
@@ -459,6 +465,7 @@ class Ghost {
 
 // Вспомогательные функции
 function initLevel(levelIndex) {
+  console.log(`Инициализация уровня ${levelIndex}...`);
   const level = LEVELS[levelIndex];
   const map = level.map;
   
@@ -470,6 +477,7 @@ function initLevel(levelIndex) {
   // Позиция игрока
   let playerX = 0;
   let playerY = 0;
+  let foundPlayer = false;
   
   // Позиции призраков
   const ghostPositions = [];
@@ -484,6 +492,7 @@ function initLevel(levelIndex) {
       } else if (cell === CELL_TYPES.PLAYER_START) {
         playerX = x;
         playerY = y;
+        foundPlayer = true;
       } else if (cell === CELL_TYPES.GHOST_START) {
         ghostPositions.push({ x, y });
       }
@@ -491,14 +500,24 @@ function initLevel(levelIndex) {
   }
   
   // Создаем игрока
-  player = new Player(playerX, playerY);
+  if (foundPlayer) {
+    console.log(`Создаем игрока на координатах: ${playerX}, ${playerY}`);
+    player = new Player(playerX, playerY);
+  } else {
+    console.error('Не найдена стартовая позиция игрока на карте!');
+    // Устанавливаем игрока в центр, если не найдена стартовая позиция
+    player = new Player(Math.floor(GRID_WIDTH / 2), Math.floor(GRID_HEIGHT / 2));
+  }
   
   // Создаем призраков
+  console.log(`Создаем ${Math.min(level.ghostCount, ghostPositions.length)} призраков...`);
   for (let i = 0; i < Math.min(level.ghostCount, ghostPositions.length); i++) {
     const pos = ghostPositions[i % ghostPositions.length];
     const ghost = new Ghost(pos.x, pos.y, GHOST_COLORS[i % GHOST_COLORS.length], i);
     ghosts.push(ghost);
   }
+  
+  console.log(`Инициализация уровня ${levelIndex} завершена. Найдено шайб: ${pucksCount}`);
 }
 
 function isWall(x, y) {
@@ -833,58 +852,59 @@ function handleKeyDown(e) {
     return;
   }
   
+  let direction = null;
+  
   // Задаем следующее направление в зависимости от нажатой клавиши
   switch (e.key) {
     case 'ArrowUp':
     case 'Up': // Для старых браузеров
     case 'w':
     case 'W':
-      player.nextDirection = DIRECTIONS.UP;
-      e.preventDefault();
+      direction = DIRECTIONS.UP;
       break;
     case 'ArrowDown':
     case 'Down': // Для старых браузеров
     case 's':
     case 'S':
-      player.nextDirection = DIRECTIONS.DOWN;
-      e.preventDefault();
+      direction = DIRECTIONS.DOWN;
       break;
     case 'ArrowLeft':
     case 'Left': // Для старых браузеров
     case 'a':
     case 'A':
-      player.nextDirection = DIRECTIONS.LEFT;
-      e.preventDefault();
+      direction = DIRECTIONS.LEFT;
       break;
     case 'ArrowRight':
     case 'Right': // Для старых браузеров
     case 'd':
     case 'D':
-      player.nextDirection = DIRECTIONS.RIGHT;
-      e.preventDefault();
+      direction = DIRECTIONS.RIGHT;
       break;
   }
   
   // Проверка на keyCode для кроссбраузерности
-  if (!e.key) {
+  if (!direction && e.keyCode) {
     switch (e.keyCode) {
       case 38: // Стрелка вверх
-        player.nextDirection = DIRECTIONS.UP;
-        e.preventDefault();
+        direction = DIRECTIONS.UP;
         break;
       case 40: // Стрелка вниз
-        player.nextDirection = DIRECTIONS.DOWN;
-        e.preventDefault();
+        direction = DIRECTIONS.DOWN;
         break;
       case 37: // Стрелка влево
-        player.nextDirection = DIRECTIONS.LEFT;
-        e.preventDefault();
+        direction = DIRECTIONS.LEFT;
         break;
       case 39: // Стрелка вправо
-        player.nextDirection = DIRECTIONS.RIGHT;
-        e.preventDefault();
+        direction = DIRECTIONS.RIGHT;
         break;
     }
+  }
+  
+  // Если направление определено, устанавливаем его и предотвращаем стандартное поведение
+  if (direction) {
+    console.log('Устанавливаем направление:', direction);
+    player.nextDirection = direction;
+    e.preventDefault();
   }
 }
 
