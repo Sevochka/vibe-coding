@@ -204,23 +204,26 @@ document.addEventListener('DOMContentLoaded', () => {
         // Удаляем скрытый элемент
         document.body.removeChild(hiddenElement);
         
-        let i = 0;
-        const speed = 20; // скорость печатания
+        // Вместо постепенного добавления символов, используем полный текст с визуальным эффектом
+        element.textContent = text;
+        element.style.maxWidth = '0';
+        element.style.display = 'block';
+        element.style.overflow = 'hidden';
+        element.style.whiteSpace = 'pre-wrap';
+        element.style.transition = 'max-width 3s steps(40, end)';
         
-        function typeWriter() {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            } else {
-                // Эффект печатания завершен
-                setTimeout(() => {
-                    element.classList.remove('typing');
-                }, 500);
-            }
-        }
-        
-        typeWriter();
+        // Задержка нужна для корректной работы transition
+        setTimeout(() => {
+            element.style.maxWidth = '100%';
+            
+            // Убираем классы и переходы после анимации
+            setTimeout(() => {
+                element.classList.remove('typing');
+                element.style.maxWidth = '';
+                element.style.transition = '';
+                element.style.overflow = '';
+            }, 3000);
+        }, 50);
     }
     
     function nextQuestion() {

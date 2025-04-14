@@ -540,22 +540,18 @@ h1.title {
 
 /* Typing effect for feedback */
 .typing {
-    overflow: hidden;
     white-space: pre-wrap;
     word-break: break-word;
-    position: relative;
     min-height: 50px;
     display: block;
     width: 100%;
     text-align: left;
+    position: relative;
+    max-width: 0;
 }
 
 .typing:after {
-    content: '|';
-    position: absolute;
-    right: 0;
-    top: 0;
-    animation: blink-caret .75s step-end infinite;
+    display: none;
 }
 
 @keyframes blink-caret {
