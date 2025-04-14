@@ -145,13 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
         
         options[correctIndex].classList.add('correct');
         
+        // Получаем вопрос для определения правильного текста обратной связи
+        const currentPeriodQuestions = periodQuestions[currentPeriod - 1];
+        const currentQuestion = currentPeriodQuestions[currentQuestionIndex];
+        
+        let feedbackText = '';
+        
         if (selectedIndex === correctIndex) {
             // Правильный ответ
             score++;
             updateScoreboard();
+            feedbackText = currentQuestion.feedback;
         } else {
             // Неправильный ответ
             options[selectedIndex].classList.add('incorrect');
+            feedbackText = currentQuestion.incorrectFeedback;
         }
         
         // Показываем обратную связь от Овечкина с плавной анимацией
@@ -163,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 feedbackContainer.classList.add('visible');
                 const oviContainer = document.querySelector('.ovi-container');
                 oviContainer.classList.add('animate');
-                typeWriterEffect(feedbackText, feedback);
+                // Передаем правильные параметры: элемент DOM и текст
+                typeWriterEffect(document.getElementById('feedback-text'), feedbackText);
             }, 50);
             
             // Переход к следующему вопросу после задержки
@@ -204,26 +213,23 @@ document.addEventListener('DOMContentLoaded', () => {
         // Удаляем скрытый элемент
         document.body.removeChild(hiddenElement);
         
-        // Вместо постепенного добавления символов, используем полный текст с визуальным эффектом
-        element.textContent = text;
-        element.style.maxWidth = '0';
-        element.style.display = 'block';
-        element.style.overflow = 'hidden';
-        element.style.whiteSpace = 'pre-wrap';
-        element.style.transition = 'max-width 3s steps(40, end)';
+        let i = 0;
+        const speed = 20; // скорость печатания
         
-        // Задержка нужна для корректной работы transition
-        setTimeout(() => {
-            element.style.maxWidth = '100%';
-            
-            // Убираем классы и переходы после анимации
-            setTimeout(() => {
-                element.classList.remove('typing');
-                element.style.maxWidth = '';
-                element.style.transition = '';
-                element.style.overflow = '';
-            }, 3000);
-        }, 50);
+        function typeWriter() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            } else {
+                // Эффект печатания завершен
+                setTimeout(() => {
+                    element.classList.remove('typing');
+                }, 500);
+            }
+        }
+        
+        typeWriter();
     }
     
     function nextQuestion() {
