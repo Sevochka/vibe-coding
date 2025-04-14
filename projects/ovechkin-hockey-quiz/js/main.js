@@ -181,14 +181,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function typeWriterEffect(element, text) {
-        element.textContent = '';
+        element.innerHTML = '';
         element.classList.add('typing');
         
-        // Сразу устанавливаем весь текст, чтобы избежать скачков из-за изменения размера контейнера
-        element.dataset.fullText = text;
+        // Создаем скрытый элемент для предварительной отрисовки текста
+        // Это поможет избежать прыжков из-за изменения высоты контейнера
+        const hiddenElement = document.createElement('div');
+        hiddenElement.style.position = 'absolute';
+        hiddenElement.style.visibility = 'hidden';
+        hiddenElement.style.width = getComputedStyle(element).width;
+        hiddenElement.style.fontSize = getComputedStyle(element).fontSize;
+        hiddenElement.style.fontFamily = getComputedStyle(element).fontFamily;
+        hiddenElement.style.lineHeight = getComputedStyle(element).lineHeight;
+        hiddenElement.style.whiteSpace = 'pre-wrap';
+        hiddenElement.style.wordBreak = 'break-word';
+        hiddenElement.textContent = text;
+        document.body.appendChild(hiddenElement);
+        
+        // Устанавливаем минимальную высоту контейнера равной высоте всего текста
+        element.style.minHeight = `${hiddenElement.offsetHeight}px`;
+        
+        // Удаляем скрытый элемент
+        document.body.removeChild(hiddenElement);
         
         let i = 0;
-        const speed = 25; // скорость печатания (немного быстрее)
+        const speed = 20; // скорость печатания
         
         function typeWriter() {
             if (i < text.length) {
@@ -196,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 i++;
                 setTimeout(typeWriter, speed);
             } else {
-                // Удаляем анимацию печатания после завершения
+                // Эффект печатания завершен
                 setTimeout(() => {
                     element.classList.remove('typing');
                 }, 500);

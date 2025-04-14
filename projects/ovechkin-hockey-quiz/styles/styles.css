@@ -364,7 +364,7 @@ h1.title {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     height: auto;
-    min-height: 100px;
+    min-height: 120px;
     overflow: hidden;
 }
 
@@ -401,6 +401,8 @@ h1.title {
     transform: translateX(0);
     transition: transform 0.3s ease-in-out;
     min-height: 80px;
+    display: flex;
+    align-items: center;
 }
 
 .ovi-container.animate .speech-bubble {
@@ -421,6 +423,8 @@ h1.title {
     font-size: 16px;
     line-height: 1.4;
     min-height: 50px;
+    text-align: left;
+    width: 100%;
 }
 
 /* Period Break Screen */
@@ -537,21 +541,26 @@ h1.title {
 /* Typing effect for feedback */
 .typing {
     overflow: hidden;
-    border-right: .15em solid var(--sports-primary-color);
     white-space: pre-wrap;
     word-break: break-word;
-    animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+    position: relative;
     min-height: 50px;
+    display: block;
+    width: 100%;
+    text-align: left;
 }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+.typing:after {
+    content: '|';
+    position: absolute;
+    right: 0;
+    top: 0;
+    animation: blink-caret .75s step-end infinite;
 }
 
 @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--sports-primary-color) }
+    from, to { opacity: 0; }
+    50% { opacity: 1; }
 }
 
 /* Responsive Adjustments */
