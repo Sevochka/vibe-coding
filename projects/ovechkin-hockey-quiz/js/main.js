@@ -55,17 +55,21 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function startGame() {
         startScreen.classList.remove('active');
-        gameScreen.classList.add('active');
         
-        currentPeriod = 1;
-        currentQuestionIndex = 0;
-        score = 0;
-        secondsLeft = 60;
-        
-        updateScoreboard();
-        startTimer();
-        loadQuestion();
-        updateProgress();
+        // Добавляем небольшую задержку для анимации перехода между экранами
+        setTimeout(() => {
+            gameScreen.classList.add('active');
+            
+            currentPeriod = 1;
+            currentQuestionIndex = 0;
+            score = 0;
+            secondsLeft = 60;
+            
+            updateScoreboard();
+            startTimer();
+            loadQuestion();
+            updateProgress();
+        }, 300);
     }
     
     function updateScoreboard() {
@@ -108,8 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
         questionText.textContent = questionData.text;
         optionsContainer.innerHTML = '';
         feedbackContainer.style.display = 'none';
+        feedbackContainer.classList.remove('visible');
+        document.querySelector('.ovi-container')?.classList.remove('animate');
         
-        // Создаем и добавляем варианты ответов
+        // Создаем и добавляем варианты ответов с задержкой для анимации
         questionData.options.forEach((option, index) => {
             const optionButton = document.createElement('button');
             optionButton.classList.add('option');
@@ -122,6 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             optionsContainer.appendChild(optionButton);
+            
+            // Анимированное появление опций
+            setTimeout(() => {
+                optionButton.style.opacity = '1';
+                optionButton.style.transform = 'translateY(0)';
+            }, 100 * index);
         });
         
         canAnswer = true;
@@ -142,22 +154,41 @@ document.addEventListener('DOMContentLoaded', () => {
             options[selectedIndex].classList.add('incorrect');
         }
         
-        // Показываем обратную связь от Овечкина
-        feedbackContainer.style.display = 'block';
-        typeWriterEffect(feedbackText, feedback);
-        
-        // Переход к следующему вопросу после задержки
+        // Показываем обратную связь от Овечкина с плавной анимацией
         setTimeout(() => {
-            nextQuestion();
-        }, 3000);
+            feedbackContainer.style.display = 'block';
+            
+            // Добавляем отложенную прозрачность для плавного появления
+            setTimeout(() => {
+                feedbackContainer.classList.add('visible');
+                const oviContainer = document.querySelector('.ovi-container');
+                oviContainer.classList.add('animate');
+                typeWriterEffect(feedbackText, feedback);
+            }, 50);
+            
+            // Переход к следующему вопросу после задержки
+            setTimeout(() => {
+                feedbackContainer.classList.remove('visible');
+                
+                // Убираем анимацию перед скрытием контейнера
+                setTimeout(() => {
+                    feedbackContainer.style.display = 'none';
+                    document.querySelector('.ovi-container').classList.remove('animate');
+                    nextQuestion();
+                }, 300);
+            }, 4000);
+        }, 500);
     }
     
     function typeWriterEffect(element, text) {
         element.textContent = '';
         element.classList.add('typing');
         
+        // Сразу устанавливаем весь текст, чтобы избежать скачков из-за изменения размера контейнера
+        element.dataset.fullText = text;
+        
         let i = 0;
-        const speed = 30; // скорость печатания
+        const speed = 25; // скорость печатания (немного быстрее)
         
         function typeWriter() {
             if (i < text.length) {
@@ -165,7 +196,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 i++;
                 setTimeout(typeWriter, speed);
             } else {
-                element.classList.remove('typing');
+                // Удаляем анимацию печатания после завершения
+                setTimeout(() => {
+                    element.classList.remove('typing');
+                }, 500);
             }
         }
         
@@ -211,53 +245,65 @@ document.addEventListener('DOMContentLoaded', () => {
     function endPeriod() {
         clearInterval(timer);
         
-        if (currentPeriod < 3) {
-            // Показываем экран перерыва между периодами
-            gameScreen.classList.remove('active');
-            periodBreak.classList.add('active');
-        } else {
-            // Игра завершена, показываем результаты
-            endGame();
-        }
+        gameScreen.classList.remove('active');
+        
+        setTimeout(() => {
+            if (currentPeriod < 3) {
+                // Показываем экран перерыва между периодами
+                periodBreak.classList.add('active');
+            } else {
+                // Игра завершена, показываем результаты
+                endGame();
+            }
+        }, 300);
     }
     
     function continueToPeriod() {
-        // Переходим к следующему периоду
-        currentPeriod++;
-        currentQuestionIndex = 0;
-        
+        // Переходим к следующему периоду с плавной анимацией
         periodBreak.classList.remove('active');
-        gameScreen.classList.add('active');
         
-        updateScoreboard();
-        startTimer();
-        loadQuestion();
-        updateProgress();
+        setTimeout(() => {
+            gameScreen.classList.add('active');
+            
+            currentPeriod++;
+            currentQuestionIndex = 0;
+            
+            updateScoreboard();
+            startTimer();
+            loadQuestion();
+            updateProgress();
+        }, 300);
     }
     
     function endGame() {
         clearInterval(timer);
         
         gameScreen.classList.remove('active');
-        resultsScreen.classList.add('active');
         
-        finalScoreElement.textContent = score;
-        
-        // Определяем сообщение о результате
-        let resultMessage = "";
-        for (const messageData of resultMessages) {
-            if (score >= messageData.min && score <= messageData.max) {
-                resultMessage = messageData.message;
-                break;
+        setTimeout(() => {
+            resultsScreen.classList.add('active');
+            
+            finalScoreElement.textContent = score;
+            
+            // Определяем сообщение о результате
+            let resultMessage = "";
+            for (const messageData of resultMessages) {
+                if (score >= messageData.min && score <= messageData.max) {
+                    resultMessage = messageData.message;
+                    break;
+                }
             }
-        }
-        
-        resultTextElement.textContent = resultMessage;
+            
+            resultTextElement.textContent = resultMessage;
+        }, 300);
     }
     
     function restartGame() {
         resultsScreen.classList.remove('active');
-        startScreen.classList.add('active');
+        
+        setTimeout(() => {
+            startScreen.classList.add('active');
+        }, 300);
     }
     
     function shareToVK() {

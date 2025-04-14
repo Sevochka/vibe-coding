@@ -92,10 +92,15 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
 }
 
 .screen.active {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Start Screen */
@@ -133,12 +138,22 @@ h1.title {
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
     margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 199, 139, 0.2);
 }
 
 .btn-start:hover, .btn-continue:hover, .btn-restart:hover {
     background-color: var(--sports-primary-color-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 199, 139, 0.3);
+}
+
+.btn-start:active, .btn-continue:active, .btn-restart:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 199, 139, 0.2);
 }
 
 /* Game Screen */
@@ -165,6 +180,13 @@ h1.title {
     justify-content: center;
     align-items: center;
     border: 2px solid var(--sports-red-a700);
+    transition: all 0.3s ease;
+}
+
+.timer-container.time-warning {
+    color: white;
+    background-color: var(--sports-red-a700);
+    animation: pulse-warning 0.6s infinite alternate;
 }
 
 .scoreboard {
@@ -226,10 +248,11 @@ h1.title {
     height: 100%;
     width: 0%;
     background: linear-gradient(to right, var(--sports-green-50), var(--sports-primary-color));
-    transition: width 0.3s ease;
+    transition: width 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     position: absolute;
     top: 0;
     left: 0;
+    box-shadow: 0 0 10px rgba(0, 199, 139, 0.3);
 }
 
 .puck {
@@ -241,8 +264,33 @@ h1.title {
     height: 20px;
     background-color: var(--sports-black);
     border-radius: 50%;
-    transition: left 0.3s ease;
+    transition: left 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
     z-index: 5;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.puck:after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    border-radius: 1px;
+}
+
+.puck:before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    border-radius: 1px;
 }
 
 .game-minute {
@@ -279,23 +327,33 @@ h1.title {
     background-color: white;
     font-size: 16px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.3s ease-out;
     text-align: left;
+    opacity: 0;
+    transform: translateY(10px);
 }
 
 .option:hover {
     border-color: var(--sports-primary-color);
     background-color: var(--sports-green-50);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .option.correct {
     border-color: var(--sports-primary-color);
     background-color: var(--sports-green-50);
+    transform: translateY(-2px);
+    transition: all 0.4s ease-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .option.incorrect {
     border-color: var(--sports-red-a700);
     background-color: var(--sports-red-50);
+    transform: translateY(-2px);
+    transition: all 0.4s ease-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Feedback Container */
@@ -303,7 +361,16 @@ h1.title {
     display: none;
     width: 100%;
     margin: 20px 0;
-    animation: fadeIn 0.5s ease-in;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    height: auto;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+.feedback-container.visible {
+    display: block;
+    opacity: 1;
 }
 
 .ovi-container {
@@ -315,6 +382,12 @@ h1.title {
     width: 80px;
     height: auto;
     margin-right: 15px;
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.ovi-container.animate .ovi-image {
+    animation: slideInOvi 0.5s ease-out;
 }
 
 .speech-bubble {
@@ -325,6 +398,13 @@ h1.title {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     flex: 1;
     border: 2px solid var(--sports-primary-color);
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+    min-height: 80px;
+}
+
+.ovi-container.animate .speech-bubble {
+    animation: slideInBubble 0.5s ease-out;
 }
 
 .speech-bubble:before {
@@ -340,6 +420,7 @@ h1.title {
 .feedback-text {
     font-size: 16px;
     line-height: 1.4;
+    min-height: 50px;
 }
 
 /* Period Break Screen */
@@ -350,6 +431,7 @@ h1.title {
 .break-animation {
     margin: 30px 0;
     animation: pulse 2s infinite;
+    transform-origin: center;
 }
 
 .sponsor-logo-large {
@@ -378,6 +460,7 @@ h1.title {
 
 .ovi-result {
     margin: 20px 0;
+    animation: bounceIn 1s ease-out;
 }
 
 .ovi-image-large {
@@ -403,11 +486,19 @@ h1.title {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .share-button:hover {
     background-color: var(--sports-grey-700);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.share-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Animations */
@@ -422,16 +513,45 @@ h1.title {
     100% { transform: scale(1); }
 }
 
+@keyframes slideInOvi {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInBubble {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse-warning {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
 /* Typing effect for feedback */
 .typing {
     overflow: hidden;
-    white-space: nowrap;
-    animation: typing 1.5s steps(40, end);
+    border-right: .15em solid var(--sports-primary-color);
+    white-space: pre-wrap;
+    word-break: break-word;
+    animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
+    min-height: 50px;
 }
 
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--sports-primary-color) }
 }
 
 /* Responsive Adjustments */
