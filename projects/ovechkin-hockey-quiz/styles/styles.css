@@ -211,6 +211,13 @@ h1.title {
     margin-bottom: 5px;
 }
 
+.team-logo {
+    background-color: white;
+    border-radius: 50%;
+    padding: 3px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
 .score {
     font-size: 28px;
     font-weight: bold;
@@ -384,6 +391,10 @@ h1.title {
     margin-right: 15px;
     transform: translateY(0);
     transition: transform 0.3s ease-in-out;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .ovi-container.animate .ovi-image {
@@ -470,6 +481,10 @@ h1.title {
 .ovi-image-large {
     height: 150px;
     width: auto;
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 }
 
 .share-container {
