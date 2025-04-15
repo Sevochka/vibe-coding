@@ -43,9 +43,9 @@ const renderKeyboard = () => {
   keyboard.innerHTML = '';
   
   const rows = [
-    ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ'],
-    ['Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э'],
-    ['Backspace', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', 'Enter']
+    ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+    ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
+    ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'Backspace', 'Enter']
   ];
   
   rows.forEach(row => {
@@ -58,7 +58,7 @@ const renderKeyboard = () => {
       
       if (key === 'Enter' || key === 'Backspace') {
         keyElement.classList.add('wide');
-        keyElement.textContent = key === 'Enter' ? '⏎' : '⌫';
+        keyElement.textContent = key === 'Enter' ? '✓' : '←';
       } else {
         keyElement.textContent = key;
       }
@@ -660,4 +660,357 @@ const toggleMultiplayerMode = () => {
   resetGameState();
   chooseRandomWord();
   renderBoard();
-}; 
+};
+
+// Добавляем анимацию нажатия клавиш
+function createKeyboard() {
+  const keyboard = document.querySelector('.keyboard');
+  keyboard.innerHTML = '';
+
+  const rows = [
+    ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+    ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
+    ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'Backspace', 'Enter']
+  ];
+
+  rows.forEach(row => {
+    const rowElement = document.createElement('div');
+    rowElement.classList.add('keyboard-row');
+    
+    row.forEach(letter => {
+      const key = document.createElement('div');
+      
+      if (letter === 'Enter') {
+        key.textContent = '✓';
+        key.classList.add('key', 'wide');
+        key.dataset.key = 'Enter';
+      } else if (letter === 'Backspace') {
+        key.textContent = '←';
+        key.classList.add('key', 'wide');
+        key.dataset.key = 'Backspace';
+      } else {
+        key.textContent = letter;
+        key.classList.add('key');
+        key.dataset.key = letter;
+      }
+      
+      key.addEventListener('click', (e) => {
+        // Добавляем класс для анимации нажатия
+        key.classList.add('key-pressed');
+        
+        // Удаляем класс через время анимации
+        setTimeout(() => {
+          key.classList.remove('key-pressed');
+        }, 150);
+        
+        handleKeyPress(e.target.dataset.key);
+      });
+      
+      rowElement.appendChild(key);
+    });
+    
+    keyboard.appendChild(rowElement);
+  });
+}
+
+// Обновленный метод для проверки букв с анимацией
+function checkWord(word, attempt) {
+  word = word.toLowerCase();
+  attempt = attempt.toLowerCase();
+
+  const letterStatuses = Array(attempt.length).fill('absent');
+  const wordLetters = word.split('');
+  
+  // Сначала проверим точные совпадения
+  for (let i = 0; i < attempt.length; i++) {
+    if (attempt[i] === wordLetters[i]) {
+      letterStatuses[i] = 'correct';
+      wordLetters[i] = null; // Помечаем букву как использованную
+    }
+  }
+  
+  // Теперь проверим буквы, которые присутствуют, но на других позициях
+  for (let i = 0; i < attempt.length; i++) {
+    if (letterStatuses[i] !== 'correct') {
+      const letterIndex = wordLetters.indexOf(attempt[i]);
+      if (letterIndex !== -1) {
+        letterStatuses[i] = 'present';
+        wordLetters[letterIndex] = null; // Помечаем букву как использованную
+      }
+    }
+  }
+  
+  return letterStatuses;
+}
+
+// Обновленный метод для анимированного добавления букв
+function addLetter(letter) {
+  if (currentCol < wordLength && currentRow < maxRows) {
+    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
+    cell.textContent = letter.toUpperCase();
+    
+    // Добавляем анимацию
+    cell.classList.add('pop');
+    
+    // Убираем класс после завершения анимации
+    setTimeout(() => {
+      cell.classList.remove('pop');
+    }, 300);
+    
+    currentCol++;
+  }
+}
+
+// Обновленная функция для анимированного удаления букв
+function deleteLetter() {
+  if (currentCol > 0 && currentRow < maxRows) {
+    currentCol--;
+    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
+    
+    // Добавляем анимацию
+    cell.classList.add('shake');
+    
+    // Убираем класс после завершения анимации
+    setTimeout(() => {
+      cell.textContent = '';
+      cell.classList.remove('shake');
+    }, 100);
+  }
+}
+
+// Обновленная функция для анимированной проверки слов
+function submitWord() {
+  if (currentCol === wordLength) {
+    let attempt = '';
+    
+    for (let i = 0; i < wordLength; i++) {
+      const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${i}"]`);
+      attempt += cell.textContent.toLowerCase();
+    }
+    
+    // Проверяем наличие слова в словаре
+    if (!isValidWord(attempt)) {
+      // Анимация для невалидного слова
+      const row = document.querySelector(`.row[data-row="${currentRow}"]`);
+      row.classList.add('shake');
+      
+      // Показываем уведомление
+      showToast('Такого слова нет в словаре');
+      
+      // Удаляем класс анимации
+      setTimeout(() => {
+        row.classList.remove('shake');
+      }, 500);
+      
+      return;
+    }
+    
+    const letterStatuses = checkWord(currentWord, attempt);
+    
+    // Анимированное обновление ячеек и клавиатуры
+    for (let i = 0; i < wordLength; i++) {
+      const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${i}"]`);
+      const letter = cell.textContent.toLowerCase();
+      const status = letterStatuses[i];
+      
+      // Используем setTimeout для последовательной анимации
+      setTimeout(() => {
+        // Добавляем класс для анимации переворота
+        cell.classList.add('reveal');
+        
+        // После завершения половины анимации добавляем класс статуса
+        setTimeout(() => {
+          cell.classList.add(`letter-${status}`);
+          cell.classList.add('highlight');
+          
+          // Обновляем клавишу на клавиатуре
+          const key = document.querySelector(`.key[data-key="${letter}"]`);
+          if (key) {
+            // Обновляем статус клавиши только если текущий статус хуже
+            if (status === 'correct' || 
+               (status === 'present' && !key.classList.contains('key-correct')) ||
+               (status === 'absent' && !key.classList.contains('key-correct') && !key.classList.contains('key-present'))) {
+              key.classList.remove('key-correct', 'key-present', 'key-absent');
+              key.classList.add(`key-${status}`);
+            }
+          }
+          
+          // Убираем класс анимации переворота
+          setTimeout(() => {
+            cell.classList.remove('reveal');
+            cell.classList.remove('highlight');
+          }, 300);
+        }, 150);
+      }, i * 200);
+    }
+    
+    // Проверяем результат через время анимации
+    setTimeout(() => {
+      if (attempt === currentWord) {
+        handleWin();
+      } else if (currentRow === maxRows - 1) {
+        handleLoss();
+      } else {
+        currentRow++;
+        currentCol = 0;
+        
+        // Обновляем подсказку
+        if (hints.length > currentRow) {
+          showHint(hints[currentRow]);
+        }
+      }
+    }, wordLength * 200 + 300);
+  }
+}
+
+// Обновленная функция для показа модального окна
+function showModal(id, content) {
+  const modal = document.getElementById(id);
+  
+  if (content) {
+    const contentContainer = modal.querySelector('.modal-content-inner');
+    contentContainer.innerHTML = content;
+  }
+  
+  // Добавляем класс для показа с анимацией
+  modal.classList.add('show');
+  
+  // Привязываем обработчик к кнопке закрытия
+  const closeBtn = modal.querySelector('.close-btn');
+  closeBtn.addEventListener('click', () => hideModal(id));
+}
+
+// Обновленная функция для скрытия модального окна
+function hideModal(id) {
+  const modal = document.getElementById(id);
+  modal.classList.remove('show');
+}
+
+// Обновленная функция для показа уведомления
+function showToast(message, duration = 3000) {
+  let toast = document.querySelector('.toast');
+  
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.classList.add('toast');
+    document.body.appendChild(toast);
+  }
+  
+  toast.textContent = message;
+  
+  // Анимированное появление
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 10);
+  
+  // Скрытие через заданное время
+  setTimeout(() => {
+    toast.classList.remove('show');
+    
+    // Удаление элемента после скрытия
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, duration);
+}
+
+// Обновленная функция для анимации победы
+function handleWin() {
+  gameState.playerScore++;
+  updateScoreboard();
+  
+  // Эффект победного гола
+  const board = document.querySelector('.board');
+  board.classList.add('goal-animation');
+  
+  // Анимация мяча
+  addBallAnimation(true);
+  
+  // Показ модального окна с поздравлением
+  const message = `
+    <div class="win-message">
+      <h3 class="float">ГОООООЛ!</h3>
+      <p>Вы угадали слово <strong>${currentWord.toUpperCase()}</strong>!</p>
+      <div class="score-info">
+        <div>Попыток: <strong>${currentRow + 1}/${maxRows}</strong></div>
+        <div>Счет: <strong>${gameState.playerScore}:${gameState.goalkeeperScore}</strong></div>
+      </div>
+      <button class="button" onclick="hideModal('resultModal'); startNewGame();">Следующее слово</button>
+    </div>
+  `;
+  
+  // Добавляем очки в зависимости от сложности
+  updatePlayerProgress(20);
+  
+  // Проверяем достижения
+  checkAchievements();
+  
+  setTimeout(() => {
+    showModal('resultModal', message);
+    board.classList.remove('goal-animation');
+  }, 1000);
+}
+
+// Обновленная функция для анимации поражения
+function handleLoss() {
+  gameState.goalkeeperScore++;
+  updateScoreboard();
+  
+  // Эффект "вратарь поймал"
+  const board = document.querySelector('.board');
+  board.classList.add('save-animation');
+  
+  // Анимация мяча
+  addBallAnimation(false);
+  
+  // Показ модального окна
+  const message = `
+    <div class="loss-message">
+      <h3>Вратарь спас!</h3>
+      <p>Загаданное слово: <strong>${currentWord.toUpperCase()}</strong></p>
+      <div class="score-info">
+        <div>Счет: <strong>${gameState.playerScore}:${gameState.goalkeeperScore}</strong></div>
+      </div>
+      <button class="button" onclick="hideModal('resultModal'); startNewGame();">Следующее слово</button>
+    </div>
+  `;
+  
+  setTimeout(() => {
+    showModal('resultModal', message);
+    board.classList.remove('save-animation');
+  }, 1000);
+}
+
+// Добавляем анимацию мяча
+function addBallAnimation(isGoal) {
+  const ball = document.createElement('div');
+  ball.classList.add('ball');
+  
+  const stadium = document.querySelector('.stadium');
+  stadium.appendChild(ball);
+  
+  // Начальная позиция мяча
+  ball.style.left = '50%';
+  ball.style.bottom = '20px';
+  
+  setTimeout(() => {
+    if (isGoal) {
+      // Мяч летит в ворота
+      ball.style.left = '70%';
+      ball.style.bottom = '80%';
+    } else {
+      // Вратарь ловит мяч
+      ball.style.left = '30%';
+      ball.style.bottom = '50%';
+    }
+    
+    // Удаляем мяч после анимации
+    setTimeout(() => {
+      stadium.removeChild(ball);
+    }, 1000);
+  }, 100);
+}
+
+// ... existing code ... 

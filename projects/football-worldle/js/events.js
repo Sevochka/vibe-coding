@@ -98,4 +98,179 @@ window.addEventListener('keydown', (e) => {
       e.preventDefault();
     }
   }
+});
+
+// Обработчик нажатия клавиш на физической клавиатуре
+document.addEventListener('keydown', function(event) {
+  // Если игра активна
+  if (!gameEnded) {
+    handleKeyPress(event.key);
+    
+    // Добавляем визуальную анимацию нажатия для соответствующей клавиши на экранной клавиатуре
+    const key = document.querySelector(`.key[data-key="${event.key.toLowerCase()}"]`) || 
+               document.querySelector(`.key[data-key="${event.key}"]`);
+    
+    if (key) {
+      key.classList.add('key-pressed');
+      setTimeout(() => {
+        key.classList.remove('key-pressed');
+      }, 150);
+    }
+  }
+});
+
+// Обработчик для кнопок уровня сложности
+document.querySelectorAll('.difficulty-button').forEach(button => {
+  button.addEventListener('click', function() {
+    // Убираем активный класс со всех кнопок
+    document.querySelectorAll('.difficulty-button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    
+    // Добавляем активный класс к нажатой кнопке
+    this.classList.add('active');
+    
+    // Получаем уровень сложности из data-атрибута
+    const level = this.dataset.level;
+    
+    // Обновляем текущий уровень сложности
+    changeDifficulty(level);
+    
+    // Добавляем эффект нажатия кнопки
+    this.classList.add('pop');
+    setTimeout(() => {
+      this.classList.remove('pop');
+    }, 300);
+  });
+});
+
+// Обработчик для кнопки подсказки
+document.getElementById('hintButton').addEventListener('click', function() {
+  useHint();
+  
+  // Добавляем эффект нажатия
+  this.classList.add('pop');
+  setTimeout(() => {
+    this.classList.remove('pop');
+  }, 300);
+});
+
+// Обработчик для кнопки "Новая игра"
+document.getElementById('newGameButton').addEventListener('click', function() {
+  startNewGame();
+  
+  // Добавляем эффект нажатия
+  this.classList.add('pop');
+  setTimeout(() => {
+    this.classList.remove('pop');
+  }, 300);
+});
+
+// Обработчик для кнопки мультиплеера
+document.getElementById('multiplayerToggle').addEventListener('click', function() {
+  toggleMultiplayer();
+  
+  // Добавляем эффект нажатия
+  this.classList.add('pop');
+  setTimeout(() => {
+    this.classList.remove('pop');
+  }, 300);
+});
+
+// Обработчик для кнопки достижений
+document.getElementById('achievementsButton').addEventListener('click', function() {
+  showAchievements();
+  
+  // Добавляем эффект нажатия
+  this.classList.add('pop');
+  setTimeout(() => {
+    this.classList.remove('pop');
+  }, 300);
+});
+
+// Обработчик для закрытия модальных окон
+document.querySelectorAll('.close-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const modal = this.closest('.modal');
+    hideModal(modal.id);
+  });
+});
+
+// Обновляем активность текущей ячейки
+function updateActiveCell() {
+  // Сначала удаляем класс active со всех ячеек
+  document.querySelectorAll('.letter-box').forEach(cell => {
+    cell.classList.remove('active');
+  });
+  
+  // Если мы находимся в пределах возможных ячеек, добавляем класс active к текущей
+  if (currentCol < wordLength && currentRow < maxRows) {
+    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
+    if (cell) {
+      cell.classList.add('active');
+    }
+  }
+}
+
+// Функция для обработки анимированного показа достижений
+function showAchievements() {
+  // Получаем контейнер для списка достижений
+  const container = document.querySelector('.achievements-list');
+  container.innerHTML = '';
+  
+  // Получаем все достижения
+  const achievements = getAllAchievements();
+  
+  // Добавляем каждое достижение с задержкой для анимации
+  achievements.forEach((achievement, index) => {
+    const element = document.createElement('div');
+    element.classList.add('achievement');
+    
+    if (!achievement.unlocked) {
+      element.classList.add('achievement-locked');
+    }
+    
+    element.innerHTML = `
+      <div class="achievement-icon">${achievement.icon}</div>
+      <div class="achievement-info">
+        <div class="achievement-name">${achievement.name}</div>
+        <div class="achievement-description">${achievement.description}</div>
+      </div>
+    `;
+    
+    container.appendChild(element);
+    
+    // Анимируем появление элементов
+    setTimeout(() => {
+      element.classList.add('pop');
+      setTimeout(() => {
+        element.classList.remove('pop');
+      }, 300);
+    }, index * 100);
+  });
+  
+  // Показываем модальное окно
+  showModal('achievementsModal');
+}
+
+// Добавляем слушатель для обновления активной ячейки
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('letter-box')) {
+    // Если клик был по ячейке, определяем её строку и колонку
+    const row = parseInt(event.target.parentElement.dataset.row);
+    const col = parseInt(event.target.dataset.col);
+    
+    // Если ячейка в текущей строке
+    if (row === currentRow && col < currentCol) {
+      // Устанавливаем курсор на эту ячейку
+      currentCol = col;
+      updateActiveCell();
+      
+      // Анимация выбора ячейки
+      event.target.classList.add('pop');
+      setTimeout(() => {
+        event.target.classList.remove('pop');
+      }, 300);
+    }
+  }
 }); 
