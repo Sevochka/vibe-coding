@@ -437,4 +437,41 @@ const createKeyboard = () => {
   if (gameState && Object.keys(gameState.keyboardStatus).length > 0) {
     updateKeyboardDisplay();
   }
+};
+
+// Функция для начала новой игры
+const startNewGame = () => {
+  // Закрыть все модальные окна
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.classList.remove('show');
+  });
+  
+  // Сбросить состояние игры
+  resetGameState();
+  chooseRandomWord();
+  
+  // Перерисовываем доску и клавиатуру
+  renderBoard();
+  renderKeyboard();
+  
+  // Обновляем интерфейс
+  updateScoreboard();
+  updatePlayerStatus();
+  
+  // Если была тема дня, сохраняем ее
+  if (gameState.currentTheme) {
+    showThemeDay(gameState.currentTheme);
+  }
+  
+  // Сбрасываем использование подсказки
+  const hintButton = document.getElementById('hintButton');
+  if (hintButton) {
+    hintButton.disabled = false;
+  }
+  
+  // Показываем сообщение
+  showToast('Новая игра началась!');
+  
+  // Обновляем активную ячейку
+  updateActiveCell();
 }; 
