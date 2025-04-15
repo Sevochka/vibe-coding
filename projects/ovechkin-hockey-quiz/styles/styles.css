@@ -55,6 +55,7 @@ html {
     -moz-text-size-adjust: 100%;
     text-size-adjust: 100%;
     word-break: normal;
+    height: 880px;
 }
 
 *, *::before, *::after {
