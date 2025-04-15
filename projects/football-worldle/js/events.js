@@ -81,8 +81,162 @@ const initEventListeners = () => {
 
 // Запуск игры при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
+  // Обработчик нажатия клавиш на физической клавиатуре
+  document.addEventListener('keydown', function(event) {
+    // Если игра активна
+    if (gameState && gameState.gameStatus === 'playing') {
+      // Предотвращаем прокрутку страницы при нажатии на клавиши, связанные с игрой
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(event.key)) {
+        if (document.activeElement === document.body) {
+          event.preventDefault();
+        }
+      }
+      
+      // Буквы русского алфавита
+      if (/^[А-яЁё]$/.test(event.key)) {
+        addLetter(event.key);
+        
+        // Анимация нажатия клавиши на экранной клавиатуре
+        const key = document.querySelector(`.key[data-key="${event.key.toLowerCase()}"]`);
+        if (key) {
+          key.classList.add('key-pressed');
+          setTimeout(() => key.classList.remove('key-pressed'), 150);
+        }
+      } 
+      // Backspace для удаления букв
+      else if (event.key === 'Backspace') {
+        removeLetter();
+        
+        // Анимация нажатия клавиши на экранной клавиатуре
+        const key = document.querySelector(`.key[data-key="Backspace"]`);
+        if (key) {
+          key.classList.add('key-pressed');
+          setTimeout(() => key.classList.remove('key-pressed'), 150);
+        }
+      } 
+      // Enter для отправки догадки
+      else if (event.key === 'Enter') {
+        submitGuess();
+        
+        // Анимация нажатия клавиши на экранной клавиатуре
+        const key = document.querySelector(`.key[data-key="Enter"]`);
+        if (key) {
+          key.classList.add('key-pressed');
+          setTimeout(() => key.classList.remove('key-pressed'), 150);
+        }
+      }
+    }
+  });
+
+  // Обработчик для кнопок уровня сложности
+  document.querySelectorAll('.difficulty-button').forEach(button => {
+    button.addEventListener('click', function() {
+      // Убираем активный класс со всех кнопок
+      document.querySelectorAll('.difficulty-button').forEach(btn => btn.classList.remove('active'));
+      
+      // Добавляем активный класс к нажатой кнопке
+      this.classList.add('active');
+      
+      // Получаем уровень сложности из data-атрибута
+      const level = this.dataset.level;
+      
+      // Обновляем текущий уровень сложности
+      switchDifficulty(level);
+      
+      // Добавляем эффект нажатия кнопки
+      this.classList.add('pop');
+      setTimeout(() => this.classList.remove('pop'), 300);
+    });
+  });
+
+  // Обработчик для кнопки подсказки
+  const hintButton = document.getElementById('hintButton');
+  if (hintButton) {
+    hintButton.addEventListener('click', function() {
+      useHint();
+      
+      // Добавляем эффект нажатия
+      this.classList.add('pop');
+      setTimeout(() => this.classList.remove('pop'), 300);
+    });
+  }
+
+  // Обработчик для кнопки "Новая игра"
+  const newGameButton = document.getElementById('newGameButton');
+  if (newGameButton) {
+    newGameButton.addEventListener('click', function() {
+      startNewGame();
+      
+      // Добавляем эффект нажатия
+      this.classList.add('pop');
+      setTimeout(() => this.classList.remove('pop'), 300);
+    });
+  }
+
+  // Обработчик для кнопки мультиплеера
+  const multiplayerToggle = document.getElementById('multiplayerToggle');
+  if (multiplayerToggle) {
+    multiplayerToggle.addEventListener('click', function() {
+      toggleMultiplayerMode();
+      
+      // Добавляем эффект нажатия
+      this.classList.add('pop');
+      setTimeout(() => this.classList.remove('pop'), 300);
+    });
+  }
+
+  // Обработчик для кнопки достижений
+  const achievementsButton = document.getElementById('achievementsButton');
+  if (achievementsButton) {
+    achievementsButton.addEventListener('click', function() {
+      showAchievements();
+      
+      // Добавляем эффект нажатия
+      this.classList.add('pop');
+      setTimeout(() => this.classList.remove('pop'), 300);
+    });
+  }
+
+  // Обработчик для закрытия модальных окон
+  document.querySelectorAll('.close-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const modal = this.closest('.modal');
+      hideModal(modal.id);
+    });
+  });
+
+  // Добавляем слушатель для обновления активной ячейки при клике
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('letter-box') && gameState && gameState.gameStatus === 'playing') {
+      // Если клик был по ячейке, определяем её строку и колонку
+      const row = parseInt(event.target.parentElement.dataset.row);
+      const col = parseInt(event.target.dataset.col);
+      
+      // Если ячейка в текущей строке
+      if (row === gameState.currentRow && col < gameState.currentGuess.length) {
+        // Устанавливаем курсор на эту ячейку
+        gameState.currentGuess = gameState.currentGuess.substring(0, col);
+        
+        // Очищаем ячейки после текущей
+        for (let i = col; i < gameState.currentWord.length; i++) {
+          const cell = document.querySelector(`.row[data-row="${row}"] .letter-box[data-col="${i}"]`);
+          if (cell) {
+            cell.textContent = '';
+          }
+        }
+        
+        // Обновляем активную ячейку
+        updateActiveCell();
+        
+        // Анимация выбора ячейки
+        event.target.classList.add('pop');
+        setTimeout(() => event.target.classList.remove('pop'), 300);
+      }
+    }
+  });
+
+  // Инициализация игры
   initGame();
-  initEventListeners();
   
   // Пометка активной кнопки сложности
   const activeButton = document.querySelector(`.difficulty-button[data-level="${gameState.difficultyLevel}"]`);
@@ -96,25 +250,6 @@ window.addEventListener('keydown', (e) => {
   if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(e.key)) {
     if (document.activeElement === document.body) {
       e.preventDefault();
-    }
-  }
-});
-
-// Обработчик нажатия клавиш на физической клавиатуре
-document.addEventListener('keydown', function(event) {
-  // Если игра активна
-  if (!gameEnded) {
-    handleKeyPress(event.key);
-    
-    // Добавляем визуальную анимацию нажатия для соответствующей клавиши на экранной клавиатуре
-    const key = document.querySelector(`.key[data-key="${event.key.toLowerCase()}"]`) || 
-               document.querySelector(`.key[data-key="${event.key}"]`);
-    
-    if (key) {
-      key.classList.add('key-pressed');
-      setTimeout(() => {
-        key.classList.remove('key-pressed');
-      }, 150);
     }
   }
 });
@@ -134,7 +269,7 @@ document.querySelectorAll('.difficulty-button').forEach(button => {
     const level = this.dataset.level;
     
     // Обновляем текущий уровень сложности
-    changeDifficulty(level);
+    switchDifficulty(level);
     
     // Добавляем эффект нажатия кнопки
     this.classList.add('pop');
@@ -168,7 +303,7 @@ document.getElementById('newGameButton').addEventListener('click', function() {
 
 // Обработчик для кнопки мультиплеера
 document.getElementById('multiplayerToggle').addEventListener('click', function() {
-  toggleMultiplayer();
+  toggleMultiplayerMode();
   
   // Добавляем эффект нажатия
   this.classList.add('pop');
@@ -204,8 +339,8 @@ function updateActiveCell() {
   });
   
   // Если мы находимся в пределах возможных ячеек, добавляем класс active к текущей
-  if (currentCol < wordLength && currentRow < maxRows) {
-    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
+  if (gameState.currentCol < gameState.currentWord.length && gameState.currentRow < gameState.maxAttempts) {
+    const cell = document.querySelector(`.row[data-row="${gameState.currentRow}"] .letter-box[data-col="${gameState.currentCol}"]`);
     if (cell) {
       cell.classList.add('active');
     }
@@ -261,9 +396,9 @@ document.addEventListener('click', function(event) {
     const col = parseInt(event.target.dataset.col);
     
     // Если ячейка в текущей строке
-    if (row === currentRow && col < currentCol) {
+    if (row === gameState.currentRow && col < gameState.currentCol) {
       // Устанавливаем курсор на эту ячейку
-      currentCol = col;
+      gameState.currentCol = col;
       updateActiveCell();
       
       // Анимация выбора ячейки

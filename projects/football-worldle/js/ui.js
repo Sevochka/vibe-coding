@@ -10,10 +10,12 @@ const renderBoard = () => {
   for (let i = 0; i < gameState.maxAttempts; i++) {
     const row = document.createElement('div');
     row.className = 'row';
+    row.dataset.row = i;
     
     for (let j = 0; j < wordLength; j++) {
       const letterBox = document.createElement('div');
       letterBox.className = 'letter-box';
+      letterBox.dataset.col = j;
       row.appendChild(letterBox);
     }
     
@@ -35,61 +37,17 @@ const renderBoard = () => {
   }
   
   updateBoard();
+  updateActiveCell();
 };
 
 // Отрисовка клавиатуры
 const renderKeyboard = () => {
-  const keyboard = document.querySelector('.keyboard');
-  keyboard.innerHTML = '';
-  
-  const rows = [
-    ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
-    ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
-    ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', 'Backspace', 'Enter']
-  ];
-  
-  rows.forEach(row => {
-    const keyboardRow = document.createElement('div');
-    keyboardRow.className = 'keyboard-row';
-    
-    row.forEach(key => {
-      const keyElement = document.createElement('div');
-      keyElement.className = 'key';
-      
-      if (key === 'Enter' || key === 'Backspace') {
-        keyElement.classList.add('wide');
-        keyElement.textContent = key === 'Enter' ? '✓' : '←';
-      } else {
-        keyElement.textContent = key;
-      }
-      
-      keyElement.addEventListener('click', () => {
-        if (key === 'Enter') {
-          submitGuess();
-        } else if (key === 'Backspace') {
-          removeLetter();
-        } else if (key === '_') { // Для спец. символа пробел
-          addLetter('_');
-        } else {
-          addLetter(key);
-        }
-      });
-      
-      keyboardRow.appendChild(keyElement);
-    });
-    
-    keyboard.appendChild(keyboardRow);
-  });
-  
-  // Если есть сохраненный статус клавиатуры, применяем его
-  if (Object.keys(gameState.keyboardStatus).length > 0) {
-    updateKeyboardDisplay();
-  }
+  createKeyboard();
 };
 
 // Обновление отображения текущей догадки на доске
 const updateBoard = () => {
-  const currentRow = document.querySelectorAll('.board .row')[gameState.currentRow];
+  const currentRow = document.querySelector(`.row[data-row="${gameState.currentRow}"]`);
   if (!currentRow) return;
   
   const letterBoxes = currentRow.querySelectorAll('.letter-box');
@@ -100,6 +58,7 @@ const updateBoard = () => {
     box.textContent = '';
     if (!box.classList.contains('letter-correct')) {
       box.className = 'letter-box';
+      box.dataset.col = box.dataset.col; // Сохраняем атрибут data-col
     }
   });
   
@@ -619,24 +578,63 @@ const provideTacticalHint = () => {
 };
 
 // Функция для начала новой игры
-const startNewGame = () => {
-  closeModal();
+function startNewGame() {
+  // Закрыть все модальные окна
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.classList.remove('show');
+  });
+  
+  // Сбросить состояние игры
   resetGameState();
   chooseRandomWord();
+  
+  // Перерисовываем доску и клавиатуру
+  renderBoard();
+  createKeyboard();
+  
+  // Обновляем интерфейс
+  updateScoreboard();
+  updatePlayerStatus();
   
   // Если была тема дня, сохраняем ее
   if (gameState.currentTheme) {
     showThemeDay(gameState.currentTheme);
   }
   
-  // Перерисовываем доску
-  renderBoard();
-  
   // Сбрасываем использование подсказки
-  document.getElementById('hintButton').disabled = false;
+  const hintButton = document.getElementById('hintButton');
+  if (hintButton) {
+    hintButton.disabled = false;
+  }
   
-  showMessage('Новая игра началась!');
-};
+  // Показываем сообщение
+  showToast('Новая игра началась!');
+  
+  // Обновляем активную ячейку
+  updateActiveCell();
+}
+
+// Обновляем активность текущей ячейки
+function updateActiveCell() {
+  // Сначала удаляем класс active со всех ячеек
+  document.querySelectorAll('.letter-box').forEach(cell => {
+    cell.classList.remove('active');
+  });
+  
+  // Если мы находимся в пределах возможных ячеек, добавляем класс active к текущей
+  if (gameState.currentRow < gameState.maxAttempts) {
+    const row = document.querySelector(`.row[data-row="${gameState.currentRow}"]`);
+    if (row) {
+      const currentCol = gameState.currentGuess.length;
+      if (currentCol < gameState.currentWord.length) {
+        const cell = row.querySelector(`.letter-box[data-col="${currentCol}"]`);
+        if (cell) {
+          cell.classList.add('active');
+        }
+      }
+    }
+  }
+}
 
 // Переключение режима мультиплеера
 const toggleMultiplayerMode = () => {
@@ -662,7 +660,7 @@ const toggleMultiplayerMode = () => {
   renderBoard();
 };
 
-// Добавляем анимацию нажатия клавиш
+// Создание клавиатуры с анимацией нажатия
 function createKeyboard() {
   const keyboard = document.querySelector('.keyboard');
   keyboard.innerHTML = '';
@@ -703,7 +701,13 @@ function createKeyboard() {
           key.classList.remove('key-pressed');
         }, 150);
         
-        handleKeyPress(e.target.dataset.key);
+        if (letter === 'Enter') {
+          submitGuess();
+        } else if (letter === 'Backspace') {
+          removeLetter();
+        } else {
+          addLetter(letter);
+        }
       });
       
       rowElement.appendChild(key);
@@ -711,6 +715,33 @@ function createKeyboard() {
     
     keyboard.appendChild(rowElement);
   });
+
+  // Если есть сохраненный статус клавиатуры, применяем его
+  if (gameState && Object.keys(gameState.keyboardStatus).length > 0) {
+    updateKeyboardDisplay();
+  }
+}
+
+// Обработчик нажатия клавиш
+function handleKeyPress(key) {
+  if (gameState.gameStatus !== 'playing') return;
+  
+  // Буквы русского алфавита
+  if (/^[А-яЁё]$/.test(key)) {
+    addLetter(key.toLowerCase());
+  } 
+  // Специальный символ для пробела в составных словах
+  else if (key === '_') {
+    addLetter('_');
+  }
+  // Backspace для удаления букв
+  else if (key === 'Backspace') {
+    removeLetter();
+  } 
+  // Enter для отправки догадки
+  else if (key === 'Enter') {
+    submitGuess();
+  }
 }
 
 // Обновленный метод для проверки букв с анимацией
@@ -884,36 +915,6 @@ function showModal(id, content) {
 function hideModal(id) {
   const modal = document.getElementById(id);
   modal.classList.remove('show');
-}
-
-// Обновленная функция для показа уведомления
-function showToast(message, duration = 3000) {
-  let toast = document.querySelector('.toast');
-  
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.classList.add('toast');
-    document.body.appendChild(toast);
-  }
-  
-  toast.textContent = message;
-  
-  // Анимированное появление
-  setTimeout(() => {
-    toast.classList.add('show');
-  }, 10);
-  
-  // Скрытие через заданное время
-  setTimeout(() => {
-    toast.classList.remove('show');
-    
-    // Удаление элемента после скрытия
-    setTimeout(() => {
-      if (toast.parentNode) {
-        toast.parentNode.removeChild(toast);
-      }
-    }, 300);
-  }, duration);
 }
 
 // Обновленная функция для анимации победы
