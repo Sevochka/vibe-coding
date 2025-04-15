@@ -133,20 +133,37 @@ const shakeCurrentRow = () => {
 
 // Отображение сообщения игроку
 const showMessage = (message) => {
-  const toast = document.querySelector('.toast');
+  showToast(message);
+};
+
+// Функция для отображения уведомлений (toast)
+const showToast = (message, duration = 3000) => {
+  let toast = document.querySelector('.toast');
+  
   if (!toast) {
-    const newToast = document.createElement('div');
-    newToast.className = 'toast';
-    document.body.appendChild(newToast);
+    toast = document.createElement('div');
+    toast.classList.add('toast');
+    document.body.appendChild(toast);
   }
   
-  const toastElement = document.querySelector('.toast');
-  toastElement.textContent = message;
-  toastElement.classList.add('show');
+  toast.textContent = message;
   
+  // Анимированное появление
   setTimeout(() => {
-    toastElement.classList.remove('show');
-  }, 2000);
+    toast.classList.add('show');
+  }, 10);
+  
+  // Скрытие через заданное время
+  setTimeout(() => {
+    toast.classList.remove('show');
+    
+    // Удаление элемента после скрытия
+    setTimeout(() => {
+      if (toast.parentNode) {
+        toast.parentNode.removeChild(toast);
+      }
+    }, 300);
+  }, duration);
 };
 
 // Обновление табло
@@ -185,6 +202,28 @@ const updatePlayerStatus = () => {
     } else {
       // Максимальный уровень
       progressFill.style.width = '100%';
+    }
+  }
+};
+
+// Обновляем активность текущей ячейки
+const updateActiveCell = () => {
+  // Сначала удаляем класс active со всех ячеек
+  document.querySelectorAll('.letter-box').forEach(cell => {
+    cell.classList.remove('active');
+  });
+  
+  // Если мы находимся в пределах возможных ячеек, добавляем класс active к текущей
+  if (gameState.currentRow < gameState.maxAttempts) {
+    const row = document.querySelector(`.row[data-row="${gameState.currentRow}"]`);
+    if (row) {
+      const currentCol = gameState.currentGuess.length;
+      if (currentCol < gameState.currentWord.length) {
+        const cell = row.querySelector(`.letter-box[data-col="${currentCol}"]`);
+        if (cell) {
+          cell.classList.add('active');
+        }
+      }
     }
   }
 };
@@ -268,10 +307,11 @@ const showGameResult = (isWin) => {
 };
 
 // Закрыть модальное окно
-const closeModal = () => {
-  document.querySelectorAll('.modal').forEach(modal => {
+const hideModal = (id) => {
+  const modal = document.getElementById(id);
+  if (modal) {
     modal.classList.remove('show');
-  });
+  }
 };
 
 // Показать достижения
@@ -299,7 +339,7 @@ const showAchievements = () => {
   });
   
   // Закрываем предыдущее модальное окно, если оно открыто
-  closeModal();
+  hideModal('resultModal');
   
   // Открываем модальное окно с достижениями
   modal.classList.add('show');
@@ -337,331 +377,8 @@ const showThemeDay = (theme) => {
   themeDayElement.style.display = 'block';
 };
 
-// Установка случайного тематического дня
-const setRandomThemeDay = () => {
-  const themes = ['champions', 'transfers', 'stadiums'];
-  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-  
-  gameState.currentTheme = randomTheme;
-  
-  // Сохраняем тему дня
-  const today = new Date().toLocaleDateString('ru-RU');
-  localStorage.setItem('themeDay', today);
-  localStorage.setItem('currentTheme', randomTheme);
-  
-  // Обновляем игру с новой темой
-  resetGameState();
-  chooseRandomWord();
-  
-  // Показываем тему дня
-  showThemeDay(randomTheme);
-};
-
-// Создание анимации гола
-const createGoalAnimation = () => {
-  const stadium = document.querySelector('.stadium');
-  if (!stadium) return;
-  
-  // Создаем мяч
-  const ball = document.createElement('div');
-  ball.className = 'ball';
-  ball.style.left = '50%';
-  ball.style.bottom = '20px';
-  stadium.appendChild(ball);
-  
-  // Анимируем движение мяча
-  setTimeout(() => {
-    ball.style.bottom = '120px';
-    ball.style.left = Math.random() > 0.5 ? '30%' : '70%';
-    
-    // Добавляем анимацию гола
-    setTimeout(() => {
-      ball.classList.add('goal-animation');
-      
-      // Удаляем мяч после анимации
-      setTimeout(() => {
-        ball.remove();
-      }, 1000);
-    }, 300);
-  }, 100);
-};
-
-// Создание анимации сейва
-const createSaveAnimation = () => {
-  const stadium = document.querySelector('.stadium');
-  if (!stadium) return;
-  
-  // Создаем мяч
-  const ball = document.createElement('div');
-  ball.className = 'ball';
-  ball.style.left = '50%';
-  ball.style.bottom = '20px';
-  stadium.appendChild(ball);
-  
-  // Анимируем движение мяча
-  setTimeout(() => {
-    ball.style.bottom = '80px';
-    ball.style.left = Math.random() > 0.5 ? '30%' : '70%';
-    
-    // Добавляем анимацию сейва
-    setTimeout(() => {
-      ball.classList.add('save-animation');
-      
-      // Удаляем мяч после анимации
-      setTimeout(() => {
-        ball.remove();
-      }, 1000);
-    }, 300);
-  }, 100);
-};
-
-// Показать анимацию "замены" (подсказки)
-const showSubstitutionAnimation = () => {
-  const substitutionCard = document.createElement('div');
-  substitutionCard.className = 'substitution-card';
-  substitutionCard.innerHTML = `
-    <div class="card-inner">
-      <div class="player-number">↑↓</div>
-      <div class="substitution-text">ЗАМЕНА</div>
-    </div>
-  `;
-  document.body.appendChild(substitutionCard);
-  
-  // Анимируем появление и исчезновение карточки
-  setTimeout(() => {
-    substitutionCard.classList.add('show');
-    
-    setTimeout(() => {
-      substitutionCard.classList.remove('show');
-      
-      setTimeout(() => {
-        substitutionCard.remove();
-      }, 500);
-    }, 1500);
-  }, 100);
-};
-
-// Проверка на достижения
-const checkAchievements = () => {
-  // Первый гол
-  if (gameState.goalCount === 1) {
-    checkAchievement('first_goal');
-  }
-  
-  // Хет-трик (три слова подряд)
-  if (gameState.streakCount >= 3) {
-    checkAchievement('hat_trick');
-  }
-  
-  // Сухой матч (слово с первой попытки)
-  if (gameState.currentRow === 0) {
-    checkAchievement('clean_sheet');
-  }
-  
-  // Супер сейв (слово на последней попытке)
-  if (gameState.currentRow === gameState.maxAttempts - 1) {
-    checkAchievement('super_save');
-  }
-  
-  // Лига Чемпионов (500+ очков)
-  if (gameState.playerPoints >= 500) {
-    checkAchievement('champions_league');
-  }
-  
-  // Золотая бутса (10+ слов подряд)
-  if (gameState.streakCount >= 10) {
-    checkAchievement('golden_boot');
-  }
-  
-  // Контроль мяча (5 слов без подсказок)
-  // Для этого нужно отслеживать серию игр без подсказок отдельно
-  const gamesWithoutHint = localStorage.getItem('gamesWithoutHint') || 0;
-  if (!gameState.usedHint) {
-    localStorage.setItem('gamesWithoutHint', Number(gamesWithoutHint) + 1);
-    if (Number(gamesWithoutHint) + 1 >= 5) {
-      checkAchievement('ball_control');
-    }
-  } else {
-    localStorage.setItem('gamesWithoutHint', 0);
-  }
-};
-
-// Проверка на конкретное достижение
-const checkAchievement = (achievementId) => {
-  if (gameState.earnedAchievements.includes(achievementId)) return;
-  
-  const achievement = achievements.find(a => a.id === achievementId);
-  if (achievement) {
-    gameState.earnedAchievements.push(achievementId);
-    showAchievementUnlocked(achievement);
-    saveGameProgress();
-  }
-};
-
-// Показать анимацию разблокированного достижения
-const showAchievementUnlocked = (achievement) => {
-  const achievementToast = document.createElement('div');
-  achievementToast.className = 'achievement-toast';
-  achievementToast.innerHTML = `
-    <div class="achievement-icon">${achievement.icon}</div>
-    <div class="achievement-info">
-      <div class="achievement-title">Достижение разблокировано!</div>
-      <div class="achievement-name">${achievement.name}</div>
-    </div>
-  `;
-  
-  document.body.appendChild(achievementToast);
-  
-  setTimeout(() => {
-    achievementToast.classList.add('show');
-    
-    setTimeout(() => {
-      achievementToast.classList.remove('show');
-      
-      setTimeout(() => {
-        achievementToast.remove();
-      }, 500);
-    }, 3000);
-  }, 100);
-};
-
-// Предоставить тактическую подсказку
-const provideTacticalHint = () => {
-  if (gameState.gameStatus !== 'playing' || gameState.guesses.length === 0) return;
-  
-  const lastGuess = gameState.guesses[gameState.guesses.length - 1].toUpperCase();
-  const targetWord = gameState.currentWord.toUpperCase();
-  
-  // Находим наибольшее расстояние между буквами
-  let maxDistance = 0;
-  let isCloseOverall = true;
-  
-  for (let i = 0; i < lastGuess.length; i++) {
-    if (lastGuess[i] === targetWord[i]) continue; // Пропускаем правильные буквы
-    
-    // Находим расстояние между буквами в алфавите
-    const lastGuessCode = lastGuess.charCodeAt(i);
-    const targetWordCode = targetWord.charCodeAt(i);
-    const distance = Math.abs(lastGuessCode - targetWordCode);
-    
-    if (distance > maxDistance) {
-      maxDistance = distance;
-    }
-    
-    if (distance > 5) { // Если расстояние больше 5, считаем что буква далека
-      isCloseOverall = false;
-    }
-  }
-  
-  const tacticalHintElement = document.querySelector('.tactical-hint');
-  let hintMessage;
-  
-  // Выбираем подходящую подсказку
-  if (maxDistance > 10) {
-    // Далекие буквы
-    const randomIndex = Math.floor(Math.random() * tacticalHints.farLetter.length);
-    hintMessage = tacticalHints.farLetter[randomIndex];
-  } else if (isCloseOverall) {
-    // Близкие буквы
-    const randomIndex = Math.floor(Math.random() * tacticalHints.closeLetter.length);
-    hintMessage = tacticalHints.closeLetter[randomIndex];
-  } else {
-    // Средние буквы - просто случайная подсказка
-    const hints = [...tacticalHints.farLetter, ...tacticalHints.closeLetter];
-    const randomIndex = Math.floor(Math.random() * hints.length);
-    hintMessage = hints[randomIndex];
-  }
-  
-  if (tacticalHintElement) {
-    tacticalHintElement.textContent = hintMessage;
-  }
-};
-
-// Функция для начала новой игры
-function startNewGame() {
-  // Закрыть все модальные окна
-  document.querySelectorAll('.modal').forEach(modal => {
-    modal.classList.remove('show');
-  });
-  
-  // Сбросить состояние игры
-  resetGameState();
-  chooseRandomWord();
-  
-  // Перерисовываем доску и клавиатуру
-  renderBoard();
-  createKeyboard();
-  
-  // Обновляем интерфейс
-  updateScoreboard();
-  updatePlayerStatus();
-  
-  // Если была тема дня, сохраняем ее
-  if (gameState.currentTheme) {
-    showThemeDay(gameState.currentTheme);
-  }
-  
-  // Сбрасываем использование подсказки
-  const hintButton = document.getElementById('hintButton');
-  if (hintButton) {
-    hintButton.disabled = false;
-  }
-  
-  // Показываем сообщение
-  showToast('Новая игра началась!');
-  
-  // Обновляем активную ячейку
-  updateActiveCell();
-}
-
-// Обновляем активность текущей ячейки
-function updateActiveCell() {
-  // Сначала удаляем класс active со всех ячеек
-  document.querySelectorAll('.letter-box').forEach(cell => {
-    cell.classList.remove('active');
-  });
-  
-  // Если мы находимся в пределах возможных ячеек, добавляем класс active к текущей
-  if (gameState.currentRow < gameState.maxAttempts) {
-    const row = document.querySelector(`.row[data-row="${gameState.currentRow}"]`);
-    if (row) {
-      const currentCol = gameState.currentGuess.length;
-      if (currentCol < gameState.currentWord.length) {
-        const cell = row.querySelector(`.letter-box[data-col="${currentCol}"]`);
-        if (cell) {
-          cell.classList.add('active');
-        }
-      }
-    }
-  }
-}
-
-// Переключение режима мультиплеера
-const toggleMultiplayerMode = () => {
-  gameState.multiplayerMode = !gameState.multiplayerMode;
-  
-  const multiplayerSection = document.querySelector('.multiplayer-section');
-  
-  if (gameState.multiplayerMode) {
-    multiplayerSection.style.display = 'block';
-    gameState.currentPlayer = 1;
-    gameState.player1Score = 0;
-    gameState.player2Score = 0;
-    updatePlayerTurn();
-    showMessage('Режим дуэли активирован!');
-  } else {
-    multiplayerSection.style.display = 'none';
-    showMessage('Режим дуэли выключен');
-  }
-  
-  // Перезапускаем игру для мультиплеера
-  resetGameState();
-  chooseRandomWord();
-  renderBoard();
-};
-
 // Создание клавиатуры с анимацией нажатия
-function createKeyboard() {
+const createKeyboard = () => {
   const keyboard = document.querySelector('.keyboard');
   keyboard.innerHTML = '';
 
@@ -720,298 +437,4 @@ function createKeyboard() {
   if (gameState && Object.keys(gameState.keyboardStatus).length > 0) {
     updateKeyboardDisplay();
   }
-}
-
-// Обработчик нажатия клавиш
-function handleKeyPress(key) {
-  if (gameState.gameStatus !== 'playing') return;
-  
-  // Буквы русского алфавита
-  if (/^[А-яЁё]$/.test(key)) {
-    addLetter(key.toLowerCase());
-  } 
-  // Специальный символ для пробела в составных словах
-  else if (key === '_') {
-    addLetter('_');
-  }
-  // Backspace для удаления букв
-  else if (key === 'Backspace') {
-    removeLetter();
-  } 
-  // Enter для отправки догадки
-  else if (key === 'Enter') {
-    submitGuess();
-  }
-}
-
-// Обновленный метод для проверки букв с анимацией
-function checkWord(word, attempt) {
-  word = word.toLowerCase();
-  attempt = attempt.toLowerCase();
-
-  const letterStatuses = Array(attempt.length).fill('absent');
-  const wordLetters = word.split('');
-  
-  // Сначала проверим точные совпадения
-  for (let i = 0; i < attempt.length; i++) {
-    if (attempt[i] === wordLetters[i]) {
-      letterStatuses[i] = 'correct';
-      wordLetters[i] = null; // Помечаем букву как использованную
-    }
-  }
-  
-  // Теперь проверим буквы, которые присутствуют, но на других позициях
-  for (let i = 0; i < attempt.length; i++) {
-    if (letterStatuses[i] !== 'correct') {
-      const letterIndex = wordLetters.indexOf(attempt[i]);
-      if (letterIndex !== -1) {
-        letterStatuses[i] = 'present';
-        wordLetters[letterIndex] = null; // Помечаем букву как использованную
-      }
-    }
-  }
-  
-  return letterStatuses;
-}
-
-// Обновленный метод для анимированного добавления букв
-function addLetter(letter) {
-  if (currentCol < wordLength && currentRow < maxRows) {
-    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
-    cell.textContent = letter.toUpperCase();
-    
-    // Добавляем анимацию
-    cell.classList.add('pop');
-    
-    // Убираем класс после завершения анимации
-    setTimeout(() => {
-      cell.classList.remove('pop');
-    }, 300);
-    
-    currentCol++;
-  }
-}
-
-// Обновленная функция для анимированного удаления букв
-function deleteLetter() {
-  if (currentCol > 0 && currentRow < maxRows) {
-    currentCol--;
-    const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${currentCol}"]`);
-    
-    // Добавляем анимацию
-    cell.classList.add('shake');
-    
-    // Убираем класс после завершения анимации
-    setTimeout(() => {
-      cell.textContent = '';
-      cell.classList.remove('shake');
-    }, 100);
-  }
-}
-
-// Обновленная функция для анимированной проверки слов
-function submitWord() {
-  if (currentCol === wordLength) {
-    let attempt = '';
-    
-    for (let i = 0; i < wordLength; i++) {
-      const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${i}"]`);
-      attempt += cell.textContent.toLowerCase();
-    }
-    
-    // Проверяем наличие слова в словаре
-    if (!isValidWord(attempt)) {
-      // Анимация для невалидного слова
-      const row = document.querySelector(`.row[data-row="${currentRow}"]`);
-      row.classList.add('shake');
-      
-      // Показываем уведомление
-      showToast('Такого слова нет в словаре');
-      
-      // Удаляем класс анимации
-      setTimeout(() => {
-        row.classList.remove('shake');
-      }, 500);
-      
-      return;
-    }
-    
-    const letterStatuses = checkWord(currentWord, attempt);
-    
-    // Анимированное обновление ячеек и клавиатуры
-    for (let i = 0; i < wordLength; i++) {
-      const cell = document.querySelector(`.row[data-row="${currentRow}"] .letter-box[data-col="${i}"]`);
-      const letter = cell.textContent.toLowerCase();
-      const status = letterStatuses[i];
-      
-      // Используем setTimeout для последовательной анимации
-      setTimeout(() => {
-        // Добавляем класс для анимации переворота
-        cell.classList.add('reveal');
-        
-        // После завершения половины анимации добавляем класс статуса
-        setTimeout(() => {
-          cell.classList.add(`letter-${status}`);
-          cell.classList.add('highlight');
-          
-          // Обновляем клавишу на клавиатуре
-          const key = document.querySelector(`.key[data-key="${letter}"]`);
-          if (key) {
-            // Обновляем статус клавиши только если текущий статус хуже
-            if (status === 'correct' || 
-               (status === 'present' && !key.classList.contains('key-correct')) ||
-               (status === 'absent' && !key.classList.contains('key-correct') && !key.classList.contains('key-present'))) {
-              key.classList.remove('key-correct', 'key-present', 'key-absent');
-              key.classList.add(`key-${status}`);
-            }
-          }
-          
-          // Убираем класс анимации переворота
-          setTimeout(() => {
-            cell.classList.remove('reveal');
-            cell.classList.remove('highlight');
-          }, 300);
-        }, 150);
-      }, i * 200);
-    }
-    
-    // Проверяем результат через время анимации
-    setTimeout(() => {
-      if (attempt === currentWord) {
-        handleWin();
-      } else if (currentRow === maxRows - 1) {
-        handleLoss();
-      } else {
-        currentRow++;
-        currentCol = 0;
-        
-        // Обновляем подсказку
-        if (hints.length > currentRow) {
-          showHint(hints[currentRow]);
-        }
-      }
-    }, wordLength * 200 + 300);
-  }
-}
-
-// Обновленная функция для показа модального окна
-function showModal(id, content) {
-  const modal = document.getElementById(id);
-  
-  if (content) {
-    const contentContainer = modal.querySelector('.modal-content-inner');
-    contentContainer.innerHTML = content;
-  }
-  
-  // Добавляем класс для показа с анимацией
-  modal.classList.add('show');
-  
-  // Привязываем обработчик к кнопке закрытия
-  const closeBtn = modal.querySelector('.close-btn');
-  closeBtn.addEventListener('click', () => hideModal(id));
-}
-
-// Обновленная функция для скрытия модального окна
-function hideModal(id) {
-  const modal = document.getElementById(id);
-  modal.classList.remove('show');
-}
-
-// Обновленная функция для анимации победы
-function handleWin() {
-  gameState.playerScore++;
-  updateScoreboard();
-  
-  // Эффект победного гола
-  const board = document.querySelector('.board');
-  board.classList.add('goal-animation');
-  
-  // Анимация мяча
-  addBallAnimation(true);
-  
-  // Показ модального окна с поздравлением
-  const message = `
-    <div class="win-message">
-      <h3 class="float">ГОООООЛ!</h3>
-      <p>Вы угадали слово <strong>${currentWord.toUpperCase()}</strong>!</p>
-      <div class="score-info">
-        <div>Попыток: <strong>${currentRow + 1}/${maxRows}</strong></div>
-        <div>Счет: <strong>${gameState.playerScore}:${gameState.goalkeeperScore}</strong></div>
-      </div>
-      <button class="button" onclick="hideModal('resultModal'); startNewGame();">Следующее слово</button>
-    </div>
-  `;
-  
-  // Добавляем очки в зависимости от сложности
-  updatePlayerProgress(20);
-  
-  // Проверяем достижения
-  checkAchievements();
-  
-  setTimeout(() => {
-    showModal('resultModal', message);
-    board.classList.remove('goal-animation');
-  }, 1000);
-}
-
-// Обновленная функция для анимации поражения
-function handleLoss() {
-  gameState.goalkeeperScore++;
-  updateScoreboard();
-  
-  // Эффект "вратарь поймал"
-  const board = document.querySelector('.board');
-  board.classList.add('save-animation');
-  
-  // Анимация мяча
-  addBallAnimation(false);
-  
-  // Показ модального окна
-  const message = `
-    <div class="loss-message">
-      <h3>Вратарь спас!</h3>
-      <p>Загаданное слово: <strong>${currentWord.toUpperCase()}</strong></p>
-      <div class="score-info">
-        <div>Счет: <strong>${gameState.playerScore}:${gameState.goalkeeperScore}</strong></div>
-      </div>
-      <button class="button" onclick="hideModal('resultModal'); startNewGame();">Следующее слово</button>
-    </div>
-  `;
-  
-  setTimeout(() => {
-    showModal('resultModal', message);
-    board.classList.remove('save-animation');
-  }, 1000);
-}
-
-// Добавляем анимацию мяча
-function addBallAnimation(isGoal) {
-  const ball = document.createElement('div');
-  ball.classList.add('ball');
-  
-  const stadium = document.querySelector('.stadium');
-  stadium.appendChild(ball);
-  
-  // Начальная позиция мяча
-  ball.style.left = '50%';
-  ball.style.bottom = '20px';
-  
-  setTimeout(() => {
-    if (isGoal) {
-      // Мяч летит в ворота
-      ball.style.left = '70%';
-      ball.style.bottom = '80%';
-    } else {
-      // Вратарь ловит мяч
-      ball.style.left = '30%';
-      ball.style.bottom = '50%';
-    }
-    
-    // Удаляем мяч после анимации
-    setTimeout(() => {
-      stadium.removeChild(ball);
-    }, 1000);
-  }, 100);
-}
-
-// ... existing code ... 
+}; 
