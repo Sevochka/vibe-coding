@@ -3,9 +3,9 @@ description:
 globs: 
 alwaysApply: true
 ---
-- Max width of quiz is 660px
+- Max width of project is 660px
 - When asked to give "код отображения в посте", give this (project-name is name of the folder) - 
-<iframe class="auto-height" height="668" id="special-quiz-{project-name}" src="https://vibe-coding-blush.vercel.app/quizes/{project-name}/" style="border: 0px;" width="100%"></iframe>
+<iframe class="auto-height" height="668" id="special-project-{project-name}" src="https://vibe-coding-blush.vercel.app/projects/{project-name}/" style="border: 0px;" width="100%"></iframe>
 
 <script src="https://basic-tests-static.sports.ru/resize.js"></script>
 
@@ -14,7 +14,7 @@ const resize = () => {
       const dataUTILS = {
         for: 'BASIC_TEST',
         action: 'resizeIframe',
-        selector: `iframe[src*=\\/specials\\/${this.quizId}], iframe[src*=\\/special\\/basic-tests\\/${this.quizId}]`,
+        selector: `iframe[src*=\\/projects\\/${projectSlug}]]`,
         sizes: {
           height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
         },
