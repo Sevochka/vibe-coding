@@ -17,3 +17,4 @@ const resizeObserver = new ResizeObserver(() => {
   resize();
 });
 resizeObserver.observe(document.body); 
+resize();
