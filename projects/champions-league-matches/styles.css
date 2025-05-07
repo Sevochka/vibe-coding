@@ -1,5 +1,5 @@
 :root {
-    /* Брендированные цвета для Sports */
+    /* Branded Colors for Sports */
     --sports-primary-color: #00c78b;
     --sports-primary-color-hover: #21a67e;
     --sports-primary-light-color-hover: #d8f7e5;
@@ -61,16 +61,16 @@ html {
 body {
     font-family: var(--ui-font-family-body);
     background-color: var(--ui-bg);
-    color: var(--sports-black);
+    color: var(--sports-grey-900);
     line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0;
 }
 
 .container {
-    max-width: 660px;
+    width: 100%;
     padding: 16px;
-    margin: 0 auto;
 }
 
 .header {
@@ -81,207 +81,151 @@ body {
     text-align: center;
 }
 
-.logo {
+.logo-link {
     display: block;
     margin-bottom: 16px;
 }
 
-.logo img {
-    height: 30px;
-    width: auto;
+.logo {
+    height: 40px;
 }
 
 .title {
     font-family: var(--ui-font-family-heading);
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--sports-black);
+    font-size: 24px;
+    color: var(--sports-green-900);
     margin-bottom: 8px;
 }
 
 .matches-container {
     position: relative;
-    min-height: 200px;
+    width: 100%;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 199, 139, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--sports-primary-color);
+    animation: spin 1s ease-in-out infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .matches-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+    width: 100%;
 }
 
 .match-card {
+    display: flex;
+    flex-direction: column;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    padding: 16px;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--sports-grey-100);
 }
 
 .match-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .match-header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 14px;
+    background-color: var(--sports-green-50);
+    padding: 8px 12px;
 }
 
 .match-tournament {
-    font-weight: 500;
+    font-weight: bold;
+    font-size: 14px;
     color: var(--sports-green-850);
 }
 
 .match-date {
-    color: var(--sports-grey-600);
+    font-size: 14px;
+    color: var(--sports-grey-700);
 }
 
-.match-teams {
+.match-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    padding: 16px;
 }
 
 .team {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    max-width: 45%;
-}
-
-.home-team {
-    text-align: right;
-    flex-direction: row-reverse;
+    flex: 1;
 }
 
 .team-logo {
-    width: 30px;
-    height: 30px;
-    background-color: #f5f5f5;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.team-logo img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 8px;
 }
 
 .team-name {
-    font-weight: 500;
-    font-size: 16px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
 }
 
-.match-time {
+.vs {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 0 16px;
 }
 
-.match-score, .match-vs {
-    font-size: 20px;
-    font-weight: 700;
+.vs-text {
     font-family: var(--ui-font-family-heading);
-    color: var(--sports-black);
+    font-size: 18px;
+    color: var(--sports-grey-600);
+    margin-bottom: 4px;
+}
+
+.match-time {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--sports-primary-color);
 }
 
 .match-venue {
-    margin-top: 12px;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--sports-grey-600);
     text-align: center;
-}
-
-.loader {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.loader-circle {
-    width: 40px;
-    height: 40px;
-    border: 4px solid var(--sports-grey-100);
-    border-top: 4px solid var(--sports-primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+    padding: 0 12px 12px;
 }
 
 .error-message {
-    display: none;
     text-align: center;
+    padding: 20px;
     color: var(--sports-red-a700);
-    margin-top: 20px;
-}
-
-.footer {
-    margin-top: 32px;
-    text-align: center;
-    font-size: 14px;
-    color: var(--sports-grey-600);
-}
-
-.footer a {
-    color: var(--sports-primary-color);
-    text-decoration: none;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-    color: var(--sports-primary-color-hover);
-}
-
-.group-title {
-    font-family: var(--ui-font-family-heading);
-    font-size: 20px;
-    margin: 20px 0 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid var(--sports-primary-color);
-}
-
-.no-matches {
-    text-align: center;
-    padding: 30px;
-    color: var(--sports-grey-600);
-    font-style: italic;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@media (max-width: 480px) {
-    .title {
-        font-size: 24px;
-    }
-    
-    .match-teams {
-        flex-direction: column;
-        gap: 12px;
-    }
-    
-    .team {
-        max-width: 100%;
-    }
-    
-    .home-team {
-        flex-direction: row;
-        text-align: left;
-    }
-    
-    .match-time {
-        margin: 8px 0;
-    }
+    background-color: var(--sports-red-50);
+    border-radius: 8px;
+    margin: 20px 0;
 } 

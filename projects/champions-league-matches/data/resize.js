@@ -1,4 +1,4 @@
-const projectSlug = CONFIG.projectSlug;
+const projectSlug = 'champions-league-matches';
 
 const resize = () => {
     const dataUTILS = {
@@ -11,7 +11,7 @@ const resize = () => {
     };
 
     window?.top?.postMessage(JSON.stringify(dataUTILS), '*');
-};
+}
 
 const resizeObserver = new ResizeObserver(() => {
     resize();
