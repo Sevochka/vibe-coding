@@ -18,7 +18,7 @@ const categories = [
     {
         title: "Спортивный инвентарь",
         terms: ["Ракетка", "Шлем", "Перчатки", "Бита"],
-        difficulty: 4
+        difficulty: 3
     },
     {
         title: "Хоккейные команды НХЛ",
