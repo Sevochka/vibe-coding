@@ -7,7 +7,7 @@ async function fetchChampionsLeagueMatches() {
         const query = `{
             statQueries {
                 football {
-                    stat_season(id: ["champions_league_24-25"]) {
+                    season(id: ["champions_league_24-25"]) {
                         id
                         name
                         matches {
@@ -56,7 +56,7 @@ async function fetchChampionsLeagueMatches() {
         }
 
         // Получаем данные о сезоне и матчах
-        const season = data.data?.statQueries?.football?.stat_season?.[0];
+        const season = data.data?.statQueries?.football?.season?.[0];
         
         if (!season) {
             throw new Error('Сезон не найден');
