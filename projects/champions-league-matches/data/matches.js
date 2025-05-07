@@ -7,30 +7,29 @@ async function fetchChampionsLeagueMatches() {
         const query = `{
             statQueries {
                 football {
-                    season(id: ["champions_league_24-25"]) {
+                    upcomingMatches(
+                        dateLimit: "2025-06-30",
+                        tournamentIds: ["champions_league"]
+                    ) {
                         id
-                        name
-                        matches {
+                        date
+                        status
+                        homeTeam {
                             id
-                            date
-                            status
-                            homeTeam {
-                                id
-                                name
-                                logo
-                            }
-                            awayTeam {
-                                id
-                                name
-                                logo
-                            }
-                            venue {
-                                name
-                                city
-                            }
-                            round {
-                                name
-                            }
+                            name
+                            logo
+                        }
+                        awayTeam {
+                            id
+                            name
+                            logo
+                        }
+                        venue {
+                            name
+                            city
+                        }
+                        round {
+                            name
                         }
                     }
                 }
@@ -55,22 +54,15 @@ async function fetchChampionsLeagueMatches() {
             throw new Error(data.errors[0]?.message || 'Ошибка GraphQL запроса');
         }
 
-        // Получаем данные о сезоне и матчах
-        const season = data.data?.statQueries?.football?.season?.[0];
+        // Получаем данные о матчах
+        const matches = data.data?.statQueries?.football?.upcomingMatches || [];
         
-        if (!season) {
-            throw new Error('Сезон не найден');
+        if (matches.length === 0) {
+            throw new Error('Матчи не найдены');
         }
 
-        const matches = season.matches || [];
-        
-        // Фильтруем только будущие матчи (статус NEW или SCHEDULED)
-        const futureMatches = matches.filter(match => 
-            match.status === 'NEW' || match.status === 'SCHEDULED'
-        );
-
         // Сортируем матчи по дате
-        const sortedMatches = futureMatches.sort((a, b) => 
+        const sortedMatches = matches.sort((a, b) => 
             new Date(a.date) - new Date(b.date)
         );
 
