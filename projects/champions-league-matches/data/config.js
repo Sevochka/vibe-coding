@@ -1,50 +1,35 @@
 const CONFIG = {
-    // ID сезона Лиги Чемпионов 2024-2025
+    // Идентификатор сезона Лиги Чемпионов 2024/25
     seasonId: 'champions_league_24-25',
     
-    // Максимальное количество матчей для отображения
-    maxMatches: 10,
+    // Параметры запроса
+    gqlEndpoint: 'https://www.sports.ru/gql/graphql/',
     
-    // Дата, до которой показываем матчи (3 месяца вперед)
-    getDateLimit: () => {
-        const today = new Date();
-        const futureDate = new Date(today);
-        futureDate.setMonth(today.getMonth() + 3);
-        return futureDate.toISOString().split('T')[0];
+    // Форматирование даты
+    dateOptions: {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'long',
+        timeZone: 'Europe/Moscow'
     },
     
-    // Базовый URL для GraphQL API
-    apiUrl: 'https://www.sports.ru/gql/graphql/',
-    
-    // Шаблон для перевода месяцев
-    months: {
-        '01': 'января',
-        '02': 'февраля',
-        '03': 'марта',
-        '04': 'апреля',
-        '05': 'мая',
-        '06': 'июня',
-        '07': 'июля',
-        '08': 'августа',
-        '09': 'сентября',
-        '10': 'октября',
-        '11': 'ноября',
-        '12': 'декабря'
+    // Форматирование времени
+    timeOptions: {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Europe/Moscow' 
     },
     
-    // Функция для форматирования даты в удобный вид
-    formatDate: (dateString) => {
-        if (!dateString) return '';
-        
-        const [year, month, day] = dateString.split('-');
-        return `${parseInt(day)} ${CONFIG.months[month]} ${year}`;
+    // Названия этапов/стадий турнира
+    stageNames: {
+        'regular_season': 'Лига',
+        'playoff': 'Плей-офф',
+        'round_of_16': '1/8 финала',
+        'quarter_finals': '1/4 финала',
+        'semi_finals': '1/2 финала',
+        'final': 'Финал'
     },
     
-    // Функция для форматирования времени
-    formatTime: (timeString) => {
-        if (!timeString) return 'TBD';
-        
-        const time = timeString.split('T')[1].substring(0, 5);
-        return time;
-    }
+    // ID проекта для ресайзера
+    projectSlug: 'champions-league-matches',
 }; 
