@@ -4,7 +4,7 @@ const resize = () => {
     const dataUTILS = {
         for: 'BASIC_TEST',
         action: 'resizeIframe',
-        selector: `iframe[src*=\\/projects\\/${projectSlug}]]`,
+        selector: `iframe[src*=\\/projects\\/${projectSlug}]`,
         sizes: {
             height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
         },
@@ -18,3 +18,7 @@ const resizeObserver = new ResizeObserver(() => {
 });
 resizeObserver.observe(document.body);
 resize(); 
+
+setTimeout(() => {
+    resize();
+}, 1000);
