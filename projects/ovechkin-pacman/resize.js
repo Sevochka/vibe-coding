@@ -2,7 +2,7 @@ const resize = () => {
   const dataUTILS = {
     for: 'BASIC_TEST',
     action: 'resizeIframe',
-    selector: `iframe[src*=\\/specials\\/ovechkin-pacman], iframe[src*=\\/special\\/basic-tests\\/ovechkin-pacman]`,
+    selector: `iframe[src*=\\/projects\\/ovechkin-pacman]`,
     sizes: {
       height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
     },
