@@ -1,10 +1,10 @@
-const projectSlug = 'champions-league-matches';
+const projectSlug = 'football-match-stats';
 
 const resize = () => {
     const dataUTILS = {
         for: 'BASIC_TEST',
         action: 'resizeIframe',
-        selector: `iframe[src*=\\/projects\\/${projectSlug}]`,
+        selector: `iframe[src*=\\/projects\\/${projectSlug}]]`,
         sizes: {
             height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
         },
