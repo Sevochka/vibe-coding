@@ -1,5 +1,5 @@
 // GraphQL запрос для получения информации о матче
-const MATCH_QUERY = `{statQueries{football{match(id:"cska-vs-zenit",source:SPORTS_HUB){id matchStatus scheduledAt currentTime dateOnly attendance home{team{id name country{name code}picture(productType:SPORTSRU,format:LOGO){webp(width:"128",height:"128")}}score penaltyScore formation{code}lineup{player{id name firstName lastName}jerseyNumber position lineupOrder lineupStarting}stat{ballPossession shotsOnTarget shotsOffTarget yellowCards redCards cornerKicks freeKicks offsides fouls}}away{team{id name country{name code}picture(productType:SPORTSRU,format:LOGO){webp(width:"128",height:"128")}}score penaltyScore formation{code}lineup{player{id name firstName lastName}jerseyNumber position lineupOrder lineupStarting}stat{ballPossession shotsOnTarget shotsOffTarget yellowCards redCards cornerKicks freeKicks offsides fouls}}events(eventType:[SCORE_CHANGE,YELLOW_CARD,RED_CARD,YELLOW_RED_CARD,PENALTY_MISSED,PENALTY_SAVED,SUBSTITUTION]){id time type team outcome periodId value{... on statScoreChange{homeScore awayScore goalScorer{name}assist{name}team}... on statYellowCard{player{name}team}... on statRedCard{player{name}team}... on statYellowRedCard{player{name}team}... on statPenaltyMissed{player{name}team}... on statPenaltySaved{player{name}team}... on statSubstitution{playerIn{name}playerOut{name}team}}}season{tournament{id name picture(productType:SPORTSRU,format:LOGO){webp(width:"64",height:"64")}}}}}}`;
+const MATCH_QUERY = `{statQueries{football{match(id:"cska-vs-zenit",source:SPORTS_HUB){id matchStatus scheduledAt currentTime dateOnly attendance home{team{id name country{name code}picture(productType:SPORTSRU,format:LOGO){webp(width:"128",height:"128")}}score penaltyScore formation{code}lineup{player{id name firstName lastName}jerseyNumber position lineupOrder lineupStarting}stat{ballPossession shotsOnTarget shotsOffTarget yellowCards redCards cornerKicks freeKicks offsides fouls}}away{team{id name country{name code}picture(productType:SPORTSRU,format:LOGO){webp(width:"128",height:"128")}}score penaltyScore formation{code}lineup{player{id name firstName lastName}jerseyNumber position lineupOrder lineupStarting}stat{ballPossession shotsOnTarget shotsOffTarget yellowCards redCards cornerKicks freeKicks offsides fouls}}events(eventType:[SCORE_CHANGE,YELLOW_CARD,RED_CARD,YELLOW_RED_CARD,PENALTY_MISSED,PENALTY_SAVED,SUBSTITUTION]){id time type team outcome periodId value{...on statScoreChange{homeScore awayScore goalScorer{name}assist{name}team}...on statYellowCard{player{name}team}...on statRedCard{player{name}team}...on statYellowRedCard{player{name}team}...on statPenaltyMissed{player{name}team}...on statPenaltySaved{player{name}team}...on statSubstitution{playerIn{name}playerOut{name}team}}}season{tournament{id name picture(productType:SPORTSRU,format:LOGO){webp(width:"64",height:"64")}}}}}}}`;
 
 // Если API недоступен или произошла ошибка, используем моковые данные
 const MOCK_MATCH_DATA = {
@@ -170,8 +170,9 @@ const MOCK_MATCH_DATA = {
 function fetchMatchData() {
   return new Promise((resolve, reject) => {
     try {
-      // Формируем URL для запроса
-      const apiUrl = `https://www.sports.ru/gql/graphql/?query=${encodeURIComponent(MATCH_QUERY)}`;
+      // Формируем URL для запроса - удаляем все пробелы и переносы строк из запроса
+      const query = MATCH_QUERY.replace(/\s+/g, '');
+      const apiUrl = `https://www.sports.ru/gql/graphql/?query=${encodeURIComponent(query)}`;
       console.log('API URL:', apiUrl); // Для отладки
       
       // Используем XMLHttpRequest вместо fetch для обхода возможных проблем с CORS
