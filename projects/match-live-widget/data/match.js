@@ -7,11 +7,11 @@ const MOCK_MATCH_DATA = {
     football: {
       match: {
         id: "CSKA-ZENIT",
-        matchStatus: "NOT_STARTED",
-        scheduledAt: "2025-05-14 19:30:00",
+        matchStatus: "ENDED",
+        scheduledAt: "2024-05-14 19:30:00",
         currentTime: "",
         dateOnly: false,
-        attendance: 0,
+        attendance: 35218,
         home: {
           team: {
             id: "CSKA",
@@ -21,13 +21,13 @@ const MOCK_MATCH_DATA = {
               code: "RUS"
             },
             picture: {
-              webp: "https://cdn.sports.ru/new-images/teams/1/CSKA.webp"
+              webp: "https://img.sports.ru/images/team_logos/1/cska_russia.png"
             }
           },
           score: 0,
           penaltyScore: 0,
           formation: {
-            code: "4-2-3-1"
+            code: "4-3-3"
           },
           lineup: [
             {
@@ -53,13 +53,97 @@ const MOCK_MATCH_DATA = {
               position: "RIGHT_BACK",
               lineupOrder: 2,
               lineupStarting: true
+            },
+            {
+              player: {
+                id: "3",
+                name: "Бактиёр Зайнутдинов",
+                firstName: "Бактиёр",
+                lastName: "Зайнутдинов"
+              },
+              jerseyNumber: "19",
+              position: "MIDFIELDER",
+              lineupOrder: 3,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "4",
+                name: "Игорь Дивеев",
+                firstName: "Игорь",
+                lastName: "Дивеев"
+              },
+              jerseyNumber: "78",
+              position: "CENTRAL_DEFENDER",
+              lineupOrder: 4,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "5",
+                name: "Кирилл Набабкин",
+                firstName: "Кирилл",
+                lastName: "Набабкин"
+              },
+              jerseyNumber: "14",
+              position: "CENTRAL_DEFENDER",
+              lineupOrder: 5,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "6",
+                name: "Иван Обляков",
+                firstName: "Иван",
+                lastName: "Обляков"
+              },
+              jerseyNumber: "10",
+              position: "CENTRAL_MIDFIELDER",
+              lineupOrder: 6,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "7",
+                name: "Федор Чалов",
+                firstName: "Федор",
+                lastName: "Чалов"
+              },
+              jerseyNumber: "9",
+              position: "STRIKER",
+              lineupOrder: 7,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "8",
+                name: "Максим Мухин",
+                firstName: "Максим",
+                lastName: "Мухин"
+              },
+              jerseyNumber: "20",
+              position: "CENTRAL_MIDFIELDER",
+              lineupOrder: 8,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "9",
+                name: "Хесус Медина",
+                firstName: "Хесус",
+                lastName: "Медина"
+              },
+              jerseyNumber: "82",
+              position: "LEFT_WINGER",
+              lineupOrder: 9,
+              lineupStarting: true
             }
           ],
           stat: {
             ballPossession: 48,
             shotsOnTarget: 2,
             shotsOffTarget: 3,
-            yellowCards: 1,
+            yellowCards: 2,
             redCards: 0,
             cornerKicks: 4,
             freeKicks: 7,
@@ -76,13 +160,13 @@ const MOCK_MATCH_DATA = {
               code: "RUS"
             },
             picture: {
-              webp: "https://cdn.sports.ru/new-images/teams/1/ZENIT.webp"
+              webp: "https://img.sports.ru/images/team_logos/1/zenit_russia.png"
             }
           },
-          score: 0,
+          score: 2,
           penaltyScore: 0,
           formation: {
-            code: "4-3-3"
+            code: "4-4-2"
           },
           lineup: [
             {
@@ -108,13 +192,85 @@ const MOCK_MATCH_DATA = {
               position: "LEFT_BACK",
               lineupOrder: 2,
               lineupStarting: true
+            },
+            {
+              player: {
+                id: "103",
+                name: "Вильмар Барриос",
+                firstName: "Вильмар",
+                lastName: "Барриос"
+              },
+              jerseyNumber: "5",
+              position: "CENTRAL_MIDFIELDER",
+              lineupOrder: 3,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "104",
+                name: "Деян Ловрен",
+                firstName: "Деян",
+                lastName: "Ловрен"
+              },
+              jerseyNumber: "6",
+              position: "CENTRAL_DEFENDER",
+              lineupOrder: 4,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "105",
+                name: "Малком",
+                firstName: "Малком",
+                lastName: ""
+              },
+              jerseyNumber: "7",
+              position: "RIGHT_WINGER",
+              lineupOrder: 5,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "106",
+                name: "Матео Кассьерра",
+                firstName: "Матео",
+                lastName: "Кассьерра"
+              },
+              jerseyNumber: "30",
+              position: "STRIKER",
+              lineupOrder: 6,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "107",
+                name: "Андрей Мостовой",
+                firstName: "Андрей",
+                lastName: "Мостовой"
+              },
+              jerseyNumber: "17",
+              position: "LEFT_WINGER",
+              lineupOrder: 7,
+              lineupStarting: true
+            },
+            {
+              player: {
+                id: "108",
+                name: "Сердар Азмун",
+                firstName: "Сердар",
+                lastName: "Азмун"
+              },
+              jerseyNumber: "9",
+              position: "STRIKER",
+              lineupOrder: 8,
+              lineupStarting: true
             }
           ],
           stat: {
             ballPossession: 52,
-            shotsOnTarget: 3,
-            shotsOffTarget: 4,
-            yellowCards: 2,
+            shotsOnTarget: 4,
+            shotsOffTarget: 2,
+            yellowCards: 1,
             redCards: 0,
             cornerKicks: 3,
             freeKicks: 6,
@@ -150,6 +306,92 @@ const MOCK_MATCH_DATA = {
               },
               team: "AWAY"
             }
+          },
+          {
+            id: "e3",
+            time: "53:27",
+            type: "SCORE_CHANGE",
+            team: "AWAY",
+            outcome: null,
+            periodId: "SECOND_HALF",
+            value: {
+              homeScore: 0,
+              awayScore: 1,
+              goalScorer: {
+                name: "Малком"
+              },
+              assist: {
+                name: "Сердар Азмун"
+              },
+              team: "AWAY"
+            }
+          },
+          {
+            id: "e4",
+            time: "67:10",
+            type: "YELLOW_CARD",
+            team: "HOME",
+            outcome: null,
+            periodId: "SECOND_HALF",
+            value: {
+              player: {
+                name: "Игорь Дивеев"
+              },
+              team: "HOME"
+            }
+          },
+          {
+            id: "e5",
+            time: "72:40",
+            type: "SUBSTITUTION",
+            team: "HOME",
+            outcome: null,
+            periodId: "SECOND_HALF",
+            value: {
+              playerIn: {
+                name: "Виктор Гонсалес"
+              },
+              playerOut: {
+                name: "Иван Обляков"
+              },
+              team: "HOME"
+            }
+          },
+          {
+            id: "e6",
+            time: "78:12",
+            type: "SCORE_CHANGE",
+            team: "AWAY",
+            outcome: null,
+            periodId: "SECOND_HALF",
+            value: {
+              homeScore: 0,
+              awayScore: 2,
+              goalScorer: {
+                name: "Сердар Азмун"
+              },
+              assist: {
+                name: "Андрей Мостовой"
+              },
+              team: "AWAY"
+            }
+          },
+          {
+            id: "e7",
+            time: "82:30",
+            type: "SUBSTITUTION",
+            team: "AWAY",
+            outcome: null,
+            periodId: "SECOND_HALF",
+            value: {
+              playerIn: {
+                name: "Артем Дзюба"
+              },
+              playerOut: {
+                name: "Сердар Азмун"
+              },
+              team: "AWAY"
+            }
           }
         ],
         season: {
@@ -157,7 +399,7 @@ const MOCK_MATCH_DATA = {
             id: "FONBET-KUBOK",
             name: "ФОНБЕТ Кубок России",
             picture: {
-              webp: "https://cdn.sports.ru/new-images/tournaments/1/RUS_CUP.webp"
+              webp: "https://img.sports.ru/images/tournament_logos/1/rus-cup.png"
             }
           }
         }
@@ -169,60 +411,11 @@ const MOCK_MATCH_DATA = {
 // Функция получения данных о матче
 function fetchMatchData() {
   return new Promise((resolve, reject) => {
-    try {
-      // Формируем URL для запроса - удаляем все пробелы и переносы строк из запроса
-      const query = MATCH_QUERY.replace(/\s+/g, '');
-      const apiUrl = `https://www.sports.ru/gql/graphql/?query=${encodeURIComponent(query)}`;
-      console.log('API URL:', apiUrl); // Для отладки
-      
-      // Используем XMLHttpRequest вместо fetch для обхода возможных проблем с CORS
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', apiUrl, true);
-      
-      xhr.onload = function() {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          try {
-            const data = JSON.parse(xhr.responseText);
-            console.log('Received data:', data); // Для отладки
-            
-            // Проверяем наличие данных матча или ошибок
-            if (data.errors) {
-              console.error('GraphQL errors:', data.errors);
-              resolve(MOCK_MATCH_DATA);
-              return;
-            }
-            
-            if (!data.data || !data.data.statQueries || !data.data.statQueries.football || !data.data.statQueries.football.match) {
-              console.warn('No match data found in response, using mock data');
-              resolve(MOCK_MATCH_DATA);
-              return;
-            }
-            
-            // Адаптируем структуру данных, если необходимо
-            const result = {
-              statQueries: data.data.statQueries
-            };
-            
-            resolve(result);
-          } catch (e) {
-            console.error('Error parsing response:', e);
-            resolve(MOCK_MATCH_DATA);
-          }
-        } else {
-          console.error('XHR error:', xhr.status, xhr.statusText);
-          resolve(MOCK_MATCH_DATA);
-        }
-      };
-      
-      xhr.onerror = function() {
-        console.error('XHR network error');
-        resolve(MOCK_MATCH_DATA);
-      };
-      
-      xhr.send();
-    } catch (error) {
-      console.error('Error in fetchMatchData:', error);
+    // На этом этапе мы просто возвращаем моковые данные,
+    // так как API имеет сложности с CORS и ограничениями доступа
+    console.log('Использование моковых данных для отображения матча');
+    setTimeout(() => {
       resolve(MOCK_MATCH_DATA);
-    }
+    }, 500);
   });
 } 
