@@ -218,6 +218,147 @@ a {
     margin-right: 4px;
 }
 
+/* Стили для счета по таймам */
+.period-score {
+    margin: 20px 0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: var(--sports-grey-50);
+}
+
+.period-score__title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    margin: 0 0 10px 0;
+    color: var(--sports-grey-800);
+}
+
+.period-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.period-table tr {
+    border-bottom: 1px solid var(--sports-grey-100);
+}
+
+.period-table tr:last-child {
+    border-bottom: none;
+}
+
+.period-table td {
+    padding: 8px 4px;
+}
+
+.period-table td:first-child {
+    width: 60%;
+    color: var(--sports-grey-600);
+}
+
+.period-table td:nth-child(2),
+.period-table td:nth-child(3) {
+    width: 20%;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Стили для блока статистики */
+.match-stats {
+    margin: 20px 0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: var(--sports-grey-50);
+}
+
+.match-stats__title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    margin: 0 0 15px 0;
+    color: var(--sports-grey-800);
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--sports-grey-100);
+}
+
+.stat-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.stat-item__value {
+    width: 25%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.stat-item__name {
+    width: 50%;
+    text-align: center;
+    color: var(--sports-grey-600);
+    font-size: 13px;
+}
+
+/* Стили для блока судейства */
+.match-referees {
+    margin: 20px 0;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background-color: var(--sports-grey-50);
+}
+
+.match-referees__title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    margin: 0 0 15px 0;
+    color: var(--sports-grey-800);
+}
+
+.referees-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.referee-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--sports-grey-100);
+}
+
+.referee-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.referee-item__type {
+    font-size: 13px;
+    color: var(--sports-grey-600);
+    margin-bottom: 4px;
+}
+
+.referee-item__name {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.referee-item__country {
+    font-size: 13px;
+    color: var(--sports-grey-600);
+}
+
 .match-footer {
     margin-top: 16px;
     text-align: center;

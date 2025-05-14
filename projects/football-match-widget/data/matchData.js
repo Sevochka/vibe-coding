@@ -21,5 +21,30 @@ const matchData = {
   venue: {
     name: "Загрузка...",
     city: "Загрузка..."
-  }
+  },
+  hasDetailStat: false,
+  stats: {
+    home: {
+      ballPossession: 0,
+      shotsOnTarget: 0,
+      shotsOffTarget: 0,
+      cornerKicks: 0,
+      yellowCards: 0,
+      redCards: 0,
+      offsides: 0,
+      fouls: 0
+    },
+    away: {
+      ballPossession: 0,
+      shotsOnTarget: 0,
+      shotsOffTarget: 0,
+      cornerKicks: 0,
+      yellowCards: 0,
+      redCards: 0,
+      offsides: 0,
+      fouls: 0
+    }
+  },
+  periodScore: [],
+  referees: []
 }; 
