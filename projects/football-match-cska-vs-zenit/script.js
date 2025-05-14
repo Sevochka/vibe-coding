@@ -4,7 +4,7 @@ async function fetchMatchData() {
     const GQL_ENDPOINT = 'https://www.sports.ru/gql/graphql/';
 
     // Создаем запрос GraphQL без пробелов, табов и новых строк
-    const queryString = `{statQueries{football{match(id:"${matchId}",source:${source}){id scheduledAt currentTime matchStatus roundName home{team{name logo:picture(productType:SPORTSRU,format:LOGO){url}}score stat{ballPossession shotsTotal shotsOnTarget cornerKicks fouls yellowCards redCards}}away{team{name logo:picture(productType:SPORTSRU,format:LOGO){url}}score stat{ballPossession shotsTotal shotsOnTarget cornerKicks fouls yellowCards redCards}}season{tournament{name}}}}}}`;
+    const queryString = `{statQueries{football{match(id:"${matchId}",source:${source}){id scheduledAt dateOnly currentTime matchStatus roundName home{team{name logo:picture(productType:SPORTSRU,format:LOGO){url}}score stat{ballPossession shotsTotal shotsOnTarget cornerKicks fouls yellowCards redCards}}away{team{name logo:picture(productType:SPORTSRU,format:LOGO){url}}score stat{ballPossession shotsTotal shotsOnTarget cornerKicks fouls yellowCards redCards}}season{tournament{name}}}}}}`;
 
     try {
         const response = await fetch(`${GQL_ENDPOINT}?query=${encodeURIComponent(queryString)}`);
