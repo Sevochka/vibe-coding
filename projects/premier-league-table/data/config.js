@@ -3,84 +3,12 @@ const CONFIG = {
     GQL_ENDPOINT: 'https://www.sports.ru/gql/graphql/',
     
     // GQL запрос для получения данных о турнирной таблице
-    GQL_QUERY: `{
-  statQueries {
-    football {
-      tournament(id: "rfpl", source: SPORTRADAR) {
-        id,
-        currentSeason {
-          id,
-          rankingTeamStat(input: {attribute: [TOTAL_GOALS]}) {
-            items {
-              team {
-                id,
-                name,
-                teaser(last: 0, next: 1) {
-                  current {
-                    id,
-                    links {
-                      sportsRu
-                    },
-                    currentMinute,
-                    home {
-                      score,
-                      team {
-                        name,
-                        logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                          url
-                        }
-                      }
-                    },
-                    away {
-                      score,
-                      team {
-                        name,
-                        logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                          url
-                        }
-                      }
-                    }
-                  }
-                },
-                lastFive {
-                  result,
-                  match {
-                    links {
-                      sportsRu
-                    }
-                  }
-                },
-                logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                  url
-                }
-              },
-              rank,
-              value,
-              stat {
-                MatchesPlayed,
-                MatchesWon,
-                MatchesDrawn,
-                MatchesLost,
-                GoalsScored,
-                GoalsConceded,
-                CupRank,
-                GroupPosition,
-                GroupName,
-                YellowCards,
-                RedCards
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}`,
+    GQL_QUERY: `{statQueries{football{tournament(id:"rfpl",source:SPORTRADAR){id,currentSeason{id,rankingTeamStat(input:{attribute:[TOTAL_GOALS]}){items{team{id,name,teaser(last:0,next:1){current{id,links{sportsRu},currentMinute,home{score,team{name,logotype(input:{resize:ORIGINAL,ext:WEBP}){url}}},away{score,team{name,logotype(input:{resize:ORIGINAL,ext:WEBP}){url}}}}},lastFive{result,match{links{sportsRu}}},logotype(input:{resize:ORIGINAL,ext:WEBP}){url}},rank,value,stat{MatchesPlayed,MatchesWon,MatchesDrawn,MatchesLost,GoalsScored,GoalsConceded,CupRank,GroupPosition,GroupName,YellowCards,RedCards}}}}}}}`,
     
     // Функция для удаления пробелов из запроса
     removeWhitespace: function(str) {
-        // Полностью удаляем все пробелы, табуляции и переносы строк
-        return str.replace(/\s/g, '');
+        // Просто возвращаем исходную строку, так как в запросе уже убраны все пробелы
+        return str;
     },
     
     // Зоны турнирной таблицы
