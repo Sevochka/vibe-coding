@@ -18,26 +18,30 @@ async function loadTournamentTable() {
         // Получаем данные турнирной таблицы
         const data = await ApiService.getTournamentTable();
         
-        // Выводим полученные данные в консоль для отладки
+        // Логируем данные для отладки
         console.log('Полученные данные:', data);
         
-        // Проверяем наличие данных
+        // Проверяем наличие данных (с учетом того, что rankingTeamStat - массив)
         if (!data || !data.data || !data.data.statQueries || !data.data.statQueries.football || 
             !data.data.statQueries.football.tournament || !data.data.statQueries.football.tournament.currentSeason ||
             !data.data.statQueries.football.tournament.currentSeason.rankingTeamStat) {
             throw new Error('Данные турнирной таблицы отсутствуют или имеют неверный формат');
         }
 
-        // Получаем элементы таблицы
-        // rankingTeamStat это массив, а не объект с полем items
-        const tableItems = data.data.statQueries.football.tournament.currentSeason.rankingTeamStat;
+        // Получаем элементы таблицы, работаем с массивом rankingTeamStat
+        const rankingTeamStat = data.data.statQueries.football.tournament.currentSeason.rankingTeamStat;
         
-        // Проверяем, что tableItems массив
-        if (!Array.isArray(tableItems)) {
-            throw new Error('Неверный формат данных: rankingTeamStat не является массивом');
+        // Проверяем, есть ли элементы в массиве
+        if (!rankingTeamStat || !rankingTeamStat.length) {
+            throw new Error('Массив данных турнирной таблицы пуст');
         }
         
-        console.log('Элементы таблицы:', tableItems);
+        // Берем первый элемент массива, который должен содержать items
+        const tableItems = rankingTeamStat[0].items;
+        
+        if (!tableItems || !tableItems.length) {
+            throw new Error('Данные команд в турнирной таблице отсутствуют');
+        }
         
         // Сортируем элементы по позиции (rank)
         const sortedTableItems = tableItems.sort((a, b) => a.rank - b.rank);
