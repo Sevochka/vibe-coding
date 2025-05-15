@@ -21,11 +21,17 @@ async function initTable() {
  * Получить данные о турнирной таблице через GraphQL запрос
  */
 async function fetchStandingsData() {
-    // Подготовка запроса - убираем лишние пробелы
+    // Подготовка запроса - удаляем все пробелы, табуляции и переносы строк
     const query = CONFIG.removeWhitespace(CONFIG.GQL_QUERY);
-    const url = `${CONFIG.GQL_ENDPOINT}?query=${encodeURIComponent(query)}`;
     
-    const response = await fetch(url);
+    // Отправляем POST запрос с query в теле
+    const response = await fetch(CONFIG.GQL_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query: query })
+    });
     
     if (!response.ok) {
         throw new Error(`Ошибка HTTP: ${response.status}`);

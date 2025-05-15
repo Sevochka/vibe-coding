@@ -79,7 +79,8 @@ const CONFIG = {
     
     // Функция для удаления пробелов из запроса
     removeWhitespace: function(str) {
-        return str.trim().replace(/\s+/g, ' ');
+        // Полностью удаляем все пробелы, табуляции и переносы строк
+        return str.replace(/\s/g, '');
     },
     
     // Зоны турнирной таблицы
