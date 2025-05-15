@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кто победит? | Спартак vs Ростов</title>
+    <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css">
+    <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/sports.css">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="widget-container">
+        <h2 class="widget-title">Кто победит?</h2>
+        
+        <div class="match-info">
+            <div class="match-date">15 мая 2025 | 20:00</div>
+            <div class="match-competition">Кубок России. Финал Пути регионов</div>
+        </div>
+
+        <div class="teams-container">
+            <div class="team-card" data-team="spartak">
+                <div class="team-logo-container">
+                    <img src="./data/spartak-logo.svg" alt="Спартак" class="team-logo">
+                </div>
+                <div class="team-name">Спартак</div>
+                <div class="team-percentage" id="spartak-percentage">0%</div>
+            </div>
+
+            <div class="vs-text">VS</div>
+
+            <div class="team-card" data-team="rostov">
+                <div class="team-logo-container">
+                    <img src="./data/rostov-logo.svg" alt="Ростов" class="team-logo">
+                </div>
+                <div class="team-name">Ростов</div>
+                <div class="team-percentage" id="rostov-percentage">0%</div>
+            </div>
+        </div>
+
+        <div class="voting-message" id="voting-message">Выберите команду, которая победит</div>
+        
+        <div class="powered-by">
+            <a href="https://www.sports.ru/?utm_source=special-match-winner-selector" target="_blank" class="sports-link">
+                <img src="./data/sports-logo.svg" alt="Sports.ru" class="sports-logo">
+            </a>
+        </div>
+    </div>
+
+    <script src="./data/teams.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 

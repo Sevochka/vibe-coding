@@ -1,0 +1,244 @@
+:root {
+    /* Branded Colors for Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI elements and typography */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background-color: var(--ui-bg);
+    color: var(--sports-black);
+    font-size: 16px;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Виджет контейнер */
+.widget-container {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    background-color: var(--ui-bg);
+}
+
+/* Заголовок виджета */
+.widget-title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--sports-black);
+}
+
+/* Информация о матче */
+.match-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.match-date {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--sports-grey-850);
+}
+
+.match-competition {
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    margin-top: 4px;
+}
+
+/* Контейнер команд */
+.teams-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Карточка команды */
+.team-card {
+    flex: 1;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.team-card:hover {
+    background-color: var(--sports-green-50);
+    border-color: var(--sports-primary-color);
+}
+
+.team-card.selected {
+    background-color: var(--sports-green-50);
+    border-color: var(--sports-primary-color);
+}
+
+/* Контейнер логотипа */
+.team-logo-container {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+/* Логотип команды */
+.team-logo {
+    max-width: 70px;
+    max-height: 70px;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-logo {
+    transform: scale(1.1);
+}
+
+/* Название команды */
+.team-name {
+    font-family: var(--ui-font-family-heading-secondary);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* Процент голосов */
+.team-percentage {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.team-percentage.visible {
+    opacity: 1;
+}
+
+/* VS текст */
+.vs-text {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 15px;
+    color: var(--sports-grey-600);
+}
+
+/* Сообщение о голосовании */
+.voting-message {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: var(--sports-grey-600);
+    transition: all 0.3s ease;
+    height: 22px;
+}
+
+.voting-message.voted {
+    color: var(--sports-primary-color);
+    font-weight: bold;
+}
+
+/* Powered by Sports.ru */
+.powered-by {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sports-link {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.sports-link:hover {
+    transform: scale(1.05);
+}
+
+.sports-logo {
+    height: 24px;
+}
+
+/* Медиа запросы для адаптивности */
+@media (max-width: 480px) {
+    .team-logo {
+        max-width: 60px;
+        max-height: 60px;
+    }
+    
+    .team-name {
+        font-size: 16px;
+    }
+    
+    .vs-text {
+        font-size: 20px;
+        margin: 0 10px;
+    }
+    
+    .team-percentage {
+        font-size: 20px;
+    }
+} 
