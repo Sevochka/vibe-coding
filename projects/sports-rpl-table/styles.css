@@ -1,0 +1,219 @@
+:root {
+    /* Branded Colors for Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Neoris", "Roboto", sans-serif;
+    background-color: white;
+    color: var(--sports-black);
+    line-height: 1.4;
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.container {
+    padding: 15px;
+}
+
+.table-title {
+    font-family: "Sports", sans-serif;
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--sports-grey-50);
+}
+
+.standings-table th {
+    background-color: var(--sports-grey-50);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sports-grey-700);
+}
+
+.standings-table .position {
+    width: 30px;
+}
+
+.standings-table .team-name {
+    text-align: left;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.standings-table .team-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.standings-table .team-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.standings-table .stats {
+    width: 30px;
+}
+
+.standings-table tbody tr:hover {
+    background-color: var(--sports-green-50);
+}
+
+.table-legend {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    line-height: 1.3;
+}
+
+.table-legend p {
+    max-width: 80%;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--sports-grey-500);
+}
+
+.previous-results {
+    display: flex;
+    gap: 2px;
+    padding-top: 5px;
+}
+
+.result-icon {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.win {
+    background-color: var(--sports-primary-color);
+}
+
+.draw {
+    background-color: var(--sports-grey-400);
+}
+
+.lose {
+    background-color: var(--sports-red-a700);
+}
+
+.ucl {
+    background-color: var(--sports-green-50);
+}
+
+.ucl td:first-child {
+    border-left: 3px solid var(--sports-primary-color);
+}
+
+.europa {
+    background-color: var(--sports-blue-50);
+}
+
+.europa td:first-child {
+    border-left: 3px solid var(--sports-blue-A400);
+}
+
+.relegation {
+    background-color: var(--sports-red-50);
+}
+
+.relegation td:first-child {
+    border-left: 3px solid var(--sports-red-a700);
+}
+
+/* Стиль для текущего матча */
+.live-match {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    padding: 3px 5px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+    font-size: 12px;
+    gap: 5px;
+}
+
+.live-match img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.live-score {
+    font-weight: 600;
+    margin: 0 3px;
+}
+
+.live-indicator {
+    color: var(--sports-red-a700);
+    font-weight: 600;
+    font-size: 11px;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+} 
