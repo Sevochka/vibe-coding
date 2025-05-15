@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Таблица РПЛ</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Премьер-лига — таблица</h1>
+    
+    <div class="table-container">
+      <table class="standings-table">
+        <thead>
+          <tr class="table-header">
+            <th class="pos">М</th>
+            <th class="team-logo-col"></th>
+            <th class="team-name">Команда</th>
+            <th class="last-matches">Последние</th>
+            <th class="games">И</th>
+            <th class="wins">В</th>
+            <th class="draws">Н</th>
+            <th class="losses">П</th>
+            <th class="goals-for">ЗМ</th>
+            <th class="goals-against">ПМ</th>
+            <th class="goals-diff">РМ</th>
+            <th class="points">О</th>
+          </tr>
+        </thead>
+        <tbody id="standings-body">
+          <!-- Данные будут загружены через JavaScript -->
+          <tr class="loading">
+            <td colspan="12">Загрузка данных...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="legend">
+      <p><span class="point">И</span> – сыграно игр, <span class="point">В</span> – выигрыши, <span class="point">Н</span> – ничьи, <span class="point">П</span> – поражения,</p>
+      <p><span class="point">ЗМ</span> – забитые мячи, <span class="point">ПМ</span> – пропущенные мячи, <span class="point">РМ</span> – разница мячей, <span class="point">О</span> – очки</p>
+    </div>
+  </div>
+
+  <script src="./data/gql-client.js"></script>
+  <script src="./resize.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html> 
