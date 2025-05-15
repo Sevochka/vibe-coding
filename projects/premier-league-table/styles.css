@@ -1,0 +1,280 @@
+:root {
+    /* Брендированные цвета Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI элементы и типографика */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    font-family: var(--ui-font-family-body);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--sports-black);
+    background-color: var(--ui-bg);
+}
+
+.container {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    margin: 0;
+    text-align: center;
+}
+
+.table-container {
+    position: relative;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.loader {
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+}
+
+.standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 14px;
+}
+
+.standings-table th,
+.standings-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid var(--sports-grey-100);
+}
+
+.standings-table th {
+    background-color: var(--sports-grey-50);
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.standings-table tr:hover {
+    background-color: var(--sports-green-50);
+}
+
+.team-column {
+    text-align: left;
+    min-width: 160px;
+}
+
+.pos-column {
+    width: 30px;
+}
+
+.match-column {
+    width: 40px;
+}
+
+.team-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.team-info {
+    display: flex;
+    align-items: center;
+}
+
+.team-name {
+    margin-right: 10px;
+    font-weight: 500;
+}
+
+.team-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.team-link:hover {
+    color: var(--sports-primary-color);
+}
+
+.match-results {
+    display: flex;
+    margin-left: 10px;
+}
+
+.match-result {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 2px;
+}
+
+.match-result-W {
+    background-color: #43a047;
+    color: white;
+}
+
+.match-result-D {
+    background-color: #ffc107;
+    color: black;
+}
+
+.match-result-L {
+    background-color: #e53935;
+    color: white;
+}
+
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+}
+
+.legend-item-box {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.legend-item-box-1 {
+    background-color: var(--sports-blue-50);
+}
+
+.legend-item-box-2 {
+    background-color: var(--sports-green-50);
+}
+
+.legend-item-box-3 {
+    background-color: var(--sports-red-50);
+}
+
+.champions-league-zone {
+    background-color: var(--sports-blue-50);
+}
+
+.europa-league-zone {
+    background-color: var(--sports-green-50);
+}
+
+.relegation-zone {
+    background-color: var(--sports-red-50);
+}
+
+.live-match {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+}
+
+.live-match.live {
+    background-color: #fff5f5;
+    border-color: #ffcdd2;
+}
+
+.live-match-score {
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+.live-match-time {
+    color: #e53935;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.live-match-team-logo {
+    width: 16px;
+    height: 16px;
+    margin: 0 2px;
+} 
