@@ -14,68 +14,43 @@ const ApiService = {
     {
       statQueries {
         football {
-          tournament(id: "rfpl", source: SPORTRADAR) {
-            id,
+          tournament(id: "rfpl") {
+            id
             currentSeason {
-              id,
-              rankingTeamStat(input: {attribute: [TOTAL_GOALS]}) {
-                items {
-                  team {
-                    id,
-                    name,
-                    teaser(last: 0, next: 1) {
-                      current {
-                        id,
-                        links {
-                          sportsRu
-                        },
-                        currentMinute,
-                        home {
-                          score,
-                          team {
-                            name,
-                            logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                              url
-                            }
-                          }
-                        },
-                        away {
-                          score,
-                          team {
-                            name,
-                            logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                              url
-                            }
-                          }
-                        }
+              pageListMatches(status: LIVE, sort: ASC_SCHEDULED_AT, limit: 10) {
+                list {
+                  id
+                  links {
+                    sportsRu
+                  }
+                  currentMinute
+                  home {
+                    score
+                    team {
+                      name
+                      logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+                        url
                       }
-                    },
-                    lastFive {
-                      result,
-                      match {
-                        links {
-                          sportsRu
-                        }
-                      }
-                    },
-                    logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                      url
                     }
-                  },
-                  rank,
-                  value,
-                  stat {
-                    MatchesPlayed,
-                    MatchesWon,
-                    MatchesDrawn,
-                    MatchesLost,
-                    GoalsScored,
-                    GoalsConceded,
-                    CupRank,
-                    GroupPosition,
-                    GroupName,
-                    YellowCards,
-                    RedCards
+                  }
+                  away {
+                    score
+                    team {
+                      name
+                      logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+                        url
+                      }
+                    }
+                  }
+                }
+              }
+              stages {
+                teamStanding {
+                  total {
+                    ...line
+                  }
+                  live {
+                    ...line
                   }
                 }
               }
@@ -83,6 +58,35 @@ const ApiService = {
           }
         }
       }
+    }
+    
+    fragment line on statTeamStandingLine {
+      team {
+        id
+        name
+        lastFive {
+          result
+          match {
+            links {
+              sportsRu
+            }
+          }
+        }
+        logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+          url
+        }
+      }
+      played
+      points
+      rank
+      rankChange
+      goalDiff
+      win
+      draw
+      loss
+      goalsFor
+      goalDiff
+      goalsAgainst
     }
     `,
 

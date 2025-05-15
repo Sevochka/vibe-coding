@@ -21,33 +21,60 @@ async function loadTournamentTable() {
         // Логируем данные для отладки
         console.log('Полученные данные:', data);
         
-        // Проверяем наличие данных (с учетом того, что rankingTeamStat - массив)
+        // Проверяем наличие данных
         if (!data || !data.data || !data.data.statQueries || !data.data.statQueries.football || 
             !data.data.statQueries.football.tournament || !data.data.statQueries.football.tournament.currentSeason ||
-            !data.data.statQueries.football.tournament.currentSeason.rankingTeamStat) {
+            !data.data.statQueries.football.tournament.currentSeason.stages) {
             throw new Error('Данные турнирной таблицы отсутствуют или имеют неверный формат');
         }
 
-        // Получаем элементы таблицы, работаем с массивом rankingTeamStat
-        const rankingTeamStat = data.data.statQueries.football.tournament.currentSeason.rankingTeamStat;
+        // Проверяем наличие данных матчей
+        const currentMatches = data.data.statQueries.football.tournament.currentSeason.pageListMatches?.list || [];
         
-        // Проверяем, есть ли элементы в массиве
-        if (!rankingTeamStat || !rankingTeamStat.length) {
-            throw new Error('Массив данных турнирной таблицы пуст');
+        // Извлекаем информацию о текущих матчах
+        const liveMatches = {};
+        
+        if (currentMatches.length > 0) {
+            currentMatches.forEach(match => {
+                // Сохраняем информацию о текущих матчах по ID команд
+                // для домашней команды
+                if (match.home && match.home.team) {
+                    liveMatches[match.home.team.name] = match;
+                }
+                // для гостевой команды
+                if (match.away && match.away.team) {
+                    liveMatches[match.away.team.name] = match;
+                }
+            });
         }
         
-        // Берем первый элемент массива, который должен содержать items
-        const tableItems = rankingTeamStat[0].items;
+        // Получаем элементы таблицы
+        // проверяем сначала stages
+        const stages = data.data.statQueries.football.tournament.currentSeason.stages;
         
-        if (!tableItems || !tableItems.length) {
-            throw new Error('Данные команд в турнирной таблице отсутствуют');
+        if (!stages || !stages.length) {
+            throw new Error('Данные этапов турнира отсутствуют');
+        }
+        
+        // Ищем этап с турнирной таблицей
+        let teamStandingTotal = [];
+        
+        for (const stage of stages) {
+            if (stage.teamStanding && stage.teamStanding.total && stage.teamStanding.total.length > 0) {
+                teamStandingTotal = stage.teamStanding.total;
+                break;
+            }
+        }
+        
+        if (teamStandingTotal.length === 0) {
+            throw new Error('Турнирная таблица отсутствует');
         }
         
         // Сортируем элементы по позиции (rank)
-        const sortedTableItems = tableItems.sort((a, b) => a.rank - b.rank);
+        const sortedTableItems = teamStandingTotal.sort((a, b) => a.rank - b.rank);
         
         // Отображаем таблицу
-        renderTournamentTable(sortedTableItems);
+        renderTournamentTable(sortedTableItems, liveMatches);
         
         // Показываем таблицу и скрываем индикатор загрузки
         loadingElement.style.display = 'none';
@@ -64,8 +91,9 @@ async function loadTournamentTable() {
 /**
  * Отображает турнирную таблицу
  * @param {Array} tableItems - Элементы турнирной таблицы
+ * @param {Object} liveMatches - Информация о текущих матчах
  */
-function renderTournamentTable(tableItems) {
+function renderTournamentTable(tableItems, liveMatches = {}) {
     const tableBodyElement = document.getElementById('table-body');
     
     // Очищаем содержимое таблицы
@@ -74,7 +102,6 @@ function renderTournamentTable(tableItems) {
     // Перебираем элементы таблицы и добавляем их в DOM
     tableItems.forEach(item => {
         const team = item.team;
-        const stat = item.stat;
         const logoUrl = team.logotype ? team.logotype.url : '';
         
         // Создаем строку таблицы
@@ -103,9 +130,9 @@ function renderTournamentTable(tableItems) {
         teamName.textContent = team.name;
         teamCell.appendChild(teamName);
         
-        // Добавляем текущий матч, если есть
-        if (team.teaser && team.teaser.current) {
-            const liveMatch = createLiveMatchElement(team.teaser.current);
+        // Добавляем текущий матч, если команда играет сейчас
+        if (liveMatches[team.name]) {
+            const liveMatch = createLiveMatchElement(liveMatches[team.name]);
             teamCell.appendChild(document.createElement('br'));
             teamCell.appendChild(liveMatch);
         }
@@ -141,24 +168,22 @@ function renderTournamentTable(tableItems) {
         tableRow.appendChild(lastFiveCell);
         
         // Добавляем статистику
-        tableRow.appendChild(createStatCell(stat.MatchesPlayed));
-        tableRow.appendChild(createStatCell(stat.MatchesWon));
-        tableRow.appendChild(createStatCell(stat.MatchesDrawn));
-        tableRow.appendChild(createStatCell(stat.MatchesLost));
-        tableRow.appendChild(createStatCell(stat.GoalsScored));
-        tableRow.appendChild(createStatCell(stat.GoalsConceded));
+        tableRow.appendChild(createStatCell(item.played)); // Игры
+        tableRow.appendChild(createStatCell(item.win)); // Победы
+        tableRow.appendChild(createStatCell(item.draw)); // Ничьи
+        tableRow.appendChild(createStatCell(item.loss)); // Поражения
+        tableRow.appendChild(createStatCell(item.goalsFor)); // Забитые голы
+        tableRow.appendChild(createStatCell(item.goalsAgainst)); // Пропущенные голы
         
         // Разница голов
-        const goalDiff = stat.GoalsScored - stat.GoalsConceded;
         const goalDiffCell = document.createElement('td');
-        goalDiffCell.textContent = goalDiff > 0 ? `+${goalDiff}` : goalDiff;
+        goalDiffCell.textContent = item.goalDiff > 0 ? `+${item.goalDiff}` : item.goalDiff;
         tableRow.appendChild(goalDiffCell);
         
-        // Очки (победа = 3 очка, ничья = 1 очко)
-        const points = (stat.MatchesWon * 3) + stat.MatchesDrawn;
+        // Очки
         const pointsCell = document.createElement('td');
         pointsCell.className = 'matches-played';
-        pointsCell.textContent = points;
+        pointsCell.textContent = item.points;
         tableRow.appendChild(pointsCell);
         
         // Добавляем строку в таблицу
