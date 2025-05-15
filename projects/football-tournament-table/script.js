@@ -18,16 +18,26 @@ async function loadTournamentTable() {
         // Получаем данные турнирной таблицы
         const data = await ApiService.getTournamentTable();
         
+        // Выводим полученные данные в консоль для отладки
+        console.log('Полученные данные:', data);
+        
         // Проверяем наличие данных
         if (!data || !data.data || !data.data.statQueries || !data.data.statQueries.football || 
             !data.data.statQueries.football.tournament || !data.data.statQueries.football.tournament.currentSeason ||
-            !data.data.statQueries.football.tournament.currentSeason.rankingTeamStat ||
-            !data.data.statQueries.football.tournament.currentSeason.rankingTeamStat.items) {
+            !data.data.statQueries.football.tournament.currentSeason.rankingTeamStat) {
             throw new Error('Данные турнирной таблицы отсутствуют или имеют неверный формат');
         }
 
         // Получаем элементы таблицы
-        const tableItems = data.data.statQueries.football.tournament.currentSeason.rankingTeamStat.items;
+        // rankingTeamStat это массив, а не объект с полем items
+        const tableItems = data.data.statQueries.football.tournament.currentSeason.rankingTeamStat;
+        
+        // Проверяем, что tableItems массив
+        if (!Array.isArray(tableItems)) {
+            throw new Error('Неверный формат данных: rankingTeamStat не является массивом');
+        }
+        
+        console.log('Элементы таблицы:', tableItems);
         
         // Сортируем элементы по позиции (rank)
         const sortedTableItems = tableItems.sort((a, b) => a.rank - b.rank);
