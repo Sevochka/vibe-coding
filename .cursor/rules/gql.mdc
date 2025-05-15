@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Endpoint is https://www.sports.ru/gql/graphql/
+To make a request use POST request to https://www.sports.ru/gql/graphql/. In body you should have query: YOUR_QUERY
+
+Also make gql query to have commas between attributes. Your API service should look like this:
+const getSearchQuery = (searchStr) => `
+{
+  searchQueries {
+    searchSuggest(query: "${searchStr}") {
+      total
+      objects {
+        tags {
+          id
+          name
+          subtype
+          sport {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
+const fetchFromSportsGql = async (query) => {
+  const data = await fetch(
+    'https://www.sports.ru/gql/graphql/',
+    {
+      headers: {
+        'x-appname': 'vibe-coding',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        query,
+      }),
+    },
+  );
+
+  return data.json();
+};
+
+
+
+When you make query your parent always will be statQueries{football: {}}!
+
+In most cases for images use 
+logotype(input: {resize: ORIGINAL, ext: WEBP, multi: X2}) {
+	url
+}
+
+When link on sports provided use source: SPORTS_HUB and slug from url.
+Example: https://www.sports.ru/football/match/cska-vs-zenit/ to
+match(id: "cska-vs-zenit", source: SPORTS_HUB)

@@ -1,24 +1,7 @@
-const projectSlug = 'betting-calculator-sports';
+// ?debug=true
+const queryParams = new URLSearchParams(window.location.search);
+const debug = queryParams.get('debug');
 
-const resize = () => {
-    const dataUTILS = {
-        for: 'BASIC_TEST',
-        action: 'resizeIframe',
-        selector: `iframe[src*=\\/projects\\/${projectSlug}]`,
-        sizes: {
-            height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
-        },
-    };
-
-    window?.top?.postMessage(JSON.stringify(dataUTILS), '*');
+if (debug && window.location.hostname === "specials.cdn.sports.ru") {
+    window.location.href = 'https://sirena.sports.ru/hockeypicker/';
 }
-
-const resizeObserver = new ResizeObserver(() => {
-    resize();
-});
-resizeObserver.observe(document.body);
-resize(); 
-
-setTimeout(() => {
-    resize();
-}, 1000);

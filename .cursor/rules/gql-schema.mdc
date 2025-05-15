@@ -1,0 +1,3328 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+type Query {
+  statQueries: statQueries!
+  type statQueries {
+    // запросы по футболу
+    football: statFootball!
+    type statFootball {
+      // метод сделанный для S&V. Список стран и вложенные турниры
+      tournamentList(
+        geo_code: geoCodePopular
+      ): statTournamentList!
+      type statTournamentList {
+        // только популярные турниры
+        popular: [statTournamentListItem!]!
+        type statTournamentListItem {
+          country: statCountry!
+          // Страна
+          type statCountry {
+            // Название
+            name: String!
+            // 3-х буквенный код (формат ISO)
+            code: String!
+            // 2-х буквенный код, формат ISO 3166 (полное соответствие)
+            iso2: String!
+            // Существует ли страна
+            actual: Boolean!
+            // Турниры
+            tournaments: [statTournament!]!
+            // Турнир
+            type statTournament {
+              // Идентификатор
+              id: ID!
+              // Название
+              name: String!
+              // Страна, в которой проходит турнир (если он не международный)
+              country: statCountry
+              // Текущий сезон
+              currentSeason: statSeason
+              // Сезон
+              type statSeason {
+                // Идентификатор
+                id: ID!
+                // Название сезона в виде 2023/2024 или 2024
+                name: String!
+                // Дата начала
+                startDate: String!
+                // Дата окончания
+                endDate: String!
+                // Финальный год проведения, например для сезона 2023/2024 будет 2024
+                year: String!
+                // Турнир, в который входит сезон
+                tournament: statTournament!
+                // Этапы сезона
+                stages(
+                  types: [stageType!]
+                  isActive: Boolean
+                ): [statStage!]!
+                // Этап сезона
+                type statStage {
+                  // Турнирная таблица
+                  teamStanding(
+                    idTeams: [ID!]
+                    groupName: String
+                  ): statTeamStanding!
+                  // Турнирная таблица
+                  type statTeamStanding {
+                    // Сезон
+                    idSeason: String!
+                    // Общая таблица
+                    total: [statTeamStandingLine]!
+                    // Строка турнирной таблицы
+                    type statTeamStandingLine {
+                      // Позиция
+                      rank: Int!
+                      // Команда
+                      team: statTeam!
+                      // Команда
+                      type statTeam {
+                        // Идентификатор
+                        id: ID!
+                        // Название
+                        name: String!
+                        // Код (сокращение)
+                        abbreviation: String!
+                        // Страна
+                        country: statCountry!
+                        // Домашний стадион
+                        venue: statVenue
+                        // Стадион
+                        type statVenue {
+                          // Идентификатор
+                          id: ID!
+                          // Название
+                          name: String!
+                          // Город
+                          city: String!
+                          // Страна
+                          country: statCountry
+                          // Вместительность
+                          capacity: Int!
+                          // Координаты: lon
+                          lon: Float!
+                          // Координаты: lat
+                          lat: Float!
+                          // Год постройки
+                          buildYear: Int!
+                          // UberSetzer связи
+                          ubersetzer: statUbersetzer!
+                          // UberSetzer связи
+                          type statUbersetzer {
+                            // ID в международных проектах
+                            internationalId: String!
+                            // ID на Sports
+                            sportsId: Int
+                            // ID тега на Sports
+                            sportsTag: Int
+                            // ID Sportradar
+                            sportradarId: String
+                            // ID Perform
+                            performId: String
+                            // ID Opta
+                            optaId: Int
+                            // ID tag
+                            tagId: String
+                            // ID Omni
+                            omniId: String
+                          }
+                          // Ссылки на внешние ресурсы
+                          links: statLink!
+                          // Ссылки на внешние ресурсы
+                          type statLink {
+                            // Основная ссылка
+                            link: String!
+                            // Ссылка для [sports.ru](mdc:https:/sports.ru)
+                            sportsRu: String!
+                            // Ссылка для [by.tribuna.com](mdc:https:/by.tribuna.com)
+                            byTribuna: String!
+                            // Ссылка для [ua.tribuna.com](mdc:https:/ua.tribuna.com)
+                            uaTribuna: String!
+                          }
+                        }
+                        // Основной турнир
+                        homeTournament: statTournament
+                        // Текущий сезон
+                        currentTournaments: [statTournament]
+                        // Цвета команды
+                        colors(
+                          product: statProduct
+                        ): [statColor]
+                        // Цвета команды
+                        type statColor {
+                          // Первый цвет
+                          first: String!
+                          // Второй цвет
+                          second: String!
+                        }
+                        // Текущий тренер
+                        mainManager: statCareer
+                        // Карьера игрока
+                        type statCareer {
+                          // Команда
+                          team: statTeam
+                          // Команда, из которой ушёл игрок
+                          teamOut: statTeam
+                          // Команда, которая арендовала
+                          teamLoanIn: statTeam
+                          // Команда, из которой арендован
+                          teamLoanOut: statTeam
+                          // Игрок
+                          player: statPlayer
+                          // Игроки
+                          type statPlayer {
+                            // Идентификатор
+                            id: ID!
+                            // Полное имя
+                            name: String!
+                            // Имя (без фамилии)
+                            firstName: String!
+                            // Фамилия
+                            lastName: String!
+                            // Возвращает первое непустое поле. В names передаётся список полей (lineup_name, ...).
+                            // Также можно использовать стандартные поля (name, firstName, lastName).
+                            // Если все поля из списка пустые, то возвращает firstName и lastName.
+                            coalesceName(
+                              names: [String!]
+                              nameTypes: [CoalesceNameAttrType!]
+                            ): String!
+                            // Новое поле амплуа
+                            fieldPosition: Position!
+                            // Дата рождения
+                            dateOfBirth: String!
+                            // Дата смерти
+                            dateOfDeath: String
+                            // Статус игрока
+                            status: playerStatus!
+                            // Национальность
+                            nationality: [statCountry!]
+                            // Статистика за сезон/команду
+                            stat(
+                              teamSeason: String
+                              idTeam: String
+                            ): [statPlayerCareer]
+                            // Статистика за сезон
+                            type statPlayerCareer {
+                              team: statTeam
+                              season: statSeason
+                              player: statPlayer
+                              matchesPlayed: Int!
+                              cleanSheet: Int!
+                              substitutedIn: Int!
+                              goalsScored: Int!
+                              penaltyScored: Int!
+                              assists: Int!
+                              ownGoals: Int!
+                              yellowCards: Int!
+                              yellowRedCards: Int!
+                              redCards: Int!
+                              minutesPlayed: Int
+                              saves: Int
+                            }
+                            // Статистика по годам
+                            statByYearTeam: [statByYearTeam]
+                            // Статистика сгруппированная по сезону
+                            type statByYearTeam {
+                              year: String!
+                              teams: [statByTeam]
+                              // Статистика за команду
+                              type statByTeam {
+                                team: statTeam
+                                items: [statPlayerCareer]
+                              }
+                            }
+                            // Общая статистика за всю карьеру
+                            totalStat: statBaseStatistic!
+                            // Основная статистика
+                            type statBaseStatistic {
+                              matchesPlayed: Int!
+                              cleanSheet: Int!
+                              substitutedIn: Int!
+                              goalsScored: Int!
+                              goalsConceded: Int!
+                              penaltyScored: Int!
+                              assists: Int!
+                              ownGoals: Int!
+                              yellowCards: Int!
+                              yellowRedCards: Int!
+                              redCards: Int!
+                              avgGoalsConceded: Int!
+                              // Количество сыгранных минут
+                              minutesPlayed: Int
+                              // Количество фолов
+                              fouls: Int!
+                              minutesPlayedPerGoal: Float
+                              minutesPlayedPerAssist: Float
+                              minutesPlayedPerFoul: Float
+                              minutesPlayedPerConceded: Float
+                            }
+                            // Карьера (история команд)
+                            careers: [statCareer]
+                            // Активный клуб
+                            currentClub: statTeam
+                            // Статистика последних матчей
+                            lastMatches: [statLastMatch]
+                            // Статистика последних матчей
+                            type statLastMatch {
+                              // Матч
+                              match: statMatch
+                              // Матч
+                              type statMatch {
+                                // Идентификатор
+                                id: ID!
+                                // Идентификатор Perform
+                                idPerform: ID
+                                teamStandingForTeam: [statTeamStandingLine!]!
+                                matchStatus: matchStatus!
+                                hasAwarded: Boolean!
+                                hasDetailStat: Boolean!
+                                hasLineups: Boolean!
+                                hasEvents: Boolean!
+                                // Период
+                                periodId: statPeriodId
+                                // Стадион
+                                venue: statVenue
+                                // Домашняя команда
+                                home: statTeamMatch
+                                // Команда в матче
+                                type statTeamMatch {
+                                  // Текущая расcтaновка
+                                  currentFormation: statFormation
+                                  // Расстановка
+                                  type statFormation {
+                                    // Код
+                                    code: String!
+                                    // Линии
+                                    positionLine: [statPositionLine]
+                                    // Линия в расстановке
+                                    type statPositionLine {
+                                      // Название
+                                      lineName: String!
+                                      // Игроки
+                                      items: [statLineupLine]
+                                      // Состав
+                                      type statLineupLine {
+                                        // Игрок
+                                        player: statPlayer
+                                        // Номер
+                                        jerseyNumber: String!
+                                        // Позиция на поле
+                                        position: statRadarPositionPlayer
+                                        // Положение в составе
+                                        lineupOrder: Int!
+                                        // Входит ли в стартовый состав
+                                        lineupStarting: Boolean!
+                                        // Вышел ли игрок на замену
+                                        lineupCurrent: Boolean!
+                                        // Тип позиции (вратарь, защитник, ...)
+                                        type: statTypePlayer!
+                                        // Статистика игрока в матче
+                                        stat: statPlayerMatchStat
+                                        // Статистика игрока в матче
+                                        type statPlayerMatchStat {
+                                          substitutedIn: Int
+                                          substitutedOut: Int
+                                          goalsScored: Int
+                                          assists: Int
+                                          ownGoals: Int
+                                          yellowCards: Int
+                                          yellowRedCards: Int
+                                          redCards: Int
+                                          penaltiesMissed: Int
+                                          penaltiesPost: Int
+                                          penaltiesTarget: Int
+                                          penaltyGoalsScored: Int
+                                          penaltyGoalsConceded: Int
+                                          goalLineClearances: Int
+                                          interceptions: Int
+                                          chancesCreated: Int
+                                          crossesSuccessful: Int
+                                          crossesTotal: Int
+                                          passesShortSuccessful: Int
+                                          passesMediumSuccessful: Int
+                                          passesLongSuccessful: Int
+                                          passesShortTotal: Int
+                                          passesMediumTotal: Int
+                                          passesLongTotal: Int
+                                          duelsHeaderSuccessful: Int
+                                          duelsSprintSuccessful: Int
+                                          duelsTackleSuccessful: Int
+                                          duelsSprintTotal: Int
+                                          duelsTackleTotal: Int
+                                          duelsHeaderTotal: Int
+                                          goalsConceded: Int
+                                          shotsFacedSaved: Int
+                                          shotsFacedTotal: Int
+                                          foulsCommitted: Int
+                                          wasFouled: Int
+                                          offsides: Int
+                                          shotsOnGoal: Int
+                                          shotsOffGoal: Int
+                                          shotsBlocked: Int
+                                          minutesPlayed: Int
+                                          performanceScore: Int
+                                          goalsByHead: Int
+                                          goalAttempts: Int
+                                          penaltiesFaced: Int
+                                          penaltiesSaved: Int
+                                          goalsByPenalty: Int
+                                          penaltyWon: Int
+                                        }
+                                        coordinates: statCoordinate
+                                        type statCoordinate {
+                                          horizontal: statPlayerPosition!
+                                          type statPlayerPosition {
+                                            x: Float!
+                                            y: Float!
+                                          }
+                                          vertical: statPlayerPosition!
+                                          application: statPlayerApplicationPosition!
+                                          type statPlayerApplicationPosition {
+                                            x: Int!
+                                            y: Int!
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                  // Расстановка стартового состава
+                                  formation: statFormation
+                                  // Команда
+                                  team: statTeam
+                                  // Голы
+                                  score: Int!
+                                  // Стартовый состав
+                                  lineup(
+                                    skipPreview: Boolean
+                                  ): [statLineupLine]
+                                  // Автоматический ли сгенерированный lineup
+                                  isPreviewLineup: Boolean!
+                                  // Текущий состав (после замен)
+                                  current_lineup: [statLineupLine]
+                                  // Запасные игроки
+                                  reserve_players: [statLineupLine]!
+                                  // Тренер
+                                  manager: statManager
+                                  // Тренер
+                                  type statManager {
+                                    // Идентификатор
+                                    id: ID!
+                                    // Полное имя
+                                    name: String!
+                                    // Имя
+                                    firstName: String!
+                                    // Фамилия
+                                    lastName: String!
+                                    // Дата рождения
+                                    dateOfBirth: String!
+                                    // Национальность
+                                    nationality: [statCountry!]
+                                    // Основное фото
+                                    avatar: statPic!
+                                    // Изображения
+                                    type statPic {
+                                      // Оригинал картинки
+                                      main: String!
+                                      // Ресайз картинки под нужные размеры
+                                      resize(
+                                        width: String
+                                        height: String
+                                      ): String!
+                                      // Ресайз и конвертация для формата webp. Качество от 1 до 100, если не указать, то 80 по дефолту
+                                      webp(
+                                        width: String
+                                        height: String
+                                        quality: Int
+                                      ): String!
+                                      // метаинформация о картинке
+                                      metaInfo: pictureMeta
+                                      type pictureMeta {
+                                        width: Int!
+                                        height: Int!
+                                        size: Int!
+                                      }
+                                    }
+                                    // Фото для продукта
+                                    picture(
+                                      productType: productType!
+                                      format: playerImageFormat!
+                                    ): statPic!
+                                    // Ссылки на внешние ресурсы
+                                    links: statLink!
+                                    // Ubersetzer связи
+                                    ubersetzer: statUbersetzer!
+                                  }
+                                  // Послематчевые пенальти
+                                  penaltyScore: Int!
+                                  // Статистика команды в матче
+                                  stat: statTeamMatchStat
+                                  // Статистика команды в матче
+                                  type statTeamMatchStat {
+                                    freeKicks: Int
+                                    offsides: Int
+                                    shotsOffTarget: Int
+                                    cornerKicks: Int
+                                    injuries: Int
+                                    shotsOnTarget: Int
+                                    yellowCards: Int
+                                    yellowRedCards: Int
+                                    redCards: Int
+                                    ballPossession: Int
+                                    goalKicks: Int
+                                    throwIns: Int
+                                    shotsSaved: Int
+                                    fouls: Int
+                                    ownGoals: Int
+                                    penaltiesMissed: Int
+                                    shotsBlocked: Int
+                                    penaltyScored: Int
+                                    substitutions: Int
+                                    shotsTotal: Int
+                                  }
+                                  // Результат (победа, ничья, поражение)
+                                  result: statResult
+                                  // Описание, собранное на основе фактоидов по игре и команде
+                                  factoid: statTeamFactoid!
+                                  // Фактоид команды в матче
+                                  type statTeamFactoid {
+                                    text: String!
+                                    stats: statTeamSeasonStat
+                                    // Статистика команды за сезон
+                                    type statTeamSeasonStat {
+                                      MatchesPlayed: Int!
+                                      MatchesWon: Int!
+                                      MatchesDrawn: Int!
+                                      MatchesLost: Int!
+                                      GoalsScored: Int!
+                                      GoalsConceded: Int!
+                                      CupRank: Int!
+                                      GroupPosition: Int!
+                                      GroupName: String!
+                                      YellowCards: Int!
+                                      RedCards: Int!
+                                    }
+                                  }
+                                  // XG
+                                  xG: Float
+                                  // список травмированных, дисквалифицированных и уехавших в расположение сборных футболистов
+                                  suspensionsPlayers: [statSuspensionItem!]!
+                                  type statSuspensionItem {
+                                    person: statPlayer!
+                                    reasons: [StatSuspensionReason!]!
+                                  }
+                                  // Последние игры команды с пагинацией; В качестве курсора используем ID матча
+                                  lastGames(
+                                    cursorMatchID: ID
+                                    limit: Int!
+                                  ): statLastGames!
+                                  type statLastGames {
+                                    // Список матчей
+                                    matches: [statMatch!]!
+                                    // Курсор для итерации списка
+                                    cursorId: ID
+                                    // Есть ли следующая пачка игр
+                                    hasNext: Boolean!
+                                  }
+                                }
+                                // Гостевая команда
+                                away: statTeamMatch
+                                // Начало матча (строка)
+                                scheduledAt: String!
+                                // Флаг наличия только даты
+                                dateOnly: Boolean!
+                                // Победитель
+                                winner: statWinner
+                                // Победитель по сумме матчей
+                                aggregateWinner: statTeam
+                                // Текущая минута
+                                currentMinute: String!
+                                // Текущая минута для клиента, разделенная с дополнительным временем в формате: 90+7
+                                currentTime: String!
+                                // Посещаемость
+                                attendance: Int!
+                                // Раунд турнира
+                                tournamentRound: TournamentRound
+                                // Раунд
+                                type TournamentRound {
+                                  // Номер тура
+                                  number: Int!
+                                  // Этап (group, cup)
+                                  type: String!
+                                  // Название группы для группового этапа (A, B, C, ...)
+                                  group: String!
+                                  // Фаза для группового этапа (group_phase_1)
+                                  phase: String!
+                                }
+                                // Начало матча (unixtime)
+                                scheduledAtStamp: Int!
+                                // Сезон
+                                season: statSeason!
+                                // Счёт по таймам
+                                periodScore: [statPeriod]
+                                // Периоды матча
+                                type statPeriod {
+                                  // Тип
+                                  type: statTypePeriodScore!
+                                  // Номер
+                                  number: Int!
+                                  // Голы домашней команды
+                                  homeScore: Int!
+                                  // Голы гостевой команды
+                                  awayScore: Int!
+                                }
+                                // Была ли в матче серия пенальти
+                                hadPenalties: Boolean!
+                                // События, radarType deprecated use eventType instead
+                                events(
+                                  radarType: [String!]
+                                  eventType: [statEnumTypeTimeline!]
+                                  after: Int
+                                ): [statTimelineEvent]
+                                // Событие
+                                type statTimelineEvent {
+                                  // Идентификатор
+                                  id: String!
+                                  // Реальное время
+                                  time: String!
+                                  // Реальное время (в формате timestamp)
+                                  unix_time: Int!
+                                  // Тип события
+                                  type: statEnumTypeTimeline!
+                                  // Команда
+                                  team: statQualifierTeam
+                                  // Период
+                                  periodId: statPeriodId
+                                  // Итог
+                                  outcome: String
+                                  // Параметры события
+                                  value: TimeLineEventValue
+                                }
+                                // Судьи
+                                referees(
+                                  refereeType: refereeTypeFilter
+                                ): [statReferee]
+                                // Судья
+                                type statReferee {
+                                  // Идентификатор
+                                  id: ID!
+                                  // Полное имя
+                                  name: String!
+                                  // Тип, main - для главного
+                                  type: String!
+                                  // Тип enum
+                                  role: String!
+                                  // Национальность
+                                  nationality: String!
+                                  // Код страны (в формате ISO)
+                                  countryCode: String!
+                                  // Страна
+                                  country: statCountry
+                                  // UberSetzer связи
+                                  ubersetzer: statUbersetzer!
+                                  // Ссылки на внешние ресурсы
+                                  links: statLink!
+                                  // Среднее значение желтых карточек
+                                  averageYellowCards: Float!
+                                  // Среднее значение красных карточек
+                                  averageRedCards: Float!
+                                }
+                                // Матчи против другой команды, last - лимит последних матчей, по дефолту = 10
+                                versus(
+                                  last: Int
+                                ): statHead2Head
+                                // Статистика личных встреч
+                                type statHead2Head {
+                                  // Статистика
+                                  stat: statAggrHead2Head
+                                  // Статистика
+                                  type statAggrHead2Head {
+                                    // Сыгранные матчи
+                                    matches: Int!
+                                    // Победы
+                                    win: Int!
+                                    // Ничьи
+                                    draw: Int!
+                                    // Поражения
+                                    loss: Int!
+                                  }
+                                  // Матчи
+                                  matches: [statMatch]
+                                }
+                                // Матчи против другой команды с пагинацией
+                                head2Head(
+                                  input: statHead2HeadInput!
+                                  input statHead2HeadInput {
+                                    teamID: String
+                                    pageSize: Int!
+                                    pageNum: Int!
+                                  }
+                                ): statHead2HeadPage
+                                type statHead2HeadPage {
+                                  // Статистика
+                                  stat: statAggregateHead2HeadPage
+                                  // Статистика
+                                  type statAggregateHead2HeadPage {
+                                    // Сыгранные матчи
+                                    matches: Int!
+                                    // Победы
+                                    win: Int!
+                                    // Ничьи
+                                    draw: Int!
+                                    // Поражения
+                                    loss: Int!
+                                  }
+                                  // Матчи
+                                  matches: [statMatch]
+                                  // Пагинация
+                                  pageInfo: statHead2HeadPageInfo!
+                                  type statHead2HeadPageInfo {
+                                    hasNextPage: Boolean!
+                                    firstPage: Int!
+                                    lastPage: Int!
+                                    currentPage: Int!
+                                    totalCount: Int!
+                                  }
+                                }
+                                // UberSetzer связи
+                                ubersetzer: statUbersetzer!
+                                // Ссылки на внешние ресурсы
+                                links: statLink!
+                                // Матчи одного тура
+                                tourMatches: [statMatch]
+                                inFavorites: Boolean
+                                // Описание, собранное на основе фактоидов по игре
+                                factoid: statFactoid!
+                                // Фактоид матча
+                                type statFactoid {
+                                  // Текст для матча
+                                  text: String!
+                                  // Фактоиды ставок
+                                  bettingFactoid: statBettingFactoidList
+                                  // Список фактидов ставок
+                                  type statBettingFactoidList {
+                                    list: [statBettingFactoid!]!
+                                    type statBettingFactoid {
+                                      type: statBettingFactoidType!
+                                      text: String!
+                                      logo: statFactoidLogo!
+                                      side: statBettingFactoidSide!
+                                    }
+                                    listWithFilter(
+                                      factoidType: String
+                                      bookmakerID: Int
+                                      factoidTextLimit: Int
+                                      factoidOddsTypeTextLimit: Int
+                                    ): [statBettingFactoid!]!
+                                  }
+                                }
+                                // Ccылка на второй матч серии
+                                relatedMatch: statMatch
+                                // Название этапа
+                                roundName: String!
+                                // Популярность матча
+                                popularity: Int
+                                // Список вкладок
+                                tabs: statMatchTabs
+                                type statMatchTabs {
+                                  // Наличие онлайна
+                                  online: Boolean!
+                                  // Наличие чата
+                                  chat: Boolean!
+                                  // Наличие расстановки команды
+                                  arrangement: Boolean!
+                                  // Наличие видео по матчу
+                                  video: Boolean!
+                                  // Наличие турнирной таблицы
+                                  table: Boolean!
+                                  // Наличие данных по результатам игры
+                                  stat: Boolean!
+                                }
+                                // Наличие коэффициентов
+                                hasXG: Boolean!
+                                // Тип раунда для поиска
+                                roundTypeName: String!
+                                // ML прогноз для матча
+                                prediction: statMLMatchPrediction
+                                // Предсказание по голам и зрелищности матча (Спортс-метр)
+                                type statMLMatchPrediction {
+                                  match: statMatch!
+                                  yellowCards: Int!
+                                  goals: Int!
+                                  spectacularity: Float!
+                                }
+                              }
+                              // Состав
+                              lineup: statLineupLine
+                              // Статистика игроков
+                              stat: statPlayerMatchStat
+                              // Команда
+                              team: statTeam
+                            }
+                            // UberSetzer связи
+                            ubersetzer: statUbersetzer!
+                            // SEO-покрытие
+                            coverage: statPlayerCoverage!
+                            // SEO-покрытие игроков
+                            type statPlayerCoverage {
+                              // Покрыта ли карьера
+                              career: Int!
+                            }
+                            // Ссылки на внешние ресурсы
+                            links: statLink!
+                            // Номер игрока
+                            jerseyNumber(
+                              teamId: ID
+                              source: statSourceList
+                              type: clubType
+                            ): Int
+                            // Виджет статистики по сезонам
+                            seasonList: statPlayerSeasonWidget!
+                            type statPlayerSeasonWidget {
+                              items: [statItemTournament]!
+                              type statItemTournament {
+                                tournament: statTournament!
+                                items: [statItemSeason!]!
+                                type statItemSeason {
+                                  season: statSeason!
+                                }
+                              }
+                              // Матчи игрока с фильтром по сезону
+                              matches(
+                                input: SeasonMatchesInput
+                                input SeasonMatchesInput {
+                                  seasonId: ID
+                                }
+                              ): [statMatch!]!
+                            }
+                            // Травмирован ли сейчас игрок
+                            activeInjury: StatPlayerInjury
+                            type StatPlayerInjury {
+                              startDate: String!
+                              endDate: String
+                              injuryType: statInjuryType!
+                            }
+                            // Bio
+                            bio: statPlayerBio!
+                            type statPlayerBio {
+                              height: Int
+                              weight: Int
+                              foot: playerFoot!
+                              gender: playerGender!
+                            }
+                            // Агрегированная статистика по сезону
+                            statBySeason: competitionPlayerStats!
+                            type competitionPlayerStats {
+                              national: CompetitionPlayerStat!
+                              type CompetitionPlayerStat {
+                                items: [SeasonPlayerStatItem!]!
+                                type SeasonPlayerStatItem {
+                                  season: statSeason!
+                                  team: statTeam!
+                                  stat: statBaseStatistic
+                                }
+                                total: statBaseStatistic!
+                              }
+                              cup: CompetitionPlayerStat!
+                              internationalClubs: CompetitionPlayerStat!
+                              internationalTeams: CompetitionPlayerStat!
+                            }
+                            // Ближайшие/следующие матчи. Duration - в минутах, сколько матч после старта должен провисеть в current.
+                            // Если не указано, то 24 часа
+                            teaser(
+                              last: Int
+                              next: Int
+                              duration: Int
+                            ): statTeaser
+                            // Тизер матчей
+                            type statTeaser {
+                              // Последние матчи
+                              last: [statMatch!]!
+                              // Следующие матчи
+                              next: [statMatch!]!
+                              // Текущий матч (если есть)
+                              current: statMatch
+                            }
+                          }
+                          // Активен ли
+                          active: Int!
+                          // Тип контракта
+                          type: contractType!
+                          // Начало карьеры
+                          startDate: String!
+                          // Окончание карьеры
+                          endDate: String
+                          // Игровой номер
+                          jerseyNumber: String!
+                          // Роль в команде, возможные значения:
+                          // player, team_captain, on_loan, career_ended,
+                          // general_manager, manager, assistant_coach, coach_for_technique, fitness_coach,
+                          // director_of_football, club_official_fr, vice_president,
+                          // unemployed, other
+                          occupation: String!
+                          // Общая статистика игрока в этой команде
+                          stat: statBaseStatistic
+                          // Статистика по годам в этой команде
+                          statByYear: [statCareerByYear]
+                          // Статистика за год
+                          type statCareerByYear {
+                            year: String!
+                            stat: statBaseStatistic
+                            items: [statPlayerCareer]
+                          }
+                          // Тип трансфера, возможные значния:
+                          // Loan, Unknown, Back from Loan, Transfer, Free Transfer, Free Agent, Trial, Player Swap
+                          transferType: transferType!
+                          // Стоимость трансфера
+                          transferValue: String!
+                          // Валюта трансфера
+                          transferCurrency: String!
+                          // Дата объявления трансфера
+                          announcedDate: String
+                        }
+                        // Текущий тренерский состав без главного тренера
+                        coaches: [statCareer!]!
+                        // Состав (сезон в формате 17/18)
+                        roster(
+                          season: ID
+                          achievements: [statAchievementList!]
+                          occupation: statOccupationList
+                          playerIds: [ID!]
+                        ): [statPlayerTeam]!
+                        // Карьера игрока
+                        type statPlayerTeam {
+                          // Команда
+                          team: statTeam
+                          // Сезон
+                          idSeason: ID
+                          // Карьера
+                          career: statCareer
+                          // Статистика
+                          stat: statBaseStatistic
+                          // Достижения
+                          achievements: [statAchievement]!
+                          // Достижения игрока
+                          type statAchievement {
+                            // Тип
+                            type: statAchievementList!
+                            // Значение
+                            value: statAchievementValue
+                          }
+                        }
+                        // Тип в виде enum
+                        typeTeam: clubType!
+                        // Год основания клуба
+                        founded: String!
+                        // Матчи сезона (id - сезона)
+                        matches(
+                          id: ID
+                        ): [statMatch]
+                        // Последние 5 матчей
+                        lastFive: [statLastForm]
+                        // Форма команды (последние матчи)
+                        type statLastForm {
+                          // Матч
+                          match: statMatch!
+                          result: statResult
+                          // Разница мячей, с которой закончился матч для этой команды
+                          pointsDiff: Int!
+                          // Высота визуального элемента для отображения результата. Вычисляется на основе разницы мячей
+                          barHeight: Int!
+                        }
+                        // Статистика по голам в последних 5 матчах
+                        goalsStat: statTeamGoalsStat
+                        // Статистика по голам команды в последних матчах
+                        type statTeamGoalsStat {
+                          scoredOver(
+                            goals: Float!
+                          ): statGoalsOver
+                          // Число матчей с выполненным тоталом голов в основное время
+                          type statGoalsOver {
+                            // Общее число матчей
+                            matches: Int!
+                            // Матчи где забито больше переданного числа голов
+                            goalsOver: Int!
+                          }
+                        }
+                        // Сезоны турниров
+                        teamSeasons(
+                          idTeamSeason: ID
+                        ): [statTeamSeason]
+                        // Сезон команды
+                        type statTeamSeason {
+                          // Название
+                          name: String!
+                          // Год
+                          year: String!
+                          // Дата начала
+                          startDate: String!
+                          // Дата окончания
+                          endDate: String!
+                          // Сезоны турниров (можно фильтровать по id турнира idTournament, а можно по домашнему home)
+                          seasons(
+                            idTournament: [ID!]
+                            home: Boolean
+                          ): [statSeason]
+                          // Матчи
+                          matches: [statMatch]
+                        }
+                        // Матчи против другой команды, last - лимит последних матчей, по дефолту = 10
+                        versus(
+                          idTeam: String!
+                          last: Int
+                        ): statHead2Head
+                        // Матчи против другой команды с пагинацией
+                        head2Head(
+                          input: statHead2HeadInput!
+                        ): statHead2HeadPage
+                        // Ближайшие/следующие матчи. Duration - в минутах, сколько матч после старта должен провисеть в current.
+                        // Если не указано, то 24 часа
+                        teaser(
+                          last: Int!
+                          next: Int!
+                          seasonId: ID
+                          duration: Int
+                        ): statTeaser
+                        // UberSetzer связи
+                        ubersetzer: statUbersetzer!
+                        // SEO-покрытие
+                        coverage: statTeamCoverage!
+                        // SEO-покрытие команды
+                        type statTeamCoverage {
+                          // Покрыты ли матчи
+                          matches: Int!
+                          // Покрыт ли состав
+                          roster: Int!
+                        }
+                        // Ссылки на внешние ресурсы
+                        links: statLink!
+                        // Находится ли турнир в избранном пользователя делающего запрос
+                        inFavorites: Boolean
+                        // Игроки, ушедшие в аренду
+                        loanPlayers: [statCareer!]!
+                        // Популярность
+                        popularity: Int!
+                        // Onboarding популярность
+                        onboardingPopularity: Int!
+                        // Ближайший турнир с турнирной таблицей
+                        nextTournamentWithStandings: statTournament
+                      }
+                      // Перспектива команды на этой позиции (выход в следующий этап или вылет)
+                      current_outcome: String!
+                      // Цвет, соответствующий перспективам команды
+                      colorOutcome: String!
+                      // Название группы
+                      groupName: String!
+                      // Название группы со словом (группа)
+                      name: String!
+                      // Сыграно матчей
+                      played: Int!
+                      // Победы
+                      win: Int!
+                      // Ничьи
+                      draw: Int!
+                      // Поражения
+                      loss: Int!
+                      // Забитые голы
+                      goalsFor: Int!
+                      // Пропущенные голы
+                      goalsAgainst: Int!
+                      // Разница голов
+                      goalDiff: Int!
+                      // Очки
+                      points: Int!
+                      // Изменение позиции относительно прошлого тура
+                      rankChange: Int!
+                    }
+                    // Таблица, посчитанная по домашним матчам
+                    home: [statTeamStandingLine]!
+                    // Таблица, посчитанная по выездным матчам
+                    away: [statTeamStandingLine]!
+                    // Таблица лайв
+                    live: [statTeamStandingLine]!
+                  }
+                  // Дата начала
+                  startDate: String!
+                  // Дата окончания
+                  endDate: String!
+                  // Тип этапа
+                  type: stageType!
+                  // Дерево сезонов для изображения турнирной сетки
+                  tree: graphTree
+                  // Дерево игр
+                  type graphTree {
+                    layers: [graphLayer!]!
+                    // Слои. Разбиваем по вертикали, обычно всегда один
+                    type graphLayer {
+                      id: ID!
+                      name: String!
+                      // значение для сортировки. меньше - выше
+                      position: Int!
+                    }
+                    pairs: [graphPair!]!
+                    // Пара противостояния
+                    type graphPair {
+                      id: ID!
+                      title: String!
+                      placeNumber: Int!
+                      layer: graphLayer!
+                      round: graphRound!
+                      // Раунды. Разбиваем по горизонтали. Слева - направо
+                      type graphRound {
+                        id: ID!
+                        name: String!
+                        enumName: graphStageName!
+                        // значение для сортировки. меньше - левее
+                        position: Int!
+                        // есть ли активные игры в раунде
+                        active: Boolean!
+                      }
+                      // input - из каких пар пришли. Кол-во эллементов в массиве от 0 до 2
+                      input: [ID!]!
+                      // Пометка для объединения слоев. Сделано для грандфиналов в киберспорте
+                      mergingLayers: Boolean!
+                      // Пометка для отображения связи с другим layout
+                      inputOtherLayout: Boolean!
+                      // output - куда выходит победитель. В финалах null
+                      output: ID
+                      // значение для сортировки
+                      position: Int!
+                      value: graphEnumPair!
+                      // финальная позиция в турнире
+                      tournamentPosition: graphTournamentPosition
+                      // Финальная позиция в турнире
+                      type graphTournamentPosition {
+                        home: Int!
+                        away: Int!
+                      }
+                      // призовая медаль
+                      medal: graphTeamMedal
+                      // Призовая медаль
+                      type graphTeamMedal {
+                        home: graphMedal
+                        away: graphMedal
+                      }
+                    }
+                    // колличество раундов, чтобы понять, на сколько разбивать сетку
+                    countRounds: Int!
+                  }
+                  // Название этапа
+                  name: String!
+                  // Активность этапа
+                  active: Boolean!
+                  // Раунды в этапах
+                  rounds: [statRound!]!
+                  type statRound {
+                    vertical: Int!
+                    name: String!
+                    teamStanding: statTeamStanding!
+                    // Название типа раунда. Нужно для фильтра в season.matches
+                    typeName: String!
+                  }
+                }
+                // Туры сезона
+                tours: [statTour!]!
+                // Тур в сезоне
+                type statTour {
+                  // Номер тура
+                  number: Int!
+                }
+                // Матчи в сезоне с фильтром по команде
+                matches(
+                  idTeam: ID
+                  round: statTournamentRoundInput
+                  // Раунды для статистики
+                  input statTournamentRoundInput {
+                    // Номера туров
+                    numbers: [Int!]
+                    // Этапы (group, cup)
+                    types: [String!]
+                    // Группы (A, B, ...)
+                    groups: [String!]
+                    // Фазы для групповых этапов (group_phase_1)
+                    phases: [String!]
+                    // Фильтр по названию раунда
+                    roundTypeName: String
+                  }
+                ): [statMatch]
+                // Матчи в сезоне с фильтром по команде + пагинатор
+                // по дефолту сортировка ASC - по id, DESC обратная по id
+                // ASC_SCHEDULED_AT, DESC_SCHEDULED_AT
+                pageListMatches(
+                  idTeam: ID
+                  source: statSourceList
+                  round: statTournamentRoundInput
+                  currentPage: Int
+                  sort: statMatchListSort!
+                  limit: Int!
+                  status: statMatchStatusSort
+                  month: Int
+                ): statMatchList
+                // Список матчей
+                type statMatchList {
+                  // Матчи
+                  list: [statMatch]
+                  // Пагинация
+                  pageInfo: statPageInfo
+                  // Пагинация
+                  type statPageInfo {
+                    // Общее количество
+                    totalCount: Int!
+                    // Есть ли следующая страница
+                    hasNextPage: Boolean!
+                    // Номер текущей страницы
+                    currentPage: Int!
+                    // Первая страница
+                    firstPage: Int!
+                    // Последняя страница
+                    lastPage: Int!
+                  }
+                }
+                // Статистика команды в сезоне, id - id  команды
+                stats(
+                  id: ID!
+                  source: statSourceList
+                ): statTeamSeasonStat
+                // Статистика игроков - deprecated, используйте rankingPlayerStat
+                statPlayers(
+                  sort: statPlayerStatSort
+                  limit: Int
+                  teams: [String!]
+                  source: statSourceList
+                ): [statPlayerBySeasonStat]
+                // Статистика по сезону
+                type statPlayerBySeasonStat {
+                  // Игрок
+                  player: statPlayer
+                  // Команда
+                  team: statTeam
+                  // Статистика
+                  stat: statBaseStatistic
+                }
+                // Тизер сезона
+                // next  n - будущих матчей,
+                // last - n - предыдущих матчей
+                // на выходе поле current всегда будет заполнятся когда идет online матча, оно не зависит от входных параметров  next и last
+                teaser(
+                  next: Int
+                  last: Int
+                ): statSeasonTeaser
+                // Тизер матчей сезона
+                type statSeasonTeaser {
+                  // Последние матчи
+                  last: [statMatch!]
+                  // Следующие матчи
+                  next: [statMatch!]
+                  // Текущие матчи
+                  current: [statMatch!]
+                }
+                // UberSetzer связи
+                ubersetzer: statUbersetzer!
+                // статистика игроков за сезон
+                rankingPlayerStat(
+                  input: statInputRankingPlayerStat
+                  input statInputRankingPlayerStat {
+                    limit: Int
+                    attribute: [statRankingAttribute!]
+                    teams: [String!]
+                    source: statSourceList
+                  }
+                ): [statRankingPlayerStat!]!
+                // Статистика игроков за сезон
+                type statRankingPlayerStat {
+                  attribute: statRankingAttribute!
+                  items: [statRankingPlayerStatItem!]!
+                  type statRankingPlayerStatItem {
+                    player: statPlayer
+                    team: statTeam
+                    rank: Int!
+                    value: String
+                    stat: statBaseStatistic!
+                  }
+                }
+                rankingPlayerStatWithPagination(
+                  input: statInputRankingPlayerStatWithPagination
+                  input statInputRankingPlayerStatWithPagination {
+                    limit: Int
+                    offset: Int
+                    attribute: statRankingAttribute!
+                    sort: statSortPlayerStat
+                    teams: [String!]
+                    source: statSourceList
+                  }
+                ): statRankingPlayerStatWithPagination!
+                // Статистика игроков за сезон с пагинацией
+                type statRankingPlayerStatWithPagination {
+                  items: [statRankingPlayerStatItem!]!
+                  total: Int!
+                }
+                rankingTeamStat(
+                  input: statInputRankingTeamStat
+                  input statInputRankingTeamStat {
+                    limit: Int
+                    attribute: [statRankingTeamAttribute!]
+                  }
+                ): [statRankingTeamStat!]!
+                // Статистика игроков за сезон
+                type statRankingTeamStat {
+                  attribute: statRankingTeamAttribute!
+                  items: [statRankingTeamStatItem!]!
+                  type statRankingTeamStatItem {
+                    team: statTeam
+                    rank: Int!
+                    value: String
+                    stat: statTeamSeasonStat!
+                  }
+                }
+                venues(
+                  id: ID
+                ): [statVenues!]!
+                // Статистика стадиона за сезон
+                type statVenues {
+                  // Стадион
+                  venue: statVenue!
+                  // Статистика по матчам
+                  stat: statVenueBySeason!
+                  type statVenueBySeason {
+                    // Матчей сыгранно на этом стадионе за турнир
+                    playedMatches: Int!
+                    // Матчей запланировано на этом стадионе за турнир
+                    scheduledMatches: Int!
+                    // Средняя заполняемость за турнир
+                    occupancyRate: Int!
+                  }
+                }
+                // участники сезона
+                participants(
+                  input: inputParticipants
+                  input inputParticipants {
+                    id: String
+                  }
+                ): [statParticipants!]!
+                type statParticipants {
+                  team: statTeam
+                  averagePlayersHeight: String!
+                  averagePlayersWeight: String!
+                  averagePlayersAge: String!
+                }
+                // тренеры
+                managers(
+                  id: ID
+                ): [statManagers!]!
+                // Тренеры за сезон
+                type statManagers {
+                  // Тренер
+                  manager: statManager
+                  // Команда
+                  team: statTeam
+                  // Статистика
+                  statMangerSeason: statMangerSeasonStat
+                  // Статистика тренера за сезон
+                  type statMangerSeasonStat {
+                    // Сыграно матчей всего
+                    matches: Int!
+                    // Победы
+                    win: Int!
+                    // Ничьи
+                    draw: Int!
+                    // Поражения
+                    loss: Int!
+                  }
+                }
+                // список травмированных, дисквалифицированных и уехавших в расположение сборных футболистов
+                suspensionsPlayers: [statSuspensionItem!]!
+                // Содержит этапы с таблицей
+                includesStandings: Boolean!
+                // Победившая команда
+                winnerTeam: statTeam
+              }
+              // Список сезонов
+              seasons: [statSeason!]!
+              // Логотип
+              logo: statPic!
+              // Логотипы для разных продуктов (форматов)
+              picture(
+                productType: productType!
+                format: tournamentImageFormat!
+              ): statPic!
+              // Тип турнира (tournament - круговой турнир)
+              type: String!
+              // SEO-покрытие
+              coverage: statTournamentCoverage!
+              // SEO-покрытие турнира
+              type statTournamentCoverage {
+                // Покрыт ли сезон
+                season: Int!
+              }
+              // Последний победитель
+              champion: statTeam
+              // UberSetzer связи
+              ubersetzer: statUbersetzer!
+              // Ссылки на внешние ресурсы
+              links: statLink!
+              // Находится ли турнир в избранном пользователя делающего запрос
+              inFavorites: Boolean
+              // Популярность
+              popularity: Int!
+              // Есть деревья
+              isShowTree: Boolean!
+              // Отображать таб Турниры для фронта и мобилок
+              isStageTab: Boolean!
+              // Содержит этапы с таблицей
+              includesStandings: Boolean!
+              // Цвет турнира HEX
+              color: String!
+            }
+            // Флаг
+            picture(
+              productType: productType!
+              format: countryImageFormat!
+            ): statPic!
+            // Ubersetzer связи
+            ubersetzer: statUbersetzer!
+          }
+          season: statSeason!
+          tournament: statTournament!
+        }
+        // национальные чемпионаты (без кубков)
+        national: [statTournamentListItem!]!
+        // международные клубные турниры
+        internationalClubs: [statTournamentListItem!]!
+        // сборные
+        internationalTeams: [statTournamentListItem!]!
+      }
+      // Метод для Onboarding. Список стран и вложенные турниры
+      tournamentOnboardingList(
+        limit: Int
+      ): statTournamentList!
+      // Команда по id
+      team(
+        id: ID!
+        source: statSourceList
+      ): statTeam
+      // Метод для Onboarding team
+      teamOnboardingList(
+        limit: Int
+      ): [statTeam]!
+      // Сезон по id
+      season(
+        id: [String!]!
+        source: statSourceList
+      ): [statSeason]
+      // Турнир по id
+      tournament(
+        id: ID!
+        source: statSourceList
+      ): statTournament
+      // Матч по id
+      match(
+        id: ID
+        source: statSourceList
+        testMode: Boolean
+      ): statMatch
+      // Будущие матчи для адротатора с минимум информации
+      upcomingMatches(
+        dateLimit: String!
+        teamIds: [ID!]
+        tournamentIds: [ID!]
+      ): [statMatch!]!
+      // Самые популярные матчи (по сумме популярности команд) по турнирам
+      mostPopularMatches(
+        dateLimit: String!
+        tournamentIds: [ID!]!
+      ): [statMatch!]!
+      // Самые популярные матчи (по турнирной таблице) по турнирам
+      matchTopRanking(
+        dateLimit: String!
+        tournamentIds: [ID!]!
+      ): [statMatch!]!
+      // Рейтинг матчей по критериям с помощью нейросети
+      topAIMatches(
+        seasonID: ID
+        source: statSourceList
+        limit: Int
+      ): statTopAIMatches!
+      type statTopAIMatches {
+        spectacular: [statTopAIMatch!]!
+        type statTopAIMatch {
+          match: statMatch!
+          spectacularRating: Int!
+          spectacularAIDescription: String!
+          boringRating: Int!
+          boringAIDescription: String!
+          bloodyRating: Int!
+          bloodyAIDescription: String!
+          predictAIHomeScore: Int!
+          predictAIAwayScore: Int!
+          predictAIHomeYellowCards: Int!
+          predictAIAwayYellowCards: Int!
+        }
+        boring: [statTopAIMatch!]!
+        bloody: [statTopAIMatch!]!
+      }
+      // Судья по id
+      referee(
+        id: ID!
+        source: statSourceList
+      ): statReferee
+      // Игрок по id
+      player(
+        id: ID!
+        source: statSourceList
+      ): statPlayer
+      // Стадион по id
+      venue(
+        id: ID!
+        source: statSourceList
+      ): statVenue
+      // Страна по id
+      country(
+        id: ID!
+        source: statCountryIDList
+      ): statCountry
+      // Зрелищные матчи. Спортс-Метр
+      mostMLPopularMatches(
+        tournamentID: ID
+        sort: statMLMatchPredictionSort
+        limit: Int!
+      ): [statMLMatchPrediction!]!
+    }
+  }
+  // Список всех стран
+  stat_countryActiveList: [statCountry]!
+  // # Состав команды
+  // idSeason - пример: 2018 или 17/18
+  stat_roster(
+    idTeam: ID!
+    idSeason: ID
+    source: statSourceList
+  ): [statPlayerTeam]!
+  // Пагинация для команд
+  stat_pageListTeams(
+    currentPage: Int
+    sort: statListSort!
+    limit: Int!
+  ): statTeamList
+  // Список команды
+  type statTeamList {
+    // Команды
+    list: [statTeam]
+    // Пагинация
+    pageInfo: statPageInfo
+  }
+  // Пагинация для игроков
+  stat_pageListPlayers(
+    currentPage: Int
+    sort: statListSort!
+    limit: Int!
+  ): statPlayerList
+  // Список игроков
+  type statPlayerList {
+    // Игроки
+    list: [statPlayer]
+    // Пагинация
+    pageInfo: statPageInfo
+  }
+  // Пагинация для матчей
+  stat_pageListMatches(
+    currentPage: Int
+    sort: statListSort!
+    limit: Int!
+  ): statMatchList
+  // Поиск сущности по строке
+  stat_search(
+    input: searchInput!
+    // Запрос на поиск
+    input searchInput {
+      // Текст запроса
+      search: String!
+      // Искомые типы
+      type: [searchType!]!
+    }
+  ): searchResult!
+  // Результат поиска
+  type searchResult {
+    // Найденные результаты
+    result: [statEntity!]
+    // Сообщение (если ошибка)
+    message: String!
+    // Статус результата
+    statusCode: Int!
+    // Ошибки
+    errors: [Error!]
+  }
+  // Матчи за день, запрос для матч-центра
+  stat_matchesByDate(
+    filter: matchesByDateFilter!
+    // Параметры для запроса матчи за день
+    input matchesByDateFilter {
+      // День в формате *yyyy-mm-dd*
+      date: String!
+      // Часовой пояс в формате *±hh:mm*
+      timezone: String
+      // Длина дня
+      dayLength: String
+      // [DEPRECATED] Фильтр по статусу матча
+      matchStatus: statMatchStatus
+      // Фильтр по статусам матча
+      status: [matchStatus!]
+      // [DEPRECATED] Фильтр по турниру
+      tournamentId: ID
+      // Фильтр по списку турниров
+      tournamentIds: [ID!]
+      // Источник id для турниров
+      source: statSourceList
+      // Только матчи с SportsId в Ubersetzer
+      hasSportsId: Boolean
+    }
+  ): mcViewFootball
+  // Тип для получения данных в формате МЦ. Возможность группировки по турнирам, получения избранных матчей
+  type mcViewFootball {
+    // Общее число турниров в tournaments
+    tournamentsCount: Int!
+    // Общее число матчей
+    matchesCount: Int!
+    // Общее число лайв матчей
+    liveMatchesCount: Int!
+    // Матчи поделенные по турнирам
+    tournaments(
+      expand: expandTournaments
+    ): [tournamentMatches!]!
+    type tournamentMatches {
+      tournament: statTournament!
+      matchesCount: Int!
+      liveMatchesCount: Int!
+      matches(
+        sort: matchesByDateSort
+      ): [statMatch!]!
+    }
+    // Список матчей
+    matches(
+      sort: matchesByDateSort
+    ): [statMatch!]!
+    // Только избранные матчи юзера
+    favoriteMatches(
+      sort: matchesByDateSort
+    ): [statMatch!]!
+  }
+  // Ближайшие матчи, запрос для матч-центра
+  stat_matchesUpcoming(
+    hasSportsId: Boolean
+    limit: Int!
+  ): mcViewFootball
+  // Трансферы, начиная с заданной даты
+  stat_transfers(
+    input: statTransfersInput!
+    input statTransfersInput {
+      startDateAt: String!
+      offset: Int
+      limit: Int
+    }
+  ): statCareerList!
+  type statCareerList {
+    // Трансферы
+    list: [statCareer!]!
+  }
+  // Запросы для матч-центра и тизера
+  matchCenterQueries: matchCenterQueries
+  type matchCenterQueries {
+    getMatches(
+      filter: mcInputFilter
+      // сделал только фильтр по видам спорта, нужны ли будут другие виды фильтров?
+      input mcInputFilter {
+        // Фильтр по видам спорта
+        sports: [mcKindOfSport!]
+        // День в формате *yyyy-mm-dd*
+        date: String!
+        // Длина дня
+        dayLength: String
+        // Часовой пояс в формате *±hh:mm*
+        timezone: String
+        // Фильтр по статусам матча
+        status: [matchStatus!]
+        // Фильтр по списку турниров
+        tournamentIds: [ID!]
+        // Фильтр по букмейкеру
+        bookmaker: BookmakerName
+        // Фильтр по гео
+        geo_code: geoCodePopular
+        // Фильтр по live + ещё неначавшимся в указанный период
+        livePlusUpcomingSpan: String
+      }
+    ): mcGetMatchesResponse
+    type mcGetMatchesResponse {
+      // views набор разных отображений под любой вид спорта
+      views: [mcView!]!
+    }
+    groupMatches(
+      filter: mcInputFilter
+    ): mcGroupMatchesResponse
+    type mcGroupMatchesResponse {
+      // матчи дня
+      matchDay: mcMatchDay
+      // избранное
+      favoriteView: [mcFavoriteMatchGroup!]!
+      // популярное
+      popularView: [mcMatchGroup!]!
+      // все остальное
+      otherView: [mcMatchGroup!]!
+    }
+    customSettingsMatches(
+      filter: mcCustomSettingsFilter
+      input mcCustomSettingsFilter {
+        // Фильтр по списку турниров
+        tournamentIds: [ID!]
+        // Фильтр по гео
+        geo_code: geoCodePopular
+      }
+    ): mcCustomSettingsMatchesResponse
+    type mcCustomSettingsMatchesResponse {
+      views: [mcMatchGroup!]!
+    }
+  }
+}
+type Mutation {
+  // Отправить тестовое событие
+  statTestMatchEvent(
+    MatchId: String!
+    Type: statEnumTypeTimeline!
+    PeriodName: String
+    MatchTime: Int
+    MatchClock: String
+    Team: String
+    X: Int
+    Y: Int
+    HomeScore: Int
+    AwayScore: Int
+    ShootoutHomeScore: Int
+    ShootoutAwayScore: Int
+    Period: Int
+    PeriodType: String
+    Status: String
+    StoppageTime: String
+    Outcome: String
+    GoalScorer: String
+    GoalScorerType: String
+    Assist: String
+    AssistType: String
+    Player: String
+    PlayerOut: String
+    PlayerIn: String
+    Name: String
+    Value: String
+  ): statTimelineEvent!
+}
+type Subscription {
+  // Подписка на события матча, radarType deprecated use eventType instead
+  matchEvent(
+    matchId: [ID!]
+    radarType: [String!]
+    eventType: [statEnumTypeTimeline!]
+    placement: OddsPlacement
+    placementName: String
+    source: statSourceList
+    seasonId: String
+  ): statMatchTimelineEvent!
+  // Событие матча
+  type statMatchTimelineEvent {
+    // Матч
+    match: statMatch
+    // Событие
+    event: statTimelineEvent!
+  }
+  // Эмуляция подписки на события матча, radarType deprecated use eventType instead
+  testMatchEvent(
+    matchId: ID!
+    radarType: [String!]
+    eventType: [statEnumTypeTimeline!]
+    placement: OddsPlacement
+    placementName: String
+    source: statSourceList
+    delay: Int
+    delayBeforeStarting: Int
+    seasonId: String
+  ): statMatchTimelineEvent!
+}
+// Ошибка с правами доступа
+type AccessRightError {
+  // Сообщение об ошибке
+  message: String!
+}
+enum BookmakerName {
+  PARIMATCH
+  LIGASTAVOK
+  GGBET
+  ONEXBET
+  OLIMP
+  WINLINE
+  PARIBET
+  MARATHON
+  BETCITY
+  BETTERA
+  ONEXSTAVKA
+  FONBET
+}
+// The `Boolean` scalar type represents `true` or `false`.
+scalar Boolean
+enum CoalesceNameAttrType {
+  NAME
+  FIRST_NAME
+  LAST_NAME
+  LINEUP_NAME
+}
+union Error = AccessRightError | StatisticError
+  // Ошибка статистики
+  type StatisticError {
+    // Сообщение об ошибке
+    message: String!
+  }
+// Ошибка
+type ErrorInterface {
+  // Сообщение об ошибке
+  message: String!
+}
+// The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](mdc:http:/en.wikipedia.org/wiki/IEEE_floating_point).
+scalar Float
+// The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+scalar ID
+// The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+scalar Int
+enum OddsPlacement {
+  // Текущий матч / Онлайн
+  ONLINE_MATCH
+  // Текущий турнир
+  CURRENT_TOURNAMENT
+}
+enum Position {
+  FORWARD
+  GOALKEEPER
+  DEFENDER
+  MANAGER
+  MIDFIELDER
+  NONE
+}
+type StatPlayerSuspension {
+  startDate: String!
+  endDate: String
+  matches: Int
+  suspensionType: statSuspensionType!
+}
+union StatSuspensionReason = StatPlayerInjury | StatPlayerSuspension
+// The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+scalar String
+union TimeLineEventValue = statMatchLineup | statBreakStart | statCancelledVideoAssistantReferee | statCornerKick | statFreeKick | statGoalKick | statInjury | statInjuryReturn | statMatchEnded | statMatchStarted | statOffside | statPenaltyAwarded | statPenaltyMissed | statPenaltySaved | statPenaltyShootout | statPeriodScore | statPeriodStart | statPossibleVideoAssistantReferee | statRedCard | statScoreChange | statShotOffTarget | statShotOnTarget | statShotSaved | statSubstitution | statThrowIn | statVideoAssistantReferee | statVideoAssistantRefereeOver | statYellowCard | statYellowRedCard | statVARGoal | statVARGoalAwarded | statVARGoalNotAwarded | statVARPenalty | statVARPenaltyAwarded | statVARPenaltyNotAwarded | statVARRedCardGiven | statVARCardUpgrade | statVARMistakenIdentity | statVARUnknown | statDeleteScoreChange | statTeamStatsChange | statBeforeStarted | statOddOneXTwo | statXG | statChangeCountMatches | statUpdateCurrentTime | updateTeamStanding
+  // Появление стартового состава
+  type statMatchLineup {
+    // Реальное время
+    time: String!
+  }
+  // Начало перерыва
+  type statBreakStart {
+    // Реальное время
+    time: String!
+    // Голы домашней команды
+    homeScore: Int!
+    // Голы выездной команды
+    awayScore: Int!
+  }
+  // Отмена после VAR
+  type statCancelledVideoAssistantReferee {
+    // Реальное время
+    time: String!
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+  }
+  // Угловой
+  type statCornerKick {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Подающий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Штрафной удар
+  type statFreeKick {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Удар от ворот
+  type statGoalKick {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Травма
+  type statInjury {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Травмированный игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Повторная травма
+  type statInjuryReturn {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Травмированный игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Матч завершён
+  type statMatchEnded {
+    // Голы домашней команды
+    homeScore: Int!
+    // Голы гостевой команды
+    awayScore: Int!
+    // Счет серии пенальти домашней команды
+    homePenaltyScore: Int!
+    // Счет серии пенальти гостевой команды
+    awayPenaltyScore: Int!
+    // Реальное время
+    time: String!
+  }
+  // Матч начался
+  type statMatchStarted {
+    // Реальное время
+    time: String!
+  }
+  // Вне игры
+  type statOffside {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Заработанный пенальти
+  type statPenaltyAwarded {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Заработавший игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Нереализованный пенальти
+  type statPenaltyMissed {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Вратарь
+    goalkeeper: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Сохраненное пенальти
+  type statPenaltySaved {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Послематчевый пенальти
+  type statPenaltyShootout {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Статус
+    status: statPenaltyShootoutStatus
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+    // Счет серии пенальти домашней команды
+    homePenaltyScore: Int!
+    // Счет серии пенальти гостевой команды
+    awayPenaltyScore: Int!
+  }
+  // Результат тайма
+  type statPeriodScore {
+    // Реальное время
+    time: String!
+    // Голы домашней команды
+    homeScore: Int!
+    // Голы гостевой команды
+    awayScore: Int!
+  }
+  // Начало тайма
+  type statPeriodStart {
+    // Реальное время
+    time: String!
+    // Голы домашней команды
+    homeScore: Int!
+    // Голы гостевой команды
+    awayScore: Int!
+  }
+  // Возможный моменты для VAR
+  type statPossibleVideoAssistantReferee {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+  }
+  // Красная карточка
+  type statRedCard {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Удалённый игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+    // Причина получения карты
+    cardReason: statEnumCardReason!
+    // Выдан игроку/стафу
+    isStaff: Boolean
+  }
+  // Гол
+  type statScoreChange {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Голы домашней команды
+    homeScore: Int!
+    // Голы гостевой команды
+    awayScore: Int!
+    // Игрок, забивший гол
+    goalScorer: statPlayer
+    // Тип гола
+    goalScorerType: String
+    // Как забит гол
+    typeScore: statMethodScore
+    // Игрок, отдавший передачу
+    assist: statPlayer
+    // Тип передачи (primary - голевая передача)
+    assistType: String
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Удар мимо
+  type statShotOffTarget {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Вид промаха
+    outcome: statOutcome
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Удар в створ
+  type statShotOnTarget {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Бьющий игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Отбитый удар
+  type statShotSaved {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Замена
+  type statSubstitution {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Ушедший игрок
+    playerOut: statPlayer
+    // Вышедший игрок
+    playerIn: statPlayer
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // Вбрасывание
+  type statThrowIn {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+  }
+  // VAR
+  type statVideoAssistantReferee {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+  }
+  // VAR просмотрен
+  type statVideoAssistantRefereeOver {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+  }
+  // Жёлтая карточка
+  type statYellowCard {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Предупреждённый игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+    // Причина получения карты
+    cardReason: statEnumCardReason!
+    // Выдан игроку/стафу
+    isStaff: Boolean
+  }
+  // Вторая жёлтая карточка
+  type statYellowRedCard {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Координаты на поле X
+    x: Int
+    // Координаты на поле Y
+    y: Int
+    // Удалённый игрок
+    player: statPlayer
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    team: String
+    // Причина получения карты
+    cardReason: statEnumCardReason!
+    // Выдан игроку/стафу
+    isStaff: Boolean
+  }
+  // Deprecated: There is instead statVARGoalAwarded and statVARGoalNotAwarded
+  type statVARGoal {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+    // Счёт
+    homeScore: Int!
+    awayScore: Int!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Goal Awarded
+  type statVARGoalAwarded {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+    // Счёт
+    homeScore: Int!
+    awayScore: Int!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Goal Not Awarded
+  type statVARGoalNotAwarded {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+    // Счёт
+    homeScore: Int!
+    awayScore: Int!
+  }
+  // Deprecated: There is instead statVARPenaltyAwarded and statVARPenaltyNotAwarded
+  type statVARPenalty {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Penalty Awarded
+  type statVARPenaltyAwarded {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Penalty Not Awarded
+  type statVARPenaltyNotAwarded {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Red Card Given
+  type statVARRedCardGiven {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Card Upgrade
+  type statVARCardUpgrade {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Mistaken Identity
+  type statVARMistakenIdentity {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  // VAR - VideoAssistantReferee
+  // VAR Unknown
+  type statVARUnknown {
+    // Реальное время
+    time: String!
+    // Минута матча
+    matchTime: Int
+    // Игровое время (с секундами)
+    matchClock: String
+    // Дополнительное время (int)
+    stoppageMin: Int
+    // Игрок
+    player: statPlayer
+    // Результат
+    outcome: String
+    // Решение по VAR
+    decision: statVARDecision
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+  }
+  type statDeleteScoreChange {
+    // Счёт
+    homeScore: Int!
+    awayScore: Int!
+    // Флаг изменения счета по VAR
+    isVAR: Boolean!
+  }
+  type statTeamStatsChange {
+    // Название статистики по команде
+    name: statEnumTeamStatsType!
+    // Команда (HOME - домашняя, AWAY - гостевая)
+    qualifier: statQualifierTeam!
+    // Значение статистики
+    value: String!
+  }
+  type statBeforeStarted {
+    time: String!
+    // Минут до начала 15,30,60
+    minutesBeforeStarted: Int!
+  }
+  // Изменение коэффициента
+  type statOddOneXTwo {
+    resultType: statOddOneXTwoResultType
+  }
+  type statXG {
+    home: Float
+    away: Float
+  }
+  type statChangeCountMatches {
+    tournament: statTournament
+    live: Int!
+    total: Int!
+  }
+  // Изменилось время матча
+  type statUpdateCurrentTime {
+    currentTime: String!
+  }
+  type updateTeamStanding {
+    season: statSeason
+  }
+enum clubType {
+  CLUB
+  NATIONAL_TEAM
+}
+// Типы контрактов
+enum contractType {
+  UNSPECIFIED
+  MAN
+  YOUTH
+  WOMEN
+}
+// Формат картинок для флага
+enum countryImageFormat {
+  SVG
+  PNG
+}
+enum expandTournaments {
+  ALL
+  FIRST5
+}
+// Регион популярности
+enum geoCodePopular {
+  // Россия
+  RU
+  // Бразилия
+  BR
+  // Россия ONBOARDING
+  ONBOARDING_RU
+}
+// Пустая пара
+type graphEmptyPair {
+  id: ID!
+}
+union graphEnumPair = graphEmptyPair | graphSkipPair | statMatch | statMatchSeries
+  // Пропуск пары
+  type graphSkipPair {
+    id: ID!
+  }
+  // Серия из нескольких матчей для древовидной структуры
+  type statMatchSeries {
+    winner: statTeam
+    items: [statMatch!]!
+  }
+enum graphMedal {
+  MEDAL_GOLD
+  MEDAL_SILVER
+  MEDAL_BRONZE
+}
+enum graphStageName {
+  FINAL
+  PRELIMINARY_FINAL
+  THREE_RD_PLACE_FINAL
+  SEMI_FINALS
+  PRELIMINARY_SEMI_FINALS
+  QUARTER_FINALS
+  EIGHT_TH_FINALS
+  THREE_RD_QUALIFYING_ROUND
+  TWO_RD_QUALIFYING_ROUND
+  TWO_ND_QUALIFYING_ROUND
+  ONE_ST_QUALIFYING_ROUND
+  ONE_RD_QUALIFYING_ROUND
+  PLAY_OFFS
+  UNKNOWN
+}
+input logoIdInput {
+  id: String!
+}
+// Результат загрузки фото
+input logoPlayerUpdateInput {
+  // Идентификатор
+  id: String!
+  // Адрес
+  url: String!
+  // Проект
+  product: productType!
+  // Формат
+  format: playerImageFormat!
+}
+// Входные данные для обновления статистических логотипов
+input logoTeamUpdateInput {
+  // Идентификатор
+  id: String!
+  // Адрес
+  url: String!
+  // Продукт
+  product: productType!
+  // Формат картинки
+  format: teamImageFormat!
+}
+// Данные для обновления логотипов
+input logoTournamentInput {
+  // Идентификатор
+  id: String!
+  // Адрес
+  url: String!
+  // Продукт для которого использовать логотип
+  product: productType!
+  // Формат логотипа
+  format: tournamentImageFormat!
+}
+// Типы периодов
+enum matchStatus {
+  // The match is scheduled to be played
+  NOT_STARTED
+  // The match is currently in progress
+  LIVE
+  // The match has been postponed to a future date
+  POSTPONED
+  // The match has been temporarily delayed and will be continued
+  DELAYED
+  // The start of the match has been temporarily delayed
+  START_DELAYED
+  // The match has been canceled and will not be played
+  CANCELLED
+  // The match is over
+  ENDED
+  // The match results have been confirmed
+  CLOSED
+  // The match has been abandoned
+  ABANDONED
+  // default
+  UNDEFINED
+}
+enum matchesByDateSort {
+  // сортировка по возрастанию по началу матча
+  ASC_SCHEDULED_AT
+  // сортировка по убыванию по началу матча
+  DESC_SCHEDULED_AT
+  // сортировка по убыванию приоритета матчей
+  PRIORITY
+}
+type mcFavoriteFootballGroup {
+  // флаг если группировка по турниру
+  isTournament: Boolean!
+  // флаг для общей группы
+  isCommonGroup: Boolean!
+  // турнир, по которому сделана группировка
+  tournament: statTournament
+  // список матчей
+  matches: [statMatch!]!
+}
+union mcFavoriteMatchGroup = mcFavoriteFootballGroup
+type mcFootballMatchGroup {
+  tournament: statTournament!
+  matches: [statMatch!]!
+  countTotalMatches: Int!
+  countLiveMatches: Int!
+}
+// ссылки
+type mcItemLinks {
+  // текстовая трансляция
+  textBroadcast: String
+  // видео трансляция
+  videoBroadcast: String
+  // покупка билетов
+  ticket: String
+}
+// Виды спорта в матч-центре
+enum mcKindOfSport {
+  TEASER_FOOTBALL
+  TEASER_ICEHOCKEY
+  TEASER_DOTA
+  TEASER_CS
+}
+union mcMatchDay = statMatch
+union mcMatchGroup = mcFootballMatchGroup
+// каждый из видов спорта заведен через разные view. Так мы сможем разделить виды спорта. Вот здесь вся магия и происходит. Под каждый вид спорта свой тип, а у фронта свой шаблон для отображения
+union mcView = mcViewFootball | mcViewIcehockey
+  type mcViewIcehockey {
+    title: String!
+  }
+enum playerFoot {
+  RIGHT
+  LEFT
+  BOTH
+  NONE
+}
+enum playerGender {
+  FEMALE
+  MALE
+  NONE
+}
+// Форматы картинок
+enum playerImageFormat {
+  // Большая
+  FULLHD
+  // Маленькая
+  AVATAR
+}
+enum playerStatus {
+  ACTIVE
+  RETIRED
+  DIED
+  NONE
+}
+// Типы продуктов
+enum productType {
+  // Международные проекты
+  TRIBUNA
+  // Sports.ru
+  SPORTSRU
+  // Betting Insider
+  BETTING
+}
+// Типы судей
+enum refereeTypeFilter {
+  // Главный
+  main
+}
+// Общий тип для результата
+type searchElement {
+  // Идентификатор
+  ID: ID!
+  // Тип
+  Type: String!
+}
+// Типы сущностей
+enum searchType {
+  // Игрок
+  PLAYER
+  // Команда
+  TEAM
+  // Турниры
+  TOURNAMENT
+  // Стадионы
+  VENUE
+}
+// Типы этапов
+enum stageType {
+  // Квалификация
+  QUALIFICATION_STAGE
+  // Групповой этап
+  GROUP_STAGE
+  // Плей-офф
+  PLAYOFF_STAGE
+  // Стандартный
+  REGULAR_STAGE
+}
+// Типы достижений
+enum statAchievementList {
+  // Лучший бомбардир
+  TOP_SCORER
+  // Лучший ассистент
+  TOP_ASSIST
+  // Частый нарушитель
+  TOUGH_GUY
+}
+union statAchievementValue = statTopScorer | statTopAssist | statToughGuy
+  // Лучший бомбардир
+  type statTopScorer {
+    // Забитые голы
+    goals: Int!
+    // Голевые передачи
+    assists: Int!
+    // Сыгранные матчи
+    matchPlayed: Int!
+  }
+  // Лучший ассистент
+  type statTopAssist {
+    // Забитые голы
+    goals: Int!
+    // Голевые передачи
+    assists: Int!
+    // Сыгранные матчи
+    matchPlayed: Int!
+  }
+  // Частый нарушитель
+  type statToughGuy {
+    // Жёлтые карточки
+    yellowCards: Int!
+    // Красные карточки
+    redCards: Int!
+    // Сыгранные матчи
+    matchPlayed: Int!
+  }
+enum statBettingFactoidSide {
+  HOME
+  AWAY
+  BOTH
+  UNKNOWN
+}
+// Типы фактоидов ставок
+enum statBettingFactoidType {
+  OUTCOME
+  INDIVIDUAL_TOTAL
+  UNKNOWN_BETTING_FACTOID_TYPE
+}
+// # Виды идентификаторов для стран
+// 
+//   О стандарте ISO 3166
+//   [https://www.iso.org/iso-3166-country-codes.html](mdc:https:/www.iso.org/iso-3166-country-codes.html)
+//   [https://en.wikipedia.org/wiki/ISO_3166-1](mdc:https:/en.wikipedia.org/wiki/ISO_3166-1)
+enum statCountryIDList {
+  // ISO alpha-3 code (неполное соответствие ISO 3166)
+  CODE
+  // ISO alpha-2 code
+  ISO2
+}
+// Два лого для h2h фактоидов
+type statDoubleFactoidLogo {
+  src1: statPic
+  src2: statPic
+}
+union statEntity = statTeam | statPlayer | statVenue | statTournament
+// Причины получения карт
+enum statEnumCardReason {
+  FOUL
+  PERSISTENT_INFRINGEMENT
+  HAND_BALL
+  DANGEROUS_PLAY
+  TIME_WASTING
+  ARGUMENT
+  DISSENT
+  SIMULATION
+  EXCESSIVE_CELEBRATION
+  ENCROACHMENT
+  LEAVING_FIELD_OF_PLAY
+  ENTERING_FIELD_OF_PLAY
+  OFF_THE_BALL_FOUL
+  NOT_RETREATING
+  ENTERING_REFEREE_REVIEW_AREA
+  EXCESSIVE_USAGE_OF_REVIEW_SIGNAL
+  OTHER_REASON
+  VIOLENT_CONDUCT
+  SPITTING
+  PROFESSIONAL_FOUL
+  SERIOUS_FOUL
+  FOUL_AND_ABUSIVE_LANGUAGE
+  ENTERING_VIDEO_OPERATIONS_ROOM
+  NOT_SET
+}
+// Типы статистики по команде
+enum statEnumTeamStatsType {
+  FREE_KICKS
+  OFFSIDES
+  SHOTS_OFF_TARGET
+  CORNER_KICKS
+  SHOTS_ON_TARGET
+  YELLOW_CARDS
+  YELLOW_RED_CARDS
+  RED_CARDS
+  BALL_POSSESSION
+  GOAL_KICKS
+  THROW_INS
+  SHOTS_SAVED
+  FOULS
+  OWN_GOALS
+  PENALTIES_MISSED
+  SHOTS_BLOCKED
+  PENALTY_SCORED
+  SUBSTITUTIONS
+  CHANGE_COUNT
+  SHOTS_TOTAL
+}
+// Типы событий
+enum statEnumTypeTimeline {
+  MATCH_LINEUP
+  BREAK_START
+  CANCELLED_VIDEO_ASSISTANT_REFEREE
+  CORNER_KICK
+  FREE_KICK
+  GOAL_KICK
+  INJURY
+  INJURY_RETURN
+  INJURY_TIME_SHOWN
+  MATCH_ENDED
+  MATCH_STARTED
+  OFFSIDE
+  PENALTY_AWARDED
+  PENALTY_MISSED
+  PENALTY_SAVED
+  PENALTY_SHOOTOUT
+  PERIOD_SCORE
+  PERIOD_START
+  POSSIBLE_VIDEO_ASSISTANT_REFEREE
+  RED_CARD
+  SCORE_CHANGE
+  SHOT_OFF_TARGET
+  SHOT_ON_TARGET
+  SHOT_SAVED
+  SUBSTITUTION
+  THROW_IN
+  VAR_GOAL_AWARDED
+  VAR_GOAL_NOT_AWARDED
+  VAR_PENALTY_AWARDED
+  VAR_PENALTY_NOT_AWARDED
+  VAR_RED_CARD_GIVEN
+  VAR_CARD_UPGRADE
+  VAR_MISTAKEN_IDENTITY
+  VAR_UNKNOWN
+  VIDEO_ASSISTANT_REFEREE
+  VIDEO_ASSISTANT_REFEREE_OVER
+  YELLOW_CARD
+  YELLOW_RED_CARD
+  UPDATE_SCORE_CHANGE
+  UPDATE_YELLOW_CARD
+  UPDATE_RED_CARD
+  UPDATE_YELLOW_RED_CARD
+  DELETE_SCORE_CHANGE
+  DELETE_YELLOW_CARD
+  DELETE_RED_CARD
+  DELETE_YELLOW_RED_CARD
+  TEAM_STATS_CHANGE
+  BEFORE_STARTED
+  LINE_ONE_X_TWO
+  XG
+  CHANGE_COUNT
+  UPDATE_CURRENT_TIME
+  UPDATE_TEAM_STANDING
+}
+union statFactoidLogo = statOneFactoidLogo | statDoubleFactoidLogo
+  // Одно лого, если фактоид не h2h
+  type statOneFactoidLogo {
+    src: statPic
+  }
+enum statInjuryType {
+  UNDEFINED
+  HEAD
+  NECK
+  MUSCLE
+  KNEE
+  ANKLE
+  POISONING
+  VIRUS
+  KNOCK
+}
+// Сортировки в пагинации
+enum statListSort {
+  // Возрастание
+  ASC
+  // Убывание
+  DESC
+}
+// Виды идентификаторов
+enum statMLMatchPredictionSort {
+  // По голам
+  GOALS
+  // По желтым карточкам
+  YELLOW_CARDS
+  // Зрелищности
+  SPECTACULARITY
+}
+// Сортировки в пагинации
+enum statMatchListSort {
+  // Возрастание
+  ASC
+  // Убывание
+  DESC
+  // сортировка по возрастанию по началу матча
+  ASC_SCHEDULED_AT
+  // сортировка по убыванию по началу матча
+  DESC_SCHEDULED_AT
+}
+// Состояние матча
+enum statMatchStatus {
+  LIVE
+  NOT_STARTED
+}
+enum statMatchStatusSort {
+  PREV
+  NEXT
+  LIVE
+  PREV_WITHOUT_LIVE
+}
+// Метод гола
+enum statMethodScore {
+  NONE
+  PENALTY
+  OWN_GOAL
+}
+// Члены команды
+enum statOccupationList {
+  // Игроки
+  PLAYER
+  // Менеджер (тренер)
+  MANAGER
+}
+// Типы результата для ставки Исход
+enum statOddOneXTwoResultType {
+  DRAW
+  AWAY
+  HOME
+}
+// Виды промаха
+enum statOutcome {
+  // Перекладина
+  BAR
+  // Мимо
+  MISS
+  // Штанга
+  POST
+}
+// Статус пенальти
+enum statPenaltyShootoutStatus {
+  // Реализован
+  SCORED
+  // Не реализован
+  MISSED
+  // Ещё не пробит
+  NOT_TAKEN_YET
+}
+// Период
+enum statPeriodId {
+  // Первый тайм
+  FIRST_HALF
+  // Второй тайм
+  SECOND_HALF
+  // Первый тайм дополнительного времени
+  EXTRA_TIME_FIRST_HALF
+  // Второй тайм дополнительного времени
+  EXTRA_TIME_SECOND_HALF
+  // Серия пенальти
+  PENALTY_SHOOTOUT
+  // Перерыв
+  HALF_TIME
+  // Конец второго тайма перед дополнительным временем
+  END_OF_SECOND_HALF_BEFORE_EXTRA_TIME
+  // Перерыв между таймами в дополнительное время
+  EXTRA_TIME_HALF_TIME
+  // Конец дополнительного времени перед серией пенальти
+  END_OF_EXTRA_TIME_BEFORE_PENALTIES
+  // Матч окончен
+  FULL_TIME
+  // До матча
+  PRE_MATCH
+}
+// Сортировки в статистике
+enum statPlayerStatSort {
+  // Бомбардиры (по голам)
+  SCORE
+  // Ассистенты (по передачам)
+  ASSIST
+  // По желтым карточкам
+  YELLOW_CARDS
+  // По красным карточкам
+  RED_CARDS
+  // Сыгранные матчи
+  MATCH_PLAYED
+}
+// Виды продуктов
+enum statProduct {
+  // Международные проекты
+  INTERNATIONAL
+  // Sports.ru
+  SPORTS
+}
+// Команда
+enum statQualifierTeam {
+  // Гостевая
+  AWAY
+  // Домашняя
+  HOME
+}
+// Позиции игроков
+enum statRadarPositionPlayer {
+  // Центральный защитник
+  CENTRAL_DEFENDER
+  // Центральный полузащитник
+  CENTRAL_MIDFIELDER
+  // Вратарь
+  GOALKEEPER
+  // Левый защитник
+  LEFT_BACK
+  // Левый полузащитник
+  LEFT_WINGER
+  // Правый защитник
+  RIGHT_BACK
+  // Правый полузащитник
+  RIGHT_WINGER
+  // Нападающий
+  STRIKER
+}
+enum statRankingAttribute {
+  // Отборы за игру
+  WON_TACKLES_PER_GAME
+  TOTAL_YELLOW_CARD
+  TOTAL_RED_CARD
+  TOTAL_GOALS
+  TOTAL_ASSISTS
+  TOTAL_GOALS_CONCEDED
+  // Пропущенные мячи, только для вратарей
+  TOTAL_GOALS_CONCEDED_FOR_GK
+  // Сэйвы за игру
+  SAVES_PER_GAME
+  // Минут на гол
+  MINUTES_PLAYED_PER_GOAL
+  // Перехваты за игру
+  INTERCEPTIONS_PER_GAME
+  GOALS_AND_ASSISTS
+  // Точность передач
+  ACCURATE_PASSES_PCT
+  // Ударов в створ за игру
+  ONTARGET_ATTEMPTS_PER_GAME
+  // Успешный дриблинг за игру
+  WON_CONTESTS_PER_GAME
+  // Количество желтых карточек + (Количество красных карточек x2)
+  TOUGH_GUY
+  // Количество сыгранных минут
+  TOTAL_MINS_PLAYED
+  // Количество фолов
+  TOTAL_FOULS
+  // Минут для ассиста
+  MINUTES_PLAYED_PER_ASSIST
+  // Минут для 1 фола
+  MINUTES_PLAYED_PER_FOUL
+  // Минут до пропущенного мяча(только для вратарей)
+  MINUTES_PLAYED_PER_CONCEDED
+  // забитых пенальти с игры
+  PENALTY_SCORED
+  // сухих матчей для вратарей
+  CLEAN_SHEET_GK
+}
+enum statRankingTeamAttribute {
+  // Всего голов
+  TOTAL_GOALS
+  // Сыгранные матчи
+  MATCH_PLAYED
+  // Количество желтых карточек
+  TOTAL_YELLOW_CARD
+  // Количество красных карточек
+  TOTAL_RED_CARD
+  // Процент удачных отборов
+  TOTAL_TACKLE_PCT
+  // Процент удачных передач
+  TOTAL_PASS_PCT
+  // Дуэлей выиграно
+  TOTAL_DUELS_WON
+  // Ударов за игру
+  ATTEMPTS_PER_GAME
+  // Ударов для гола
+  ATTEMPTS_PER_GOAL
+  // Количество желтых карточек + (Количество красных карточек x2)
+  TOUGH_TEAM
+}
+// Тип судьи
+enum statRefereeRole {
+  // Main Referee
+  MAIN
+  // Lineman 1 / AR1 – Senior Assistant Referee
+  LINESMAN_1
+  // Assistant Referee 2 (Lineman 2 / AR2 – Junior Assistant Referee)
+  LINESMAN_2
+  // Fourth Official (Fourth Official / Substitute Referee)
+  FOURTH_OFFICIAL
+  // VAR
+  VAR
+  // VAR assistant official
+  VAR_ASSISTANT
+}
+// Результат
+enum statResult {
+  // Победа
+  WIN
+  // Ничья
+  DRAW
+  // Поражение
+  LOSE
+}
+enum statSortPlayerStat {
+  ASC
+  DESC
+  DEFAULT
+}
+// Виды идентификаторов
+enum statSourceList {
+  // Глобальный
+  GLOBAL
+  // Sportradar
+  SPORTRADAR
+  // Perform
+  PERFORM
+  // ID на [Sports.ru](mdc:https:/sports.ru)
+  SPORTS
+  // ID тега на [Sports.ru](mdc:https:/sports.ru)
+  SPORTS_TAG
+  // Название хаба на [Sports.ru](mdc:https:/sports.ru)
+  SPORTS_HUB
+  // Хабы [Tribuna.com](mdc:https:/tribuna.com)
+  TRIBUNA_HUB
+  // OMNI
+  OMNI
+  // Opta
+  OPTA
+  // Tag
+  TAG
+}
+enum statSuspensionType {
+  DISQUALIFICATION
+  PLAY_FOR_THE_NATIONAL_TEAM
+}
+// Сортировки в статистике по командам
+enum statTeamStatSort {
+  // Всего голов
+  TOTAL_GOALS
+  // Сыгранные матчи
+  MATCH_PLAYED
+  // Количество передач
+  TOTAL_ASSISTS
+  // Количество желтых карточек
+  TOTAL_YELLOW_CARD
+  // Количество красных карточек
+  TOTAL_RED_CARD
+  // Процент удачных отборов
+  TOTAL_TACKLE_PCT
+  // Процент удачных передач
+  TOTAL_PASS_PCT
+  // Дуэлей выиграно
+  TOTAL_DUELS_WON
+}
+// Тестовое событие
+type statTestEvent {
+  // Сообщение
+  msg: String!
+}
+// Фильтр для стат
+input statTournamentPopularFilter {
+  // Фильтр по гео
+  geo_code: geoCodePopular
+}
+// Типы периодов
+enum statTypePeriodScore {
+  // Дополнительное время
+  OVERTIME
+  // Серия пенальти
+  PENALTIES
+  // Основное время
+  REGULAR_PERIOD
+}
+// Типы позиций
+enum statTypePlayer {
+  // Вратарь
+  GOALKEEPER
+  // Защитник
+  DEFENDER
+  // Полузащитник
+  MIDFIELDER
+  // Нападающий
+  FORWARD
+}
+// Решение по VAR
+enum statVARDecision {
+  CONFIRMED
+  CANCELLED
+}
+// Победитель
+enum statWinner {
+  // Гостевая команда
+  AWAY
+  // Ничья
+  DRAW
+  // Домашняя команда
+  HOME
+}
+type stat_countryActiveList {
+  list: [statCountry!]!
+}
+// Форматы картинок
+enum teamImageFormat {
+  // Форма
+  KIT
+  // SVG-логотип
+  SVG
+  // PNG/JPG логотип
+  LOGO
+}
+// Форматы изображений турнира
+enum tournamentImageFormat {
+  BACKGROUND
+  LOGO
+  SVG
+}
+// Типы периодов
+enum transferType {
+  TRANSFER
+  FREE_TRANSFER
+  BACK_FROM_LOAN
+  LOAN
+  UNKNOWN
+  PLAYER_SWAP
+  FREE_AGENT
+  TRIAL
+}
+// Результат загрузки картинки
+type updateLogoPayload {
+  // URL новой картинки
+  updatedURL: String!
+  // Код ответа
+  statusCode: Int!
+  // Сообщение
+  message: String!
+  // Ошибки
+  errors: [Error!]
+}
+
+

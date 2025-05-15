@@ -19,62 +19,64 @@ const ApiService = {
             currentSeason {
               id,
               rankingTeamStat(input: {attribute: [TOTAL_GOALS]}) {
-                team {
-                  id,
-                  name,
-                  teaser(last: 0, next: 1) {
-                    current {
-                      id,
-                      links {
-                        sportsRu
-                      },
-                      currentMinute,
-                      home {
-                        score,
-                        team {
-                          name,
-                          logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                            url
+                items {
+                  team {
+                    id,
+                    name,
+                    teaser(last: 0, next: 1) {
+                      current {
+                        id,
+                        links {
+                          sportsRu
+                        },
+                        currentMinute,
+                        home {
+                          score,
+                          team {
+                            name,
+                            logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+                              url
+                            }
                           }
-                        }
-                      },
-                      away {
-                        score,
-                        team {
-                          name,
-                          logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                            url
+                        },
+                        away {
+                          score,
+                          team {
+                            name,
+                            logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+                              url
+                            }
                           }
                         }
                       }
-                    }
-                  },
-                  lastFive {
-                    result,
-                    match {
-                      links {
-                        sportsRu
+                    },
+                    lastFive {
+                      result,
+                      match {
+                        links {
+                          sportsRu
+                        }
                       }
+                    },
+                    logotype(input: {resize: ORIGINAL, ext: WEBP}) {
+                      url
                     }
                   },
-                  logotype(input: {resize: ORIGINAL, ext: WEBP}) {
-                    url
+                  rank,
+                  value,
+                  stat {
+                    MatchesPlayed,
+                    MatchesWon,
+                    MatchesDrawn,
+                    MatchesLost,
+                    GoalsScored,
+                    GoalsConceded,
+                    CupRank,
+                    GroupPosition,
+                    GroupName,
+                    YellowCards,
+                    RedCards
                   }
-                },
-                rank,
-                value,
-                stat {
-                  MatchesPlayed,
-                  MatchesWon,
-                  MatchesDrawn,
-                  MatchesLost,
-                  GoalsScored,
-                  GoalsConceded,
-                  CupRank,
-                  GroupPosition,
-                  GroupName,
-                  YellowCards,
-                  RedCards
                 }
               }
             }
