@@ -2,6 +2,11 @@
     /* Branded Colors for Sports */
     --sports-primary-color: #00c78b;
     --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
     --sports-grey-800: #4a4a4a;
     --sports-grey-600: #757575;
     --sports-grey-500: #7f7f7f;
@@ -10,7 +15,7 @@
     --sports-grey-50: #efefef;
     --sports-yellow-A700: #ffc300;
     --sports-red-a700: #ff003c;
-    --sports-green-50: #d8f7e5;
+    --sports-red-50: #ffe7eb;
     --sports-black: #000;
 
     /* UI elements and typography */
@@ -52,9 +57,10 @@ body {
 
 h1 {
     font-family: var(--ui-font-family-heading);
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 20px;
     text-align: center;
+    color: var(--sports-grey-900);
 }
 
 .loading-container {
@@ -83,8 +89,9 @@ h1 {
 .table-container {
     overflow-x: auto;
     margin-bottom: 16px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    background-color: #fff;
 }
 
 .tournament-table {
@@ -92,25 +99,30 @@ h1 {
     border-collapse: collapse;
     text-align: center;
     font-size: 14px;
+    box-shadow: 0 0 0 1px var(--sports-grey-100);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .tournament-table th {
     background-color: var(--sports-primary-color);
     color: white;
-    padding: 10px;
+    padding: 12px 8px;
     font-weight: 600;
     position: sticky;
     top: 0;
     z-index: 10;
+    text-transform: uppercase;
+    font-size: 12px;
 }
 
 .tournament-table th.position {
-    width: 30px;
+    width: 36px;
 }
 
 .tournament-table th.team {
     text-align: left;
-    min-width: 160px;
+    min-width: 180px;
 }
 
 .tournament-table th.last-five {
@@ -118,12 +130,17 @@ h1 {
 }
 
 .tournament-table th.stats {
-    min-width: 30px;
+    min-width: 36px;
 }
 
 .tournament-table td {
-    padding: 10px;
+    padding: 12px 8px;
     border-bottom: 1px solid var(--sports-grey-100);
+    transition: background-color 0.3s ease;
+}
+
+.tournament-table tbody tr {
+    transition: transform 0.5s ease, background-color 0.3s ease;
 }
 
 .tournament-table tr:nth-child(even) {
@@ -137,6 +154,8 @@ h1 {
 .tournament-table .position {
     text-align: center;
     font-weight: bold;
+    font-size: 15px;
+    color: var(--sports-grey-800);
 }
 
 .tournament-table .team {
@@ -147,15 +166,17 @@ h1 {
 }
 
 .team-logo {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+    width: 28px;
+    height: 28px;
+    margin-right: 12px;
     object-fit: contain;
 }
 
 .team-name {
     display: inline-block;
     vertical-align: middle;
+    font-weight: 600;
+    color: var(--sports-grey-900);
 }
 
 .last-five {
@@ -168,12 +189,13 @@ h1 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border-radius: 4px;
     font-size: 12px;
     font-weight: bold;
     color: white;
+    text-decoration: none;
 }
 
 .win {
@@ -189,7 +211,13 @@ h1 {
 }
 
 .matches-played {
-    font-weight: 500;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--sports-grey-900);
+}
+
+.moving-up {
+    background-color: rgba(0, 199, 139, 0.1) !important;
 }
 
 .error-container {
@@ -203,11 +231,14 @@ h1 {
 }
 
 .legend {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--sports-grey-600);
     margin-bottom: 16px;
     line-height: 1.4;
     text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
 }
 
 .footer {
@@ -217,7 +248,7 @@ h1 {
 }
 
 .sports-logo img {
-    height: 24px;
+    height: 28px;
 }
 
 /* Live match display */
@@ -234,59 +265,95 @@ h1 {
 
 .live-match-status {
     font-size: 11px;
+    font-weight: bold;
     color: var(--sports-red-a700);
     margin-right: 8px;
     white-space: nowrap;
+    position: relative;
+    padding-left: 12px;
+}
+
+.live-match-status::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: var(--sports-red-a700);
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
 }
 
 .live-match-teams {
     display: flex;
     align-items: center;
     flex: 1;
+    text-decoration: none;
+    color: inherit;
 }
 
 .live-team {
     display: flex;
     align-items: center;
+    max-width: 45%;
 }
 
 .live-team img {
     width: 16px;
     height: 16px;
-    margin-right: 4px;
+    margin-right: 6px;
+    object-fit: contain;
 }
 
 .live-score {
     display: flex;
     align-items: center;
-    margin: 0 4px;
+    justify-content: center;
+    margin: 0 8px;
     font-weight: bold;
+    min-width: 40px;
 }
 
 .live-separator {
     margin: 0 4px;
+    color: var(--sports-grey-500);
 }
 
-/* Responsive adjustments */
+@keyframes highlight {
+    0% { background-color: rgba(0, 199, 139, 0.3); }
+    100% { background-color: transparent; }
+}
+
+.highlight-row {
+    animation: highlight 1.5s ease-out;
+}
+
 @media (max-width: 600px) {
     .tournament-table {
-        font-size: 12px;
+        font-size: 13px;
     }
     
     .tournament-table th,
     .tournament-table td {
-        padding: 8px 4px;
+        padding: 10px 4px;
     }
     
     .team-logo {
-        width: 20px;
-        height: 20px;
-        margin-right: 6px;
+        width: 24px;
+        height: 24px;
+        margin-right: 8px;
     }
     
     .match-result {
         width: 18px;
         height: 18px;
-        font-size: 10px;
+        font-size: 11px;
     }
 } 
