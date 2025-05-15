@@ -28,6 +28,9 @@ async function loadTournamentTable() {
             throw new Error('Данные турнирной таблицы отсутствуют или имеют неверный формат');
         }
 
+        // Создаем имитацию матча Зенит - Краснодар
+        const liveMatch = createZenitKrasnodarMatch(data);
+        
         // Проверяем наличие данных матчей
         const currentMatches = data.data.statQueries.football.tournament.currentSeason.pageListMatches?.list || [];
         
@@ -46,6 +49,12 @@ async function loadTournamentTable() {
                     liveMatches[match.away.team.name] = match;
                 }
             });
+        }
+        
+        // Добавляем имитацию лайв-матча
+        if (liveMatch) {
+            liveMatches['Зенит'] = liveMatch;
+            liveMatches['Краснодар'] = liveMatch;
         }
         
         // Получаем элементы таблицы
@@ -82,7 +91,7 @@ async function loadTournamentTable() {
         
         // Запускаем имитацию обновления данных Зенита через 3 секунды
         setTimeout(() => {
-            simulateZenitUpdate(sortedTableItems);
+            simulateZenitUpdate(sortedTableItems, liveMatch);
         }, 3000);
     } catch (error) {
         console.error('Ошибка при загрузке турнирной таблицы:', error);
@@ -94,48 +103,130 @@ async function loadTournamentTable() {
 }
 
 /**
+ * Создает имитацию лайв-матча между Зенитом и Краснодаром
+ * @param {Object} data - Данные, полученные от API
+ * @returns {Object} - Объект с данными матча или null в случае ошибки
+ */
+function createZenitKrasnodarMatch(data) {
+    try {
+        // Пытаемся найти команды в турнирной таблице
+        const stages = data.data.statQueries.football.tournament.currentSeason.stages;
+        let teamStandingTotal = [];
+        
+        for (const stage of stages) {
+            if (stage.teamStanding && stage.teamStanding.total && stage.teamStanding.total.length > 0) {
+                teamStandingTotal = stage.teamStanding.total;
+                break;
+            }
+        }
+        
+        const zenitData = teamStandingTotal.find(item => item.team.name === 'Зенит');
+        const krasnodarData = teamStandingTotal.find(item => item.team.name === 'Краснодар');
+        
+        if (!zenitData || !krasnodarData) {
+            console.error('Не удалось найти данные Зенита или Краснодара');
+            return null;
+        }
+        
+        // Создаем имитацию матча
+        return {
+            id: 'live-zenit-krasnodar',
+            currentMinute: '67′',
+            matchStatus: 'LIVE',
+            links: {
+                sportsRu: 'https://www.sports.ru/football/'
+            },
+            home: {
+                score: 1,
+                team: {
+                    name: 'Зенит',
+                    logotype: zenitData.team.logotype
+                }
+            },
+            away: {
+                score: 0,
+                team: {
+                    name: 'Краснодар',
+                    logotype: krasnodarData.team.logotype
+                }
+            }
+        };
+    } catch (error) {
+        console.error('Ошибка при создании имитации матча:', error);
+        return null;
+    }
+}
+
+/**
  * Имитация обновления данных Зенита в реальном времени
  * @param {Array} tableItems - Элементы турнирной таблицы
+ * @param {Object} liveMatch - Данные о лайв-матче
  */
-function simulateZenitUpdate(tableItems) {
+function simulateZenitUpdate(tableItems, liveMatch) {
     // Находим Зенит и Краснодар в данных
     const zenitIndex = tableItems.findIndex(item => item.team.name === 'Зенит');
     const krasnodarIndex = tableItems.findIndex(item => item.team.name === 'Краснодар');
     
     if (zenitIndex !== -1 && krasnodarIndex !== -1) {
-        // Обновляем данные Зенита
+        // Обновляем данные Зенита и Краснодара
         const zenitItem = tableItems[zenitIndex];
+        const krasnodarItem = tableItems[krasnodarIndex];
         
-        // Увеличиваем очки Зенита с 60 до 63
-        if (zenitItem.points === 60) {
-            zenitItem.points = 63;
-            zenitItem.win += 1; // Учитываем новую победу
-            zenitItem.played += 1; // Увеличиваем количество сыгранных матчей
+        // Обновляем счет в лайв-матче (0-0 -> 1-0)
+        if (liveMatch) {
+            // Сначала обновляем до 0-0
+            liveMatch.home.score = 0;
+            liveMatch.away.score = 0;
             
-            // Пересортируем таблицу
-            tableItems.sort((a, b) => {
-                // Сначала сортируем по очкам (по убыванию)
-                if (b.points !== a.points) {
-                    return b.points - a.points;
+            // Выводим текущую таблицу
+            renderTournamentTable(tableItems, { 'Зенит': liveMatch, 'Краснодар': liveMatch });
+            
+            // Через 1.5 сек меняем счет на 1-0 и обновляем таблицу
+            setTimeout(() => {
+                // Меняем счет
+                liveMatch.home.score = 1;
+                
+                // Обновляем очки и статистику
+                if (zenitItem.points === 60) {
+                    zenitItem.points = 63;
+                    zenitItem.win += 1; // Учитываем новую победу
+                    zenitItem.played += 1; // Увеличиваем количество сыгранных матчей
+                    zenitItem.goalsFor += 1; // Увеличиваем забитые голы
+                    zenitItem.goalDiff += 1; // Обновляем разницу голов
+                    
+                    // Обновляем данные Краснодара (проигрыш)
+                    krasnodarItem.loss += 1;
+                    krasnodarItem.played += 1;
+                    krasnodarItem.goalsAgainst += 1;
+                    krasnodarItem.goalDiff -= 1;
+                    
+                    // Пересортируем таблицу
+                    tableItems.sort((a, b) => {
+                        // Сначала сортируем по очкам (по убыванию)
+                        if (b.points !== a.points) {
+                            return b.points - a.points;
+                        }
+                        // При одинаковых очках сортируем по разнице голов (по убыванию)
+                        if (b.goalDiff !== a.goalDiff) {
+                            return b.goalDiff - a.goalDiff;
+                        }
+                        // При одинаковой разнице голов сортируем по забитым голам (по убыванию)
+                        return b.goalsFor - a.goalsFor;
+                    });
+                    
+                    // Обновляем ранги
+                    tableItems.forEach((item, index) => {
+                        item.rank = index + 1;
+                    });
+                    
+                    // Обновляем отображение
+                    renderTournamentTable(tableItems, { 'Зенит': liveMatch, 'Краснодар': liveMatch }, true);
+                    
+                    // Выделяем обновленные строки
+                    highlightTeamRow('Зенит', 'up');
+                    highlightTeamRow('Краснодар', 'down');
                 }
-                // При одинаковых очках сортируем по разнице голов (по убыванию)
-                if (b.goalDiff !== a.goalDiff) {
-                    return b.goalDiff - a.goalDiff;
-                }
-                // При одинаковой разнице голов сортируем по забитым голам (по убыванию)
-                return b.goalsFor - a.goalsFor;
-            });
-            
-            // Обновляем ранги
-            tableItems.forEach((item, index) => {
-                item.rank = index + 1;
-            });
-            
-            // Обновляем отображение
-            renderTournamentTable(tableItems, {}, true);
-            
-            // Выделяем обновленные строки
-            highlightTeamRow('Зенит');
+            }, 1500);
         }
     }
 }
@@ -143,8 +234,9 @@ function simulateZenitUpdate(tableItems) {
 /**
  * Выделяет строку команды в таблице
  * @param {string} teamName - Название команды
+ * @param {string} direction - Направление перемещения ('up', 'down' или '')
  */
-function highlightTeamRow(teamName) {
+function highlightTeamRow(teamName, direction = '') {
     const tableRows = document.querySelectorAll('#table-body tr');
     
     tableRows.forEach(row => {
@@ -153,14 +245,27 @@ function highlightTeamRow(teamName) {
         if (teamNameElement && teamNameElement.textContent === teamName) {
             // Добавляем класс для анимации
             row.classList.add('highlight-row');
-            row.classList.add('moving-up');
             
-            // Удаляем класс через 3 секунды
+            if (direction === 'up') {
+                row.classList.add('moving-up');
+                row.classList.add('bump');
+            } else if (direction === 'down') {
+                row.classList.add('moving-down');
+                row.classList.add('shake');
+            }
+            
+            // Удаляем класс через определенное время
             setTimeout(() => {
                 row.classList.remove('highlight-row');
                 setTimeout(() => {
-                    row.classList.remove('moving-up');
-                }, 1000);
+                    if (direction === 'up') {
+                        row.classList.remove('moving-up');
+                        row.classList.remove('bump');
+                    } else if (direction === 'down') {
+                        row.classList.remove('moving-down');
+                        row.classList.remove('shake');
+                    }
+                }, 2000);
             }, 1500);
         }
     });
@@ -206,6 +311,9 @@ function renderTournamentTable(tableItems, liveMatches = {}, isUpdate = false) {
                 if (oldPositions[team.name].position > item.rank) {
                     // Команда поднялась в таблице
                     row.classList.add('moving-up');
+                } else {
+                    // Команда опустилась в таблице
+                    row.classList.add('moving-down');
                 }
             }
             
@@ -271,7 +379,7 @@ function createTableRow(item, team, liveMatches) {
     
     // Добавляем текущий матч, если команда играет сейчас
     if (liveMatches[team.name]) {
-        const liveMatch = createLiveMatchElement(liveMatches[team.name]);
+        const liveMatch = createLiveMatchElement(liveMatches[team.name], team.name);
         teamCell.appendChild(document.createElement('br'));
         teamCell.appendChild(liveMatch);
     }
@@ -370,9 +478,10 @@ function getResultShortText(result) {
 /**
  * Создаёт элемент с информацией о текущем матче
  * @param {Object} match - Информация о матче
+ * @param {string} currentTeamName - Название текущей команды
  * @returns {HTMLElement} - Элемент с информацией о матче
  */
-function createLiveMatchElement(match) {
+function createLiveMatchElement(match, currentTeamName) {
     const liveMatchContainer = document.createElement('div');
     liveMatchContainer.className = 'live-match';
     
@@ -408,6 +517,7 @@ function createLiveMatchElement(match) {
     scoreContainer.className = 'live-score';
     
     const homeScore = document.createElement('span');
+    homeScore.className = 'live-score-home';
     homeScore.textContent = match.home.score;
     scoreContainer.appendChild(homeScore);
     
@@ -417,6 +527,7 @@ function createLiveMatchElement(match) {
     scoreContainer.appendChild(separator);
     
     const awayScore = document.createElement('span');
+    awayScore.className = 'live-score-away';
     awayScore.textContent = match.away.score;
     scoreContainer.appendChild(awayScore);
     
@@ -436,6 +547,12 @@ function createLiveMatchElement(match) {
     awayTeam.appendChild(awayTeamName);
     
     teamsContainer.appendChild(awayTeam);
+    
+    // Добавляем элемент "Идет матч"
+    const matchInProgress = document.createElement('div');
+    matchInProgress.className = 'match-in-progress';
+    matchInProgress.textContent = 'Идет матч';
+    teamsContainer.appendChild(matchInProgress);
     
     liveMatchContainer.appendChild(teamsContainer);
     
