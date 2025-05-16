@@ -17,7 +17,6 @@ const matchData = {
             winProbability: 33
         }
     },
-    drawProbability: 20,
     matchUrl: "https://www.sports.ru/football/match/chelsea-vs-mu/"
 };
 
