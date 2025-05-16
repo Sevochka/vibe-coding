@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рейтинг сборных ФИФА</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1 class="header__title">Рейтинг сборных ФИФА</h1>
+    <p class="header__subtitle">Актуальный мировой рейтинг национальных сборных по футболу</p>
+  </header>
+
+  <div class="filters">
+    <span class="filters__title">Конфедерация:</span>
+    <select id="confederation-filter" class="filters__select">
+      <option value="all">Все конфедерации</option>
+      <option value="UEFA">УЕФА</option>
+      <option value="CONMEBOL">КОНМЕБОЛ</option>
+      <option value="CONCACAF">КОНКАКАФ</option>
+      <option value="AFC">АФК</option>
+      <option value="CAF">КАФ</option>
+      <option value="OFC">ОФК</option>
+    </select>
+  </div>
+
+  <div class="search">
+    <input type="text" id="search-input" class="search__input" placeholder="Поиск сборной...">
+    <svg class="search__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.7 14.3L11.5 10.1C12.4 9 13 7.6 13 6C13 2.7 10.3 0 7 0C3.7 0 1 2.7 1 6C1 9.3 3.7 12 7 12C8.6 12 10 11.4 11.1 10.5L15.3 14.7C15.5 14.9 15.8 14.9 16 14.7C16.1 14.5 16.1 14.3 15.7 14.3ZM2 6C2 3.2 4.2 1 7 1C9.8 1 12 3.2 12 6C12 8.8 9.8 11 7 11C4.2 11 2 8.8 2 6Z" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <table class="ranking-table">
+    <thead class="ranking-table__header">
+      <tr>
+        <th class="sortable" data-sort="rank">Место</th>
+        <th class="sortable" data-sort="name">Сборная</th>
+        <th class="sortable" data-sort="points">Очки</th>
+        <th class="sortable" data-sort="change">+/-</th>
+        <th class="sortable" data-sort="confederation">Конфедерация</th>
+      </tr>
+    </thead>
+    <tbody id="ranking-table-body" class="ranking-table__body">
+      <!-- Данные будут добавлены с помощью JavaScript -->
+    </tbody>
+  </table>
+
+  <div class="info">
+    <h3 class="info__title">О рейтинге</h3>
+    <p class="info__text">Рейтинг ФИФА — система ранжирования мужских национальных сборных по футболу. Рейтинг основан на результатах выступлений команд в международных матчах и обновляется ежемесячно. Положение сборной в этом рейтинге используется при жеребьёвке финальных турниров чемпионатов мира и континентальных первенств.</p>
+  </div>
+
+  <footer class="footer">
+    <a href="https://www.sports.ru/?utm_source=special-fifa-ranking" class="logo-link">
+      <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+    </a>
+    <p>© 2024 Sports.ru</p>
+  </footer>
+
+  <script src="./data/countries.js"></script>
+  <script src="./script.js"></script>
+  <script src="./resize.js"></script>
+</body>
+</html> 
