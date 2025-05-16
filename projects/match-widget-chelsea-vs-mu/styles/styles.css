@@ -1,0 +1,284 @@
+:root {
+    /* Брендовые цвета для Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI элементы и типографика */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background-color: var(--ui-bg);
+    color: var(--sports-black);
+    line-height: 1.5;
+}
+
+.match-widget-container {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0;
+    background-color: var(--ui-bg);
+}
+
+.match-widget {
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid var(--sports-grey-100);
+    padding: 20px;
+    margin: 16px 0;
+}
+
+.match-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.match-widget-sports-logo img {
+    height: 20px;
+    width: auto;
+}
+
+.match-widget-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.match-widget-league {
+    font-family: var(--ui-font-family-heading);
+    font-weight: 700;
+    color: var(--sports-grey-600);
+    font-size: 14px;
+}
+
+.match-widget-date {
+    font-family: var(--ui-font-family-body);
+    color: var(--sports-grey-500);
+    font-size: 12px;
+}
+
+.match-widget-teams {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.match-widget-team {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.team-logo {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.team-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.team-name {
+    font-family: var(--ui-font-family-heading);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.match-widget-vs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.match-widget-vs span {
+    font-family: var(--ui-font-family-heading);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--sports-grey-500);
+}
+
+.team-win-probability {
+    width: 100%;
+    max-width: 120px;
+}
+
+.probability-value {
+    font-family: var(--ui-font-family-heading);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--sports-primary-color);
+    margin-bottom: 5px;
+}
+
+.probability-bar {
+    height: 6px;
+    width: 100%;
+    background-color: var(--sports-grey-100);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.probability-fill {
+    height: 100%;
+    background-color: var(--sports-primary-color);
+    border-radius: 3px;
+}
+
+.match-widget-draw {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.draw-title {
+    font-family: var(--ui-font-family-body);
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    margin-right: 8px;
+}
+
+.draw-probability {
+    font-family: var(--ui-font-family-heading);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--sports-yellow-A700);
+    margin-right: 16px;
+}
+
+.draw-probability-bar {
+    height: 6px;
+    flex: 1;
+    background-color: var(--sports-grey-100);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.draw-probability-fill {
+    height: 100%;
+    background-color: var(--sports-yellow-A700);
+    border-radius: 3px;
+}
+
+.match-widget-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.match-widget-footer-info {
+    font-size: 12px;
+    color: var(--sports-grey-500);
+    text-align: center;
+}
+
+.match-widget-footer-cta {
+    display: flex;
+    justify-content: center;
+}
+
+.match-cta-button {
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: var(--sports-primary-color);
+    color: white;
+    font-family: var(--ui-font-family-heading);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.match-cta-button:hover {
+    background-color: var(--sports-primary-color-hover);
+}
+
+@media (max-width: 480px) {
+    .match-widget {
+        padding: 16px;
+    }
+    
+    .team-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .team-name {
+        font-size: 16px;
+    }
+    
+    .probability-value {
+        font-size: 18px;
+    }
+    
+    .match-widget-draw {
+        margin-bottom: 16px;
+    }
+} 
