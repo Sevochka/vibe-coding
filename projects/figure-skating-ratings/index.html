@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейтинги фигуристов - Sports.ru</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <a href="https://www.sports.ru/?utm_source=special-figure-skating-ratings" class="logo-link">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+                </a>
+                <h1 class="title">Рейтинги фигуристов</h1>
+                <p class="subtitle">Актуальные рейтинги спортсменов в фигурном катании</p>
+            </div>
+        </header>
+
+        <!-- Filters Section -->
+        <section class="filters-section">
+            <div class="filters-grid">
+                <!-- Gender Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Пол</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="gender" data-value="all">Все</button>
+                        <button class="filter-btn" data-filter="gender" data-value="male">Мужчины</button>
+                        <button class="filter-btn" data-filter="gender" data-value="female">Женщины</button>
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Категория</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="category" data-value="all">Все</button>
+                        <button class="filter-btn" data-filter="category" data-value="senior">Взрослые</button>
+                        <button class="filter-btn" data-filter="category" data-value="junior">Юниоры</button>
+                    </div>
+                </div>
+
+                <!-- Country Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Страна</label>
+                    <select class="filter-select" data-filter="country">
+                        <option value="all">Все страны</option>
+                        <option value="RUS">Россия</option>
+                        <option value="USA">США</option>
+                        <option value="JPN">Япония</option>
+                        <option value="CAN">Канада</option>
+                        <option value="FRA">Франция</option>
+                        <option value="CHN">Китай</option>
+                        <option value="ITA">Италия</option>
+                    </select>
+                </div>
+
+                <!-- Sort Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Сортировка</label>
+                    <select class="filter-select" data-filter="sort">
+                        <option value="rating">По рейтингу</option>
+                        <option value="name">По имени</option>
+                        <option value="age">По возрасту</option>
+                        <option value="country">По стране</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- View Toggles -->
+            <div class="view-toggles">
+                <div class="toggle-group">
+                    <button class="toggle-btn active" data-view="table">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M0 2h16v2H0V2zm0 4h16v2H0V6zm0 4h16v2H0v-2zm0 4h16v2H0v-2z"/>
+                        </svg>
+                        Таблица
+                    </button>
+                    <button class="toggle-btn" data-view="cards">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M0 0h7v7H0V0zm9 0h7v7H9V0zM0 9h7v7H0V9zm9 0h7v7H9V9z"/>
+                        </svg>
+                        Карточки
+                    </button>
+                </div>
+                
+                <div class="results-count">
+                    Показано: <span id="results-count">0</span> спортсменов
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Table View -->
+            <div class="table-container" id="table-view">
+                <table class="ratings-table">
+                    <thead>
+                        <tr>
+                            <th class="rank-column">Место</th>
+                            <th class="name-column">Спортсмен</th>
+                            <th class="country-column">Страна</th>
+                            <th class="category-column">Категория</th>
+                            <th class="rating-column">Рейтинг</th>
+                            <th class="change-column">Изменение</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Data will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cards View -->
+            <div class="cards-container hidden" id="cards-view">
+                <div class="cards-grid" id="cards-grid">
+                    <!-- Cards will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Загрузка рейтингов...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state hidden" id="empty-state">
+                <div class="empty-icon">🏆</div>
+                <h3>Нет результатов</h3>
+                <p>Попробуйте изменить фильтры поиска</p>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Sports.ru. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./data/skaters.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 

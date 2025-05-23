@@ -1,0 +1,230 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background-color: #f4f4f4;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 660px;
+    width: 100%;
+}
+
+.match-widget {
+    background-color: var(--sports-primary-color);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    color: #fff;
+}
+
+.tournament-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tournament-logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.tournament-name {
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.match-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.team-logo {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.team-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.team-name {
+    font-family: var(--ui-font-family-heading);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.vs-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20%;
+}
+
+.vs {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.match-date {
+    font-size: 14px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.match-time {
+    font-family: var(--ui-font-family-heading);
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.odds-section {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.odds-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.odd-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.odd-type {
+    font-size: 14px;
+    margin-bottom: 5px;
+    opacity: 0.8;
+}
+
+.odd-value-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.bookmaker-logo {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background-color: white;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.bookmaker-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.odd-value {
+    font-family: var(--ui-font-family-heading);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.watch-button {
+    background-color: var(--sports-yellow-A700);
+    color: var(--sports-black);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.2s;
+    text-align: center;
+}
+
+.watch-button:hover {
+    background-color: #e6b000;
+}
+
+.sports-logo {
+    display: block;
+    width: 100px;
+    margin: 15px auto 0;
+} 
