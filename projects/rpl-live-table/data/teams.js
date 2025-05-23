@@ -1,0 +1,78 @@
+// Данные команд РПЛ (топ-5)
+const teams = [
+    {
+        id: 1,
+        name: 'Краснодар',
+        logo: '🟢',
+        position: 1,
+        games: 30,
+        wins: 10,
+        draws: 3,
+        losses: 17,
+        goalsFor: 33,
+        goalsAgainst: 65,
+        goalDifference: -32,
+        points: 33,
+        color: '#00c78b'
+    },
+    {
+        id: 2,
+        name: 'Зенит',
+        logo: '🔵',
+        position: 2,
+        games: 29,
+        wins: 11,
+        draws: 4,
+        losses: 14,
+        goalsFor: 37,
+        goalsAgainst: 63,
+        goalDifference: -26,
+        points: 37,
+        color: '#235bff'
+    },
+    {
+        id: 3,
+        name: 'ЦСКА',
+        logo: '🔴',
+        position: 3,
+        games: 29,
+        wins: 7,
+        draws: 3,
+        losses: 19,
+        goalsFor: 24,
+        goalsAgainst: 56,
+        goalDifference: -32,
+        points: 24,
+        color: '#ff003c'
+    },
+    {
+        id: 4,
+        name: 'Динамо',
+        logo: '⚪',
+        position: 4,
+        games: 29,
+        wins: 8,
+        draws: 5,
+        losses: 16,
+        goalsFor: 29,
+        goalsAgainst: 56,
+        goalDifference: -27,
+        points: 29,
+        color: '#0040fc'
+    },
+    {
+        id: 5,
+        name: 'Спартак',
+        logo: '🔻',
+        position: 5,
+        games: 29,
+        wins: 7,
+        draws: 5,
+        losses: 17,
+        goalsFor: 26,
+        goalsAgainst: 54,
+        goalDifference: -28,
+        points: 26,
+        color: '#ff003c'
+    }
+]; 

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live турнирная таблица РПЛ | Sports.ru</title>
+    <meta name="description" content="Интерактивная live-турнирная таблица Российской Премьер-лиги с анимированными изменениями позиций команд в реальном времени">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Live Турнирная Таблица</h1>
+            <p>Российская Премьер-лига</p>
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                Live обновления
+            </div>
+        </div>
+        
+        <div class="table-container" id="table-container">
+            <!-- Таблица будет загружена динамически -->
+        </div>
+    </div>
+
+    <div class="matches-section">
+        <div class="section-header">
+            🏆 Live матчи
+        </div>
+        <div id="matches-container">
+            <!-- Матчи будут загружены динамически -->
+        </div>
+    </div>
+
+    <div class="controls" id="controls-container">
+        <!-- Элементы управления будут загружены динамически -->
+    </div>
+
+    <div class="footer">
+        <a href="https://www.sports.ru/?utm_source=special-rpl-live-table" target="_blank">
+            <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" />
+        </a>
+        <p>Интерактивная таблица с анимацией изменения позиций команд</p>
+    </div>
+
+    <!-- Подключение файлов данных -->
+    <script src="./data/teams.js"></script>
+    <script src="./data/matches.js"></script>
+    
+    <!-- Основной скрипт -->
+    <script src="./script.js"></script>
+    
+    <!-- Скрипт для ресайза iframe -->
+    <script src="./resize.js"></script>
+</body>
+</html> 
