@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Туалетный Эксперт | Sports.ru</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Логотип Sports -->
+        <div class="header">
+            <a href="https://www.sports.ru/?utm_source=special-toilet-cleaning-game" target="_blank">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+            </a>
+            <h1>Туалетный Эксперт</h1>
+            <p class="subtitle">Стань мастером уборки вместе со звездами редакции!</p>
+        </div>
+
+        <!-- Экран выбора персонажа -->
+        <div id="characterSelect" class="character-select active">
+            <h2>Выбери своего героя</h2>
+            <div class="characters-grid">
+                <!-- Персонажи будут загружены из JS -->
+            </div>
+            <button id="startGame" class="start-btn" disabled>Начать уборку</button>
+        </div>
+
+        <!-- Игровой экран -->
+        <div id="gameScreen" class="game-screen">
+            <div class="game-header">
+                <div class="player-info">
+                    <img id="selectedCharacterAvatar" src="" alt="" class="player-avatar">
+                    <span id="selectedCharacterName"></span>
+                </div>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span>Чистота:</span>
+                        <div class="progress-bar">
+                            <div id="cleanProgress" class="progress-fill"></div>
+                        </div>
+                        <span id="cleanPercentage">0%</span>
+                    </div>
+                    <div class="stat">
+                        <span>Время:</span>
+                        <span id="gameTimer">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-area">
+                <canvas id="toiletCanvas" width="600" height="400"></canvas>
+                <div class="toilet-bowl">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="toilet-logo">
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <div class="brush-indicator">
+                    <span>🧽 Ершик активен</span>
+                </div>
+                <button id="resetGame" class="reset-btn">Новая игра</button>
+            </div>
+        </div>
+
+        <!-- Экран победы -->
+        <div id="victoryScreen" class="victory-screen">
+            <div class="victory-content">
+                <h2>🎉 Поздравляем!</h2>
+                <p>Туалет сияет чистотой!</p>
+                <div class="victory-stats">
+                    <div class="victory-character">
+                        <img id="victoryAvatar" src="" alt="" class="victory-avatar">
+                        <span id="victoryCharacterName"></span>
+                    </div>
+                    <div class="victory-time">
+                        <span>Время уборки:</span>
+                        <strong id="victoryTime"></strong>
+                    </div>
+                </div>
+                <div class="victory-message" id="victoryMessage"></div>
+                <button id="playAgain" class="play-again-btn">Играть снова</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./data/characters.js"></script>
+    <script src="./data/messages.js"></script>
+    <script src="./game.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 

@@ -1,0 +1,410 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+:root {
+    /* Branded Colors for Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI elements and typography */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: var(--ui-font-family-body);
+    background: linear-gradient(135deg, var(--sports-green-50) 0%, var(--sports-yellow-50) 100%);
+    min-height: 100vh;
+    color: var(--sports-black);
+}
+
+.container {
+    max-width: 660px;
+    margin: 0 auto;
+    background: var(--ui-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    background: var(--sports-primary-color);
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    height: 40px;
+    margin-bottom: 15px;
+}
+
+.header h1 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 32px;
+    margin: 0 0 10px 0;
+    font-weight: bold;
+}
+
+.subtitle {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 16px;
+}
+
+/* Character Select */
+.character-select, .game-screen, .victory-screen {
+    display: none;
+    padding: 30px 20px;
+}
+
+.character-select.active, .game-screen.active, .victory-screen.active {
+    display: block;
+}
+
+.character-select h2 {
+    text-align: center;
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    color: var(--sports-green-900);
+    margin: 0 0 30px 0;
+}
+
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.character-card {
+    background: var(--sports-grey-50);
+    border: 3px solid transparent;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.character-card:hover {
+    background: var(--sports-green-50);
+    transform: translateY(-2px);
+}
+
+.character-card.selected {
+    border-color: var(--sports-primary-color);
+    background: var(--sports-primary-light-color-hover);
+}
+
+.character-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    font-size: 40px;
+    line-height: 60px;
+    background: var(--sports-yellow-A700);
+    display: block;
+    margin: 0 auto 10px auto;
+}
+
+.character-name {
+    font-weight: bold;
+    color: var(--sports-green-900);
+    font-size: 14px;
+}
+
+.character-desc {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    margin-top: 5px;
+}
+
+.start-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--sports-primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.start-btn:hover:not(:disabled) {
+    background: var(--sports-primary-color-hover);
+}
+
+.start-btn:disabled {
+    background: var(--sports-grey-400);
+    cursor: not-allowed;
+}
+
+/* Game Screen */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--sports-grey-50);
+    border-radius: 8px;
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sports-yellow-A700);
+    font-size: 24px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.game-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.progress-bar {
+    width: 120px;
+    height: 8px;
+    background: var(--sports-grey-100);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--sports-primary-color);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Game Area */
+.game-area {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#toiletCanvas {
+    border: 3px solid var(--sports-grey-100);
+    border-radius: 12px;
+    background: #ffffff;
+    cursor: crosshair;
+    max-width: 100%;
+    height: auto;
+}
+
+.toilet-bowl {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.toilet-logo {
+    height: 20px;
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--sports-grey-50);
+    border-radius: 8px;
+}
+
+.brush-indicator {
+    color: var(--sports-green-900);
+    font-weight: bold;
+}
+
+.reset-btn {
+    padding: 10px 20px;
+    background: var(--sports-orange-900);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.reset-btn:hover {
+    background: var(--sports-red-a700);
+}
+
+/* Victory Screen */
+.victory-content {
+    text-align: center;
+}
+
+.victory-content h2 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 32px;
+    color: var(--sports-primary-color);
+    margin: 0 0 15px 0;
+}
+
+.victory-stats {
+    background: var(--sports-grey-50);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.victory-character {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.victory-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--sports-yellow-A700);
+    font-size: 36px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.victory-time {
+    font-size: 18px;
+    color: var(--sports-green-900);
+}
+
+.victory-message {
+    background: var(--sports-primary-light-color-hover);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--sports-green-850);
+}
+
+.play-again-btn {
+    padding: 15px 30px;
+    background: var(--sports-primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.play-again-btn:hover {
+    background: var(--sports-primary-color-hover);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+
+    .game-stats {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .characters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .character-avatar {
+        width: 50px;
+        height: 50px;
+        font-size: 32px;
+        line-height: 50px;
+    }
+
+    #toiletCanvas {
+        width: 100%;
+        height: auto;
+    }
+
+    .victory-character {
+        flex-direction: column;
+        gap: 10px;
+    }
+} 
