@@ -264,6 +264,12 @@ body {
     max-width: 100%;
     height: auto;
     position: relative;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+#toiletCanvas:hover {
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.15), 0 0 10px rgba(0, 199, 139, 0.2);
 }
 
 /* Кастомный курсор-ершик */
@@ -273,8 +279,10 @@ body {
     z-index: 1000;
     font-size: 24px;
     transform: translate(-12px, -12px);
-    transition: opacity 0.1s ease;
+    transition: opacity 0.2s ease, transform 0.1s ease;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    filter: drop-shadow(0 0 3px rgba(0, 199, 139, 0.5));
+    will-change: transform, opacity;
 }
 
 .toilet-bowl {
@@ -426,6 +434,7 @@ body {
     #toiletCanvas {
         width: 100%;
         height: auto;
+        touch-action: none;
     }
 
     .victory-character {
@@ -434,6 +443,17 @@ body {
     }
 
     .brush-cursor {
-        font-size: 20px;
+        font-size: 28px;
+        transform: translate(-14px, -14px);
+    }
+
+    .brush-indicator {
+        font-size: 14px;
+    }
+
+    .game-controls {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
     }
 } 
