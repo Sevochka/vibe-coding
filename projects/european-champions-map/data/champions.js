@@ -229,5 +229,126 @@ const champions = {
         flag: 'https://flagcdn.com/w80/rs.png',
         logo: 'https://logos-world.net/wp-content/uploads/2020/11/Red-Star-Belgrade-Logo.png',
         big5: false
+    },
+    'hungary': {
+        country: 'Венгрия',
+        champion: 'Ференцварош',
+        league: 'НБ I',
+        points: 78,
+        goals: 89,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/hu.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f9/Ferencvaros_TC.svg/200px-Ferencvaros_TC.svg.png',
+        big5: false
+    },
+    'slovakia': {
+        country: 'Словакия',
+        champion: 'Слован Братислава',
+        league: 'Фортуна Лига',
+        points: 64,
+        goals: 67,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/sk.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f8/SK_Slovan_Bratislava_logo.svg/200px-SK_Slovan_Bratislava_logo.svg.png',
+        big5: false
+    },
+    'slovenia': {
+        country: 'Словения',
+        champion: 'Целе',
+        league: 'Телеком Словения Лига',
+        points: 84,
+        goals: 76,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/si.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/NK_Celje_logo.svg/200px-NK_Celje_logo.svg.png',
+        big5: false
+    },
+    'romania': {
+        country: 'Румыния',
+        champion: 'ФКСБ',
+        league: 'Лига 1',
+        points: 80,
+        goals: 71,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/ro.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/FC_Steaua_Bucharest_logo.svg/200px-FC_Steaua_Bucharest_logo.svg.png',
+        big5: false
+    },
+    'bulgaria': {
+        country: 'Болгария',
+        champion: 'Лудогорец',
+        league: 'Первая лига',
+        points: 84,
+        goals: 95,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/bg.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/PFC_Ludogorets_Razgrad_logo.svg/200px-PFC_Ludogorets_Razgrad_logo.svg.png',
+        big5: false
+    },
+    'ireland': {
+        country: 'Ирландия',
+        champion: 'Шемрок Роверс',
+        league: 'Премьер-дивизион',
+        points: 63,
+        goals: 54,
+        season: '2023',
+        flag: 'https://flagcdn.com/w80/ie.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Shamrock_Rovers_FC_logo.svg/200px-Shamrock_Rovers_FC_logo.svg.png',
+        big5: false
+    },
+    'wales': {
+        country: 'Уэльс',
+        champion: 'Нью Сэйнтс',
+        league: 'Премьер-лига Уэльса',
+        points: 84,
+        goals: 89,
+        season: '2023/24',
+        flag: 'https://flagcdn.com/w80/wales.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/49/The_New_Saints_FC_logo.svg/200px-The_New_Saints_FC_logo.svg.png',
+        big5: false
+    },
+    'finland': {
+        country: 'Финляндия',
+        champion: 'ХИК',
+        league: 'Вейккауслига',
+        points: 70,
+        goals: 65,
+        season: '2023',
+        flag: 'https://flagcdn.com/w80/fi.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/ff/Helsingin_IFK_logo.svg/200px-Helsingin_IFK_logo.svg.png',
+        big5: false
+    },
+    'estonia': {
+        country: 'Эстония',
+        champion: 'Флора',
+        league: 'Мейстрилиига',
+        points: 78,
+        goals: 82,
+        season: '2023',
+        flag: 'https://flagcdn.com/w80/ee.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/FC_Flora_logo.svg/200px-FC_Flora_logo.svg.png',
+        big5: false
+    },
+    'latvia': {
+        country: 'Латвия',
+        champion: 'Рига ФК',
+        league: 'Вирслига',
+        points: 73,
+        goals: 68,
+        season: '2023',
+        flag: 'https://flagcdn.com/w80/lv.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Riga_FC_logo.svg/200px-Riga_FC_logo.svg.png',
+        big5: false
+    },
+    'lithuania': {
+        country: 'Литва',
+        champion: 'Жальгирис',
+        league: 'А Лига',
+        points: 76,
+        goals: 71,
+        season: '2023',
+        flag: 'https://flagcdn.com/w80/lt.png',
+        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/FK_%C5%BDalgiris_logo.svg/200px-FK_%C5%BDalgiris_logo.svg.png',
+        big5: false
     }
 }; 

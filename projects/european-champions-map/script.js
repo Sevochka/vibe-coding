@@ -16,6 +16,7 @@ class EuropeanChampionsMap {
         Object.keys(mapPaths).forEach(countryId => {
             const country = mapPaths[countryId];
             const championData = champions[countryId];
+            const countryData = countries[countryId];
             
             // Создаем группу для страны
             const countryGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
@@ -25,18 +26,30 @@ class EuropeanChampionsMap {
             // Создаем путь страны
             const countryPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             countryPath.setAttribute('d', country.path);
-            countryPath.setAttribute('class', `country ${championData?.big5 ? 'big5' : ''}`);
+            
+            // Определяем классы для стилизации
+            let classes = 'country';
+            if (championData?.big5) {
+                classes += ' big5';
+            }
+            if (!championData) {
+                classes += ' no-data';
+            }
+            
+            countryPath.setAttribute('class', classes);
             countryPath.setAttribute('data-country', countryId);
 
-            // Добавляем лейбл страны
-            const countryLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-            countryLabel.setAttribute('x', country.cx);
-            countryLabel.setAttribute('y', country.cy);
-            countryLabel.setAttribute('class', 'country-label');
-            countryLabel.textContent = countries[countryId]?.code || countryId.toUpperCase();
+            // Добавляем лейбл страны (только если есть данные о стране)
+            if (countryData) {
+                const countryLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                countryLabel.setAttribute('x', country.cx);
+                countryLabel.setAttribute('y', country.cy);
+                countryLabel.setAttribute('class', 'country-label');
+                countryLabel.textContent = countryData.code;
+                countryGroup.appendChild(countryLabel);
+            }
 
             countryGroup.appendChild(countryPath);
-            countryGroup.appendChild(countryLabel);
             this.mapContainer.appendChild(countryGroup);
         });
     }
@@ -61,6 +74,15 @@ class EuropeanChampionsMap {
 
         this.mapContainer.addEventListener('mouseout', (e) => {
             this.hideTooltip();
+        });
+
+        // Обработка движения мыши для обновления позиции tooltip
+        this.mapContainer.addEventListener('mousemove', (e) => {
+            const tooltip = document.getElementById('map-tooltip');
+            if (tooltip && tooltip.style.opacity === '1') {
+                tooltip.style.left = e.pageX + 15 + 'px';
+                tooltip.style.top = e.pageY - 10 + 'px';
+            }
         });
     }
 
@@ -90,8 +112,13 @@ class EuropeanChampionsMap {
         if (!championData) {
             this.championPanel.innerHTML = `
                 <div class="champion-content">
-                    <h3 class="champion-title">Информация недоступна</h3>
-                    <p class="champion-description">К сожалению, данные по чемпиону ${countryData?.name || countryId} пока недоступны</p>
+                    <h3 class="champion-title">📊 ${countryData?.name || countryId}</h3>
+                    <p class="champion-description">
+                        ${countryData ? 
+                            `Информация о чемпионе ${countryData.name} пока недоступна. Население: ${countryData.population}, столица: ${countryData.capital}.` :
+                            `К сожалению, данные по этой стране пока недоступны.`
+                        }
+                    </p>
                 </div>
             `;
             return;
@@ -149,8 +176,6 @@ class EuropeanChampionsMap {
         const championData = champions[countryId];
         const countryData = countries[countryId];
         
-        if (!championData) return;
-
         // Создаем всплывающую подсказку
         let tooltip = document.getElementById('map-tooltip');
         if (!tooltip) {
@@ -170,14 +195,28 @@ class EuropeanChampionsMap {
                 transition: all 0.3s ease;
                 opacity: 0;
                 transform: translateY(10px);
+                max-width: 200px;
+                text-align: center;
             `;
             document.body.appendChild(tooltip);
         }
 
-        tooltip.innerHTML = `
-            <strong>${championData.champion}</strong><br>
-            <small>${championData.country} • ${championData.league}</small>
-        `;
+        if (championData) {
+            tooltip.innerHTML = `
+                <strong>${championData.champion}</strong><br>
+                <small>${championData.country} • ${championData.league}</small>
+            `;
+        } else if (countryData) {
+            tooltip.innerHTML = `
+                <strong>${countryData.name}</strong><br>
+                <small>Данные недоступны</small>
+            `;
+        } else {
+            tooltip.innerHTML = `
+                <strong>${countryId.toUpperCase()}</strong><br>
+                <small>Нет информации</small>
+            `;
+        }
 
         tooltip.style.left = event.pageX + 15 + 'px';
         tooltip.style.top = event.pageY - 10 + 'px';
@@ -226,6 +265,21 @@ class EuropeanChampionsMap {
 
         return results;
     }
+
+    // Получить статистику по карте
+    getMapStats() {
+        const totalCountries = Object.keys(mapPaths).length;
+        const countriesWithData = Object.keys(champions).length;
+        const big5Countries = Object.values(champions).filter(c => c.big5).length;
+        
+        return {
+            totalCountries,
+            countriesWithData,
+            countriesWithoutData: totalCountries - countriesWithData,
+            big5Countries,
+            coverage: Math.round((countriesWithData / totalCountries) * 100)
+        };
+    }
 }
 
 // Инициализация карты
@@ -254,22 +308,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Обработчик клавиатуры для навигации
     document.addEventListener('keydown', (e) => {
+        const availableCountries = Object.keys(champions);
+        
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
             // Переключение на следующую страну
-            const countries = Object.keys(champions);
-            const currentIndex = countries.indexOf(map.selectedCountry);
-            const nextIndex = (currentIndex + 1) % countries.length;
-            map.selectCountry(countries[nextIndex]);
+            const currentIndex = availableCountries.indexOf(map.selectedCountry);
+            const nextIndex = (currentIndex + 1) % availableCountries.length;
+            map.selectCountry(availableCountries[nextIndex]);
         } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
             // Переключение на предыдущую страну
-            const countries = Object.keys(champions);
-            const currentIndex = countries.indexOf(map.selectedCountry);
-            const prevIndex = currentIndex === 0 ? countries.length - 1 : currentIndex - 1;
-            map.selectCountry(countries[prevIndex]);
+            const currentIndex = availableCountries.indexOf(map.selectedCountry);
+            const prevIndex = currentIndex === 0 ? availableCountries.length - 1 : currentIndex - 1;
+            map.selectCountry(availableCountries[prevIndex]);
         }
     });
 
-    console.log('🏆 Карта чемпионов Европы загружена!');
+    const stats = map.getMapStats();
+    console.log('🗺️ Карта чемпионов Европы загружена!');
+    console.log(`📊 Статистика: ${stats.countriesWithData}/${stats.totalCountries} стран (${stats.coverage}% покрытие)`);
+    console.log(`⭐ Топ-5 лиг UEFA: ${stats.big5Countries} стран`);
     console.log('💡 Используйте стрелки для навигации или кликайте по странам');
-    console.log('🔍 Доступен объект window.europeMap для дополнительных возможностей');
+    console.log('🔍 Доступны команды: europeMap.searchChampion("запрос"), europeMap.getMapStats()');
 }); 

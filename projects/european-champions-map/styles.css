@@ -124,30 +124,32 @@ body {
     margin-bottom: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--sports-grey-100);
+    overflow: hidden;
 }
 
 .europe-map {
     width: 100%;
     height: auto;
-    max-height: 400px;
+    max-height: 450px;
+    display: block;
+    margin: 0 auto;
 }
 
 /* Map Countries */
 .country {
     fill: var(--sports-grey-100);
     stroke: var(--ui-bg);
-    stroke-width: 1;
+    stroke-width: 1.5;
     cursor: pointer;
     transition: all 0.3s ease;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.1));
 }
 
 .country:hover {
     fill: var(--sports-primary-color);
     stroke: var(--sports-green-850);
-    stroke-width: 2;
-    transform: scale(1.02);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    stroke-width: 2.5;
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
 }
 
 .country.big5 {
@@ -158,6 +160,16 @@ body {
     fill: var(--sports-cyan-900);
 }
 
+.country.no-data {
+    fill: var(--sports-grey-50);
+    opacity: 0.6;
+}
+
+.country.no-data:hover {
+    fill: var(--sports-grey-400);
+    opacity: 0.8;
+}
+
 .country.selected {
     fill: var(--sports-primary-color);
     stroke: var(--sports-green-850);
@@ -166,9 +178,18 @@ body {
 }
 
 @keyframes pulse {
-    0% { stroke-width: 3; }
-    50% { stroke-width: 4; }
-    100% { stroke-width: 3; }
+    0% { 
+        stroke-width: 3; 
+        filter: drop-shadow(0 3px 8px rgba(0, 199, 139, 0.3));
+    }
+    50% { 
+        stroke-width: 4; 
+        filter: drop-shadow(0 5px 15px rgba(0, 199, 139, 0.5));
+    }
+    100% { 
+        stroke-width: 3; 
+        filter: drop-shadow(0 3px 8px rgba(0, 199, 139, 0.3));
+    }
 }
 
 /* Champion Panel */
@@ -317,12 +338,28 @@ body {
 
 /* Country Labels */
 .country-label {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: bold;
     fill: var(--sports-black);
     text-anchor: middle;
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 0.7;
+    font-family: var(--ui-font-family-body);
+}
+
+/* Small countries special styling */
+.country[data-country="andorra"],
+.country[data-country="monaco"],
+.country[data-country="luxembourg"] {
+    stroke-width: 2;
+}
+
+.country[data-country="andorra"]:hover,
+.country[data-country="monaco"]:hover,
+.country[data-country="luxembourg"]:hover {
+    stroke-width: 3;
+    transform: scale(1.2);
+    transform-origin: center;
 }
 
 /* Responsive Design */
@@ -334,6 +371,14 @@ body {
     
     .title {
         font-size: 24px;
+    }
+    
+    .europe-map {
+        max-height: 350px;
+    }
+    
+    .country-label {
+        font-size: 8px;
     }
     
     .legend {
