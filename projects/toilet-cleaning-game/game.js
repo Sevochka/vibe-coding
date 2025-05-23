@@ -9,6 +9,8 @@ class ToiletCleaningGame {
         this.dirtPixels = [];
         this.totalDirtPixels = 0;
         this.cleanedPixels = 0;
+        this.brushCursor = null;
+        this.dirtAreas = [];
         
         this.init();
     }
@@ -18,6 +20,7 @@ class ToiletCleaningGame {
         this.setupEventListeners();
         this.canvas = document.getElementById('toiletCanvas');
         this.ctx = this.canvas.getContext('2d');
+        this.brushCursor = document.getElementById('brushCursor');
         this.setupCanvas();
     }
 
@@ -63,9 +66,11 @@ class ToiletCleaningGame {
     setupCanvas() {
         // Настройка Canvas для рисования и стирания
         this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
-        this.canvas.addEventListener('mousemove', (e) => this.draw(e));
+        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         this.canvas.addEventListener('mouseup', () => this.stopDrawing());
         this.canvas.addEventListener('mouseout', () => this.stopDrawing());
+        this.canvas.addEventListener('mouseenter', () => this.showBrush());
+        this.canvas.addEventListener('mouseleave', () => this.hideBrush());
 
         // Touch события для мобильных устройств
         this.canvas.addEventListener('touchstart', (e) => {
@@ -123,97 +128,202 @@ class ToiletCleaningGame {
     }
 
     initializeToilet() {
-        // Рисуем туалет с грязью
-        this.ctx.fillStyle = '#f0f0f0';
+        // Очищаем canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        // Рисуем фон ванной комнаты
+        this.drawBathroomBackground();
+        
+        // Рисуем детализированный туалет
+        this.drawDetailedToilet();
+        
+        // Добавляем реалистичную грязь
+        this.addRealisticDirt();
+        
+        // Подсчитываем грязь
+        this.countDirtAreas();
+    }
+
+    drawBathroomBackground() {
+        // Фон плитки
+        const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
+        gradient.addColorStop(0, '#f8f8f8');
+        gradient.addColorStop(1, '#e8e8e8');
+        this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // Рисуем форму туалета
-        this.drawToiletBowl();
-        
-        // Добавляем грязь
-        this.addDirt();
-        
-        // Подсчитываем общее количество грязных пикселей
-        this.countDirtPixels();
-    }
-
-    drawToiletBowl() {
-        // Рисуем овальную форму туалета
-        this.ctx.fillStyle = 'white';
-        this.ctx.beginPath();
-        this.ctx.ellipse(
-            this.canvas.width / 2, 
-            this.canvas.height / 2 + 50, 
-            180, 120, 0, 0, 2 * Math.PI
-        );
-        this.ctx.fill();
-        this.ctx.strokeStyle = '#ccc';
-        this.ctx.lineWidth = 3;
-        this.ctx.stroke();
-
-        // Внутренняя часть
-        this.ctx.fillStyle = '#f8f8f8';
-        this.ctx.beginPath();
-        this.ctx.ellipse(
-            this.canvas.width / 2, 
-            this.canvas.height / 2 + 50, 
-            160, 100, 0, 0, 2 * Math.PI
-        );
-        this.ctx.fill();
-    }
-
-    addDirt() {
-        // Добавляем случайные пятна грязи
-        const dirtSpots = 15;
-        
-        for (let i = 0; i < dirtSpots; i++) {
-            this.addDirtSpot();
+        // Рисуем плитку (опционально)
+        this.ctx.strokeStyle = '#ddd';
+        this.ctx.lineWidth = 1;
+        for (let x = 0; x < this.canvas.width; x += 40) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, 0);
+            this.ctx.lineTo(x, this.canvas.height);
+            this.ctx.stroke();
+        }
+        for (let y = 0; y < this.canvas.height; y += 40) {
+            this.ctx.beginPath();
+            this.ctx.moveTo(0, y);
+            this.ctx.lineTo(this.canvas.width, y);
+            this.ctx.stroke();
         }
     }
 
-    addDirtSpot() {
+    drawDetailedToilet() {
         const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2 + 50;
+        const centerY = this.canvas.height / 2 + 60;
+
+        // Основа туалета (белая керамика)
+        this.ctx.fillStyle = 'white';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY, 200, 140, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        // Тень основы
+        this.ctx.fillStyle = 'rgba(0,0,0,0.1)';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX + 3, centerY + 3, 200, 140, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        // Основа туалета повторно (поверх тени)
+        this.ctx.fillStyle = 'white';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY, 200, 140, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        // Внешний ободок
+        this.ctx.strokeStyle = '#ddd';
+        this.ctx.lineWidth = 4;
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY, 200, 140, 0, 0, 2 * Math.PI);
+        this.ctx.stroke();
+
+        // Внутренняя чаша (место где будет грязь)
+        this.ctx.fillStyle = '#fafafa';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY, 170, 110, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        // Внутренний ободок
+        this.ctx.strokeStyle = '#e0e0e0';
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY, 170, 110, 0, 0, 2 * Math.PI);
+        this.ctx.stroke();
+
+        // Сливное отверстие
+        this.ctx.fillStyle = '#444';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX, centerY + 20, 30, 20, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        // Блики на керамике
+        this.ctx.fillStyle = 'rgba(255,255,255,0.6)';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX - 50, centerY - 30, 40, 20, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+
+        this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        this.ctx.beginPath();
+        this.ctx.ellipse(centerX + 60, centerY - 50, 20, 35, 0, 0, 2 * Math.PI);
+        this.ctx.fill();
+    }
+
+    addRealisticDirt() {
+        const centerX = this.canvas.width / 2;
+        const centerY = this.canvas.height / 2 + 60;
         
-        // Случайная позиция внутри туалета
+        this.dirtAreas = [];
+
+        // Создаем несколько областей грязи
+        const dirtSpots = 8 + Math.floor(Math.random() * 5);
+        
+        for (let i = 0; i < dirtSpots; i++) {
+            this.addDirtArea(centerX, centerY);
+        }
+
+        // Добавляем пятна по краям
+        for (let i = 0; i < 6; i++) {
+            this.addEdgeDirt(centerX, centerY);
+        }
+    }
+
+    addDirtArea(centerX, centerY) {
+        // Случайная позиция внутри туалетной чаши
         const angle = Math.random() * 2 * Math.PI;
-        const radius = Math.random() * 80;
+        const radius = Math.random() * 100 + 20; // От 20 до 120 пикселей от центра
         const x = centerX + Math.cos(angle) * radius;
-        const y = centerY + Math.sin(angle) * radius * 0.6; // Эллипс
+        const y = centerY + Math.sin(angle) * radius * 0.7; // Эллиптическая форма
+
+        // Проверяем, что пятно внутри чаши
+        const distanceFromCenter = Math.sqrt(
+            Math.pow((x - centerX) / 170, 2) + Math.pow((y - centerY) / 110, 2)
+        );
         
-        const spotSize = 20 + Math.random() * 30;
+        if (distanceFromCenter > 1) return; // Пятно за пределами чаши
+
+        const spotSize = 25 + Math.random() * 35;
+        const dirtArea = { x, y, size: spotSize, cleaned: false, id: Math.random() };
         
-        // Градиент для более реалистичного вида
-        const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, spotSize);
-        gradient.addColorStop(0, '#4a3728');
-        gradient.addColorStop(0.7, '#6b4423');
+        this.dirtAreas.push(dirtArea);
+        this.drawDirtSpot(x, y, spotSize);
+    }
+
+    addEdgeDirt(centerX, centerY) {
+        // Грязь по краям чаши
+        const angle = Math.random() * 2 * Math.PI;
+        const radius = 140 + Math.random() * 20; // Ближе к краю
+        const x = centerX + Math.cos(angle) * radius;
+        const y = centerY + Math.sin(angle) * radius * 0.7;
+
+        const spotSize = 15 + Math.random() * 20;
+        const dirtArea = { x, y, size: spotSize, cleaned: false, id: Math.random() };
+        
+        this.dirtAreas.push(dirtArea);
+        this.drawDirtSpot(x, y, spotSize);
+    }
+
+    drawDirtSpot(x, y, size) {
+        // Создаем неровное пятно грязи
+        const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, size);
+        
+        // Разные оттенки коричневого
+        const colors = [
+            ['#3d2f1f', '#5d3f2f'],
+            ['#4a3728', '#6b4423'],
+            ['#2f1f0f', '#4f2f1f'],
+            ['#5a4738', '#7a5743']
+        ];
+        
+        const colorPair = colors[Math.floor(Math.random() * colors.length)];
+        gradient.addColorStop(0, colorPair[0]);
+        gradient.addColorStop(0.6, colorPair[1]);
         gradient.addColorStop(1, 'transparent');
         
         this.ctx.fillStyle = gradient;
+        
+        // Рисуем неровную форму
         this.ctx.beginPath();
-        this.ctx.arc(x, y, spotSize, 0, 2 * Math.PI);
+        const points = 8;
+        for (let i = 0; i < points; i++) {
+            const angle = (i / points) * 2 * Math.PI;
+            const variation = 0.7 + Math.random() * 0.6;
+            const radius = size * variation;
+            const px = x + Math.cos(angle) * radius;
+            const py = y + Math.sin(angle) * radius;
+            
+            if (i === 0) {
+                this.ctx.moveTo(px, py);
+            } else {
+                this.ctx.lineTo(px, py);
+            }
+        }
+        this.ctx.closePath();
         this.ctx.fill();
     }
 
-    countDirtPixels() {
-        const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        const pixels = imageData.data;
-        
-        this.dirtPixels = [];
-        
-        for (let i = 0; i < pixels.length; i += 4) {
-            const r = pixels[i];
-            const g = pixels[i + 1];
-            const b = pixels[i + 2];
-            const alpha = pixels[i + 3];
-            
-            // Проверяем, является ли пиксель грязью (темные цвета)
-            if (alpha > 0 && r < 150 && g < 150 && b < 150) {
-                this.dirtPixels.push(i / 4);
-            }
-        }
-        
-        this.totalDirtPixels = this.dirtPixels.length;
+    countDirtAreas() {
+        this.totalDirtPixels = this.dirtAreas.length;
         this.cleanedPixels = 0;
     }
 
@@ -228,64 +338,98 @@ class ToiletCleaningGame {
         };
     }
 
-    startDrawing(e) {
-        this.isDrawing = true;
-        this.draw(e);
+    handleMouseMove(e) {
+        const pos = this.getCanvasPosition(e);
+        this.updateBrushPosition(pos.x, pos.y);
+        
+        if (this.isDrawing) {
+            this.cleanDirt(pos.x, pos.y);
+        }
     }
 
-    draw(e) {
-        if (!this.isDrawing) return;
+    updateBrushPosition(x, y) {
+        const rect = this.canvas.getBoundingClientRect();
+        this.brushCursor.style.left = (x / this.canvas.width * rect.width) + rect.left + 'px';
+        this.brushCursor.style.top = (y / this.canvas.height * rect.height) + rect.top + 'px';
+    }
 
+    showBrush() {
+        this.brushCursor.style.opacity = '1';
+    }
+
+    hideBrush() {
+        this.brushCursor.style.opacity = '0';
+    }
+
+    startDrawing(e) {
+        this.isDrawing = true;
         const pos = this.getCanvasPosition(e);
+        this.cleanDirt(pos.x, pos.y);
+    }
+
+    cleanDirt(x, y) {
+        const brushSize = 25;
+        let cleaned = false;
         
-        // Стираем грязь (круглая область)
-        this.ctx.globalCompositeOperation = 'destination-out';
-        this.ctx.beginPath();
-        this.ctx.arc(pos.x, pos.y, 20, 0, 2 * Math.PI);
-        this.ctx.fill();
+        // Проверяем каждую область грязи
+        this.dirtAreas.forEach(dirtArea => {
+            if (!dirtArea.cleaned) {
+                const distance = Math.sqrt(
+                    Math.pow(x - dirtArea.x, 2) + Math.pow(y - dirtArea.y, 2)
+                );
+                
+                // Если ершик достаточно близко к пятну грязи
+                if (distance < brushSize + dirtArea.size / 2) {
+                    dirtArea.cleaned = true;
+                    this.eraseDirtSpot(dirtArea);
+                    cleaned = true;
+                }
+            }
+        });
         
-        // Возвращаем обычный режим рисования
+        if (cleaned) {
+            this.updateProgress();
+        }
+    }
+
+    eraseDirtSpot(dirtArea) {
+        // Стираем пятно, рисуя чистую область поверх
         this.ctx.globalCompositeOperation = 'source-over';
         
-        // Проверяем прогресс
-        this.checkProgress();
+        // Рисуем чистый фон
+        this.ctx.fillStyle = '#fafafa';
+        this.ctx.beginPath();
+        this.ctx.arc(dirtArea.x, dirtArea.y, dirtArea.size + 5, 0, 2 * Math.PI);
+        this.ctx.fill();
+        
+        // Добавляем блеск чистой поверхности
+        this.ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        this.ctx.beginPath();
+        this.ctx.arc(dirtArea.x - 5, dirtArea.y - 5, dirtArea.size / 3, 0, 2 * Math.PI);
+        this.ctx.fill();
     }
 
     stopDrawing() {
         this.isDrawing = false;
     }
 
-    checkProgress() {
-        const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
-        const pixels = imageData.data;
-        
-        let remainingDirt = 0;
-        
-        for (let i = 0; i < pixels.length; i += 4) {
-            const r = pixels[i];
-            const g = pixels[i + 1];
-            const b = pixels[i + 2];
-            const alpha = pixels[i + 3];
-            
-            if (alpha > 0 && r < 150 && g < 150 && b < 150) {
-                remainingDirt++;
-            }
-        }
-        
-        const cleanPercent = Math.max(0, Math.floor((1 - remainingDirt / this.totalDirtPixels) * 100));
+    updateProgress() {
+        const cleanedCount = this.dirtAreas.filter(area => area.cleaned).length;
+        const cleanPercent = Math.floor((cleanedCount / this.totalDirtPixels) * 100);
         
         // Обновляем UI
         document.getElementById('cleanProgress').style.width = cleanPercent + '%';
         document.getElementById('cleanPercentage').textContent = cleanPercent + '%';
         
-        // Проверяем победу (95% чистоты)
-        if (cleanPercent >= 95) {
+        // Проверяем победу (100% чистоты)
+        if (cleanPercent >= 100) {
             this.endGame();
         }
     }
 
     endGame() {
         clearInterval(this.gameTimer);
+        this.hideBrush();
         
         const elapsed = Math.floor((Date.now() - this.gameStartTime) / 1000);
         const minutes = Math.floor(elapsed / 60);
@@ -321,6 +465,8 @@ class ToiletCleaningGame {
         this.gameStartTime = null;
         this.cleanedPixels = 0;
         this.totalDirtPixels = 0;
+        this.dirtAreas = [];
+        this.hideBrush();
         
         // Сбрасываем UI
         document.getElementById('victoryScreen').classList.remove('active');
