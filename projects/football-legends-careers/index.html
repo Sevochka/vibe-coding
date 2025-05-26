@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ Легенды футбола: Самые длительные карьеры в сборных</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="https://www.sports.ru/?utm_source=special-football-legends-careers" class="logo">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" />
+            </a>
+            <h1 class="title">⚽ Легенды футбола: Рекордсмены по длительности карьеры</h1>
+            <p class="subtitle">🏆 Футболисты, чья любовь к национальным командам длилась десятилетиями</p>
+        </header>
+
+        <div class="intro">
+            <p class="intro-text">
+                🌟 Представляем уникальную подборку футболистов, которые посвятили своим национальным сборным 
+                невероятно долгие годы! Лидер рейтинга — легендарный Джордж Веа из Либерии, 
+                чья карьера в сборной длилась фантастические <strong>31 год и 342 дня</strong>! 
+                Эти игроки доказали, что преданность родине не знает границ времени. ⏰
+            </p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">🌍 Все игроки</button>
+            <button class="filter-btn" data-filter="active">⚡ Активные</button>
+            <button class="filter-btn" data-filter="retired">🎖️ Завершили</button>
+            <button class="filter-btn" data-filter="30plus">🔥 30+ лет</button>
+        </div>
+
+        <div class="players-grid" id="playersGrid">
+            <!-- Игроки будут добавлены через JavaScript -->
+        </div>
+
+        <footer class="footer">
+            <p>📊 Данные актуальны на ноябрь 2024 года</p>
+            <p>🏅 Источник: <a href="https://ru.wikipedia.org/wiki/Список_футболистов_с_самыми_длительными_карьерами_в_сборных" target="_blank">Википедия</a></p>
+        </footer>
+    </div>
+
+    <script src="./data/players.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
