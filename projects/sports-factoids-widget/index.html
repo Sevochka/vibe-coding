@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спортивные Фактоиды - Виджеты</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="https://www.sports.ru/?utm_source=special-sports-factoids-widget" class="logo-link">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="header-logo">
+            </a>
+            <h1 class="header-title">Горячие Фактоиды</h1>
+        </div>
+
+        <div class="factoids-container">
+            <div class="factoids-header">
+                <div class="factoids-title">
+                    <span class="fire-icon">🔥</span>
+                    <span>Топ Фактов</span>
+                    <span class="stats-icon">📊</span>
+                </div>
+                <div class="factoids-subtitle">Самая горячая статистика матча</div>
+            </div>
+
+            <div class="factoids-list" id="factoidsList"></div>
+
+            <div class="betting-promotion">
+                <div class="promo-gradient"></div>
+                <div class="promo-content">
+                    <div class="promo-icon">💰</div>
+                    <div class="promo-text">
+                        <div class="promo-title">Повысь свои шансы!</div>
+                        <div class="promo-subtitle">Делай ставки на основе реальной статистики</div>
+                    </div>
+                    <button class="promo-button" id="promoButton">
+                        <span>Попробовать</span>
+                        <span class="button-arrow">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="more-facts-section">
+                <button class="more-facts-btn" id="moreFactsBtn">
+                    <span class="btn-icon">📈</span>
+                    <span>Больше фактов</span>
+                    <span class="btn-shimmer"></span>
+                </button>
+                <div class="advertising-label">Реклама 18+</div>
+            </div>
+        </div>
+
+        <div class="floating-elements">
+            <div class="floating-stat">⚡</div>
+            <div class="floating-stat">🎯</div>
+            <div class="floating-stat">🏆</div>
+        </div>
+    </div>
+
+    <script src="./data/factoids.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
