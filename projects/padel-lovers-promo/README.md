@@ -68,11 +68,11 @@ padel-lovers-promo/
 ## Изображения
 
 Необходимо заменить placeholder изображения на реальные:
-- `awards-ceremony.jpg` - **ДОБАВЛЕНО**: Церемония награждения (используется в hero и галерее)
+- `awards-ceremony.jpg` - ✅ **ДОБАВЛЕНО**: Церемония награждения (используется в hero и галерее)
+- **Корты** - ✅ **ДОБАВЛЕНО**: Используется ссылка с Яндекс.Диска для иконки и галереи
 - `players-icon.jpg` - Иконка игроков
-- `court-icon.jpg` - Иконка кортов  
 - `trophy-icon.jpg` - Иконка наград
-- `gallery-1.jpg`, `gallery-2.jpg`, `gallery-4.jpg` - Остальные фотографии турнира
+- `gallery-2.jpg`, `gallery-4.jpg` - Остальные фотографии турнира
 - `winline-logo.jpg` - Логотип Winline
 - `partner-2.jpg` до `partner-4.jpg` - Логотипы партнеров
 
