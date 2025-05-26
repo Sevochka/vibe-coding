@@ -336,6 +336,140 @@ body {
     font-weight: 500;
 }
 
+/* Prizes Section */
+.prizes-section {
+    padding: 40px 0;
+    background: linear-gradient(135deg, var(--sports-blue-50) 0%, var(--sports-green-50) 100%);
+}
+
+.prizes-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+.prizes-image {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.prizes-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.prizes-image:hover .prizes-img {
+    transform: scale(1.05);
+}
+
+.prizes-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--sports-primary-color);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.badge-text {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-desc {
+    display: block;
+    font-size: 10px;
+    opacity: 0.9;
+}
+
+.prizes-info h3 {
+    font-family: var(--ui-font-family-heading-secondary);
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--sports-grey-900);
+    margin-bottom: 15px;
+}
+
+.prizes-info p {
+    color: var(--sports-grey-600);
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.prizes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.prize-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.prize-item:hover {
+    transform: translateX(5px);
+}
+
+.prize-place {
+    font-size: 24px;
+    width: 40px;
+    text-align: center;
+}
+
+.prize-details {
+    flex: 1;
+}
+
+.prize-details strong {
+    display: block;
+    font-size: 16px;
+    color: var(--sports-grey-900);
+    margin-bottom: 2px;
+}
+
+.prize-details span {
+    color: var(--sports-grey-600);
+    font-size: 14px;
+}
+
+.special-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: var(--sports-yellow-50);
+    border-radius: 12px;
+    border-left: 4px solid var(--sports-yellow-A700);
+}
+
+.note-icon {
+    font-size: 20px;
+}
+
+.special-note span:last-child {
+    color: var(--sports-grey-700);
+    font-weight: 500;
+}
+
 /* Registration */
 .registration {
     padding: 40px 0;
@@ -533,5 +667,14 @@ body {
     
     .hero-title {
         font-size: 36px;
+    }
+    
+    .prizes-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    
+    .prizes-img {
+        height: 350px;
     }
 } 

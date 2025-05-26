@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Наблюдение за карточками
-    const cards = document.querySelectorAll('.info-card, .gallery-item, .partner-logo');
+    const cards = document.querySelectorAll('.info-card, .gallery-item, .partner-logo, .prize-item, .prizes-image');
     cards.forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';
