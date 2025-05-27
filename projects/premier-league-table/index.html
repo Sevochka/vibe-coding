@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Турнирная таблица АПЛ 2024/25</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="https://www.sports.ru/?utm_source=special-premier-league-table" target="_blank">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru">
+                </a>
+            </div>
+            <h1>Турнирная таблица АПЛ 2024/25</h1>
+        </header>
+        
+        <div class="controls">
+            <button id="playButton">Воспроизвести</button>
+            <input type="range" id="weekSlider" min="1" max="38" value="1">
+            <span id="currentWeek">Тур 1</span>
+        </div>
+        
+        <div class="visualization">
+            <canvas id="tableCanvas"></canvas>
+        </div>
+        
+        <footer>
+            <p>Данные визуализации показывают движение команд в турнирной таблице Английской Премьер-лиги в течение сезона 2024/25.</p>
+            <p>© <a href="https://www.sports.ru/?utm_source=special-premier-league-table" target="_blank">Sports.ru</a></p>
+        </footer>
+    </div>
+    <script src="./data/teams.js"></script>
+    <script src="./data/results.js"></script>
+    <script src="./js/animation.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
