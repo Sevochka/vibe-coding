@@ -3,7 +3,7 @@ class TableManager {
         this.currentWeek = 1;
         this.isPlaying = false;
         this.playInterval = null;
-        this.autoPlaySpeed = 1500; // время между турами в мс
+        this.autoPlaySpeed = 1000; // время между турами в мс
         this.rowHeight = 30; // высота строки в пикселях
         
         this.standings = new Map();
@@ -84,14 +84,14 @@ class TableManager {
         });
         
         // Максимальное значение слайдера равно количеству доступных туров
-        weekSlider.max = results.length;
+        weekSlider.max = fullResults.length;
     }
 
     startAnimation() {
         if (this.playInterval) return;
         
         this.playInterval = setInterval(() => {
-            if (this.currentWeek < results.length) {
+            if (this.currentWeek < fullResults.length) {
                 this.currentWeek++;
                 document.getElementById('weekSlider').value = this.currentWeek;
                 document.getElementById('currentWeek').textContent = `Тур ${this.currentWeek}`;
@@ -120,7 +120,7 @@ class TableManager {
 
         // Обновляем статистику для всех матчей до текущей недели
         for (let i = 0; i < week; i++) {
-            const weekResults = results[i];
+            const weekResults = fullResults[i];
             if (!weekResults) continue;
 
             weekResults.matches.forEach(match => {

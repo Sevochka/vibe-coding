@@ -162,6 +162,9 @@ h1 {
     height: 24px;
     margin: 0 10px;
     object-fit: contain;
+    background-color: transparent;
+    border-radius: 0;
+    display: block;
 }
 
 .team-name {
