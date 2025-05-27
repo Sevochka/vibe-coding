@@ -169,6 +169,7 @@ h1 {
     object-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    image-rendering: -webkit-optimize-contrast;
 }
 
 .team-name {
