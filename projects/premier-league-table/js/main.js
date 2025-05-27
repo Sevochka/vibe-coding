@@ -1,11 +1,10 @@
 class TableManager {
     constructor() {
-        this.canvas = document.getElementById('tableCanvas');
-        this.animation = new TableAnimation(this.canvas);
         this.currentWeek = 1;
         this.isPlaying = false;
         this.playInterval = null;
         this.autoPlaySpeed = 1500; // время между турами в мс
+        this.rowHeight = 30; // высота строки в пикселях
         
         this.standings = new Map();
         teams.forEach(team => {
@@ -17,18 +16,46 @@ class TableManager {
                 played: 0,
                 won: 0,
                 drawn: 0,
-                lost: 0
+                lost: 0,
+                position: 0 // текущая позиция в таблице
             });
         });
 
+        this.teamPositions = document.getElementById('teamPositions');
+        this.setupTeamElements();
         this.setupControls();
-        this.updateCanvasSize();
-        window.addEventListener('resize', () => this.updateCanvasSize());
         
         // Автоматически запускаем анимацию при загрузке
         setTimeout(() => {
             this.startAnimation();
         }, 1000);
+    }
+    
+    // Создаем элементы команд в DOM
+    setupTeamElements() {
+        teams.forEach((team, index) => {
+            const teamRow = document.createElement('div');
+            teamRow.className = 'team-row';
+            teamRow.id = `team-${team.id}`;
+            teamRow.innerHTML = `
+                <div class="position-number">1</div>
+                <img src="${team.logo}" alt="${team.name}" class="team-logo" crossorigin="anonymous">
+                <div class="team-name">${team.name}</div>
+                <div class="team-stats">
+                    <span class="team-played">0</span>
+                    <span class="team-won">0</span>
+                    <span class="team-drawn">0</span>
+                    <span class="team-lost">0</span>
+                    <span class="team-gd">0</span>
+                </div>
+                <div class="team-points">0</div>
+            `;
+            
+            // Начальная позиция (все на первом месте)
+            teamRow.style.transform = `translateY(${index * this.rowHeight}px)`;
+            
+            this.teamPositions.appendChild(teamRow);
+        });
     }
 
     setupControls() {
@@ -58,11 +85,6 @@ class TableManager {
         
         // Максимальное значение слайдера равно количеству доступных туров
         weekSlider.max = results.length;
-    }
-
-    updateCanvasSize() {
-        this.animation.updateCanvasSize();
-        this.animation.draw();
     }
 
     startAnimation() {
@@ -151,11 +173,30 @@ class TableManager {
             }
             return b[1].gf - a[1].gf;
         });
-
-        // Обновляем анимацию
-        this.animation.updateStandings(sortedTeams.map(team => team[0]), week);
         
-        // Выводим текущую таблицу в консоль для отладки
+        // Обновляем позиции команд
+        sortedTeams.forEach((team, index) => {
+            const [teamId, stats] = team;
+            stats.position = index + 1;
+            
+            // Обновляем DOM-элемент
+            const teamElement = document.getElementById(`team-${teamId}`);
+            if (teamElement) {
+                // Плавно перемещаем команду на новую позицию
+                teamElement.style.transform = `translateY(${index * this.rowHeight}px)`;
+                
+                // Обновляем статистику
+                teamElement.querySelector('.position-number').textContent = index + 1;
+                teamElement.querySelector('.team-played').textContent = stats.played;
+                teamElement.querySelector('.team-won').textContent = stats.won;
+                teamElement.querySelector('.team-drawn').textContent = stats.drawn;
+                teamElement.querySelector('.team-lost').textContent = stats.lost;
+                teamElement.querySelector('.team-gd').textContent = stats.gd > 0 ? `+${stats.gd}` : stats.gd;
+                teamElement.querySelector('.team-points').textContent = stats.points;
+            }
+        });
+        
+        // Отладочный вывод в консоль
         console.log('Тур', week, 'Таблица:', sortedTeams);
     }
     

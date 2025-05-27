@@ -126,5 +126,37 @@ const results = [
             { home: 'WHU', away: 'EVE', score: [1, 0] },
             { home: 'AVL', away: 'NEW', score: [2, 0] }
         ]
+    },
+    // Тур 9
+    {
+        week: 9,
+        matches: [
+            { home: 'ARS', away: 'LIV', score: [2, 2] },
+            { home: 'BRE', away: 'IPW', score: [1, 0] },
+            { home: 'CHE', away: 'NEW', score: [2, 1] },
+            { home: 'CRY', away: 'NFO', score: [0, 1] },
+            { home: 'EVE', away: 'FUL', score: [1, 0] },
+            { home: 'MUN', away: 'WHU', score: [2, 1] },
+            { home: 'SOU', away: 'LEI', score: [2, 1] },
+            { home: 'TOT', away: 'WOL', score: [3, 1] },
+            { home: 'AVL', away: 'BHA', score: [2, 1] },
+            { home: 'BOU', away: 'MCI', score: [1, 3] }
+        ]
+    },
+    // Тур 10
+    {
+        week: 10,
+        matches: [
+            { home: 'BHA', away: 'ARS', score: [1, 2] },
+            { home: 'FUL', away: 'TOT', score: [1, 3] },
+            { home: 'IPW', away: 'NEW', score: [2, 1] },
+            { home: 'LEI', away: 'CHE', score: [1, 2] },
+            { home: 'LIV', away: 'BOU', score: [3, 0] },
+            { home: 'MCI', away: 'SOU', score: [2, 0] },
+            { home: 'NFO', away: 'EVE', score: [2, 0] },
+            { home: 'WHU', away: 'BRE', score: [2, 0] },
+            { home: 'WOL', away: 'CRY', score: [2, 2] },
+            { home: 'AVL', away: 'MUN', score: [3, 1] }
+        ]
     }
 ]; 
