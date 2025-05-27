@@ -167,6 +167,8 @@ h1 {
     display: block;
     max-width: 100%;
     object-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .team-name {

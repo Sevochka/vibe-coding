@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестирование логотипа</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .logo-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            text-align: center;
+        }
+        .team-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            background-color: transparent;
+            border-radius: 0;
+            display: block;
+            margin: 0 auto;
+        }
+        .status {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <h2>Тестирование логотипа клуба</h2>
+        <img id="teamLogo" src="https://cdn-m.sport24.ru/m/1359/87cd/bd62/c2ad/ef95/5947/53f7/af93/400_10000_max.png" alt="Логотип клуба" class="team-logo" crossorigin="anonymous">
+        <div class="status" id="status">Загрузка...</div>
+    </div>
+
+    <script>
+        const teamLogo = document.getElementById('teamLogo');
+        const status = document.getElementById('status');
+
+        teamLogo.onload = function() {
+            status.textContent = 'Логотип успешно загружен';
+            status.style.color = 'green';
+        };
+
+        teamLogo.onerror = function() {
+            status.textContent = 'Ошибка загрузки логотипа';
+            status.style.color = 'red';
+        };
+    </script>
+</body>
+</html> 
