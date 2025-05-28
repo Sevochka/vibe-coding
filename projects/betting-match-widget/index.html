@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Виджет ставок на матч ПСЖ - Интер</title>
+    <title>Виджет ставок на матч</title>
     <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css">
     <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/sports.css">
     <link rel="stylesheet" href="./css/styles.css">
@@ -12,12 +12,12 @@
     <div class="container">
         <div class="widget-container">
             <div class="widget-header">
-                <h2>Лига чемпионов</h2>
-                <div class="date-time">Сегодня, 22:00</div>
+                <h2>Матч ЛЧ УЕФА: Прогноз и коэффициенты</h2>
+                <div class="date-time">6 ноября, 23:00</div>
             </div>
             
             <div class="match-container">
-                <div class="team home-team">
+                <div class="team">
                     <div class="team-logo">
                         <img src="https://pictures.cdn.sports.ru/_FNyAnwbUYTKnOLg5ULLXCHjJwAthUC2WOAZYyhrkfo/fill/150/150/no/1/czM6Ly9zcG9ydHMtYmFja2VuZC1zdGF0LXBpY3R1cmVzLXh3enltd3NyL1RFQU0vbWFpbi9wYXJpc19zYWludF9nZXJtYWluXzE3NDgyNzI0MzIucG5n.png" alt="ПСЖ">
                     </div>
@@ -25,9 +25,9 @@
                     <div class="team-form">
                         <div class="form-indicator win"></div>
                         <div class="form-indicator win"></div>
-                        <div class="form-indicator win"></div>
-                        <div class="form-indicator win"></div>
                         <div class="form-indicator loss"></div>
+                        <div class="form-indicator win"></div>
+                        <div class="form-indicator draw"></div>
                     </div>
                 </div>
                 
@@ -36,29 +36,29 @@
                     <div class="betting-options">
                         <div class="betting-option">
                             <div class="bet-type">П1</div>
-                            <div class="bet-odds" data-bookmaker="fonbet">2.20</div>
+                            <div class="bet-odds" id="home-win-odds">2.10</div>
                         </div>
                         <div class="betting-option">
                             <div class="bet-type">X</div>
-                            <div class="bet-odds" data-bookmaker="fonbet">3.45</div>
+                            <div class="bet-odds" id="draw-odds">3.65</div>
                         </div>
                         <div class="betting-option">
                             <div class="bet-type">П2</div>
-                            <div class="bet-odds" data-bookmaker="fonbet">3.50</div>
+                            <div class="bet-odds" id="away-win-odds">3.25</div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="team away-team">
+                <div class="team">
                     <div class="team-logo">
                         <img src="https://pictures.cdn.sports.ru/g7cs8U2z1SlgICrOIEbyAsUYBAF2VcjX4yYj_N-w4ZY/fill/150/150/no/1/czM6Ly9zcG9ydHMtYmFja2VuZC1zdGF0LXBpY3R1cmVzLXh3enltd3NyL1RFQU0vbWFpbi9pbnRlcl9taWxhbl8xNzQ4MjcyNDUxLnBuZw.png" alt="Интер">
                     </div>
                     <div class="team-name">Интер</div>
                     <div class="team-form">
                         <div class="form-indicator win"></div>
+                        <div class="form-indicator win"></div>
+                        <div class="form-indicator win"></div>
                         <div class="form-indicator draw"></div>
-                        <div class="form-indicator win"></div>
-                        <div class="form-indicator win"></div>
                         <div class="form-indicator win"></div>
                     </div>
                 </div>
@@ -75,38 +75,39 @@
                     <div class="bookmaker-tab" data-bookmaker="winline">
                         <img src="./data/winline-logo.svg" alt="Винлайн">
                     </div>
+                    <div class="bookmaker-tab" data-bookmaker="betcity">
+                        <img src="./data/betcity-logo.svg" alt="Бетсити">
+                    </div>
                 </div>
                 
-                <div class="bookmaker-content active" data-bookmaker="fonbet">
-                    <a href="https://fon.bet?deepLink=start_auth_process&promoAlias=fb15k&eventId=55260400&utm_source=sports.ru&utm_medium=cpc&utm_campaign=all_base&utm_content=odds&utm_term=button" target="_blank" class="bet-now-button">
-                        Получить бонус
-                    </a>
+                <div class="bookmaker-content active" id="fonbet-content">
+                    <a href="https://www.fonbet.ru/live/football/europe/uefa-champions-league/34522236/?utm_source=sports-widget" class="bet-now-button" target="_blank">Сделать ставку на Фонбет</a>
                 </div>
                 
-                <div class="bookmaker-content" data-bookmaker="pari">
-                    <a href="https://pari.ru/promo/top_match/?eventId=55260400&utm_source=default&utm_medium=cpc&utm_campaign=all_base&utm_content=odds" target="_blank" class="bet-now-button">
-                        Получить бонус
-                    </a>
+                <div class="bookmaker-content" id="pari-content">
+                    <a href="https://www.pari.ru/sports/football/uefa-champions-league/?utm_source=sports-widget" class="bet-now-button" target="_blank">Сделать ставку на Пари</a>
                 </div>
                 
-                <div class="bookmaker-content" data-bookmaker="winline">
-                    <a href="#" target="_blank" class="bet-now-button">
-                        Получить бонус
-                    </a>
+                <div class="bookmaker-content" id="winline-content">
+                    <a href="https://winline.ru/sports/football/champion_league/uefa_champions_league/?utm_source=sports-widget" class="bet-now-button" target="_blank">Сделать ставку на Винлайн</a>
+                </div>
+
+                <div class="bookmaker-content" id="betcity-content">
+                    <a href="https://betcity.ru/ru/line/football/europe/uefa-champions-league/?utm_source=sports-widget" class="bet-now-button" target="_blank">Сделать ставку на Бетсити</a>
                 </div>
             </div>
             
             <div class="widget-footer">
-                <a href="https://www.sports.ru/?utm_source=special-betting-match-widget" class="sports-link">
+                <a href="https://www.sports.ru/?utm_source=special-betting-match-widget" class="sports-link" target="_blank">
                     <img src="./data/sports-logo.svg" alt="Sports.ru">
                 </a>
                 <div class="age-restriction">18+</div>
             </div>
         </div>
     </div>
-
+    
     <script src="./data/match-data.js"></script>
-    <script src="./data/resize.js"></script>
     <script src="./data/script.js"></script>
+    <script src="./data/resize.js"></script>
 </body>
 </html> 

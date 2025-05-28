@@ -215,7 +215,8 @@ body {
 
 .bookmaker-tabs {
     display: flex;
-    gap: 15px;
+    justify-content: center;
+    gap: 30px;
     margin-bottom: 15px;
     border-bottom: 1px solid var(--sports-grey-100);
     padding-bottom: 15px;
@@ -223,6 +224,9 @@ body {
 
 .bookmaker-tab {
     height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     opacity: 0.6;
     transition: opacity 0.2s;
@@ -235,6 +239,7 @@ body {
 .bookmaker-tab img {
     height: 100%;
     width: auto;
+    max-width: 100px;
 }
 
 .bookmaker-content {
