@@ -1,82 +1,68 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Данные по коэффициентам для разных букмекеров
-    const bookmakerOdds = {
-        fonbet: {
-            homeWin: 2.10,
-            draw: 3.65,
-            awayWin: 3.25
-        },
-        pari: {
-            homeWin: 2.20,
-            draw: 3.50,
-            awayWin: 3.30
-        },
-        winline: {
-            homeWin: 2.15,
-            draw: 3.55,
-            awayWin: 3.20
-        },
-        betcity: {
-            homeWin: 2.18,
-            draw: 3.60,
-            awayWin: 3.28
-        }
-    };
-
-    // Получаем все вкладки букмекеров
+    // Переключение между букмекерами
     const bookmakerTabs = document.querySelectorAll('.bookmaker-tab');
     const bookmakerContents = document.querySelectorAll('.bookmaker-content');
+    const betOdds = document.querySelectorAll('.bet-odds');
     
-    // Элементы с коэффициентами
-    const homeWinOdds = document.getElementById('home-win-odds');
-    const drawOdds = document.getElementById('draw-odds');
-    const awayWinOdds = document.getElementById('away-win-odds');
-
-    // Устанавливаем начальные коэффициенты (Фонбет)
-    updateOdds('fonbet');
-
-    // Обработка кликов по вкладкам букмекеров
     bookmakerTabs.forEach(tab => {
         tab.addEventListener('click', function() {
-            // Убираем активный класс со всех вкладок и контента
-            bookmakerTabs.forEach(t => t.classList.remove('active'));
-            bookmakerContents.forEach(c => c.classList.remove('active'));
-            
-            // Добавляем активный класс к выбранной вкладке
-            this.classList.add('active');
-            
-            // Получаем ID букмекера
             const bookmaker = this.getAttribute('data-bookmaker');
             
-            // Активируем соответствующий контент
-            const content = document.getElementById(`${bookmaker}-content`);
-            content.classList.add('active');
+            // Обновляем активную вкладку
+            bookmakerTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Обновляем активный контент
+            bookmakerContents.forEach(content => {
+                if (content.getAttribute('data-bookmaker') === bookmaker) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
             
             // Обновляем коэффициенты
             updateOdds(bookmaker);
         });
     });
-
-    // Функция обновления коэффициентов
+    
+    // Функция обновления коэффициентов в зависимости от выбранного букмекера
     function updateOdds(bookmaker) {
-        homeWinOdds.textContent = bookmakerOdds[bookmaker].homeWin.toFixed(2);
-        drawOdds.textContent = bookmakerOdds[bookmaker].draw.toFixed(2);
-        awayWinOdds.textContent = bookmakerOdds[bookmaker].awayWin.toFixed(2);
+        const bookmakerData = matchData.bettingOdds.find(b => {
+            if (bookmaker === 'fonbet' && b.line1x2.bonusURL.includes('fon.bet')) return true;
+            if (bookmaker === 'pari' && b.line1x2.bonusURL.includes('pari.ru')) return true;
+            if (bookmaker === 'winline' && b.line1x2.bonusURL.includes('winline')) return true;
+            return false;
+        }) || matchData.bettingOdds[0]; // По умолчанию первый букмекер
+        
+        // Обновляем коэффициенты
+        const oddsElements = document.querySelectorAll('.bet-odds');
+        oddsElements.forEach(element => {
+            if (element.parentElement.querySelector('.bet-type').textContent === 'П1') {
+                element.textContent = bookmakerData.line1x2.h.toFixed(2);
+            } else if (element.parentElement.querySelector('.bet-type').textContent === 'X') {
+                element.textContent = bookmakerData.line1x2.x.toFixed(2);
+            } else if (element.parentElement.querySelector('.bet-type').textContent === 'П2') {
+                element.textContent = bookmakerData.line1x2.a.toFixed(2);
+            }
+        });
     }
-
-    // Обработка кликов по коэффициентам
-    homeWinOdds.addEventListener('click', function() {
-        const activeBookmaker = document.querySelector('.bookmaker-tab.active').getAttribute('data-bookmaker');
-        window.open(document.querySelector(`#${activeBookmaker}-content a`).href, '_blank');
-    });
-
-    drawOdds.addEventListener('click', function() {
-        const activeBookmaker = document.querySelector('.bookmaker-tab.active').getAttribute('data-bookmaker');
-        window.open(document.querySelector(`#${activeBookmaker}-content a`).href, '_blank');
-    });
-
-    awayWinOdds.addEventListener('click', function() {
-        const activeBookmaker = document.querySelector('.bookmaker-tab.active').getAttribute('data-bookmaker');
-        window.open(document.querySelector(`#${activeBookmaker}-content a`).href, '_blank');
+    
+    // Клик на коэффициент
+    betOdds.forEach(odd => {
+        odd.addEventListener('click', function() {
+            const activeBookmaker = document.querySelector('.bookmaker-tab.active').getAttribute('data-bookmaker');
+            const betType = this.parentElement.querySelector('.bet-type').textContent;
+            const odds = this.textContent;
+            
+            // Находим активную вкладку букмекера
+            const bookmakerContent = document.querySelector(`.bookmaker-content[data-bookmaker="${activeBookmaker}"]`);
+            const bonusLink = bookmakerContent.querySelector('.bet-now-button');
+            
+            // Открываем ссылку на сайт букмекера
+            if (bonusLink && bonusLink.getAttribute('href') !== '#') {
+                window.open(bonusLink.getAttribute('href'), '_blank');
+            }
+        });
     });
 }); 

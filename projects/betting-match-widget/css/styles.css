@@ -215,31 +215,29 @@ body {
 
 .bookmaker-tabs {
     display: flex;
-    justify-content: center;
-    gap: 30px;
+    gap: 15px;
     margin-bottom: 15px;
     border-bottom: 1px solid var(--sports-grey-100);
     padding-bottom: 15px;
 }
 
 .bookmaker-tab {
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     opacity: 0.6;
     transition: opacity 0.2s;
+    padding: 8px 12px;
+    border-radius: 6px;
 }
 
 .bookmaker-tab.active {
     opacity: 1;
+    background-color: var(--sports-grey-50);
 }
 
-.bookmaker-tab img {
-    height: 100%;
-    width: auto;
-    max-width: 100px;
+.bookmaker-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--sports-grey-800);
 }
 
 .bookmaker-content {
