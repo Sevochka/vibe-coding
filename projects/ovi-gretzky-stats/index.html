@@ -13,7 +13,7 @@
         <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="sports-logo">
       </a>
       <h1>Овечкин vs Грецки: Гонка за рекордом</h1>
-      <p>Точечная диаграмма голов по сезонам</p>
+      <p>Накопительный график голов по сезонам</p>
     </header>
     
     <section class="section chart-section">
@@ -21,25 +21,25 @@
         <div class="player-legend">
           <div class="legend-item">
             <div class="legend-color ovechkin-color"></div>
-            <span>Овечкин (894)</span>
+            <span>ОВЕЧКИН</span>
           </div>
           <div class="legend-item">
             <div class="legend-color gretzky-color"></div>
-            <span>Грецки (894)</span>
+            <span>ГРЕЦКИ</span>
           </div>
-        </div>
-        
-        <div class="slider-container">
-          <input type="range" min="1" max="19" value="1" class="season-slider" id="season-slider">
-          <div class="slider-labels">
-            <span>1 сезон</span>
-            <span>19 сезонов</span>
-          </div>
-          <div class="current-season" id="current-season">1 сезон</div>
         </div>
         
         <div class="goals-chart-container" id="goals-chart-container">
           <!-- Здесь будет рисоваться график -->
+        </div>
+        
+        <div class="slider-container">
+          <input type="range" min="1" max="19" value="19" class="season-slider" id="season-slider">
+          <div class="slider-labels">
+            <span>1 сезон</span>
+            <span>19 сезонов</span>
+          </div>
+          <div class="current-season" id="current-season">19 сезонов</div>
         </div>
         
         <div class="play-controls">

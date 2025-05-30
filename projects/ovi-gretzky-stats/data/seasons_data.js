@@ -44,26 +44,29 @@ const seasonsData = {
   ]
 };
 
-// Кумулятивные данные по сезонам (накопительные)
+// Вычисляем кумулятивные (накопительные) значения голов
 const cumulativeData = {
   ovechkin: [],
   gretzky: []
 };
 
-// Рассчитываем кумулятивные данные для обоих игроков
+// Заполняем данные о кумулятивных голах
 for (const player of ['ovechkin', 'gretzky']) {
   let cumulativeGoals = 0;
-  let cumulativeGames = 0;
   
-  for (const season of seasonsData[player]) {
-    cumulativeGoals += season.goals;
-    cumulativeGames += 1;
+  // Добавляем начальную точку (0,0)
+  cumulativeData[player].push({
+    season: 0,
+    goals: 0
+  });
+  
+  // Добавляем остальные точки с накопительным итогом
+  for (const seasonData of seasonsData[player]) {
+    cumulativeGoals += seasonData.goals;
     
     cumulativeData[player].push({
-      season: cumulativeGames,
-      games: cumulativeGames,
-      goals: cumulativeGoals,
-      goalsPerGame: (cumulativeGoals / cumulativeGames).toFixed(3)
+      season: seasonData.season,
+      goals: cumulativeGoals
     });
   }
 }

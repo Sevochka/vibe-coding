@@ -1,96 +1,76 @@
 // Инициализация переменных
 let isAnimating = false;
 let animationInterval;
-let maxGoals;
 
-// Получение максимального значения голов для масштабирования графиков
-function getMaxGoals() {
-  let maxOvi = Math.max(...seasonsData.ovechkin.map(s => s.goals));
-  let maxGretzky = Math.max(...seasonsData.gretzky.map(s => s.goals));
-  return Math.max(maxOvi, maxGretzky);
-}
-
-// Создание визуализации голов
-function createGoalsChart(seasonsCount = 1) {
+// Создание визуализации накопительных голов
+function createGoalsChart(seasonsCount = 19) {
   const container = document.getElementById('goals-chart-container');
   container.innerHTML = '';
   
-  // Определяем максимальное значение для масштабирования
-  maxGoals = getMaxGoals();
+  // Получаем данные для отображения
+  const oviData = cumulativeData.ovechkin.slice(0, seasonsCount + 1);
+  const gretzkyData = cumulativeData.gretzky.slice(0, seasonsCount + 1);
   
-  // Создаем оси координат
-  createAxes(container, maxGoals, seasonsCount);
+  // Находим максимальное значение голов для масштабирования
+  const maxGoals = Math.max(
+    oviData[oviData.length - 1].goals,
+    gretzkyData[gretzkyData.length - 1].goals
+  );
   
-  // Создаем линии данных
-  createDataLines(container, seasonsCount);
+  // Добавляем ось X с метками сезонов
+  createSeasonAxis(container, seasonsCount);
+  
+  // Добавляем вертикальные линии сетки
+  createGridLines(container, seasonsCount);
+  
+  // Создаем SVG для линий графика
+  const svg = createSvgElement(container, maxGoals, oviData, gretzkyData);
+  
+  // Добавляем точки и подписи
+  addDataPoints(container, oviData, 'ovechkin', maxGoals);
+  addDataPoints(container, gretzkyData, 'gretzky', maxGoals);
+  
+  // Добавляем анимацию
+  setTimeout(() => {
+    const paths = svg.querySelectorAll('.line-path');
+    paths.forEach(path => path.classList.add('animate-line'));
+  }, 100);
 }
 
-// Создание осей и сетки
-function createAxes(container, maxGoals, seasonsCount) {
-  // Округлим максимальное значение голов до ближайшего десятка вверх
-  const roundedMaxGoals = Math.ceil(maxGoals / 10) * 10;
-  
-  // Ось X (сезоны)
+// Создание оси X с метками сезонов
+function createSeasonAxis(container, seasonsCount) {
   const xAxis = document.createElement('div');
   xAxis.className = 'x-axis';
   
-  // Добавляем метки сезонов на оси X
+  // Добавляем метки сезонов
   for (let i = 0; i <= seasonsCount; i++) {
-    if (i % 2 === 0 || i === seasonsCount) { // Показываем каждый второй сезон для уменьшения нагромождения
-      const percentage = (i / seasonsCount) * 100;
-      
-      const xLabel = document.createElement('div');
-      xLabel.className = 'x-label';
-      xLabel.textContent = i;
-      xLabel.style.left = `${percentage}%`;
-      xAxis.appendChild(xLabel);
-      
-      // Добавляем вертикальные линии сетки
-      if (i > 0) {
-        const gridLine = document.createElement('div');
-        gridLine.className = 'grid-line vertical';
-        gridLine.style.left = `${percentage}%`;
-        container.appendChild(gridLine);
-      }
-    }
+    // Показываем каждый сезон
+    const percentage = (i / seasonsCount) * 100;
+    
+    const xLabel = document.createElement('div');
+    xLabel.className = 'x-label';
+    xLabel.textContent = i;
+    xLabel.style.left = `${percentage}%`;
+    xAxis.appendChild(xLabel);
   }
   
   container.appendChild(xAxis);
-  
-  // Ось Y (голы)
-  const yAxis = document.createElement('div');
-  yAxis.className = 'y-axis';
-  
-  // Добавляем метки голов на оси Y
-  const steps = 5; // количество шагов на оси Y
-  
-  for (let i = 0; i <= steps; i++) {
-    const goalValue = Math.round(i * (roundedMaxGoals / steps));
-    const percentage = 100 - (goalValue / roundedMaxGoals) * 100; // Инвертируем для оси Y (0 внизу)
-    
-    const yLabel = document.createElement('div');
-    yLabel.className = 'y-label';
-    yLabel.textContent = goalValue;
-    yLabel.style.top = `${percentage}%`;
-    yAxis.appendChild(yLabel);
-    
-    // Добавляем горизонтальные линии сетки
-    const gridLine = document.createElement('div');
-    gridLine.className = 'grid-line horizontal';
-    gridLine.style.top = `${percentage}%`;
-    container.appendChild(gridLine);
-  }
-  
-  container.appendChild(yAxis);
 }
 
-// Создание линий данных
-function createDataLines(container, seasonsCount) {
-  // Получаем данные для указанного количества сезонов
-  const oviData = [{ season: 0, goals: 0 }, ...seasonsData.ovechkin.slice(0, seasonsCount)];
-  const gretzkyData = [{ season: 0, goals: 0 }, ...seasonsData.gretzky.slice(0, seasonsCount)];
-  
-  // Создаем SVG элемент для линий
+// Создание вертикальных линий сетки
+function createGridLines(container, seasonsCount) {
+  for (let i = 1; i <= seasonsCount; i++) {
+    const percentage = (i / seasonsCount) * 100;
+    
+    const gridLine = document.createElement('div');
+    gridLine.className = 'grid-line vertical';
+    gridLine.style.left = `${percentage}%`;
+    container.appendChild(gridLine);
+  }
+}
+
+// Создание SVG элемента с линиями графика
+function createSvgElement(container, maxGoals, oviData, gretzkyData) {
   const svgNS = "http://www.w3.org/2000/svg";
   const svg = document.createElementNS(svgNS, "svg");
   svg.setAttribute("width", "100%");
@@ -98,75 +78,65 @@ function createDataLines(container, seasonsCount) {
   svg.style.position = "absolute";
   svg.style.top = "0";
   svg.style.left = "0";
-  svg.style.zIndex = "2";
   
   // Создаем линии для Овечкина и Грецки
-  const oviPath = createPath(oviData, "ovechkin");
-  const gretzkyPath = createPath(gretzkyData, "gretzky");
+  svg.appendChild(createPath(oviData, 'ovechkin', maxGoals, svgNS));
+  svg.appendChild(createPath(gretzkyData, 'gretzky', maxGoals, svgNS));
   
-  svg.appendChild(oviPath);
-  svg.appendChild(gretzkyPath);
   container.appendChild(svg);
-  
-  // Добавляем точки и подписи
-  addDataPoints(container, oviData, "ovechkin");
-  addDataPoints(container, gretzkyData, "gretzky");
-  
-  // Добавляем анимацию
-  setTimeout(() => {
-    oviPath.classList.add('animate-line');
-    gretzkyPath.classList.add('animate-line');
-  }, 100);
-  
-  // Функция для создания пути (линии)
-  function createPath(data, playerClass) {
-    const path = document.createElementNS(svgNS, "path");
-    path.classList.add("line-path", playerClass);
-    
-    let pathD = "";
-    
-    data.forEach((season, index) => {
-      // Рассчитываем координаты точки (x - сезоны, y - голы)
-      const x = (index / data.length) * 100;
-      const y = 100 - (season.goals / maxGoals) * 100; // Инвертируем для оси Y
-      
-      if (index === 0) {
-        pathD += `M ${x}% ${y}%`;
-      } else {
-        pathD += ` L ${x}% ${y}%`;
-      }
-    });
-    
-    path.setAttribute("d", pathD);
-    return path;
-  }
+  return svg;
 }
 
-// Добавление точек данных
-function addDataPoints(container, data, playerClass) {
-  // Начинаем с индекса 1, так как индекс 0 - это начальная точка (0,0)
-  for (let i = 1; i < data.length; i++) {
-    const season = data[i];
+// Создание линии (path) для графика
+function createPath(data, playerClass, maxGoals, svgNS) {
+  const path = document.createElementNS(svgNS, "path");
+  path.classList.add("line-path", playerClass);
+  
+  // Формируем путь линии
+  let pathD = "";
+  const totalSeasons = data.length - 1; // вычитаем 1, т.к. у нас есть сезон 0
+  
+  data.forEach((point, index) => {
+    // Вычисляем координаты
+    const x = (point.season / totalSeasons) * 100;
+    const y = 100 - (point.goals / maxGoals) * 90; // оставляем отступ сверху
     
-    // Рассчитываем координаты точки
-    const x = (i / (data.length - 1)) * 100;
-    const y = 100 - (season.goals / maxGoals) * 100; // Инвертируем для оси Y
+    if (index === 0) {
+      pathD += `M ${x}% ${y}%`;
+    } else {
+      pathD += ` L ${x}% ${y}%`;
+    }
+  });
+  
+  path.setAttribute("d", pathD);
+  return path;
+}
+
+// Добавление точек и подписей к графику
+function addDataPoints(container, data, playerClass, maxGoals) {
+  const totalSeasons = data.length - 1;
+  
+  // Пропускаем первую точку (0,0)
+  for (let i = 1; i < data.length; i++) {
+    const point = data[i];
+    
+    // Вычисляем координаты
+    const x = (point.season / totalSeasons) * 100;
+    const y = 100 - (point.goals / maxGoals) * 90; // оставляем отступ сверху
     
     // Создаем точку
-    const point = document.createElement('div');
-    point.className = `data-point ${playerClass} animate-fade`;
-    point.style.left = `${x}%`;
-    point.style.top = `${y}%`;
-    point.style.animationDelay = `${i * 0.1}s`;
-    container.appendChild(point);
+    const pointElement = document.createElement('div');
+    pointElement.className = `data-point ${playerClass}`;
+    pointElement.style.left = `${x}%`;
+    pointElement.style.top = `${y}%`;
+    container.appendChild(pointElement);
     
-    // Добавляем подписи к точкам
+    // Добавляем подпись с количеством голов
     const label = document.createElement('div');
-    label.className = `point-label ${playerClass} animate-fade`;
-    label.textContent = season.goals;
+    label.className = `point-label ${playerClass}`;
+    label.textContent = point.goals;
     label.style.left = `${x}%`;
     label.style.top = `${y}%`;
-    label.style.animationDelay = `${i * 0.1 + 0.2}s`;
     container.appendChild(label);
   }
 }
@@ -201,10 +171,10 @@ function setupSeasonSlider() {
       playButton.innerHTML = '&#9658; Воспроизвести';
       isAnimating = false;
     } else {
-      let currentSeason = parseInt(slider.value);
-      if (currentSeason === 19) {
-        currentSeason = 0;
-      }
+      let currentSeason = 1; // Начинаем с первого сезона
+      slider.value = currentSeason;
+      updateSeasonText(currentSeason);
+      createGoalsChart(currentSeason);
       
       playButton.innerHTML = '&#10074;&#10074; Пауза';
       isAnimating = true;
@@ -222,7 +192,7 @@ function setupSeasonSlider() {
         slider.value = currentSeason;
         updateSeasonText(currentSeason);
         createGoalsChart(currentSeason);
-      }, 1500); // интервал в 1.5 секунды между обновлениями
+      }, 600); // интервал для анимации
     }
   });
   
@@ -240,8 +210,8 @@ function setupSeasonSlider() {
   });
 }
 
-// Инициализация всего при загрузке страницы
+// Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
-  createGoalsChart(1);  // Начинаем с одного сезона
+  createGoalsChart(19); // Сразу показываем все 19 сезонов
   setupSeasonSlider();
 }); 

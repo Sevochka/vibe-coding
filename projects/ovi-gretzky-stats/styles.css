@@ -37,15 +37,15 @@
   --sports-grey-50: #efefef;
 
   /* Элементы UI и типографика */
-  --ui-bg: #fff;
+  --ui-bg: #f5f9ff;
   --ui-font-family-body: "Neoris", "Roboto", sans-serif;
   --ui-font-family-heading: "Sports", sans-serif;
   --ui-font-family-heading-primary: "Sports", sans-serif;
   --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
   
   /* Цвета для графиков */
-  --ovechkin-color: var(--sports-red-a700);
-  --gretzky-color: var(--sports-blue-A700);
+  --ovechkin-color: #ff003c;
+  --gretzky-color: #0040fc;
 }
 
 * {
@@ -226,14 +226,18 @@ h3 {
 
 .player-legend {
   display: flex;
-  justify-content: center;
   margin-bottom: 15px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  margin: 0 10px;
+  margin-right: 20px;
+}
+
+.legend-item span {
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .legend-color {
@@ -308,65 +312,37 @@ h3 {
 /* Стили для графика голов */
 .goals-chart-container {
   position: relative;
-  height: 400px;
+  height: 450px;
   margin: 20px 0;
-  border-left: 1px solid var(--sports-grey-400);
-  border-bottom: 1px solid var(--sports-grey-400);
+  border: 1px solid var(--sports-grey-100);
+  background-color: white;
+  border-radius: 4px;
 }
 
 /* Ось X - сезоны */
 .x-axis {
   position: absolute;
-  bottom: -20px;
+  bottom: 10px;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
 }
 
 .x-label {
   position: absolute;
   transform: translateX(-50%);
   font-size: 12px;
-  color: var(--sports-grey-800);
+  color: var(--sports-grey-600);
+  text-align: center;
 }
 
-/* Ось Y - голы */
-.y-axis {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.y-label {
-  position: absolute;
-  left: -40px;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--sports-grey-800);
-}
-
-/* Сетка */
-.grid-line {
-  position: absolute;
-  background-color: rgba(0,0,0,0.05);
-  z-index: 1;
-}
-
-.grid-line.horizontal {
-  left: 0;
-  width: 100%;
-  height: 1px;
-}
-
+/* Вертикальные линии сетки */
 .grid-line.vertical {
+  position: absolute;
   top: 0;
   width: 1px;
-  height: 100%;
+  height: calc(100% - 20px);
+  background-color: rgba(0,0,0,0.05);
+  z-index: 1;
 }
 
 /* Линии графика */
@@ -409,8 +385,6 @@ h3 {
   position: absolute;
   font-size: 12px;
   font-weight: bold;
-  padding: 2px 4px;
-  border-radius: 2px;
   transform: translate(-50%, -150%);
   white-space: nowrap;
   z-index: 4;
@@ -465,15 +439,6 @@ h3 {
   
   .goals-chart-container {
     height: 350px;
-  }
-  
-  .y-label {
-    font-size: 10px;
-    left: -30px;
-  }
-  
-  .x-label {
-    font-size: 10px;
   }
   
   .point-label {
