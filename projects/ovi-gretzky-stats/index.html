@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Овечкин vs Грецки: Легенды НХЛ в цифрах</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a href="https://www.sports.ru/?utm_source=special-ovi-gretzky-stats" target="_blank">
+        <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="sports-logo">
+      </a>
+      <h1>Овечкин vs Грецки: Легенды НХЛ в цифрах</h1>
+      <p>Сравнение статистики двух величайших хоккеистов в истории НХЛ</p>
+    </header>
+    
+    <section class="section profiles-section">
+      <h2>Профили игроков</h2>
+      <div class="profiles-container">
+        <!-- Профиль Овечкина -->
+        <div class="player-profile ovechkin">
+          <div class="player-header">
+            <img src="https://s-cdn.sportbox.ru/images/styles/220_auto/fp_fotos/0a/8d/3fb243da4e64eb7efc4e00ed9fe4c0985e5e5c1c7eba5584967968.jpg" alt="Александр Овечкин" class="player-photo">
+            <div class="player-name-info">
+              <h3>Александр Овечкин</h3>
+              <div class="player-nickname">«Ови»</div>
+            </div>
+          </div>
+          
+          <div class="player-bio">
+            <div class="bio-item">
+              <div class="bio-label">Родился:</div>
+              <div class="bio-value" id="ovechkin-birth"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Страна:</div>
+              <div class="bio-value" id="ovechkin-country"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Рост/вес:</div>
+              <div class="bio-value" id="ovechkin-size"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Позиция:</div>
+              <div class="bio-value" id="ovechkin-position"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Номер:</div>
+              <div class="bio-value" id="ovechkin-number"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Карьера:</div>
+              <div class="bio-value" id="ovechkin-career"></div>
+            </div>
+          </div>
+          
+          <div class="player-stats">
+            <div class="stat-item">
+              <div class="stat-label">Игры:</div>
+              <div class="stat-value" id="ovechkin-games"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы:</div>
+              <div class="stat-value" id="ovechkin-goals"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Передачи:</div>
+              <div class="stat-value" id="ovechkin-assists"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Очки:</div>
+              <div class="stat-value" id="ovechkin-points"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Победные голы:</div>
+              <div class="stat-value" id="ovechkin-winning"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы в большинстве:</div>
+              <div class="stat-value" id="ovechkin-pp"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы в меньшинстве:</div>
+              <div class="stat-value" id="ovechkin-sh"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Кубок Стэнли:</div>
+              <div class="stat-value">1</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Профиль Грецки -->
+        <div class="player-profile gretzky">
+          <div class="player-header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Wayne_Gretzky_2006-02-18.jpg/220px-Wayne_Gretzky_2006-02-18.jpg" alt="Уэйн Грецки" class="player-photo">
+            <div class="player-name-info">
+              <h3>Уэйн Грецки</h3>
+              <div class="player-nickname">«Великий»</div>
+            </div>
+          </div>
+          
+          <div class="player-bio">
+            <div class="bio-item">
+              <div class="bio-label">Родился:</div>
+              <div class="bio-value" id="gretzky-birth"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Страна:</div>
+              <div class="bio-value" id="gretzky-country"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Рост/вес:</div>
+              <div class="bio-value" id="gretzky-size"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Позиция:</div>
+              <div class="bio-value" id="gretzky-position"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Номер:</div>
+              <div class="bio-value" id="gretzky-number"></div>
+            </div>
+            <div class="bio-item">
+              <div class="bio-label">Карьера:</div>
+              <div class="bio-value" id="gretzky-career"></div>
+            </div>
+          </div>
+          
+          <div class="player-stats">
+            <div class="stat-item">
+              <div class="stat-label">Игры:</div>
+              <div class="stat-value" id="gretzky-games"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы:</div>
+              <div class="stat-value" id="gretzky-goals"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Передачи:</div>
+              <div class="stat-value" id="gretzky-assists"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Очки:</div>
+              <div class="stat-value" id="gretzky-points"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Победные голы:</div>
+              <div class="stat-value" id="gretzky-winning"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы в большинстве:</div>
+              <div class="stat-value" id="gretzky-pp"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Голы в меньшинстве:</div>
+              <div class="stat-value" id="gretzky-sh"></div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Кубок Стэнли:</div>
+              <div class="stat-value">4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section chart-section">
+      <h2>Динамика по сезонам</h2>
+      
+      <div class="chart-wrapper">
+        <div class="chart-title">Голы по сезонам</div>
+        <div class="player-legend">
+          <div class="legend-item">
+            <div class="legend-color ovechkin-color"></div>
+            <span>Овечкин</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color gretzky-color"></div>
+            <span>Грецки</span>
+          </div>
+        </div>
+        <div class="slider-container">
+          <input type="range" min="1" max="19" value="19" class="season-slider" id="season-slider">
+          <div class="slider-labels">
+            <span>1 сезон</span>
+            <span>19 сезонов</span>
+          </div>
+          <div class="current-season" id="current-season">Все сезоны (2005-2024 для Овечкина / 1979-1998 для Грецки)</div>
+        </div>
+        <canvas id="goals-chart"></canvas>
+        <div class="play-controls">
+          <button id="play-btn" class="control-btn">&#9658; Воспроизвести</button>
+          <button id="reset-btn" class="control-btn">&#8634; Сбросить</button>
+        </div>
+      </div>
+      
+      <div class="chart-wrapper">
+        <div class="chart-title">Накопительные голы</div>
+        <canvas id="cumulative-goals-chart"></canvas>
+      </div>
+      
+      <div class="chart-wrapper">
+        <div class="chart-title">Накопительные очки</div>
+        <canvas id="cumulative-points-chart"></canvas>
+      </div>
+    </section>
+    
+    <section class="section comparison-section">
+      <h2>Сравнение карьерных достижений</h2>
+      <div class="chart-wrapper">
+        <div class="chart-title">Итоговая статистика карьеры</div>
+        <div class="stats-comparison" id="stats-comparison">
+          <!-- Сюда будут добавлены строки сравнения через JavaScript -->
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <script src="./data/players_data.js"></script>
+  <script src="./data/seasons_data.js"></script>
+  <script src="./main.js"></script>
+  <script src="./resize.js"></script>
+</body>
+</html> 
