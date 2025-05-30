@@ -81,87 +81,6 @@ function createGoalsBars(seasonsCount = 1) {
   }
 }
 
-// График накопительных голов
-let cumulativeGoalsChart;
-function createCumulativeGoalsChart() {
-  const ctx = document.getElementById('cumulative-goals-chart').getContext('2d');
-  
-  const oviSeasons = cumulativeData.ovechkin.map(s => s.season);
-  const oviGoals = cumulativeData.ovechkin.map(s => s.goals);
-  const gretzkyGoals = cumulativeData.gretzky.map(s => s.goals);
-  
-  cumulativeGoalsChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: oviSeasons,
-      datasets: [
-        {
-          label: 'Овечкин',
-          data: oviGoals,
-          borderColor: getComputedStyle(document.documentElement).getPropertyValue('--ovechkin-color'),
-          backgroundColor: 'rgba(255, 0, 60, 0.1)',
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.1,
-          fill: true
-        },
-        {
-          label: 'Грецки',
-          data: gretzkyGoals,
-          borderColor: getComputedStyle(document.documentElement).getPropertyValue('--gretzky-color'),
-          backgroundColor: 'rgba(0, 64, 252, 0.1)',
-          borderWidth: 2,
-          pointRadius: 3,
-          tension: 0.1,
-          fill: true
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
-        },
-        tooltip: {
-          mode: 'index',
-          intersect: false,
-          callbacks: {
-            title: function(tooltipItems) {
-              const index = tooltipItems[0].dataIndex;
-              const oviSeason = cumulativeData.ovechkin[index].season;
-              const gretzkySeason = cumulativeData.gretzky[index].season;
-              return `После ${index + 1} сезонов (${oviSeason} / ${gretzkySeason})`;
-            }
-          }
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Голы (накопительно)',
-            font: {
-              weight: 'bold'
-            }
-          }
-        },
-        x: {
-          title: {
-            display: true,
-            text: 'Сезон',
-            font: {
-              weight: 'bold'
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
 // Обработка слайдера сезонов
 function setupSeasonSlider() {
   const slider = document.getElementById('season-slider');
@@ -234,6 +153,5 @@ function setupSeasonSlider() {
 // Инициализация всего при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
   createGoalsBars(1);  // Начинаем с одного сезона
-  createCumulativeGoalsChart();
   setupSeasonSlider();
 }); 
