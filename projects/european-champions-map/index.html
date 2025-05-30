@@ -1,72 +1,70 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карта чемпионов Европы</title>
-    <link rel="stylesheet" href="./styles.css">
-    @import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
-    @import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта чемпионов европейских футбольных лиг 2023/2024</title>
+  
+  <!-- Подключаем Leaflet.js для карты -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Импорт базовых стилей Sports.ru -->
+  <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css">
+  <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/sports.css">
+  
+  <!-- Подключаем собственные стили -->
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo-container">
-                <a href="https://www.sports.ru/?utm_source=special-european-champions-map" target="_blank">
-                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
-                </a>
-            </div>
-            <h1 class="title">Карта чемпионов Европы 2023/24</h1>
-            <p class="subtitle">Нажмите на страну, чтобы узнать чемпиона</p>
-        </header>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <a href="https://www.sports.ru/?utm_source=special-european-champions-map" target="_blank">
+          <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru">
+        </a>
+      </div>
+      <h1>Чемпионы европейских лиг <span class="season">сезон 2023/2024</span></h1>
+    </header>
 
-        <!-- Interactive Map -->
-        <div class="map-container">
-            <svg id="europeMap" viewBox="0 0 900 650" class="europe-map">
-                <!-- Countries will be added here -->
-            </svg>
-        </div>
+    <div class="content">
+      <!-- Контейнер для карты -->
+      <div id="map"></div>
 
-        <!-- Champion Info Panel -->
-        <div id="championInfo" class="champion-panel">
-            <div class="champion-content">
-                <h3 class="champion-title">Выберите страну</h3>
-                <p class="champion-description">Нажмите на любую страну на карте, чтобы узнать её чемпиона сезона 2023/24</p>
-            </div>
+      <!-- Контейнер для информации о клубе -->
+      <div id="club-info" class="hidden">
+        <div class="close-btn">×</div>
+        <div class="club-header">
+          <div class="club-logo">
+            <img id="club-logo-img" src="" alt="">
+          </div>
+          <div class="club-title">
+            <h2 id="club-name"></h2>
+            <p id="club-country"></p>
+            <p id="club-league"></p>
+          </div>
         </div>
-
-        <!-- Legend -->
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color legend-big5"></div>
-                <span>Топ-5 лиг UEFA</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color legend-other"></div>
-                <span>Другие европейские лиги</span>
-            </div>
+        <div class="club-stats">
+          <div class="stat-item">
+            <div class="stat-title">Чемпионских титулов</div>
+            <div id="club-titles" class="stat-value"></div>
+          </div>
         </div>
-
-        <!-- Tournament Links -->
-        <div class="tournament-links">
-            <a href="https://www.sports.ru/uefa-euro-2024/" class="tournament-link">
-                ЕВРО-2024
-            </a>
-            <a href="https://www.sports.ru/football/champions-league/" class="tournament-link">
-                Лига чемпионов
-            </a>
-            <a href="https://www.sports.ru/football/europa-league/" class="tournament-link">
-                Лига Европы
-            </a>
-        </div>
+      </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="./data/countries.js"></script>
-    <script src="./data/champions.js"></script>
-    <script src="./data/map-paths.js"></script>
-    <script src="./script.js"></script>
-    <script src="./resize.js"></script>
+    <footer>
+      <p>&copy; 2024 <a href="https://www.sports.ru/?utm_source=special-european-champions-map" target="_blank">Sports.ru</a> - Все данные актуальны на момент окончания сезона 2023/2024</p>
+    </footer>
+  </div>
+
+  <!-- Подключаем данные -->
+  <script src="./data/countries.js"></script>
+  
+  <!-- Подключаем скрипт для карты -->
+  <script src="./script.js"></script>
+  
+  <!-- Подключаем скрипт для ресайза фрейма -->
+  <script src="./resize.js"></script>
 </body>
 </html> 

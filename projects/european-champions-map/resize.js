@@ -1,18 +1,20 @@
-const resize = () => {
-    const dataUTILS = {
-        for: 'BASIC_TEST',
-        action: 'resizeIframe',
-        selector: `iframe[src*=\\/projects\\/european-champions-map]`,
-        sizes: {
-            height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
-        },
-    };
+const projectSlug = 'european-champions-map';
 
-    window?.top?.postMessage(JSON.stringify(dataUTILS), '*');
+const resize = () => {
+  const dataUTILS = {
+    for: 'BASIC_TEST',
+    action: 'resizeIframe',
+    selector: `iframe[src*=\\/projects\\/${projectSlug}]`,
+    sizes: {
+      height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
+    },
+  };
+
+  window?.top?.postMessage(JSON.stringify(dataUTILS), '*');
 }
 
 const resizeObserver = new ResizeObserver(() => {
-    resize();
+  resize();
 });
 resizeObserver.observe(document.body);
 resize(); 
