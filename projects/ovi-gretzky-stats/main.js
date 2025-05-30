@@ -30,16 +30,47 @@ function createAxes(container, maxGoals, seasonsCount) {
   // Округлим максимальное значение голов до ближайшего десятка вверх
   const roundedMaxGoals = Math.ceil(maxGoals / 10) * 10;
   
-  // Ось Y (сезоны)
+  // Ось X (сезоны)
+  const xAxis = document.createElement('div');
+  xAxis.className = 'x-axis';
+  
+  // Добавляем метки сезонов на оси X
+  for (let i = 0; i <= seasonsCount; i++) {
+    if (i % 2 === 0 || i === seasonsCount) { // Показываем каждый второй сезон для уменьшения нагромождения
+      const percentage = (i / seasonsCount) * 100;
+      
+      const xLabel = document.createElement('div');
+      xLabel.className = 'x-label';
+      xLabel.textContent = i;
+      xLabel.style.left = `${percentage}%`;
+      xAxis.appendChild(xLabel);
+      
+      // Добавляем вертикальные линии сетки
+      if (i > 0) {
+        const gridLine = document.createElement('div');
+        gridLine.className = 'grid-line vertical';
+        gridLine.style.left = `${percentage}%`;
+        container.appendChild(gridLine);
+      }
+    }
+  }
+  
+  container.appendChild(xAxis);
+  
+  // Ось Y (голы)
   const yAxis = document.createElement('div');
   yAxis.className = 'y-axis';
   
-  // Добавляем метки сезонов
-  for (let i = 0; i < seasonsCount; i++) {
-    const percentage = i / (seasonsCount - 1 || 1) * 100;
+  // Добавляем метки голов на оси Y
+  const steps = 5; // количество шагов на оси Y
+  
+  for (let i = 0; i <= steps; i++) {
+    const goalValue = Math.round(i * (roundedMaxGoals / steps));
+    const percentage = 100 - (goalValue / roundedMaxGoals) * 100; // Инвертируем для оси Y (0 внизу)
+    
     const yLabel = document.createElement('div');
     yLabel.className = 'y-label';
-    yLabel.textContent = `Сезон ${i + 1}`;
+    yLabel.textContent = goalValue;
     yLabel.style.top = `${percentage}%`;
     yAxis.appendChild(yLabel);
     
@@ -51,41 +82,13 @@ function createAxes(container, maxGoals, seasonsCount) {
   }
   
   container.appendChild(yAxis);
-  
-  // Ось X (голы)
-  const xAxis = document.createElement('div');
-  xAxis.className = 'x-axis';
-  
-  // Добавляем метки голов (0, 20, 40, 60, 80, 100)
-  const steps = 5; // количество шагов на оси X
-  
-  for (let i = 0; i <= steps; i++) {
-    const goalValue = Math.round(i * (roundedMaxGoals / steps));
-    const percentage = (goalValue / roundedMaxGoals) * 100;
-    
-    const xLabel = document.createElement('div');
-    xLabel.className = 'x-label';
-    xLabel.textContent = goalValue;
-    xLabel.style.left = `${percentage}%`;
-    xAxis.appendChild(xLabel);
-    
-    // Добавляем вертикальные линии сетки
-    if (i > 0) {
-      const gridLine = document.createElement('div');
-      gridLine.className = 'grid-line vertical';
-      gridLine.style.left = `${percentage}%`;
-      container.appendChild(gridLine);
-    }
-  }
-  
-  container.appendChild(xAxis);
 }
 
 // Создание линий данных
 function createDataLines(container, seasonsCount) {
   // Получаем данные для указанного количества сезонов
-  const oviData = seasonsData.ovechkin.slice(0, seasonsCount);
-  const gretzkyData = seasonsData.gretzky.slice(0, seasonsCount);
+  const oviData = [{ season: 0, goals: 0 }, ...seasonsData.ovechkin.slice(0, seasonsCount)];
+  const gretzkyData = [{ season: 0, goals: 0 }, ...seasonsData.gretzky.slice(0, seasonsCount)];
   
   // Создаем SVG элемент для линий
   const svgNS = "http://www.w3.org/2000/svg";
@@ -123,9 +126,9 @@ function createDataLines(container, seasonsCount) {
     let pathD = "";
     
     data.forEach((season, index) => {
-      // Рассчитываем координаты точки (x - голы, y - сезоны)
-      const x = (season.goals / maxGoals) * 100;
-      const y = (index / (data.length - 1 || 1)) * 100;
+      // Рассчитываем координаты точки (x - сезоны, y - голы)
+      const x = (index / data.length) * 100;
+      const y = 100 - (season.goals / maxGoals) * 100; // Инвертируем для оси Y
       
       if (index === 0) {
         pathD += `M ${x}% ${y}%`;
@@ -141,17 +144,20 @@ function createDataLines(container, seasonsCount) {
 
 // Добавление точек данных
 function addDataPoints(container, data, playerClass) {
-  data.forEach((season, index) => {
+  // Начинаем с индекса 1, так как индекс 0 - это начальная точка (0,0)
+  for (let i = 1; i < data.length; i++) {
+    const season = data[i];
+    
     // Рассчитываем координаты точки
-    const x = (season.goals / maxGoals) * 100;
-    const y = (index / (data.length - 1 || 1)) * 100;
+    const x = (i / (data.length - 1)) * 100;
+    const y = 100 - (season.goals / maxGoals) * 100; // Инвертируем для оси Y
     
     // Создаем точку
     const point = document.createElement('div');
     point.className = `data-point ${playerClass} animate-fade`;
     point.style.left = `${x}%`;
     point.style.top = `${y}%`;
-    point.style.animationDelay = `${index * 0.1}s`;
+    point.style.animationDelay = `${i * 0.1}s`;
     container.appendChild(point);
     
     // Добавляем подписи к точкам
@@ -160,9 +166,9 @@ function addDataPoints(container, data, playerClass) {
     label.textContent = season.goals;
     label.style.left = `${x}%`;
     label.style.top = `${y}%`;
-    label.style.animationDelay = `${index * 0.1 + 0.2}s`;
+    label.style.animationDelay = `${i * 0.1 + 0.2}s`;
     container.appendChild(label);
-  });
+  }
 }
 
 // Обработка слайдера сезонов

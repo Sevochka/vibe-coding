@@ -314,7 +314,24 @@ h3 {
   border-bottom: 1px solid var(--sports-grey-400);
 }
 
-/* Ось Y - сезоны */
+/* Ось X - сезоны */
+.x-axis {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.x-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: var(--sports-grey-800);
+}
+
+/* Ось Y - голы */
 .y-axis {
   position: absolute;
   top: 0;
@@ -329,23 +346,6 @@ h3 {
   position: absolute;
   left: -40px;
   transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--sports-grey-800);
-}
-
-/* Ось X - голы */
-.x-axis {
-  position: absolute;
-  bottom: -20px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-}
-
-.x-label {
-  position: absolute;
-  transform: translateX(-50%);
   font-size: 12px;
   color: var(--sports-grey-800);
 }
@@ -418,12 +418,10 @@ h3 {
 
 .point-label.ovechkin {
   color: var(--ovechkin-color);
-  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .point-label.gretzky {
   color: var(--gretzky-color);
-  background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Анимации */
