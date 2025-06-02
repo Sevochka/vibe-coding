@@ -1,0 +1,386 @@
+{
+  "data": {
+    "statQueries": {
+      "football": {
+        "match": {
+          "id": "102679574",
+          "home": {
+            "team": {
+              "name": "ПСЖ",
+              "logotype": {
+                "url": "https://pictures.cdn.sports.ru/_FNyAnwbUYTKnOLg5ULLXCHjJwAthUC2WOAZYyhrkfo/fill/150/150/no/1/czM6Ly9zcG9ydHMtYmFja2VuZC1zdGF0LXBpY3R1cmVzLXh3enltd3NyL1RFQU0vbWFpbi9wYXJpc19zYWludF9nZXJtYWluXzE3NDgyNzI0MzIucG5n.png"
+              },
+              "lastFive": [
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "ПСЖ"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Реймс"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "ПСЖ"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Осер"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Монпелье"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "ПСЖ"
+                      }
+                    },
+                    "winner": "AWAY"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "ПСЖ"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Арсенал"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Страсбур"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "ПСЖ"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                }
+              ]
+            },
+            "lineup": [
+              {
+                "player": {
+                  "name": "Матвей Сафонов",
+                  "fieldPosition": "GOALKEEPER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Нуну Мендеш",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Вильян Пачо",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Маркиньос",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Ашраф Хакими",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Фабиан Руис",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Витинья",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Жоау Невеш",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Брэдли Барколя",
+                  "fieldPosition": "FORWARD"
+                }
+              },
+              {
+                "player": {
+                  "name": "Усман Дембеле",
+                  "fieldPosition": "FORWARD"
+                }
+              },
+              {
+                "player": {
+                  "name": "Дезире Дуэ",
+                  "fieldPosition": "FORWARD"
+                }
+              }
+            ]
+          },
+          "away": {
+            "team": {
+              "name": "Интер",
+              "logotype": {
+                "url": "https://pictures.cdn.sports.ru/g7cs8U2z1SlgICrOIEbyAsUYBAF2VcjX4yYj_N-w4ZY/fill/150/150/no/1/czM6Ly9zcG9ydHMtYmFja2VuZC1zdGF0LXBpY3R1cmVzLXh3enltd3NyL1RFQU0vbWFpbi9pbnRlcl9taWxhbl8xNzQ4MjcyNDUxLnBuZw.png"
+              },
+              "lastFive": [
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Комо"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Интер"
+                      }
+                    },
+                    "winner": "AWAY"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Интер"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Лацио"
+                      }
+                    },
+                    "winner": "DRAW"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Торино"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Интер"
+                      }
+                    },
+                    "winner": "AWAY"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Интер"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Барселона"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                },
+                {
+                  "match": {
+                    "home": {
+                      "team": {
+                        "name": "Интер"
+                      }
+                    },
+                    "away": {
+                      "team": {
+                        "name": "Верона"
+                      }
+                    },
+                    "winner": "HOME"
+                  }
+                }
+              ]
+            },
+            "lineup": [
+              {
+                "player": {
+                  "name": "Ян Зоммер",
+                  "fieldPosition": "GOALKEEPER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Карлос Аугусто",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Стефан де Врей",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Янн Биссек",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Никола Залевски",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Хоакин Корреа",
+                  "fieldPosition": "FORWARD"
+                }
+              },
+              {
+                "player": {
+                  "name": "Федерико Димарко",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Кристьян Аслани",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Хакан Чалханоглу",
+                  "fieldPosition": "MIDFIELDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Маттео Дармиан",
+                  "fieldPosition": "DEFENDER"
+                }
+              },
+              {
+                "player": {
+                  "name": "Мехди Тареми",
+                  "fieldPosition": "FORWARD"
+                }
+              }
+            ]
+          },
+          "bettingOdds": [
+            {
+              "line1x2": {
+                "h": 2.2,
+                "x": 3.45,
+                "a": 3.5,
+                "bonusURL": "https://fon.bet?deepLink=start_auth_process&promoAlias=fb15k&eventId=55260400&utm_source=sports.ru&utm_medium=cpc&utm_campaign=all_base&utm_content=odds&utm_term=button"
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.22,
+                "x": 3.43,
+                "a": 3.46,
+                "bonusURL": ""
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.2,
+                "x": 3.45,
+                "a": 3.5,
+                "bonusURL": "https://pari.ru/promo/top_match/?eventId=55260400&utm_source=default&utm_medium=cpc&utm_campaign=all_base&utm_content=odds"
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.25,
+                "x": 3.45,
+                "a": 3.5,
+                "bonusURL": ""
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.25,
+                "x": 3.5,
+                "a": 3.6,
+                "bonusURL": ""
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.252,
+                "x": 3.46,
+                "a": 3.48,
+                "bonusURL": ""
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.18,
+                "x": 3.3,
+                "a": 3.35,
+                "bonusURL": ""
+              }
+            },
+            {
+              "line1x2": {
+                "h": 2.2,
+                "x": 3.45,
+                "a": 3.5,
+                "bonusURL": ""
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "extensions": {
+    "traceID": "6f5e8006fdefc37865bdafde912a8458"
+  }
+}
