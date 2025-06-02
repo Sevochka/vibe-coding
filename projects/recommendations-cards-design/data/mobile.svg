@@ -1,0 +1,15 @@
+<svg width="400" height="240" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mobileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00a0f0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#006496;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#mobileGrad)"/>
+  <rect x="50" y="50" width="300" height="140" fill="rgba(255,255,255,0.1)" rx="12"/>
+  <text x="200" y="105" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">МОБИЛЬНЫЕ</text>
+  <text x="200" y="125" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">ИГРЫ</text>
+  <text x="200" y="150" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="rgba(255,255,255,0.8)">Турнир</text>
+  <rect x="75" y="75" width="8" height="12" fill="rgba(255,255,255,0.4)" rx="2"/>
+  <rect x="315" y="155" width="8" height="12" fill="rgba(255,255,255,0.4)" rx="2"/>
+</svg> 

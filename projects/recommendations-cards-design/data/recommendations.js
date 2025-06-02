@@ -2,7 +2,7 @@ const recommendationsData = [
     {
         id: "1",
         title: "Лучшие киберспортивные моменты 2024 года",
-        image: "https://cyber.sports.ru/dynamic_images/post/325/123/4/share/cybersport_moment.jpg",
+        image: "./data/cybersport.svg",
         rating: "+15",
         hasFlame: true,
         flameCount: 12,
@@ -11,7 +11,7 @@ const recommendationsData = [
     {
         id: "2",
         title: "Новый патч в Dota 2: что изменилось",
-        image: "https://cyber.sports.ru/dynamic_images/post/312/456/7/share/dota2_patch.jpg",
+        image: "./data/dota2.svg",
         rating: "+8",
         hasFlame: false,
         flameCount: 0,
@@ -20,7 +20,7 @@ const recommendationsData = [
     {
         id: "3",
         title: "Чемпионат мира по CS2: анализ финала",
-        image: "https://cyber.sports.ru/dynamic_images/post/298/789/1/share/cs2_championship.jpg",
+        image: "./data/cs2.svg",
         rating: "+22",
         hasFlame: true,
         flameCount: 18,
@@ -29,7 +29,7 @@ const recommendationsData = [
     {
         id: "4",
         title: "Гайд по League of Legends для новичков",
-        image: "https://cyber.sports.ru/dynamic_images/post/287/654/3/share/lol_guide.jpg",
+        image: "./data/lol.svg",
         rating: "+6",
         hasFlame: false,
         flameCount: 0,
@@ -38,7 +38,7 @@ const recommendationsData = [
     {
         id: "5",
         title: "Топ-10 игроков года в Valorant",
-        image: "https://cyber.sports.ru/dynamic_images/post/276/321/9/share/valorant_top.jpg",
+        image: "./data/valorant.svg",
         rating: "+11",
         hasFlame: true,
         flameCount: 7,
@@ -47,7 +47,7 @@ const recommendationsData = [
     {
         id: "6",
         title: "Обзор нового турнира по мобильным играм",
-        image: "https://cyber.sports.ru/dynamic_images/post/265/987/6/share/mobile_tournament.jpg",
+        image: "./data/mobile.svg",
         rating: "+4",
         hasFlame: false,
         flameCount: 0,
@@ -56,7 +56,7 @@ const recommendationsData = [
     {
         id: "7",
         title: "Интервью с командой чемпионов",
-        image: "https://cyber.sports.ru/dynamic_images/post/254/159/2/share/champions_interview.jpg",
+        image: "./data/interview.svg",
         rating: "+13",
         hasFlame: true,
         flameCount: 9,
@@ -65,7 +65,7 @@ const recommendationsData = [
     {
         id: "8",
         title: "Анализ трансферного окна в киберспорте",
-        image: "https://cyber.sports.ru/dynamic_images/post/243/753/8/share/transfers_analysis.jpg",
+        image: "./data/transfers.svg",
         rating: "+7",
         hasFlame: false,
         flameCount: 0,
@@ -74,7 +74,7 @@ const recommendationsData = [
     {
         id: "9",
         title: "Как стать профессиональным игроком",
-        image: "https://cyber.sports.ru/dynamic_images/post/232/486/4/share/pro_player_guide.jpg",
+        image: "./data/guides.svg",
         rating: "+19",
         hasFlame: true,
         flameCount: 14,
@@ -83,7 +83,7 @@ const recommendationsData = [
     {
         id: "10",
         title: "Статистика киберспорта за последний месяц",
-        image: "https://cyber.sports.ru/dynamic_images/post/221/852/7/share/esports_stats.jpg",
+        image: "./data/stats.svg",
         rating: "+5",
         hasFlame: false,
         flameCount: 0,
