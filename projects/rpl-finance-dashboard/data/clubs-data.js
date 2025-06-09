@@ -26,7 +26,7 @@ const clubsData = {
       "Расходы на молодежь": 335.5,
       "Агентские услуги": 7.8,
       "Статус": "Прибыльный",
-      "logo_url": "./images/sochi.png"
+      "logo_url": "./images/FC_Akron_Logo_2023.svg.png"
     },
     {
       "Клуб": "Ахмат",
@@ -362,7 +362,7 @@ const clubsData = {
       "Расходы на молодежь": 442.5,
       "Агентские услуги": 1165.3,
       "Статус": "Убыточный",
-      "logo_url": "./images/sparta;.png"
+      "logo_url": "./images/spartak.png"
     },
     {
       "Клуб": "Факел",
