@@ -26,7 +26,7 @@ const clubsData = {
       "Расходы на молодежь": 335.5,
       "Агентские услуги": 7.8,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/8/80/FC_Akron_Logo_2022.svg"
+      "logo_url": "./images/sochi.png"
     },
     {
       "Клуб": "Ахмат",
@@ -54,7 +54,7 @@ const clubsData = {
       "Расходы на молодежь": 66.8,
       "Агентские услуги": 7.8,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/FC_Akhmat_Grozny_logo.svg"
+      "logo_url": "./images/akhmat.png"
     },
     {
       "Клуб": "Динамо Махачкала",
@@ -82,7 +82,7 @@ const clubsData = {
       "Расходы на молодежь": 28.6,
       "Агентские услуги": 20.1,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/FC_Dynamo_Makhachkala_logo.svg"
+      "logo_url": "./images/dinamo.png"
     },
     {
       "Клуб": "Динамо Москва",
@@ -110,7 +110,7 @@ const clubsData = {
       "Расходы на молодежь": 1011.3,
       "Агентские услуги": 366.8,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/FC_Dynamo_Moscow_logo.svg"
+      "logo_url": "./images/dinamo.png"
     },
     {
       "Клуб": "Зенит",
@@ -138,7 +138,7 @@ const clubsData = {
       "Расходы на молодежь": 896.9,
       "Агентские услуги": 454.9,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/4/42/FC_Zenit_Saint_Petersburg_Logo.svg"
+      "logo_url": "./images/zenit.png"
     },
     {
       "Клуб": "Краснодар",
@@ -166,7 +166,7 @@ const clubsData = {
       "Расходы на молодежь": 1446.5,
       "Агентские услуги": 515.0,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/FC_Krasnodar_logo.svg"
+      "logo_url": "./images/krasnodar.png"
     },
     {
       "Клуб": "Крылья Советов",
@@ -194,7 +194,7 @@ const clubsData = {
       "Расходы на молодежь": 187.9,
       "Агентские услуги": 44.6,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/8/8e/PFC_Krylia_Sovetov_Samara_logo.svg"
+      "logo_url": "./images/krylia.png"
     },
     {
       "Клуб": "Локомотив",
@@ -222,7 +222,7 @@ const clubsData = {
       "Расходы на молодежь": 438.1,
       "Агентские услуги": 336.1,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/FC_Lokomotiv_Moscow_logo.svg"
+      "logo_url": "./images/lokomotiv.png"
     },
     {
       "Клуб": "Оренбург",
@@ -250,7 +250,7 @@ const clubsData = {
       "Расходы на молодежь": 79.9,
       "Агентские услуги": 53.3,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/FC_Orenburg_logo.svg"
+      "logo_url": "./images/sochi.png"
     },
     {
       "Клуб": "Пари НН",
@@ -278,7 +278,7 @@ const clubsData = {
       "Расходы на молодежь": 96.6,
       "Агентские услуги": 42.2,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/FC_Pari_Nizhny_Novgorod_logo.svg"
+      "logo_url": "./images/pari.png"
     },
     {
       "Клуб": "Ростов",
@@ -306,7 +306,7 @@ const clubsData = {
       "Расходы на молодежь": 162.0,
       "Агентские услуги": 159.3,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/4/43/FC_Rostov_logo.svg"
+      "logo_url": "./images/rostov.png"
     },
     {
       "Клуб": "Рубин",
@@ -334,7 +334,7 @@ const clubsData = {
       "Расходы на молодежь": 208.9,
       "Агентские услуги": 220.3,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/FC_Rubin_Kazan_logo.svg"
+      "logo_url": "./images/rubin.png"
     },
     {
       "Клуб": "Спартак",
@@ -362,7 +362,7 @@ const clubsData = {
       "Расходы на молодежь": 442.5,
       "Агентские услуги": 1165.3,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/9/96/FC_Spartak_Moscow_logo.svg"
+      "logo_url": "./images/sparta;.png"
     },
     {
       "Клуб": "Факел",
@@ -390,7 +390,7 @@ const clubsData = {
       "Расходы на молодежь": 96.3,
       "Агентские услуги": 0.0,
       "Статус": "Прибыльный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/a/a1/FC_Fakel_Voronezh_logo.svg"
+      "logo_url": "./images/sochi.png"
     },
     {
       "Клуб": "Химки",
@@ -418,7 +418,7 @@ const clubsData = {
       "Расходы на молодежь": 78.6,
       "Агентские услуги": 13.5,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/FC_Khimki_logo.svg"
+      "logo_url": "./images/khimki.png"
     },
     {
       "Клуб": "ЦСКА",
@@ -446,7 +446,7 @@ const clubsData = {
       "Расходы на молодежь": 470.5,
       "Агентские услуги": 535.1,
       "Статус": "Убыточный",
-      "logo_url": "https://upload.wikimedia.org/wikipedia/commons/5/57/PFC_CSKA_Moscow_logo.svg"
+      "logo_url": "./images/cska.png"
     }
   ],
   "summary": {
