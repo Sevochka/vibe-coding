@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спортивная лента Sports.ru</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" type="image/x-icon" href="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Шапка приложения -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="https://www.sports.ru/?utm_source=special-sports-news-feed" target="_blank">
+                        <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+                    </a>
+                    <div class="title-section">
+                        <h1>Спортивная лента</h1>
+                        <span class="subtitle">Последние новости Sports.ru</span>
+                    </div>
+                </div>
+                <div class="status-indicator">
+                    <span class="online-status"></span>
+                    <span>Онлайн</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Контент ленты -->
+        <div class="feed-container">
+            <div class="load-more-section">
+                <button class="load-more-btn" type="button">
+                    Загрузить ещё
+                </button>
+            </div>
+
+            <!-- Блок с новостями -->
+            <div class="news-feed" id="newsFeed">
+                <!-- Новости будут добавляться через JavaScript -->
+            </div>
+
+            <!-- Блок с подсказками -->
+            <div class="suggestions-section">
+                <div class="suggestions-container">
+                    <h3>Рекомендуем прочитать:</h3>
+                    <div class="suggestions-buttons" id="suggestionsContainer">
+                        <!-- Подсказки будут добавляться через JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Навигационные кнопки -->
+                <div class="navigation-buttons">
+                    <button type="button" class="nav-btn prev-btn" id="prevBtn">
+                        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.116 16.177l-5.469-5.47a.999.999 0 0 1 0-1.414l5.469-5.47a.5.5 0 0 1 .707 0l.354.354a.5.5 0 0 1 0 .707L4.811 9.25H17.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H4.811l4.366 4.366a.5.5 0 0 1 0 .707l-.354.354a.5.5 0 0 1-.707 0Z" fill="currentColor"></path>
+                        </svg>
+                    </button>
+                    <button type="button" class="nav-btn next-btn disabled" id="nextBtn">
+                        <svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.116 16.177l-5.469-5.47a.999.999 0 0 1 0-1.414l5.469-5.47a.5.5 0 0 1 .707 0l.354.354a.5.5 0 0 1 0 .707L4.811 9.25H17.5a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H4.811l4.366 4.366a.5.5 0 0 1 0 .707l-.354.354a.5.5 0 0 1-.707 0Z" fill="currentColor"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Скролл-индикатор -->
+            <div class="scroll-indicator">
+                <div class="scroll-thumb"></div>
+            </div>
+        </div>
+
+        <!-- Модальное окно с настройками интересов -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Настройки интересов</h3>
+                    <button class="close-btn" id="closeModal">
+                        <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Выберите виды спорта, которые вас интересуют:</p>
+                    <div class="interests-grid" id="interestsGrid">
+                        <!-- Интересы будут добавлены через JavaScript -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="save-btn" id="saveInterests">Сохранить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Кнопка настроек -->
+        <button class="settings-btn" id="settingsBtn">
+            <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Подключение данных и скриптов -->
+    <script src="./data/news.js"></script>
+    <script src="./data/suggestions.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
