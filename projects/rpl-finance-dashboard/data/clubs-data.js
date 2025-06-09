@@ -26,7 +26,7 @@ const clubsData = {
       "Расходы на молодежь": 335.5,
       "Агентские услуги": 7.8,
       "Статус": "Прибыльный",
-      "logo_url": "./images/FC_Akron_Logo_2023.svg.png"
+      "logo_url": "./images/akron.png"
     },
     {
       "Клуб": "Ахмат",
@@ -82,7 +82,7 @@ const clubsData = {
       "Расходы на молодежь": 28.6,
       "Агентские услуги": 20.1,
       "Статус": "Убыточный",
-      "logo_url": "./images/dinamo.png"
+      "logo_url": "./images/dinamo machakala.png"
     },
     {
       "Клуб": "Динамо Москва",
@@ -390,7 +390,7 @@ const clubsData = {
       "Расходы на молодежь": 96.3,
       "Агентские услуги": 0.0,
       "Статус": "Прибыльный",
-      "logo_url": "./images/sochi.png"
+      "logo_url": "./images/fakel.png"
     },
     {
       "Клуб": "Химки",
