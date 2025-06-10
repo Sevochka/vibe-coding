@@ -1,0 +1,390 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+    /* Sports branded colors */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-900: #222;
+    
+    /* Rave colors */
+    --neon-purple: #8a2be2;
+    --neon-green: #39ff14;
+    --neon-pink: #ff1493;
+    --electric-blue: #00bfff;
+    --cyber-yellow: #ffff00;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.banner-container {
+    width: 300px;
+    height: 600px;
+    position: relative;
+    background: linear-gradient(45deg, #1a0033, #2d1b69, #4b0082);
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    border: 2px solid var(--neon-green);
+    box-shadow: 0 0 20px var(--neon-green);
+}
+
+/* Фоновые волны */
+.wave-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 20px;
+    background: linear-gradient(90deg, transparent, var(--neon-purple), transparent);
+    animation: wave-move 3s linear infinite;
+}
+
+.wave1 {
+    top: 20%;
+    animation-delay: 0s;
+    opacity: 0.8;
+}
+
+.wave2 {
+    top: 50%;
+    animation-delay: -1s;
+    background: linear-gradient(90deg, transparent, var(--neon-pink), transparent);
+    opacity: 0.6;
+}
+
+.wave3 {
+    top: 80%;
+    animation-delay: -2s;
+    background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+    opacity: 0.4;
+}
+
+@keyframes wave-move {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(50%); }
+}
+
+/* Пиксельный дождь */
+.pixel-rain {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, var(--neon-green), transparent),
+        radial-gradient(2px 2px at 40px 70px, var(--neon-pink), transparent),
+        radial-gradient(1px 1px at 90px 40px, var(--neon-purple), transparent),
+        radial-gradient(1px 1px at 130px 80px, var(--electric-blue), transparent),
+        radial-gradient(2px 2px at 160px 30px, var(--cyber-yellow), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: pixel-fall 4s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes pixel-fall {
+    to { transform: translateY(100px); }
+}
+
+/* Диско-шар */
+.disco-ball {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #333, #111);
+    animation: disco-rotate 4s linear infinite;
+    box-shadow: 0 0 30px var(--neon-pink);
+}
+
+.ball-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.mirror-tile {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: linear-gradient(45deg, var(--neon-green), var(--neon-purple));
+    font-size: 8px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    animation: tile-flicker 2s ease-in-out infinite alternate;
+}
+
+.mirror-tile:nth-child(1) { top: 10px; left: 30px; }
+.mirror-tile:nth-child(2) { top: 20px; right: 15px; }
+.mirror-tile:nth-child(3) { bottom: 20px; left: 10px; }
+.mirror-tile:nth-child(4) { bottom: 10px; right: 25px; }
+.mirror-tile:nth-child(5) { top: 35px; left: 5px; }
+.mirror-tile:nth-child(6) { top: 45px; right: 5px; }
+.mirror-tile:nth-child(7) { bottom: 35px; left: 30px; }
+.mirror-tile:nth-child(8) { bottom: 45px; right: 10px; }
+
+@keyframes disco-rotate {
+    from { transform: translateX(-50%) rotate(0deg); }
+    to { transform: translateX(-50%) rotate(360deg); }
+}
+
+@keyframes tile-flicker {
+    0% { background: linear-gradient(45deg, var(--neon-green), var(--neon-purple)); }
+    50% { background: linear-gradient(45deg, var(--neon-pink), var(--electric-blue)); }
+    100% { background: linear-gradient(45deg, var(--cyber-yellow), var(--neon-purple)); }
+}
+
+/* Летающие деньги */
+.flying-money {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Основной контент */
+.banner-content {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+/* Логотип Sports.ru */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.sports-logo {
+    width: 80px;
+    height: auto;
+    filter: drop-shadow(0 0 10px var(--neon-green));
+    transition: filter 0.3s ease;
+}
+
+.sports-logo:hover {
+    filter: drop-shadow(0 0 20px var(--neon-green));
+}
+
+/* Бегущая строка */
+.neon-ticker {
+    background: var(--sports-grey-1050);
+    border: 1px solid var(--neon-green);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.ticker-content {
+    white-space: nowrap;
+    color: var(--neon-green);
+    font-weight: bold;
+    font-size: 12px;
+    animation: ticker-scroll 8s linear infinite;
+    text-shadow: 0 0 10px var(--neon-green);
+}
+
+@keyframes ticker-scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Главный слоган */
+.main-slogan {
+    font-family: 'Sports', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--neon-pink);
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 
+        0 0 10px var(--neon-pink),
+        0 0 20px var(--neon-pink),
+        0 0 30px var(--neon-pink);
+    animation: neon-flicker 2s ease-in-out infinite alternate;
+    line-height: 1.2;
+}
+
+.glitch {
+    position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.glitch::before {
+    animation: glitch-anim-1 2s infinite linear alternate-reverse;
+    color: var(--neon-green);
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-anim-2 1s infinite linear alternate-reverse;
+    color: var(--electric-blue);
+    z-index: -2;
+}
+
+@keyframes glitch-anim-1 {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { transform: translate(0); }
+    20% { transform: translate(2px, -2px); }
+    40% { transform: translate(2px, 2px); }
+    60% { transform: translate(-2px, -2px); }
+    80% { transform: translate(-2px, 2px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes neon-flicker {
+    0% { 
+        text-shadow: 
+            0 0 10px var(--neon-pink),
+            0 0 20px var(--neon-pink),
+            0 0 30px var(--neon-pink);
+    }
+    100% { 
+        text-shadow: 
+            0 0 5px var(--neon-pink),
+            0 0 15px var(--neon-pink),
+            0 0 25px var(--neon-pink),
+            0 0 35px var(--neon-pink);
+    }
+}
+
+/* Дополнительный текст */
+.sub-text {
+    font-size: 14px;
+    color: var(--neon-green);
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px var(--neon-green);
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* CTA кнопка */
+.rave-button {
+    background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
+    border: 2px solid var(--neon-green);
+    color: white;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-top: auto;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    font-family: 'Sports', sans-serif;
+}
+
+.rave-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, var(--neon-green), transparent);
+    transform: rotate(45deg);
+    animation: button-shine 3s linear infinite;
+}
+
+.button-text {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.rave-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px var(--neon-green);
+}
+
+@keyframes button-shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Глитч оверлей */
+.glitch-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(255, 255, 255, 0.03) 2px,
+            rgba(255, 255, 255, 0.03) 4px
+        );
+    pointer-events: none;
+    animation: scan-lines 0.1s linear infinite;
+}
+
+@keyframes scan-lines {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4px); }
+}
+
+/* Адаптивность */
+@media (max-width: 320px) {
+    .banner-container {
+        width: 280px;
+    }
+    
+    .main-slogan {
+        font-size: 20px;
+    }
+    
+    .banner-content {
+        padding: 15px;
+    }
+} 
