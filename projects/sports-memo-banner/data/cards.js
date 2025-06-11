@@ -1,33 +1,33 @@
-// Данные карточек для игры мемо
+// Данные карточек для игры мемо - спортивные символы
 const CARD_SYMBOLS = [
     {
-        id: 'haaland',
-        name: 'Эрлинг Холанд',
-        image: './images_memo/haaland.jpg',
+        id: 'football',
+        name: 'Футбол',
+        symbol: '⚽',
         color: '#00a8ff'
     },
     {
-        id: 'grealish',
-        name: 'Джек Грилиш', 
-        image: './images_memo/grealish.jpg',
+        id: 'basketball',
+        name: 'Баскетбол', 
+        symbol: '🏀',
         color: '#6c5ce7'
     },
     {
-        id: 'akanji',
-        name: 'Мануэль Аканджи',
-        image: './images_memo/akanji.jpg',
+        id: 'tennis',
+        name: 'Теннис',
+        symbol: '🎾',
         color: '#fd79a8'
     },
     {
-        id: 'alaba',
-        name: 'Давид Алаба',
-        image: './images_memo/alaba.jpg',
+        id: 'hockey',
+        name: 'Хоккей',
+        symbol: '🏒',
         color: '#00b894'
     },
     {
-        id: 'muller',
-        name: 'Томас Мюллер',
-        image: './images_memo/muller.jpg',
+        id: 'volleyball',
+        name: 'Волейбол',
+        symbol: '🏐',
         color: '#e17055'
     }
 ];
