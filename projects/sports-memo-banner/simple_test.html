@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Простой тест карточки</title>
+    <style>
+        body {
+            padding: 50px;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .test-card {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            margin: 20px;
+            display: inline-block;
+        }
+        
+        .test-card.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .card-back {
+            background: linear-gradient(135deg, #062B75 0%, #0a3d8a 100%);
+            color: white;
+        }
+        
+        .card-front {
+            background: linear-gradient(135deg, #00a8ff 0%, #0070cc 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .test-img {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+        
+        .controls {
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Простейший тест карточки</h2>
+    
+    <div class="test-card" id="testCard">
+        <div class="card-side card-back">
+            <div>
+                <div>🏈 SPORTS.RU</div>
+                <div style="font-size: 10px; margin-top: 5px;">Задняя сторона</div>
+            </div>
+        </div>
+        <div class="card-side card-front">
+            <img src="./images_memo/haaland.jpg" alt="Холанд" class="test-img" 
+                 onload="console.log('✅ Изображение загружено!')"
+                 onerror="console.error('❌ Ошибка загрузки!'); this.style.display='none'; this.parentElement.innerHTML='<div style=color:red>ОШИБКА<br>ЗАГРУЗКИ</div>'">
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="flipCard()">Перевернуть</button>
+        <button onclick="resetCard()">Сбросить</button>
+    </div>
+    
+    <div class="info">
+        <h3>Статус:</h3>
+        <p id="status">Не перевернута (должна показывать синий фон)</p>
+        <p>Классы: <span id="classes">memo-card</span></p>
+    </div>
+    
+    <script>
+        let isFlipped = false;
+        const card = document.getElementById('testCard');
+        
+        function updateStatus() {
+            const statusEl = document.getElementById('status');
+            const classesEl = document.getElementById('classes');
+            
+            if (isFlipped) {
+                statusEl.textContent = 'Перевернута (должна показывать фото Холанда)';
+            } else {
+                statusEl.textContent = 'Не перевернута (должна показывать синий фон)';
+            }
+            
+            classesEl.textContent = card.className;
+        }
+        
+        function flipCard() {
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                card.classList.add('flipped');
+            } else {
+                card.classList.remove('flipped');
+            }
+            updateStatus();
+            console.log('🔄 Карточка перевернута:', isFlipped);
+        }
+        
+        function resetCard() {
+            isFlipped = false;
+            card.classList.remove('flipped');
+            updateStatus();
+            console.log('🔄 Карточка сброшена');
+        }
+        
+        updateStatus();
+        
+        // Проверяем загрузку изображения
+        console.log('🎯 Тестируем путь к изображению: ./images_memo/haaland.jpg');
+    </script>
+</body>
+</html> 

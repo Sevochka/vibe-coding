@@ -204,7 +204,7 @@ body {
     overflow: hidden;
 }
 
-/* Задняя сторона карточки - единый дизайн */
+/* Задняя сторона карточки - показывается по умолчанию */
 .card-back {
     background: linear-gradient(135deg, #062B75 0%, #0a3d8a 100%);
     border: 2px solid #ffffff;
@@ -213,6 +213,8 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 8px;
+    /* НЕ поворачиваем - показывается по умолчанию */
+    z-index: 2;
 }
 
 .card-back::before {
@@ -301,12 +303,13 @@ body {
     opacity: 0.6;
 }
 
-/* Передняя сторона карточки - уникальный дизайн для каждой */
+/* Передняя сторона карточки - показывается при перевороте */
 .card-front {
     transform: rotateY(180deg);
     position: relative;
     border: 2px solid #ffffff;
     overflow: hidden;
+    z-index: 1;
 }
 
 .card-inner {
