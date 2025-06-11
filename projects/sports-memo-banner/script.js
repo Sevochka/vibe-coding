@@ -74,6 +74,8 @@ class MemoGame {
     }
     
     createCardElement(card) {
+        console.log('🃏 Создаём карточку:', card.symbol.name, 'ID:', card.id);
+        
         const cardDiv = document.createElement('div');
         cardDiv.className = 'memo-card';
         cardDiv.dataset.cardId = card.id;
@@ -84,41 +86,64 @@ class MemoGame {
             cardDiv.classList.add('flipped');
         }
         
-        // Задняя сторона карточки (синий фон с логотипом Sports.ru)
-        const cardBack = `
-            <div class="card-face card-back">
-                <div class="card-back-header">
-                    <div class="card-back-logo">S</div>
-                    <div class="card-back-year">2024</div>
-                </div>
-                <div class="card-back-footer">
-                    <div class="card-back-brand">sports.ru</div>
-                    <div class="card-back-pattern">///////////</div>
-                </div>
+        // Задняя сторона карточки (СИНИЙ ФОН)
+        const cardBack = document.createElement('div');
+        cardBack.className = 'card-face card-back';
+        cardBack.innerHTML = `
+            <div class="card-back-header">
+                <div class="card-back-logo">S</div>
+                <div class="card-back-year">2024</div>
+            </div>
+            <div class="card-back-footer">
+                <div class="card-back-brand">sports.ru</div>
+                <div class="card-back-pattern">///////////</div>
             </div>
         `;
         
-        // Передняя сторона карточки с ФОТОГРАФИЕЙ ИГРОКА
-        const cardFront = `
-            <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%);">
-                <div class="card-inner">
-                    <div class="card-corner top-left"></div>
-                    <div class="card-content">
-                        <img src="${card.symbol.image}" 
-                             alt="${card.symbol.name}" 
-                             class="card-player-photo"
-                             loading="eager"
-                             onload="console.log('Изображение загружено:', '${card.symbol.name}')"
-                             onerror="console.error('Ошибка загрузки изображения:', '${card.symbol.image}'); this.style.display='none';" />
-                    </div>
-                    <div class="card-player-name">${card.symbol.name}</div>
-                    <div class="card-corner bottom-right"></div>
-                </div>
+        // Передняя сторона карточки (ФОТОГРАФИЯ ИГРОКА)
+        const cardFront = document.createElement('div');
+        cardFront.className = 'card-face card-front';
+        cardFront.style.background = `linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%)`;
+        
+        cardFront.innerHTML = `
+            <div class="card-inner">
+                <div class="card-corner top-left"></div>
+                <div class="card-content"></div>
+                <div class="card-player-name">${card.symbol.name}</div>
+                <div class="card-corner bottom-right"></div>
             </div>
         `;
         
-        cardDiv.innerHTML = cardBack + cardFront;
+        // Создаем изображение
+        const playerImg = document.createElement('img');
+        playerImg.src = card.symbol.image;
+        playerImg.alt = card.symbol.name;
+        playerImg.className = 'card-player-photo';
+        playerImg.loading = 'eager';
+        
+        playerImg.onload = () => {
+            console.log('✅ Изображение загружено:', card.symbol.name, playerImg.src);
+        };
+        
+        playerImg.onerror = () => {
+            console.error('❌ ОШИБКА загрузки изображения:', card.symbol.name, playerImg.src);
+        };
+        
+        // Добавляем изображение в контент
+        const cardContent = cardFront.querySelector('.card-content');
+        cardContent.appendChild(playerImg);
+        
+        // Добавляем обе стороны к карточке
+        cardDiv.appendChild(cardBack);
+        cardDiv.appendChild(cardFront);
+        
         cardDiv.addEventListener('click', () => this.handleCardClick(card.id));
+        
+        console.log('🎯 Карточка создана с элементами:', {
+            hasBack: !!cardDiv.querySelector('.card-back'),
+            hasFront: !!cardDiv.querySelector('.card-front'),
+            hasImage: !!cardDiv.querySelector('.card-player-photo')
+        });
         
         return cardDiv;
     }
@@ -391,4 +416,4 @@ class MemoGame {
 // Инициализация игры при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     new MemoGame();
-}); 
+});

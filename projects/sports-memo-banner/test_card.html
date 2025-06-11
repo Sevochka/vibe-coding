@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест карточки</title>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        body {
+            padding: 50px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .test-card {
+            width: 120px;
+            height: 156px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Тест одной карточки</h2>
+    
+    <div class="test-container">
+        <div class="memo-card test-card" id="testCard">
+            <!-- Задняя сторона -->
+            <div class="card-face card-back">
+                <div class="card-back-header">
+                    <div class="card-back-logo">S</div>
+                    <div class="card-back-year">2024</div>
+                </div>
+                <div class="card-back-footer">
+                    <div class="card-back-brand">sports.ru</div>
+                    <div class="card-back-pattern">///////////</div>
+                </div>
+            </div>
+            
+            <!-- Передняя сторона -->
+            <div class="card-face card-front" style="background: linear-gradient(135deg, #00a8ff 0%, #0070cc 100%);">
+                <div class="card-inner">
+                    <div class="card-corner top-left"></div>
+                    <div class="card-content">
+                        <img src="./images_memo/haaland.jpg" 
+                             alt="Эрлинг Холанд" 
+                             class="card-player-photo"
+                             onload="console.log('✅ Изображение Холанда загружено')"
+                             onerror="console.error('❌ Ошибка загрузки изображения Холанда')">
+                    </div>
+                    <div class="card-player-name">Эрлинг Холанд</div>
+                    <div class="card-corner bottom-right"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="flipCard()" style="padding: 10px 20px; font-size: 16px;">
+                Перевернуть карточку
+            </button>
+            <button onclick="resetCard()" style="padding: 10px 20px; font-size: 16px;">
+                Сбросить
+            </button>
+        </div>
+    </div>
+    
+    <div class="info">
+        <h3>Информация:</h3>
+        <p id="cardState">Состояние: Не перевернута</p>
+        <p>Должна показываться: <span id="expectedSide">Задняя сторона (синий фон)</span></p>
+        <p>Классы карточки: <span id="cardClasses"></span></p>
+    </div>
+    
+    <script>
+        let isFlipped = false;
+        const card = document.getElementById('testCard');
+        
+        function updateInfo() {
+            document.getElementById('cardState').textContent = 
+                `Состояние: ${isFlipped ? 'Перевернута' : 'Не перевернута'}`;
+            document.getElementById('expectedSide').textContent = 
+                isFlipped ? 'Передняя сторона (фото Холанда)' : 'Задняя сторона (синий фон)';
+            document.getElementById('cardClasses').textContent = card.className;
+        }
+        
+        function flipCard() {
+            isFlipped = !isFlipped;
+            if (isFlipped) {
+                card.classList.add('flipped');
+            } else {
+                card.classList.remove('flipped');
+            }
+            updateInfo();
+            console.log('🔄 Карточка перевернута:', isFlipped);
+        }
+        
+        function resetCard() {
+            isFlipped = false;
+            card.classList.remove('flipped');
+            updateInfo();
+            console.log('🔄 Карточка сброшена');
+        }
+        
+        updateInfo();
+    </script>
+</body>
+</html> 
