@@ -38,7 +38,11 @@ class MemoGame {
     }
     
     initializeGame() {
+        console.log('🎮 Инициализация игры...');
         this.cards = createGameCards();
+        console.log('📦 Создано карточек:', this.cards.length);
+        console.log('🃏 Данные карточек:', this.cards.map(c => ({ id: c.id, symbol: c.symbol.name, image: c.symbol.image })));
+        
         this.flippedCards = [];
         this.moves = 0;
         this.foundPairs = 0;
@@ -80,7 +84,7 @@ class MemoGame {
             cardDiv.classList.add('flipped');
         }
         
-        // Задняя сторона карточки
+        // Задняя сторона карточки (синий фон с логотипом Sports.ru)
         const cardBack = `
             <div class="card-face card-back">
                 <div class="card-back-header">
@@ -94,14 +98,18 @@ class MemoGame {
             </div>
         `;
         
-        // Передняя сторона карточки с изображением игрока
+        // Передняя сторона карточки с ФОТОГРАФИЕЙ ИГРОКА
         const cardFront = `
             <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%);">
                 <div class="card-inner">
                     <div class="card-corner top-left"></div>
                     <div class="card-content">
-                        <img src="${card.symbol.image}" alt="${card.symbol.name}" class="card-player-photo" 
-                             onerror="this.style.display='none'" />
+                        <img src="${card.symbol.image}" 
+                             alt="${card.symbol.name}" 
+                             class="card-player-photo"
+                             loading="eager"
+                             onload="console.log('Изображение загружено:', '${card.symbol.name}')"
+                             onerror="console.error('Ошибка загрузки изображения:', '${card.symbol.image}'); this.style.display='none';" />
                     </div>
                     <div class="card-player-name">${card.symbol.name}</div>
                     <div class="card-corner bottom-right"></div>
@@ -158,13 +166,17 @@ class MemoGame {
         const card = this.cards.find(c => c.id === cardId);
         const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
         
+        console.log('🔄 Переворачиваем карточку:', { cardId, playerName: card.symbol.name, imagePath: card.symbol.image });
+        
         card.isFlipped = true;
         this.flippedCards.push(cardId);
         
         cardElement.classList.add('flipped', 'flipping');
+        console.log('✅ Добавлены классы: flipped, flipping к карточке', cardId);
         
         setTimeout(() => {
             cardElement.classList.remove('flipping');
+            console.log('🎯 Анимация завершена для карточки', cardId);
         }, 800);
     }
     

@@ -3,31 +3,31 @@ const CARD_SYMBOLS = [
     {
         id: 'haaland',
         name: 'Эрлинг Холанд',
-        image: './images_memo/Эрлинг Холанд.jpg',
+        image: './images_memo/haaland.jpg',
         color: '#00a8ff'
     },
     {
         id: 'grealish',
         name: 'Джек Грилиш', 
-        image: './images_memo/Джек Грилиш.jpg',
+        image: './images_memo/grealish.jpg',
         color: '#6c5ce7'
     },
     {
         id: 'akanji',
         name: 'Мануэль Аканджи',
-        image: './images_memo/Мануэль Аканджи.jpg',
+        image: './images_memo/akanji.jpg',
         color: '#fd79a8'
     },
     {
         id: 'alaba',
         name: 'Давид Алаба',
-        image: './images_memo/Давид Алаба.jpg',
+        image: './images_memo/alaba.jpg',
         color: '#00b894'
     },
     {
         id: 'muller',
         name: 'Томас Мюллер',
-        image: './images_memo/Томас Мюллер.jpg',
+        image: './images_memo/muller.jpg',
         color: '#e17055'
     }
 ];
