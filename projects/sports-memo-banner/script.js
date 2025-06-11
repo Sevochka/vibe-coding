@@ -4,7 +4,7 @@ class MemoGame {
         this.flippedCards = [];
         this.moves = 0;
         this.foundPairs = 0;
-        this.totalPairs = 8;
+        this.totalPairs = 5;
         this.gameStarted = false;
         this.gameTimer = null;
         this.startTime = null;
@@ -94,15 +94,16 @@ class MemoGame {
             </div>
         `;
         
-        // Передняя сторона карточки с уникальным дизайном
+        // Передняя сторона карточки с изображением игрока
         const cardFront = `
             <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%);">
                 <div class="card-inner">
                     <div class="card-corner top-left"></div>
                     <div class="card-content">
-                        <img src="${card.symbol.image}" alt="${card.symbol.name}" class="card-sport-icon" />
+                        <img src="${card.symbol.image}" alt="${card.symbol.name}" class="card-player-photo" 
+                             onerror="this.style.display='none'" />
                     </div>
-                    <div class="card-sport-name">${card.symbol.name}</div>
+                    <div class="card-player-name">${card.symbol.name}</div>
                     <div class="card-corner bottom-right"></div>
                 </div>
             </div>
