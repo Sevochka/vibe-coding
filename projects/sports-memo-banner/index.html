@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спортивное Мемо - Sports.ru</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="memo-banner">
+        <div class="banner-header">
+            <a href="https://www.sports.ru/?utm_source=special-sports-memo-banner" class="logo">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo-img">
+            </a>
+            <h1 class="game-title">Спортивное Мемо</h1>
+        </div>
+
+        <div class="game-container">
+            <div class="game-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Ходы:</span>
+                    <span class="stat-value" id="moves">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Пары:</span>
+                    <span class="stat-value"><span id="found-pairs">0</span>/8</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Время:</span>
+                    <span class="stat-value" id="timer">00:00</span>
+                </div>
+            </div>
+
+            <div class="memo-grid" id="memo-grid">
+                <!-- Карточки будут созданы через JavaScript -->
+            </div>
+
+            <div class="game-controls">
+                <button class="btn btn-primary" id="new-game-btn">Новая игра</button>
+                <button class="btn btn-secondary" id="hint-btn">Подсказка</button>
+            </div>
+        </div>
+
+        <div class="game-overlay hidden" id="win-overlay">
+            <div class="overlay-content">
+                <h2>Поздравляем!</h2>
+                <p>Вы нашли все пары за <span id="final-moves">0</span> ходов</p>
+                <p>Время: <span id="final-time">00:00</span></p>
+                <button class="btn btn-primary" id="play-again-btn">Играть снова</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./data/cards.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
