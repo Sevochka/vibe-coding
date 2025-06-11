@@ -123,14 +123,23 @@ class Physics {
         return false;
     }
 
-    // Применение трения
+    // Применение трения (только для бит, шайба практически не теряет скорость)
     applyFriction(object) {
         const friction = object.friction || 0.99;
         object.vx *= friction;
         object.vy *= friction;
 
-        // Остановка объекта если скорость очень мала
-        const minSpeed = GAME_CONFIG.PUCK.MIN_SPEED;
+        // Для шайбы используем очень маленькую минимальную скорость
+        // Для бит - обычную остановку
+        let minSpeed;
+        if (object.radius === GAME_CONFIG.PUCK.RADIUS) {
+            // Это шайба - практически не останавливается
+            minSpeed = GAME_CONFIG.PUCK.MIN_SPEED;
+        } else {
+            // Это бита - останавливается как обычно
+            minSpeed = 0.1;
+        }
+
         if (Math.abs(object.vx) < minSpeed && Math.abs(object.vy) < minSpeed) {
             object.vx = 0;
             object.vy = 0;
@@ -187,11 +196,11 @@ class Physics {
 
         // Сила удара зависит от скорости биты
         const paddleSpeed = Math.sqrt(paddle.vx * paddle.vx + paddle.vy * paddle.vy);
-        const hitForce = Math.min(paddleSpeed * 0.3 + 2, GAME_CONFIG.PUCK.MAX_SPEED);
+        const hitForce = Math.min(paddleSpeed * 0.4 + 3, GAME_CONFIG.PUCK.MAX_SPEED); // Увеличиваем силу удара
 
-        // Передача импульса шайбе
-        puck.vx = nx * hitForce + paddle.vx * 0.3;
-        puck.vy = ny * hitForce + paddle.vy * 0.3;
+        // Передача импульса шайбе с сохранением энергии
+        puck.vx = nx * hitForce + paddle.vx * 0.4; // Больше передаем энергию от биты
+        puck.vy = ny * hitForce + paddle.vy * 0.4;
 
         // Ограничение максимальной скорости шайбы
         const speed = Math.sqrt(puck.vx * puck.vx + puck.vy * puck.vy);

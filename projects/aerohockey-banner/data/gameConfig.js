@@ -34,12 +34,12 @@ const GAME_CONFIG = {
     PUCK: {
         RADIUS: 10,
         MASS: 1,
-        FRICTION: 0.98,
+        FRICTION: 0.999,
         BOUNCE_FACTOR: 0.8,
         START_X: 140,
         START_Y: 200,
         MAX_SPEED: 12,
-        MIN_SPEED: 0.1
+        MIN_SPEED: 0.001
     },
     
     // Настройки ворот
@@ -55,7 +55,7 @@ const GAME_CONFIG = {
         GRAVITY: 0,
         TIME_STEP: 1/60,
         COLLISION_DAMPING: 0.7,
-        WALL_BOUNCE: 0.8
+        WALL_BOUNCE: 0.9
     },
     
     // Игровые правила
