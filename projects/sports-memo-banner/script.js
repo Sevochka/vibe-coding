@@ -45,6 +45,11 @@ class MemoGame {
         this.gameStarted = false;
         this.hintUsed = false;
         
+        // Сброс кнопки подсказки
+        this.hintBtn.textContent = 'Подсказка';
+        this.hintBtn.disabled = false;
+        this.hintBtn.style.opacity = '1';
+        
         if (this.gameTimer) {
             clearInterval(this.gameTimer);
             this.gameTimer = null;
@@ -75,14 +80,50 @@ class MemoGame {
             cardDiv.classList.add('flipped');
         }
         
-        cardDiv.innerHTML = `
-            <div class="card-face card-back"></div>
-            <div class="card-face card-front">${card.symbol}</div>
+        // Задняя сторона карточки
+        const cardBack = `
+            <div class="card-face card-back">
+                <div class="card-back-header">
+                    <div class="card-back-logo">S</div>
+                    <div class="card-back-year">2024</div>
+                </div>
+                <div class="card-back-footer">
+                    <div class="card-back-brand">sports.ru</div>
+                    <div class="card-back-pattern">///////////</div>
+                </div>
+            </div>
         `;
         
+        // Передняя сторона карточки с уникальным дизайном
+        const cardFront = `
+            <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%);">
+                <div class="card-inner">
+                    <div class="card-corner top-left"></div>
+                    <div class="card-content">
+                        <img src="${card.symbol.image}" alt="${card.symbol.name}" class="card-sport-icon" />
+                    </div>
+                    <div class="card-sport-name">${card.symbol.name}</div>
+                    <div class="card-corner bottom-right"></div>
+                </div>
+            </div>
+        `;
+        
+        cardDiv.innerHTML = cardBack + cardFront;
         cardDiv.addEventListener('click', () => this.handleCardClick(card.id));
         
         return cardDiv;
+    }
+    
+    // Утилита для затемнения цвета
+    darkenColor(color, percent) {
+        const num = parseInt(color.replace("#",""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) - amt;
+        const G = (num >> 8 & 0x00FF) - amt;
+        const B = (num & 0x0000FF) - amt;
+        return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
     }
     
     handleCardClick(cardId) {
@@ -108,7 +149,7 @@ class MemoGame {
             
             setTimeout(() => {
                 this.checkForMatch();
-            }, 1000);
+            }, 1200); // Увеличено время для просмотра карточек
         }
     }
     
@@ -123,7 +164,7 @@ class MemoGame {
         
         setTimeout(() => {
             cardElement.classList.remove('flipping');
-        }, 600);
+        }, 800);
     }
     
     checkForMatch() {
@@ -131,7 +172,7 @@ class MemoGame {
         const firstCard = this.cards.find(c => c.id === firstCardId);
         const secondCard = this.cards.find(c => c.id === secondCardId);
         
-        if (firstCard.symbol === secondCard.symbol) {
+        if (firstCard.symbol.id === secondCard.symbol.id) {
             // Совпадение найдено
             this.markAsMatched(firstCardId, secondCardId);
             this.foundPairs++;
@@ -159,6 +200,9 @@ class MemoGame {
         
         cardElement1.classList.add('matched');
         cardElement2.classList.add('matched');
+        
+        // Звуковой эффект успеха (если поддерживается)
+        this.playSuccessSound();
     }
     
     unflipCards(cardId1, cardId2) {
@@ -170,8 +214,37 @@ class MemoGame {
         card1.isFlipped = false;
         card2.isFlipped = false;
         
-        cardElement1.classList.remove('flipped');
-        cardElement2.classList.remove('flipped');
+        // Добавляем анимацию переворота обратно
+        cardElement1.classList.add('flipping');
+        cardElement2.classList.add('flipping');
+        
+        setTimeout(() => {
+            cardElement1.classList.remove('flipped', 'flipping');
+            cardElement2.classList.remove('flipped', 'flipping');
+        }, 400);
+    }
+    
+    playSuccessSound() {
+        // Создаем короткий звуковой сигнал через Web Audio API
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.2);
+        } catch (e) {
+            // Звук не поддерживается, игнорируем
+        }
     }
     
     startGame() {
@@ -190,7 +263,7 @@ class MemoGame {
         
         setTimeout(() => {
             this.showWinOverlay();
-        }, 500);
+        }, 800);
     }
     
     showHint() {
@@ -202,9 +275,9 @@ class MemoGame {
         const unmatchedCards = this.cards.filter(card => !card.isMatched && !card.isFlipped);
         
         if (unmatchedCards.length >= 2) {
-            const firstSymbol = unmatchedCards[0].symbol;
+            const firstSymbol = unmatchedCards[0].symbol.id;
             const matchingCard = unmatchedCards.find(card => 
-                card.symbol === firstSymbol && card.id !== unmatchedCards[0].id
+                card.symbol.id === firstSymbol && card.id !== unmatchedCards[0].id
             );
             
             if (matchingCard) {
@@ -212,12 +285,12 @@ class MemoGame {
                 const cardElement2 = document.querySelector(`[data-card-id="${matchingCard.id}"]`);
                 
                 // Подсвечиваем карточки
-                cardElement1.style.boxShadow = '0 0 20px var(--sports-yellow-A700)';
-                cardElement2.style.boxShadow = '0 0 20px var(--sports-yellow-A700)';
+                cardElement1.classList.add('hint');
+                cardElement2.classList.add('hint');
                 
                 setTimeout(() => {
-                    cardElement1.style.boxShadow = '';
-                    cardElement2.style.boxShadow = '';
+                    cardElement1.classList.remove('hint');
+                    cardElement2.classList.remove('hint');
                 }, 2000);
                 
                 this.hintUsed = true;
@@ -248,6 +321,53 @@ class MemoGame {
         this.finalMovesElement.textContent = this.moves;
         this.finalTimeElement.textContent = this.timerElement.textContent;
         this.winOverlay.classList.remove('hidden');
+        
+        // Добавляем конфетти эффект
+        this.createConfetti();
+    }
+    
+    createConfetti() {
+        // Простой эффект конфетти
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.width = '6px';
+                confetti.style.height = '6px';
+                confetti.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                confetti.style.borderRadius = '50%';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `fall ${Math.random() * 2 + 2}s linear forwards`;
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }, i * 50);
+        }
+        
+        // Добавляем CSS анимацию для падения
+        if (!document.getElementById('confetti-style')) {
+            const style = document.createElement('style');
+            style.id = 'confetti-style';
+            style.textContent = `
+                @keyframes fall {
+                    0% {
+                        transform: translateY(-10px) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(100vh) rotate(720deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
     }
     
     hideWinOverlay() {
