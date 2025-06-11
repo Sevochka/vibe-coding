@@ -86,7 +86,7 @@ class MemoGame {
             cardDiv.classList.add('flipped');
         }
         
-        // Используем простую структуру как в simple_test.html
+        // Создаём структуру карточки с изображением на лицевой стороне
         cardDiv.innerHTML = `
             <div class="card-face card-back">
                 <div class="card-back-header">
@@ -98,12 +98,14 @@ class MemoGame {
                     <div class="card-back-pattern">///////////</div>
                 </div>
             </div>
-            <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%); display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                <div class="sport-symbol" style="font-size: 48px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-                    ${card.symbol.symbol}
-                </div>
-                <div class="sport-name" style="color: white; font-weight: bold; font-size: 12px; margin-top: 10px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">
-                    ${card.symbol.name}
+            <div class="card-face card-front" style="background: linear-gradient(135deg, ${card.symbol.color} 0%, ${this.darkenColor(card.symbol.color, 20)} 100%);">
+                <div class="card-inner">
+                    <div class="card-content">
+                        <div class="card-player-photo">
+                            <img src="${card.symbol.image}" alt="${card.symbol.name}">
+                        </div>
+                        <div class="card-player-name">${card.symbol.name}</div>
+                    </div>
                 </div>
             </div>
         `;
