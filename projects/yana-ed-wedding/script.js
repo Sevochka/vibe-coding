@@ -18,9 +18,13 @@ function updateCountdown() {
         document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
         document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
         
-        // Добавляем эффект мерцания для секунд
+        // Мягкое мерцание для секунд
         const secondsElement = document.getElementById('seconds');
-        secondsElement.style.textShadow = `0 0 ${10 + Math.random() * 10}px var(--vhs-cyan)`;
+        if (seconds % 2 === 0) {
+            secondsElement.style.opacity = '0.8';
+        } else {
+            secondsElement.style.opacity = '1';
+        }
     } else {
         // Если дата наступила
         document.getElementById('days').textContent = '000';
@@ -30,8 +34,8 @@ function updateCountdown() {
         
         // Показываем сообщение о том, что свадьба началась
         const countdownSection = document.querySelector('.countdown-section .section-title');
-        countdownSection.textContent = 'СВАДЬБА НАЧАЛАСЬ!';
-        countdownSection.style.animation = 'glitch 1s infinite';
+        countdownSection.textContent = 'Свадьба началась!';
+        countdownSection.style.color = 'var(--vintage-orange)';
     }
 }
 
@@ -73,131 +77,110 @@ function showSuccessMessage() {
     const button = document.querySelector('.submit-btn');
     const originalText = button.textContent;
     
-    button.textContent = 'ОТПРАВЛЕНО!';
-    button.style.background = 'linear-gradient(135deg, var(--vhs-cyan), var(--vhs-blue))';
-    button.style.transform = 'scale(1.05)';
+    button.textContent = 'Спасибо! Получили ваш ответ ♥';
+    button.style.background = 'linear-gradient(135deg, var(--vintage-blue), var(--vintage-orange))';
+    button.style.transform = 'scale(1.02)';
     
     setTimeout(() => {
         button.textContent = originalText;
-        button.style.background = 'linear-gradient(135deg, var(--vhs-pink), var(--vhs-purple))';
+        button.style.background = 'linear-gradient(135deg, var(--vintage-brown), var(--vintage-orange))';
         button.style.transform = 'scale(1)';
-    }, 3000);
+    }, 4000);
 }
 
-// Добавляем эффект мерцания для заголовков
-function addGlitchEffect() {
+// Добавляем мягкие эффекты наведения для заголовков
+function addHoverEffects() {
     const sectionTitles = document.querySelectorAll('.section-title');
     
     sectionTitles.forEach(title => {
-        const originalText = title.textContent;
-        
         title.addEventListener('mouseenter', () => {
-            title.style.animation = 'glitch 0.5s infinite';
+            title.style.color = 'var(--vintage-orange)';
+            title.style.transition = 'color 0.3s ease';
         });
         
         title.addEventListener('mouseleave', () => {
-            title.style.animation = 'none';
+            title.style.color = 'var(--vintage-brown)';
         });
     });
 }
 
-// Добавляем эффект печатной машинки для timeline
-function typewriterEffect() {
-    const timelineItems = document.querySelectorAll('.timeline-content p');
+// Добавляем эффект плавного появления для timeline
+function fadeInTimeline() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
     
-    timelineItems.forEach((item, index) => {
-        const text = item.textContent;
-        item.textContent = '';
-        
-        setTimeout(() => {
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) {
-                    item.textContent += text.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(timer);
-                }
-            }, 30);
-        }, index * 1000);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 200);
+            }
+        });
+    });
+    
+    timelineItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(item);
     });
 }
 
-// Добавляем эффект параллакса для VHS overlay
-function parallaxEffect() {
-    const vhsOverlay = document.querySelector('.vhs-overlay');
+// Добавляем мягкие эффекты для цветовых образцов
+function animateColorSwatches() {
+    const colorItems = document.querySelectorAll('.color-item');
+    
+    colorItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-8px) scale(1.05)';
+            item.style.boxShadow = '0 8px 25px rgba(139, 111, 71, 0.4)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0) scale(1)';
+            item.style.boxShadow = '0 5px 15px rgba(139, 111, 71, 0.2)';
+        });
+    });
+}
+
+// Добавляем мягкий эффект для фотографий
+function animatePhotos() {
+    const photoFrames = document.querySelectorAll('.photo-frame');
+    
+    photoFrames.forEach(frame => {
+        frame.addEventListener('mouseenter', () => {
+            frame.style.transform = 'rotate(0deg) scale(1.08)';
+            frame.style.boxShadow = '0 12px 35px rgba(139, 111, 71, 0.4)';
+        });
+        
+        frame.addEventListener('mouseleave', () => {
+            if (frame.classList.contains('left')) {
+                frame.style.transform = 'rotate(-2deg) scale(1)';
+            } else {
+                frame.style.transform = 'rotate(1.5deg) scale(1)';
+            }
+            frame.style.boxShadow = '0 8px 25px rgba(139, 111, 71, 0.3)';
+        });
+    });
+}
+
+// Добавляем эффект мягкого параллакса
+function addParallax() {
+    const heroSection = document.querySelector('.hero-section');
     
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-        vhsOverlay.style.transform = `translateY(${rate}px)`;
-    });
-}
-
-// Добавляем эффект мерцания для цветовых образцов
-function animateColorSwatches() {
-    const colorSwatches = document.querySelectorAll('.color-swatch');
-    
-    colorSwatches.forEach(swatch => {
-        swatch.addEventListener('mouseenter', () => {
-            swatch.style.animation = 'float 2s ease-in-out infinite';
-            swatch.style.boxShadow = '0 0 30px rgba(255, 255, 255, 0.3)';
-        });
+        const rate = scrolled * -0.3;
         
-        swatch.addEventListener('mouseleave', () => {
-            swatch.style.animation = 'none';
-            swatch.style.boxShadow = '0 0 20px rgba(0, 0, 0, 0.5)';
-        });
+        if (heroSection) {
+            heroSection.style.transform = `translateY(${rate}px)`;
+        }
     });
 }
 
-// Добавляем эффект звука для кнопок (визуальная имитация)
-function addSoundEffect() {
-    const buttons = document.querySelectorAll('button, .radio-label, .checkbox-label');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Создаем визуальный эффект "звука"
-            const soundWave = document.createElement('div');
-            soundWave.style.position = 'fixed';
-            soundWave.style.top = '50%';
-            soundWave.style.left = '50%';
-            soundWave.style.width = '10px';
-            soundWave.style.height = '10px';
-            soundWave.style.background = 'var(--vhs-cyan)';
-            soundWave.style.borderRadius = '50%';
-            soundWave.style.transform = 'translate(-50%, -50%)';
-            soundWave.style.pointerEvents = 'none';
-            soundWave.style.zIndex = '9999';
-            soundWave.style.opacity = '0.8';
-            
-            document.body.appendChild(soundWave);
-            
-            // Анимация расширения
-            soundWave.animate([
-                { transform: 'translate(-50%, -50%) scale(1)', opacity: 0.8 },
-                { transform: 'translate(-50%, -50%) scale(20)', opacity: 0 }
-            ], {
-                duration: 300,
-                easing: 'ease-out'
-            }).onfinish = () => {
-                document.body.removeChild(soundWave);
-            };
-        });
-    });
-}
-
-// Инициализация всех эффектов после загрузки страницы
-document.addEventListener('DOMContentLoaded', () => {
-    addGlitchEffect();
-    animateColorSwatches();
-    addSoundEffect();
-    parallaxEffect();
-    
-    // Запускаем эффект печатной машинки с задержкой
-    setTimeout(typewriterEffect, 2000);
-    
-    // Добавляем обработчик для плавной прокрутки
+// Плавная прокрутка
+function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -210,34 +193,46 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+}
+
+// Инициализация всех эффектов после загрузки страницы
+document.addEventListener('DOMContentLoaded', () => {
+    addHoverEffects();
+    animateColorSwatches();
+    animatePhotos();
+    addParallax();
+    initSmoothScroll();
+    
+    // Запускаем эффект появления timeline с задержкой
+    setTimeout(fadeInTimeline, 1000);
 });
 
-// Добавляем эффект мерцания для VHS лейблов
+// Добавляем мягкое мерцание для VHS лейблов
 setInterval(() => {
     const vhsLabels = document.querySelectorAll('.vhs-label');
     vhsLabels.forEach(label => {
-        if (Math.random() > 0.7) {
-            label.style.opacity = '0.3';
+        if (Math.random() > 0.8) {
+            label.style.opacity = '0.7';
             setTimeout(() => {
                 label.style.opacity = '1';
-            }, 100);
+            }, 200);
         }
     });
-}, 2000);
+}, 3000);
 
-// Добавляем эффект статических помех для фона
-function addStaticNoise() {
-    const body = document.body;
+// Добавляем мягкие эффекты зерна для винтажности
+function addVintageEffects() {
+    const filmGrain = document.querySelector('.film-grain');
     
     setInterval(() => {
-        if (Math.random() > 0.95) {
-            body.style.filter = 'brightness(1.1) contrast(1.05)';
+        if (Math.random() > 0.9) {
+            filmGrain.style.opacity = '0.4';
             setTimeout(() => {
-                body.style.filter = 'none';
-            }, 50);
+                filmGrain.style.opacity = '0.3';
+            }, 100);
         }
-    }, 1000);
+    }, 2000);
 }
 
-// Запускаем эффект статических помех
-addStaticNoise(); 
+// Запускаем винтажные эффекты
+addVintageEffects(); 
