@@ -7,55 +7,94 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div class="vhs-overlay"></div>
+    <div class="film-overlay"></div>
     
-    <!-- Главный экран -->
+    <!-- Главный экран с панельками -->
     <section class="hero-section">
-        <div class="film-grain"></div>
+        <div class="panelki-bg"></div>
         <div class="container">
-            <div class="vhs-title">
+            <div class="vintage-title-block">
                 <h1 class="vintage-text">ЯНА и ЭД</h1>
-                <div class="subtitle">ПРИГЛАШАЮТ НА СВАДЬБУ</div>
+                <div class="subtitle">Приглашают на свадьбу</div>
                 <div class="date-display">30 августа 2025</div>
+                <div class="cassette-label">⏯ WEDDING TAPE '25 ⏯</div>
             </div>
             
-            <!-- Фото молодоженов -->
+            <!-- Реальные фото молодоженов -->
             <div class="couple-photos">
-                <div class="photo-frame left">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400'%3E%3Cdefs%3E%3ClinearGradient id='grad1' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23D4A574;stop-opacity:0.8' /%3E%3Cstop offset='100%25' style='stop-color:%23C4A29E;stop-opacity:0.8' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%23F5F1EB'/%3E%3Crect x='50' y='80' width='200' height='280' rx='20' fill='url(%23grad1)'/%3E%3Ccircle cx='150' cy='140' r='35' fill='%23E8D7C3'/%3E%3Crect x='120' y='180' width='60' height='100' rx='30' fill='%23D4A574'/%3E%3Ctext x='150' y='350' text-anchor='middle' fill='%238B6F47' font-size='16' font-family='serif'%3EЯНА%3C/text%3E%3Ctext x='150' y='370' text-anchor='middle' fill='%236B8CAE' font-size='12' font-family='serif'%3E1995%3C/text%3E%3C/svg%3E" 
-                         alt="Фото Яны" class="couple-photo">
-                    <div class="vhs-label">ЯНА 1995</div>
+                <div class="photo-frame left-photo">
+                    <div class="film-border">
+                        <img src="./images/yana.jpg" alt="Яна" class="couple-photo">
+                        <div class="photo-shadow"></div>
+                    </div>
+                    <div class="photo-label">ЯНА ♥ 1995</div>
+                    <div class="film-holes">
+                        <div class="hole"></div>
+                        <div class="hole"></div>
+                        <div class="hole"></div>
+                    </div>
                 </div>
                 
-                <div class="photo-frame right">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400'%3E%3Cdefs%3E%3ClinearGradient id='grad2' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%236B8CAE;stop-opacity:0.8' /%3E%3Cstop offset='100%25' style='stop-color:%238B6F47;stop-opacity:0.8' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='%23F5F1EB'/%3E%3Crect x='50' y='80' width='200' height='280' rx='20' fill='url(%23grad2)'/%3E%3Ccircle cx='150' cy='140' r='35' fill='%23E8D7C3'/%3E%3Crect x='120' y='180' width='60' height='100' rx='30' fill='%236B8CAE'/%3E%3Ctext x='150' y='350' text-anchor='middle' fill='%238B6F47' font-size='16' font-family='serif'%3EЭД%3C/text%3E%3Ctext x='150' y='370' text-anchor='middle' fill='%236B8CAE' font-size='12' font-family='serif'%3E1993%3C/text%3E%3C/svg%3E" 
-                         alt="Фото Эда" class="couple-photo">
-                    <div class="vhs-label">ЭД 1993</div>
+                <div class="photo-frame right-photo">
+                    <div class="film-border">
+                        <img src="./images/ed.jpg" alt="Эд" class="couple-photo">
+                        <div class="photo-shadow"></div>
+                    </div>
+                    <div class="photo-label">ЭД ♥ 1993</div>
+                    <div class="film-holes">
+                        <div class="hole"></div>
+                        <div class="hole"></div>
+                        <div class="hole"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Дополнительные винтажные фото -->
+            <div class="vintage-photos-grid">
+                <div class="vintage-photo-item">
+                    <img src="./images/ab60ed96255df9ace02e3244a67063a3.jpg" alt="Винтажное фото" class="vintage-photo">
+                    <div class="vintage-photo-frame"></div>
+                </div>
+                <div class="vintage-photo-item">
+                    <img src="./images/e88e69e56e0199b4b513d140b10c6635.jpg" alt="Винтажное фото" class="vintage-photo">
+                    <div class="vintage-photo-frame"></div>
+                </div>
+                <div class="vintage-photo-item">
+                    <img src="./images/0de475327a069b35da24d4996707f8c5.jpg" alt="Винтажное фото" class="vintage-photo">
+                    <div class="vintage-photo-frame"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Обратный отсчет -->
+    <!-- Обратный отсчет в стиле кассеты -->
     <section class="countdown-section">
-        <div class="container">
-            <h2 class="section-title">До свадьбы осталось</h2>
-            <div class="countdown-display">
-                <div class="countdown-item">
-                    <div class="countdown-number" id="days">000</div>
-                    <div class="countdown-label">дней</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="hours">00</div>
-                    <div class="countdown-label">часов</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="minutes">00</div>
-                    <div class="countdown-label">минут</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-number" id="seconds">00</div>
-                    <div class="countdown-label">секунд</div>
+        <div class="cassette-deck">
+            <div class="container">
+                <h2 class="section-title">До нашего дня осталось</h2>
+                <div class="countdown-display">
+                    <div class="countdown-cassette">
+                        <div class="cassette-reel left-reel"></div>
+                        <div class="countdown-numbers">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="days">000</div>
+                                <div class="countdown-label">дней</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="hours">00</div>
+                                <div class="countdown-label">часов</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="minutes">00</div>
+                                <div class="countdown-label">минут</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="seconds">00</div>
+                                <div class="countdown-label">секунд</div>
+                            </div>
+                        </div>
+                        <div class="cassette-reel right-reel"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -63,9 +102,10 @@
 
     <!-- Программа дня -->
     <section class="timeline-section">
+        <div class="notebook-bg"></div>
         <div class="container">
-            <h2 class="section-title">Программа дня</h2>
-            <div class="timeline">
+            <h2 class="section-title">Программа нашего дня</h2>
+            <div class="timeline-notebook">
                 <div class="timeline-item">
                     <div class="timeline-time">16:00</div>
                     <div class="timeline-content">
@@ -103,18 +143,20 @@
         <div class="container">
             <h2 class="section-title">Где нас найти</h2>
             <div class="location-info">
-                <h3>Loft Hall Mondrian</h3>
-                <p>2-й Кожуховский проезд, дом 29, корпус 6<br>Москва</p>
+                <div class="location-card">
+                    <h3>Loft Hall Mondrian</h3>
+                    <p>2-й Кожуховский проезд, дом 29, корпус 6<br>Москва</p>
+                    <div class="metro-info">
+                        <span class="metro-icon">🚇</span>
+                        <span>м. Дубровка / Кожуховская (7-10 мин пешком)</span>
+                    </div>
+                </div>
                 <div class="map-container">
                     <iframe src="https://yandex.ru/map-widget/v1/?pt=37.654674,55.698681&z=16&l=map" 
                             width="100%" 
                             height="300" 
                             frameborder="0"></iframe>
-                </div>
-                <div class="location-note">
-                    <p><strong>🚇 Как добраться:</strong></p>
-                    <p>Метро "Дубровка" или "Кожуховская"<br>
-                    Пешком 7-10 минут от станции</p>
+                    <div class="map-frame"></div>
                 </div>
             </div>
         </div>
@@ -124,18 +166,24 @@
     <section class="dresscode-section">
         <div class="container">
             <h2 class="section-title">Дресс-код</h2>
-            <p class="dresscode-description">Поддержите атмосферу праздника нарядами в нашей цветовой палитре.<br>Будем благодарны, если вы выберете одежду в этих оттенках:</p>
+            <p class="dresscode-description">Поддержите атмосферу праздника нарядами в нашей цветовой палитре</p>
             <div class="color-palette">
                 <div class="color-item">
-                    <div class="color-swatch brown"></div>
+                    <div class="color-swatch brown">
+                        <div class="paint-texture"></div>
+                    </div>
                     <span>Коричневые<br>оттенки</span>
                 </div>
                 <div class="color-item">
-                    <div class="color-swatch forest"></div>
+                    <div class="color-swatch forest">
+                        <div class="paint-texture"></div>
+                    </div>
                     <span>Лесные<br>тона</span>
                 </div>
                 <div class="color-item">
-                    <div class="color-swatch sage"></div>
+                    <div class="color-swatch sage">
+                        <div class="paint-texture"></div>
+                    </div>
                     <span>Серые<br>оттенки</span>
                 </div>
             </div>
@@ -147,7 +195,7 @@
         <div class="container">
             <h2 class="section-title">Подтверждение участия</h2>
             <div class="rsvp-intro">
-                <p>Будем очень рады видеть вас на нашем празднике! Пожалуйста, подтвердите ваше участие до 15 августа.</p>
+                <p>Будем очень рады видеть вас на нашем празднике!<br>Пожалуйста, подтвердите участие до 15 августа.</p>
             </div>
             <form class="rsvp-form" id="rsvpForm">
                 <div class="form-group">
@@ -220,10 +268,18 @@
     <!-- Футер -->
     <footer class="footer">
         <div class="container">
-            <p>С нетерпением ждем встречи с вами на нашей свадьбе!</p>
-            <p>С любовью и благодарностью, Яна и Эд ♥</p>
-            <div class="footer-note">
-                <p>По всем вопросам можете писать в личные сообщения</p>
+            <div class="footer-content">
+                <div class="footer-photo">
+                    <img src="./images/2025-06-16 14.35.12.jpg" alt="Совместное фото" class="footer-couple-photo">
+                    <div class="polaroid-frame"></div>
+                </div>
+                <div class="footer-text">
+                    <p>С нетерпением ждем встречи с вами на нашей свадьбе!</p>
+                    <p class="footer-signature">С любовью и благодарностью,<br><strong>Яна и Эд ♥</strong></p>
+                    <div class="footer-note">
+                        <p>По всем вопросам можете писать в личные сообщения</p>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>
