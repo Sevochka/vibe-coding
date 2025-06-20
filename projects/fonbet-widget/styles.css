@@ -14,6 +14,9 @@
 }
 html, body {
     height: 78px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
 }
 body {
     font-family: 'Roboto', 'Neoris', Arial, sans-serif;
