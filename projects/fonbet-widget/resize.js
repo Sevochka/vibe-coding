@@ -4,7 +4,7 @@ const resize = () => {
         action: 'resizeIframe',
         selector: `iframe[src*=\/projects\/fonbet-widget]`,
         sizes: {
-          height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
+          height: 78,
         },
       };
 
