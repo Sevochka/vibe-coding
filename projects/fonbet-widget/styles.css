@@ -20,7 +20,6 @@ html, body {
 }
 body {
     font-family: 'Roboto', 'Neoris', Arial, sans-serif;
-    background: var(--fonbet-bg);
     margin: 0;
 }
 .fonbet-widget {
