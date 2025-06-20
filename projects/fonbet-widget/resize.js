@@ -2,9 +2,9 @@ const resize = () => {
       const dataUTILS = {
         for: 'BASIC_TEST',
         action: 'resizeIframe',
-        selector: `iframe[src*=\/projects\/fonbet-widget]`,
+        selector: `iframe[src*=\/projects\/fonbet-widget\/index.html]`,
         sizes: {
-          height: Math.floor(document.body.scrollHeight / 2),
+          height: document.body.scrollHeight,
         },
       };
 
