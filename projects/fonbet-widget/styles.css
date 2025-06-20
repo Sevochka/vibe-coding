@@ -12,6 +12,9 @@
     --fonbet-logo-radius: 22px;
     --fonbet-logo-font: italic 800 22px/1 'Sports', 'Roboto', Arial, sans-serif;
 }
+html, body {
+    height: 78px;
+}
 body {
     font-family: 'Roboto', 'Neoris', Arial, sans-serif;
     background: var(--fonbet-bg);
@@ -21,7 +24,6 @@ body {
     box-sizing: border-box;
     max-width: 660px;
     width: 100%;
-    min-height: 48px;
     background: var(--fonbet-bg);
     border: var(--fonbet-border);
     border-radius: var(--fonbet-radius);
