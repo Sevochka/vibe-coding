@@ -1,39 +1,148 @@
 // Дата свадьбы - 30 августа 2025
-const weddingDate = new Date('2025-08-30T16:00:00');
+const weddingDate = new Date('2025-08-30T15:00:00');
 
-// Функция обновления обратного отсчета
+// Функция обратного отсчета
 function updateCountdown() {
-    const now = new Date();
-    const difference = weddingDate - now;
-    
-    if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-        
-        // Обновляем отображение
-        document.getElementById('days').textContent = days.toString().padStart(3, '0');
-        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    const now = new Date().getTime();
+    const distance = weddingDate.getTime() - now;
+
+    if (distance > 0) {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('days').textContent = days;
+        document.getElementById('hours').textContent = hours;
+        document.getElementById('minutes').textContent = minutes;
     } else {
-        // Если дата наступила
-        document.getElementById('days').textContent = '000';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
-        
-        // Показываем сообщение о том, что свадьба началась
-        const countdownSection = document.querySelector('.countdown-section .section-title');
-        countdownSection.textContent = 'Свадьба началась!';
-        countdownSection.style.color = 'var(--accent-red)';
+        document.getElementById('days').textContent = '0';
+        document.getElementById('hours').textContent = '0';
+        document.getElementById('minutes').textContent = '0';
     }
 }
 
-// Обновляем обратный отсчет каждую секунду
-setInterval(updateCountdown, 1000);
-updateCountdown(); // Сразу обновляем при загрузке
+// Карусель
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+    const track = document.getElementById('carousel');
+    const slideWidth = 100;
+    track.style.transform = `translateX(-${index * slideWidth}%)`;
+}
+
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+}
+
+function prevSlide() {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    showSlide(currentSlide);
+}
+
+// Автоматическая смена слайдов
+function autoSlide() {
+    nextSlide();
+}
+
+// Анимации при прокрутке
+function animateOnScroll() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
+}
+
+// Кнопка "наверх"
+function createScrollToTopButton() {
+    const button = document.createElement('button');
+    button.innerHTML = '↑';
+    button.style.cssText = `
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: var(--primary-pink);
+        color: white;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    `;
+    
+    button.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            button.style.opacity = '1';
+        } else {
+            button.style.opacity = '0';
+        }
+    });
+    
+    document.body.appendChild(button);
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    // Запуск обратного отсчета
+    updateCountdown();
+    setInterval(updateCountdown, 60000); // Обновляем каждую минуту
+
+    // Инициализация карусели
+    if (document.getElementById('carousel')) {
+        showSlide(0);
+        
+        // Кнопки карусели
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        
+        // Автоматическая смена слайдов каждые 5 секунд
+        let autoSlideInterval = setInterval(autoSlide, 5000);
+        
+        // Пауза при наведении на карусель
+        const carouselContainer = document.querySelector('.carousel-container');
+        
+        if (carouselContainer) {
+            carouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(autoSlideInterval);
+            });
+            
+            carouselContainer.addEventListener('mouseleave', () => {
+                autoSlideInterval = setInterval(autoSlide, 5000);
+            });
+        }
+    }
+    
+    // Анимации при прокрутке
+    animateOnScroll();
+    
+    // Создаем кнопку "наверх"
+    createScrollToTopButton();
+});
 
 // Обработка формы RSVP
 document.getElementById('rsvpForm').addEventListener('submit', function(e) {
