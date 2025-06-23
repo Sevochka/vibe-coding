@@ -1,23 +1,36 @@
-// Карусель
-let currentSlide = 0;
-const slides = document.querySelectorAll('.carousel-slide');
-const totalSlides = slides.length;
+// Карусели
+let currentSlideGirls = 0;
+let currentSlideBoys = 0;
+const slidesGirls = document.querySelectorAll('#carousel-girls .carousel-slide');
+const slidesBoys = document.querySelectorAll('#carousel-boys .carousel-slide');
+const totalSlidesGirls = slidesGirls.length;
+const totalSlidesBoys = slidesBoys.length;
 
-function showSlide(index) {
-    const carousel = document.getElementById('carousel');
+function showSlide(carouselId, index) {
+    const carousel = document.getElementById(carouselId);
     if (carousel) {
         carousel.style.transform = `translateX(-${index * 100}%)`;
     }
 }
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    showSlide(currentSlide);
+function nextSlide(type) {
+    if (type === 'girls') {
+        currentSlideGirls = (currentSlideGirls + 1) % totalSlidesGirls;
+        showSlide('carousel-girls', currentSlideGirls);
+    } else if (type === 'boys') {
+        currentSlideBoys = (currentSlideBoys + 1) % totalSlidesBoys;
+        showSlide('carousel-boys', currentSlideBoys);
+    }
 }
 
-function prevSlide() {
-    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-    showSlide(currentSlide);
+function prevSlide(type) {
+    if (type === 'girls') {
+        currentSlideGirls = (currentSlideGirls - 1 + totalSlidesGirls) % totalSlidesGirls;
+        showSlide('carousel-girls', currentSlideGirls);
+    } else if (type === 'boys') {
+        currentSlideBoys = (currentSlideBoys - 1 + totalSlidesBoys) % totalSlidesBoys;
+        showSlide('carousel-boys', currentSlideBoys);
+    }
 }
 
 // Анимации при прокрутке
@@ -76,46 +89,65 @@ function createScrollToTopButton() {
     document.body.appendChild(button);
 }
 
-// Инициализация карусели
-function initCarousel() {
-    const carousel = document.getElementById('carousel');
-    if (!carousel) return;
+// Инициализация каруселей
+function initCarousels() {
+    // Показать первые слайды
+    showSlide('carousel-girls', 0);
+    showSlide('carousel-boys', 0);
 
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const carouselContainer = document.querySelector('.carousel-container');
-
-    // Показать первый слайд
-    showSlide(0);
-
-    // Автоматическая прокрутка
-    let autoSlideInterval = setInterval(nextSlide, 4000);
+    // Автоматическая прокрутка для девочек
+    let autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
+    
+    // Автоматическая прокрутка для мальчиков
+    let autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
 
     // Обработчики кнопок
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            nextSlide();
-            autoSlideInterval = setInterval(nextSlide, 4000);
+    document.querySelectorAll('.carousel-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const carouselType = btn.getAttribute('data-carousel');
+            const isNext = btn.classList.contains('next');
+            
+            if (carouselType === 'girls') {
+                clearInterval(autoSlideGirlsInterval);
+                if (isNext) {
+                    nextSlide('girls');
+                } else {
+                    prevSlide('girls');
+                }
+                autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
+            } else if (carouselType === 'boys') {
+                clearInterval(autoSlideBоysInterval);
+                if (isNext) {
+                    nextSlide('boys');
+                } else {
+                    prevSlide('boys');
+                }
+                autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
+            }
         });
-    }
+    });
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            clearInterval(autoSlideInterval);
-            prevSlide();
-            autoSlideInterval = setInterval(nextSlide, 4000);
-        });
-    }
+    // Пауза при наведении на карусели
+    const girlsContainer = document.querySelector('#carousel-girls').closest('.carousel-container');
+    const boysContainer = document.querySelector('#carousel-boys').closest('.carousel-container');
 
-    // Пауза при наведении
-    if (carouselContainer) {
-        carouselContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideInterval);
+    if (girlsContainer) {
+        girlsContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideGirlsInterval);
         });
         
-        carouselContainer.addEventListener('mouseleave', () => {
-            autoSlideInterval = setInterval(nextSlide, 4000);
+        girlsContainer.addEventListener('mouseleave', () => {
+            autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
+        });
+    }
+
+    if (boysContainer) {
+        boysContainer.addEventListener('mouseenter', () => {
+            clearInterval(autoSlideBоysInterval);
+        });
+        
+        boysContainer.addEventListener('mouseleave', () => {
+            autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
         });
     }
 }
@@ -171,8 +203,8 @@ function initColorPalette() {
 
 // Инициализация всех функций
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация карусели
-    initCarousel();
+    // Инициализация каруселей
+    initCarousels();
     
     // Анимации при прокрутке
     animateOnScroll();
