@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&display=swap');
 
 :root {
     --primary-pink: #FF6B9D;
@@ -25,31 +25,35 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: "Bad Script", cursive;
+    font-weight: 400;
     color: var(--text-dark);
     line-height: 1.6;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .container {
     max-width: 660px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
 }
 
 /* Общие стили секций */
 section {
     padding: 60px 0;
     min-height: auto;
+    width: 100%;
 }
 
 .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-weight: 400;
+    font-size: 2.8rem;
     margin-bottom: 2rem;
     text-align: center;
     color: var(--text-dark);
+    line-height: 1.2;
 }
 
 /* 1 экран - Intro */
@@ -59,6 +63,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .intro-content {
@@ -69,15 +76,16 @@ section {
     padding: 40px;
     border-radius: var(--border-radius);
     color: var(--text-dark);
+    width: 100%;
 }
 
 .intro-photo {
-    flex: 0 0 250px;
+    flex: 0 0 300px;
 }
 
 .main-couple-photo {
     width: 100%;
-    height: 350px;
+    height: 400px;
     object-fit: cover;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -88,7 +96,7 @@ section {
 }
 
 .intro-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.7;
     font-weight: 400;
 }
@@ -99,6 +107,9 @@ section {
     background-size: cover;
     background-position: center;
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .date-content {
@@ -107,26 +118,27 @@ section {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    width: 100%;
 }
 
 .date-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
     color: var(--text-dark);
     margin-bottom: 1rem;
 }
 
 .main-date {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
     color: var(--text-dark);
     margin-bottom: 1rem;
 }
 
 .date-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--text-gray);
     margin-bottom: 3rem;
 }
@@ -141,23 +153,23 @@ section {
 .countdown-item {
     background: var(--primary-pink);
     color: var(--text-light);
-    padding: 20px;
+    padding: 25px 20px;
     border-radius: var(--border-radius);
     text-align: center;
-    min-width: 80px;
+    min-width: 100px;
     box-shadow: var(--shadow);
 }
 
 .countdown-number {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 2.5rem;
+    font-weight: 400;
     margin-bottom: 5px;
 }
 
 .countdown-label {
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-transform: uppercase;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 /* 3 экран - Location */
@@ -167,6 +179,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .location-content {
@@ -175,24 +190,25 @@ section {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     text-align: center;
+    width: 100%;
 }
 
 .venue-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 2.2rem;
+    font-weight: 400;
     color: var(--text-dark);
     margin-bottom: 1rem;
 }
 
 .venue-address {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-bottom: 2rem;
     color: var(--text-gray);
 }
 
 .parking-note p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-style: italic;
     color: var(--text-gray);
     line-height: 1.6;
@@ -204,12 +220,16 @@ section {
     background-size: cover;
     background-position: center;
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .timeline-content {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    width: 100%;
 }
 
 .timeline-item {
@@ -223,20 +243,19 @@ section {
 }
 
 .timeline-time {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-pink);
-    background: var(--text-dark);
+    font-family: "Bad Script", cursive;
+    font-size: 1.8rem;
+    font-weight: 400;
     color: var(--text-light);
-    padding: 15px 20px;
+    background: var(--text-dark);
+    padding: 20px 25px;
     border-radius: var(--border-radius);
-    min-width: 150px;
+    min-width: 180px;
     text-align: center;
 }
 
 .timeline-desc {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.6;
     flex: 1;
 }
@@ -248,6 +267,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .concept-content {
@@ -256,18 +278,19 @@ section {
     color: var(--text-dark);
     padding: 60px 40px;
     border-radius: var(--border-radius);
+    width: 100%;
 }
 
 .concept-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-family: "Bad Script", cursive;
+    font-size: 2.2rem;
     color: var(--text-dark);
     margin-bottom: 2rem;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .concept-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
 }
@@ -278,6 +301,9 @@ section {
     background-size: cover;
     background-position: center;
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .dresscode-content {
@@ -285,6 +311,7 @@ section {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    width: 100%;
 }
 
 .dresscode-text {
@@ -293,7 +320,7 @@ section {
 }
 
 .dresscode-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
 }
@@ -305,16 +332,17 @@ section {
 }
 
 .color-group h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
+    font-family: "Bad Script", cursive;
+    font-size: 1.6rem;
     margin-bottom: 1.5rem;
     text-align: center;
     color: var(--text-dark);
+    font-weight: 400;
 }
 
 .colors-row {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
 }
@@ -322,10 +350,11 @@ section {
 .color-item {
     text-align: center;
     background: rgba(255, 255, 255, 0.8);
-    padding: 15px;
+    padding: 20px 15px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     transition: transform 0.3s ease;
+    min-width: 100px;
 }
 
 .color-item:hover {
@@ -333,8 +362,8 @@ section {
 }
 
 .color-swatch {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     margin: 0 auto 10px;
     border: 3px solid white;
@@ -351,8 +380,8 @@ section {
 .base-brown { background: var(--base-brown); }
 
 .color-item span {
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 400;
+    font-size: 1.1rem;
 }
 
 /* 7 экран - Expectations */
@@ -362,6 +391,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .expectations-content {
@@ -370,6 +402,7 @@ section {
     color: var(--text-dark);
     padding: 60px 40px;
     border-radius: var(--border-radius);
+    width: 100%;
 }
 
 .carousel-container {
@@ -393,7 +426,7 @@ section {
 
 .carousel-slide img {
     width: 100%;
-    height: 300px;
+    height: 350px;
     object-fit: cover;
 }
 
@@ -403,10 +436,10 @@ section {
     transform: translateY(-50%);
     background: rgba(255, 255, 255, 0.9);
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: var(--shadow);
@@ -426,8 +459,8 @@ section {
 }
 
 .reality-text {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-size: 1.5rem;
+    font-weight: 400;
     color: var(--text-dark);
 }
 
@@ -437,6 +470,9 @@ section {
     background-size: cover;
     background-position: center;
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .gifts-content {
@@ -445,10 +481,11 @@ section {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     text-align: center;
+    width: 100%;
 }
 
 .gifts-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
 }
@@ -460,6 +497,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .gifts-money-content {
@@ -468,12 +508,13 @@ section {
     color: var(--text-dark);
     padding: 60px 40px;
     border-radius: var(--border-radius);
+    width: 100%;
 }
 
 .gifts-money-content h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
     color: var(--text-dark);
     line-height: 1.4;
 }
@@ -484,12 +525,16 @@ section {
     background-size: cover;
     background-position: center;
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .gifts-alt-content {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    width: 100%;
 }
 
 .gifts-alt-text {
@@ -500,7 +545,7 @@ section {
 }
 
 .gifts-alt-text p {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
 }
@@ -513,14 +558,15 @@ section {
 }
 
 .contact-info h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
+    font-family: "Bad Script", cursive;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
     color: var(--text-dark);
+    font-weight: 400;
 }
 
 .contact-info p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
@@ -528,20 +574,20 @@ section {
 .organizer-contact {
     background: var(--primary-pink);
     color: var(--text-light);
-    padding: 25px;
+    padding: 30px;
     border-radius: var(--border-radius);
     text-align: center;
 }
 
 .organizer-name {
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-size: 1.4rem;
+    font-weight: 400;
     margin-bottom: 0.5rem;
 }
 
 .organizer-phone {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 /* 11 экран - Final */
@@ -551,6 +597,9 @@ section {
     background-position: center;
     color: var(--text-light);
     padding: 80px 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 .final-content {
@@ -558,9 +607,10 @@ section {
     gap: 40px;
     align-items: center;
     background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
+    padding: 50px;
     border-radius: var(--border-radius);
     color: var(--text-dark);
+    width: 100%;
 }
 
 .final-text {
@@ -568,78 +618,101 @@ section {
 }
 
 .final-text h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
     margin-bottom: 2rem;
     line-height: 1.4;
 }
 
 .signature {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-family: "Bad Script", cursive;
+    font-size: 1.8rem;
+    font-weight: 400;
     color: var(--primary-pink);
     margin-bottom: 2rem;
 }
 
 .postscript p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.6;
     font-style: italic;
     color: var(--text-gray);
 }
 
 .final-photo {
-    flex: 0 0 200px;
+    flex: 0 0 250px;
 }
 
 .couple-photos {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .couple-photo {
     width: 100%;
-    height: 120px;
+    height: 150px;
     object-fit: cover;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 30px;
+    }
+    
+    .intro-content,
+    .final-content {
+        gap: 30px;
+    }
+    
+    .intro-photo {
+        flex: 0 0 280px;
+    }
+    
+    .main-couple-photo {
+        height: 350px;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
-        padding: 0 15px;
+        padding: 0 20px;
     }
     
     section {
-        padding: 40px 0;
+        padding: 50px 0;
+        min-height: auto;
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: 2.3rem;
     }
     
     .date-title {
-        font-size: 2.2rem;
+        font-size: 2.8rem;
     }
     
     .main-date {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .intro-content,
     .final-content {
         flex-direction: column;
         text-align: center;
+        padding: 40px 30px;
     }
     
-    .intro-photo {
+    .intro-photo,
+    .final-photo {
         flex: none;
         width: 100%;
-        max-width: 250px;
+        max-width: 300px;
         margin: 0 auto;
     }
     
@@ -651,12 +724,19 @@ section {
         flex-direction: column;
         text-align: center;
         gap: 20px;
+        padding: 30px 25px;
     }
     
     .timeline-time {
         min-width: auto;
         width: 100%;
-        max-width: 200px;
+        max-width: 250px;
+        font-size: 1.6rem;
+        padding: 15px 20px;
+    }
+    
+    .timeline-desc {
+        font-size: 1.2rem;
     }
     
     .countdown-timer {
@@ -664,12 +744,12 @@ section {
     }
     
     .countdown-item {
-        min-width: 70px;
-        padding: 15px;
+        min-width: 80px;
+        padding: 20px 15px;
     }
     
     .countdown-number {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
     .color-palette {
@@ -678,16 +758,17 @@ section {
     
     .colors-row {
         justify-content: center;
-        gap: 10px;
+        gap: 15px;
     }
     
     .color-item {
-        padding: 12px;
+        padding: 15px 12px;
+        min-width: 85px;
     }
     
     .color-swatch {
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
     }
     
     .carousel-container {
@@ -695,24 +776,38 @@ section {
     }
     
     .carousel-slide img {
-        height: 250px;
+        height: 280px;
+    }
+    
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
     }
     
     .gifts-alt-content {
         gap: 30px;
     }
     
-    .final-photo {
-        flex: none;
-        width: 100%;
-        max-width: 200px;
-        margin: 0 auto;
+    .couple-photos {
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .couple-photo {
+        width: 120px;
+        height: 120px;
     }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 10px;
+        padding: 0 15px;
+    }
+    
+    section {
+        padding: 40px 0;
     }
     
     .intro-content,
@@ -730,43 +825,113 @@ section {
     }
     
     .timeline-item {
-        padding: 20px;
+        padding: 25px 20px;
     }
     
     .section-title {
-        font-size: 1.8rem;
-    }
-    
-    .date-title {
         font-size: 2rem;
     }
     
+    .date-title {
+        font-size: 2.5rem;
+    }
+    
     .main-date {
-        font-size: 1.3rem;
+        font-size: 1.8rem;
     }
     
     .concept-subtitle,
     .venue-name {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     
     .final-text h2 {
-        font-size: 1.7rem;
+        font-size: 2rem;
     }
     
     .gifts-money-content h2 {
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
     
     .carousel-slide img {
-        height: 200px;
+        height: 220px;
     }
     
     .main-couple-photo {
         height: 250px;
     }
     
+    .couple-photos {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
     .couple-photo {
+        width: 100%;
         height: 100px;
+    }
+    
+    .intro-text p,
+    .concept-text p,
+    .dresscode-text p,
+    .gifts-text p,
+    .gifts-alt-text p {
+        font-size: 1.1rem;
+    }
+    
+    .date-subtitle,
+    .venue-address,
+    .timeline-desc,
+    .reality-text,
+    .contact-info p,
+    .postscript p {
+        font-size: 1.1rem;
+    }
+    
+    .parking-note p {
+        font-size: 1rem;
+    }
+    
+    .countdown-item {
+        min-width: 70px;
+        padding: 15px 10px;
+    }
+    
+    .countdown-number {
+        font-size: 1.8rem;
+    }
+    
+    .timeline-time {
+        font-size: 1.4rem;
+    }
+    
+    .color-group h3 {
+        font-size: 1.4rem;
+    }
+    
+    .color-item {
+        padding: 12px 8px;
+        min-width: 75px;
+    }
+    
+    .color-swatch {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .color-item span {
+        font-size: 1rem;
+    }
+    
+    .organizer-name {
+        font-size: 1.2rem;
+    }
+    
+    .organizer-phone {
+        font-size: 1.1rem;
+    }
+    
+    .signature {
+        font-size: 1.6rem;
     }
 } 
