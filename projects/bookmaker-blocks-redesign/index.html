@@ -47,36 +47,44 @@
 
         <!-- Информационный блок -->
         <section class="section">
-            <div style="background: var(--sports-grey-50); padding: 24px; border-radius: 12px; text-align: center;">
-                <h3 style="margin: 0 0 16px 0; font-family: var(--ui-font-family-heading); font-size: 20px;">Улучшения в дизайне</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left;">
-                    <div>
-                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Амбассадоры</h4>
-                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
+            <div style="background: linear-gradient(135deg, var(--sports-grey-50), #fafafa); padding: 32px; border-radius: 16px; text-align: center; border: 1px solid var(--sports-grey-100);">
+                <h3 style="margin: 0 0 20px 0; font-family: var(--ui-font-family-heading); font-size: 24px; color: var(--sports-black);">Ключевые улучшения</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: left;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h4 style="margin: 0 0 12px 0; color: var(--sports-primary-color); font-size: 16px; font-weight: 600;">✓ Амбассадоры</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 13px; color: var(--sports-grey-600); line-height: 1.6;">
                             <li>Имена в две строки</li>
-                            <li>Категории деятельности</li>
-                            <li>Больше места для информации</li>
-                            <li>Заглушки для аватаров</li>
+                            <li>Категории деятельности с цветовым кодированием</li>
+                            <li>Информация о контрактах и сроках</li>
+                            <li>Автоматические заглушки с инициалами</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Трансляции</h4>
-                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
-                            <li>Адаптивные названия</li>
-                            <li>Live индикаторы</li>
-                            <li>Заглушки для логотипов</li>
-                            <li>Больше места для длинных названий</li>
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h4 style="margin: 0 0 12px 0; color: var(--sports-primary-color); font-size: 16px; font-weight: 600;">✓ Трансляции</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 13px; color: var(--sports-grey-600); line-height: 1.6;">
+                            <li>Адаптивные названия турниров</li>
+                            <li>Анимированные Live индикаторы</li>
+                            <li>Статистика просмотров и матчей</li>
+                            <li>Заглушки для отсутствующих логотипов</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Партнеры</h4>
-                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
-                            <li>Типы партнерства</li>
-                            <li>Категории организаций</li>
+                    <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <h4 style="margin: 0 0 12px 0; color: var(--sports-primary-color); font-size: 16px; font-weight: 600;">✓ Партнеры</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 13px; color: var(--sports-grey-600); line-height: 1.6;">
+                            <li>Типы партнерства и стоимость контрактов</li>
+                            <li>Информация о лигах и городах</li>
+                            <li>Сроки действия соглашений</li>
                             <li>Единый стиль с другими блоками</li>
-                            <li>Интерактивные элементы</li>
                         </ul>
                     </div>
+                </div>
+                
+                <div style="margin-top: 24px; padding: 20px; background: var(--sports-green-50); border-radius: 12px;">
+                    <h4 style="margin: 0 0 12px 0; color: var(--sports-green-850); font-size: 16px;">Технические особенности</h4>
+                    <p style="margin: 0; font-size: 13px; color: var(--sports-grey-600); line-height: 1.6;">
+                        Использование JSON для структурированных данных • Адаптивный дизайн • Автоматические заглушки • 
+                        Брендированные цвета Sports.ru • Плавные анимации • Семантическая разметка
+                    </p>
                 </div>
             </div>
         </section>
@@ -89,11 +97,6 @@
         </footer>
     </div>
 
-    <!-- Подключение данных -->
-    <script src="./data/ambassadors.js"></script>
-    <script src="./data/broadcasts.js"></script>
-    <script src="./data/partners.js"></script>
-    
     <!-- Основной скрипт -->
     <script src="./script.js"></script>
     

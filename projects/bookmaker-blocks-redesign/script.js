@@ -1,3 +1,6 @@
+// Глобальные переменные для данных
+let bookmakerData = null;
+
 // Утилиты для работы с именами и заглушками
 function splitName(fullName) {
     const nameParts = fullName.trim().split(' ');
@@ -28,18 +31,34 @@ function createPlaceholderElement(name, isLogo = false) {
     return placeholder;
 }
 
+// Загрузка JSON данных
+async function loadBookmakerData() {
+    try {
+        const response = await fetch('./data/bookmaker_data.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        bookmakerData = await response.json();
+        console.log('Данные загружены:', bookmakerData);
+        return bookmakerData;
+    } catch (error) {
+        console.error('Ошибка загрузки данных:', error);
+        return null;
+    }
+}
+
 // Создание блока амбассадора
 function createAmbassadorBlock(ambassador) {
     const block = document.createElement('div');
     block.className = 'block-item ambassador-block';
     
-    const nameParts = splitName(ambassador.fullName);
+    const nameParts = splitName(ambassador.name);
     
     block.innerHTML = `
-        ${ambassador.avatar ? 
-            `<img src="${ambassador.avatar}" alt="${ambassador.fullName}" class="block-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-             <div class="placeholder-avatar" style="display: none;">${getInitials(ambassador.fullName)}</div>` :
-            `<div class="placeholder-avatar">${getInitials(ambassador.fullName)}</div>`
+        ${ambassador.avatar_url ? 
+            `<img src="${ambassador.avatar_url}" alt="${ambassador.name}" class="block-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+             <div class="placeholder-avatar" style="display: none;">${getInitials(ambassador.name)}</div>` :
+            `<div class="placeholder-avatar">${getInitials(ambassador.name)}</div>`
         }
         
         <div class="block-name">
@@ -54,6 +73,11 @@ function createAmbassadorBlock(ambassador) {
         <div class="block-bookmaker">Амбассадор ${ambassador.bookmaker}</div>
         
         <div class="block-description">${ambassador.description}</div>
+        
+        <div class="contract-info">
+            <div class="partnership-since">С ${ambassador.partnership_since}</div>
+            <div class="contract-value">${ambassador.contract_value}</div>
+        </div>
     `;
     
     return block;
@@ -65,30 +89,34 @@ function createBroadcastBlock(broadcast) {
     block.className = 'block-item broadcast-block';
     
     // Определяем нужно ли разбивать название на строки
-    const needMultiLine = broadcast.fullName.length > 20;
-    const nameParts = needMultiLine ? splitName(broadcast.fullName) : { first: broadcast.name, last: '' };
+    const needMultiLine = broadcast.full_name.length > 20;
+    const nameParts = needMultiLine ? splitName(broadcast.full_name) : { first: broadcast.tournament_name, last: '' };
     
     block.innerHTML = `
-        ${broadcast.hasLiveBroadcast ? '<div class="live-indicator"></div>' : ''}
+        ${broadcast.has_live ? '<div class="live-indicator"></div>' : ''}
         
-        ${broadcast.logo ? 
-            `<img src="${broadcast.logo}" alt="${broadcast.fullName}" class="block-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-             <div class="placeholder-logo" style="display: none;">${getInitials(broadcast.fullName)}</div>` :
-            `<div class="placeholder-logo">${getInitials(broadcast.fullName)}</div>`
+        ${broadcast.logo_url ? 
+            `<img src="${broadcast.logo_url}" alt="${broadcast.full_name}" class="block-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+             <div class="placeholder-logo" style="display: none;">${getInitials(broadcast.full_name)}</div>` :
+            `<div class="placeholder-logo">${getInitials(broadcast.full_name)}</div>`
         }
         
         <div class="block-name">
-            <span class="name-first">${needMultiLine ? nameParts.first : broadcast.name}</span>
+            <span class="name-first">${needMultiLine ? nameParts.first : broadcast.tournament_name}</span>
             ${needMultiLine && nameParts.last ? `<span class="name-last">${nameParts.last}</span>` : ''}
         </div>
         
-        <div class="block-type">Турнир</div>
+        <div class="block-type">Турнир • ${broadcast.season}</div>
         
         <div class="block-bookmaker">Трансляции на ${broadcast.bookmaker}</div>
         
         <div class="block-description">${broadcast.description}</div>
         
-        ${broadcast.hasLiveBroadcast ? '<div style="font-size: 10px; color: var(--sports-red-a700); font-weight: 600; text-transform: uppercase;">● Live</div>' : ''}
+        <div class="broadcast-info">
+            ${broadcast.has_live ? '<div class="live-badge">● LIVE</div>' : ''}
+            <div class="viewers">Зрители: ${parseInt(broadcast.viewers_avg).toLocaleString()}</div>
+            <div class="matches">Матчей: ${broadcast.matches_count}</div>
+        </div>
     `;
     
     return block;
@@ -99,13 +127,13 @@ function createPartnerBlock(partner) {
     const block = document.createElement('div');
     block.className = 'block-item partner-block';
     
-    const nameParts = splitName(partner.fullName);
+    const nameParts = splitName(partner.full_name);
     
     block.innerHTML = `
-        ${partner.logo ? 
-            `<img src="${partner.logo}" alt="${partner.fullName}" class="block-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-             <div class="placeholder-logo" style="display: none;">${getInitials(partner.fullName)}</div>` :
-            `<div class="placeholder-logo">${getInitials(partner.fullName)}</div>`
+        ${partner.logo_url ? 
+            `<img src="${partner.logo_url}" alt="${partner.full_name}" class="block-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+             <div class="placeholder-logo" style="display: none;">${getInitials(partner.full_name)}</div>` :
+            `<div class="placeholder-logo">${getInitials(partner.full_name)}</div>`
         }
         
         <div class="block-name">
@@ -113,13 +141,19 @@ function createPartnerBlock(partner) {
             ${nameParts.last ? `<span class="name-last">${nameParts.last}</span>` : ''}
         </div>
         
-        <div class="block-type">${partner.type}</div>
+        <div class="block-type">${partner.type} • ${partner.city}</div>
         
-        <div class="partnership-type">${partner.partnershipType}</div>
+        <div class="partnership-type">${partner.partnership_type}</div>
         
         <div class="block-bookmaker">Партнер ${partner.bookmaker}</div>
         
         <div class="block-description">${partner.description}</div>
+        
+        <div class="partnership-info">
+            <div class="contract-value">${partner.contract_value}</div>
+            <div class="contract-duration">${partner.contract_duration}</div>
+            <div class="league">${partner.league}</div>
+        </div>
     `;
     
     return block;
@@ -127,11 +161,16 @@ function createPartnerBlock(partner) {
 
 // Функция рендеринга блоков
 function renderBlocks() {
+    if (!bookmakerData) {
+        console.error('Данные не загружены!');
+        return;
+    }
+    
     // Рендер амбассадоров
     const ambassadorsGrid = document.getElementById('ambassadors-grid');
     ambassadorsGrid.innerHTML = '';
     
-    ambassadors.forEach(ambassador => {
+    bookmakerData.ambassadors.forEach(ambassador => {
         const block = createAmbassadorBlock(ambassador);
         ambassadorsGrid.appendChild(block);
     });
@@ -140,7 +179,7 @@ function renderBlocks() {
     const broadcastsGrid = document.getElementById('broadcasts-grid');
     broadcastsGrid.innerHTML = '';
     
-    broadcasts.forEach(broadcast => {
+    bookmakerData.broadcasts.forEach(broadcast => {
         const block = createBroadcastBlock(broadcast);
         broadcastsGrid.appendChild(block);
     });
@@ -149,17 +188,23 @@ function renderBlocks() {
     const partnersGrid = document.getElementById('partners-grid');
     partnersGrid.innerHTML = '';
     
-    partners.forEach(partner => {
+    bookmakerData.partners.forEach(partner => {
         const block = createPartnerBlock(partner);
         partnersGrid.appendChild(block);
     });
 }
 
 // Функция инициализации
-function initializeBlocks() {
-    // Проверяем доступность данных
-    if (typeof ambassadors === 'undefined' || typeof broadcasts === 'undefined' || typeof partners === 'undefined') {
-        console.error('Данные не загружены! Убедитесь что все data файлы подключены.');
+async function initializeBlocks() {
+    // Показываем loader
+    document.body.style.opacity = '0.7';
+    
+    // Загружаем данные
+    const data = await loadBookmakerData();
+    
+    if (!data) {
+        console.error('Не удалось загрузить данные!');
+        document.body.innerHTML = '<div style="text-align: center; padding: 50px; color: red;">Ошибка загрузки данных</div>';
         return;
     }
     
@@ -168,6 +213,9 @@ function initializeBlocks() {
     
     // Добавляем обработчики событий
     addEventListeners();
+    
+    // Убираем loader
+    document.body.style.opacity = '1';
 }
 
 // Обработчики событий
@@ -185,7 +233,7 @@ function addEventListeners() {
         img.addEventListener('error', function() {
             this.style.display = 'none';
             const placeholder = this.nextElementSibling;
-            if (placeholder && placeholder.classList.contains('placeholder-avatar', 'placeholder-logo')) {
+            if (placeholder && (placeholder.classList.contains('placeholder-avatar') || placeholder.classList.contains('placeholder-logo'))) {
                 placeholder.style.display = 'flex';
             }
         });
