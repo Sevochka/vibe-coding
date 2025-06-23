@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Улучшенный слайдер трансляций</title>
+    <link rel="stylesheet" href="./styles.css">
+    @import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+    @import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+</head>
+<body>
+    <div class="broadcast-container">
+        <div class="broadcast-header">
+            <h2 class="broadcast-title">
+                <svg class="broadcast-icon" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L13.09 8.26L19 7L17.74 13.26L24 12L22.91 18.74L17 20L18.26 13.74L12 15L10.91 8.74L5 10L6.26 3.74L0 5L1.09 11.26L7 10L5.74 16.26L12 15L13.09 21.26L19 20L17.74 13.74L24 15L22.91 8.26L17 7L18.26 0.74L12 2Z" fill="currentColor"/>
+                </svg>
+                Бесплатные трансляции
+            </h2>
+            <div class="broadcast-controls">
+                <button class="control-btn prev-btn" id="prevBtn">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M14.3311 18L8.25 12L14.3311 6L15.75 7.4L11.0878 12L15.75 16.6L14.3311 18Z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button class="control-btn next-btn" id="nextBtn">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M14.3311 18L8.25 12L14.3311 6L15.75 7.4L11.0878 12L15.75 16.6L14.3311 18Z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="broadcast-slider" id="broadcastSlider">
+            <div class="slider-track" id="sliderTrack">
+                <!-- Карточки будут добавлены через JavaScript -->
+            </div>
+        </div>
+
+        <div class="broadcast-indicators" id="indicators">
+            <!-- Индикаторы будут добавлены через JavaScript -->
+        </div>
+    </div>
+
+    <script src="./data/broadcasts.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 

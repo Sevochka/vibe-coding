@@ -1,0 +1,390 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-red-a700: #ff003c;
+    --sports-orange-900: #d26e00;
+    --sports-cyan-A700: #00a0f0;
+    --sports-blue-A700: #0040fc;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background-color: var(--ui-bg);
+    color: var(--sports-grey-900);
+    line-height: 1.5;
+    padding: 20px;
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.broadcast-container {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--sports-grey-100);
+    position: relative;
+    overflow: hidden;
+}
+
+.broadcast-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--sports-primary-color), var(--sports-cyan-A700), var(--sports-blue-A700));
+    border-radius: 16px 16px 0 0;
+}
+
+.broadcast-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.broadcast-title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sports-grey-900);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.broadcast-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--sports-primary-color);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.broadcast-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 12px;
+    background: var(--ui-bg);
+    color: var(--sports-grey-600);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.control-btn:hover {
+    background: var(--sports-primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 199, 139, 0.3);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.next-btn svg {
+    transform: rotate(180deg);
+}
+
+.broadcast-slider {
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.slider-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    gap: 16px;
+}
+
+.broadcast-card {
+    min-width: 200px;
+    height: 140px;
+    background: var(--ui-bg);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    color: inherit;
+    border: 2px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.broadcast-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--sports-grey-100);
+    transition: all 0.3s ease;
+}
+
+.broadcast-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--sports-primary-color);
+    box-shadow: 0 8px 32px rgba(0, 199, 139, 0.2);
+}
+
+.broadcast-card:hover::before {
+    background: linear-gradient(90deg, var(--sports-primary-color), var(--sports-cyan-A700));
+}
+
+.broadcast-card.live::before {
+    background: var(--sports-red-a700);
+    animation: liveGlow 2s ease-in-out infinite;
+}
+
+@keyframes liveGlow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.card-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: contain;
+    background: var(--sports-grey-50);
+    padding: 4px;
+}
+
+.card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--sports-grey-900);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-subtitle {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 6px;
+}
+
+.card-status.live {
+    background: var(--sports-red-a700);
+    color: white;
+}
+
+.card-status.upcoming {
+    background: var(--sports-primary-light-color-hover);
+    color: var(--sports-green-850);
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.live .status-dot {
+    animation: liveDot 1.5s ease-in-out infinite;
+}
+
+@keyframes liveDot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.card-time {
+    font-size: 11px;
+    color: var(--sports-grey-500);
+    font-weight: 500;
+}
+
+.sport-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+    opacity: 0.3;
+}
+
+.broadcast-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sports-grey-300);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: var(--sports-primary-color);
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: var(--sports-primary-color-hover);
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .broadcast-container {
+        padding: 16px;
+        margin: 0 -20px;
+        border-radius: 0;
+    }
+    
+    .broadcast-title {
+        font-size: 24px;
+    }
+    
+    .broadcast-card {
+        min-width: 180px;
+        height: 120px;
+        padding: 12px;
+    }
+    
+    .card-logo {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .card-title {
+        font-size: 14px;
+    }
+    
+    .card-subtitle {
+        font-size: 11px;
+    }
+}
+
+/* Скролл для мобильных устройств */
+@media (max-width: 480px) {
+    .broadcast-slider {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .broadcast-slider::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .slider-track {
+        transition: none;
+    }
+    
+    .broadcast-controls {
+        display: none;
+    }
+} 
