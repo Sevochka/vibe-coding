@@ -1,26 +1,3 @@
-// Дата свадьбы - 30 августа 2025
-const weddingDate = new Date('2025-08-30T15:00:00');
-
-// Функция обратного отсчета
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = weddingDate.getTime() - now;
-
-    if (distance > 0) {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-        document.getElementById('days').textContent = days;
-        document.getElementById('hours').textContent = hours;
-        document.getElementById('minutes').textContent = minutes;
-    } else {
-        document.getElementById('days').textContent = '0';
-        document.getElementById('hours').textContent = '0';
-        document.getElementById('minutes').textContent = '0';
-    }
-}
-
 // Карусель
 let currentSlide = 0;
 const slides = document.querySelectorAll('.carousel-slide');
@@ -105,10 +82,6 @@ function createScrollToTopButton() {
 
 // Инициализация
 document.addEventListener('DOMContentLoaded', function() {
-    // Запуск обратного отсчета
-    updateCountdown();
-    setInterval(updateCountdown, 60000); // Обновляем каждую минуту
-
     // Инициализация карусели
     if (document.getElementById('carousel')) {
         showSlide(0);
@@ -143,51 +116,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Создаем кнопку "наверх"
     createScrollToTopButton();
 });
-
-// Обработка формы RSVP
-document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = new FormData(this);
-    const attendance = formData.get('attendance');
-    const name = formData.get('name');
-    const drinks = formData.getAll('drinks');
-    
-    // Создаем объект с данными формы
-    const rsvpData = {
-        attendance: attendance,
-        name: name,
-        drinks: drinks,
-        timestamp: new Date().toISOString()
-    };
-    
-    // Сохраняем в localStorage (в реальном проекте отправляли бы на сервер)
-    const existingData = JSON.parse(localStorage.getItem('weddingRSVP') || '[]');
-    existingData.push(rsvpData);
-    localStorage.setItem('weddingRSVP', JSON.stringify(existingData));
-    
-    // Показываем сообщение об успешной отправке
-    showSuccessMessage();
-    
-    // Очищаем форму
-    this.reset();
-});
-
-// Функция показа сообщения об успешной отправке
-function showSuccessMessage() {
-    const button = document.querySelector('.submit-btn');
-    const originalText = button.textContent;
-    
-    button.textContent = 'Спасибо! Получили ваш ответ ♥';
-    button.style.background = 'var(--accent-green)';
-    button.style.transform = 'scale(1.05)';
-    
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = 'var(--accent-red)';
-        button.style.transform = 'scale(1)';
-    }, 3000);
-}
 
 // Простые эффекты для фотографий
 function initPhotoEffects() {
@@ -260,58 +188,8 @@ function initScrollAnimations() {
     });
 }
 
-// Обработка интерактивных элементов формы
-function enhanceFormInteractivity() {
-    const radioLabels = document.querySelectorAll('.radio-label');
-    const checkboxLabels = document.querySelectorAll('.checkbox-label');
-    
-    // Эффекты для radio buttons
-    radioLabels.forEach(label => {
-        label.addEventListener('click', () => {
-            // Убираем активный класс у всех radio в группе
-            radioLabels.forEach(l => l.classList.remove('active'));
-            // Добавляем активный класс к выбранному
-            label.classList.add('active');
-        });
-    });
-    
-    // Эффекты для checkboxes
-    checkboxLabels.forEach(label => {
-        label.addEventListener('click', () => {
-            setTimeout(() => {
-                const checkbox = label.querySelector('input[type="checkbox"]');
-                if (checkbox.checked) {
-                    label.classList.add('active');
-                } else {
-                    label.classList.remove('active');
-                }
-            }, 50);
-        });
-    });
-}
-
 // Инициализация всех эффектов
 document.addEventListener('DOMContentLoaded', () => {
     initPhotoEffects();
-    enhanceFormInteractivity();
     initScrollAnimations();
-});
-
-// Добавляем стили для активных элементов формы
-const formStyles = document.createElement('style');
-formStyles.textContent = `
-    .radio-label.active,
-    .checkbox-label.active {
-        background: var(--panel-frame) !important;
-        border-color: var(--accent-red) !important;
-        color: var(--text-dark) !important;
-        font-weight: 700;
-    }
-    
-    .radio-label.active .radio-custom,
-    .checkbox-label.active .checkbox-custom {
-        border-color: var(--accent-red) !important;
-        background: var(--paper-white) !important;
-    }
-`;
-document.head.appendChild(formStyles); 
+}); 
