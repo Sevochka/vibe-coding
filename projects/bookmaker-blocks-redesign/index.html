@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Улучшенные блоки букмекеров - Рейтинг букмекеров</title>
+    <meta name="description" content="Улучшенная визуализация блоков с амбассадорами, трансляциями и партнерами букмекеров">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Заголовок проекта -->
+        <header>
+            <h1 class="section-title">Рейтинг Букмекеров</h1>
+            <p class="subtitle">Улучшенная визуализация блоков с амбассадорами, трансляциями и партнерами</p>
+        </header>
+
+        <!-- Блок с амбассадорами -->
+        <section class="section">
+            <h2 class="section-title">Амбассадоры букмекеров</h2>
+            <p class="subtitle">Знаменитости, которые представляют букмекерские компании</p>
+            
+            <div class="blocks-grid" id="ambassadors-grid">
+                <!-- Блоки амбассадоров будут добавлены через JavaScript -->
+            </div>
+        </section>
+
+        <!-- Блок с трансляциями -->
+        <section class="section">
+            <h2 class="section-title">Трансляции турниров</h2>
+            <p class="subtitle">Спортивные события доступные на платформах букмекеров</p>
+            
+            <div class="blocks-grid" id="broadcasts-grid">
+                <!-- Блоки трансляций будут добавлены через JavaScript -->
+            </div>
+        </section>
+
+        <!-- Блок с партнерами -->
+        <section class="section">
+            <h2 class="section-title">Партнеры букмекеров</h2>
+            <p class="subtitle">Клубы, турниры и организации - партнеры букмекерских компаний</p>
+            
+            <div class="blocks-grid" id="partners-grid">
+                <!-- Блоки партнеров будут добавлены через JavaScript -->
+            </div>
+        </section>
+
+        <!-- Информационный блок -->
+        <section class="section">
+            <div style="background: var(--sports-grey-50); padding: 24px; border-radius: 12px; text-align: center;">
+                <h3 style="margin: 0 0 16px 0; font-family: var(--ui-font-family-heading); font-size: 20px;">Улучшения в дизайне</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; text-align: left;">
+                    <div>
+                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Амбассадоры</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
+                            <li>Имена в две строки</li>
+                            <li>Категории деятельности</li>
+                            <li>Больше места для информации</li>
+                            <li>Заглушки для аватаров</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Трансляции</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
+                            <li>Адаптивные названия</li>
+                            <li>Live индикаторы</li>
+                            <li>Заглушки для логотипов</li>
+                            <li>Больше места для длинных названий</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin: 0 0 8px 0; color: var(--sports-primary-color); font-size: 14px;">✓ Партнеры</h4>
+                        <ul style="margin: 0; padding-left: 16px; font-size: 12px; color: var(--sports-grey-600);">
+                            <li>Типы партнерства</li>
+                            <li>Категории организаций</li>
+                            <li>Единый стиль с другими блоками</li>
+                            <li>Интерактивные элементы</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Логотип Sports.ru -->
+        <footer>
+            <a href="https://www.sports.ru/?utm_source=special-bookmaker-blocks-redesign" class="sports-logo">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru">
+            </a>
+        </footer>
+    </div>
+
+    <!-- Подключение данных -->
+    <script src="./data/ambassadors.js"></script>
+    <script src="./data/broadcasts.js"></script>
+    <script src="./data/partners.js"></script>
+    
+    <!-- Основной скрипт -->
+    <script src="./script.js"></script>
+    
+    <!-- Скрипт для автоматического изменения размера iframe -->
+    <script src="./resize.js"></script>
+</body>
+</html> 
