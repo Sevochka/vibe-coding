@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Амбассадоры Sports.ru</title>
+    <meta name="description" content="Познакомьтесь с амбассадорами Sports.ru - известными спортсменами, комментаторами и блогерами">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="https://www.sports.ru/?utm_source=special-sports-ambassadors" class="logo-link">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+            </a>
+        </header>
+
+        <main class="main">
+            <section class="ambassadors-section">
+                <div class="ambassadors-header">
+                    <h1 class="ambassadors-title">Амбассадоры Sports.ru</h1>
+                    <p class="ambassadors-subtitle">Встречайте наших партнеров — звезд спорта, журналистики и киберспорта</p>
+                </div>
+
+                <div class="ambassadors-slider">
+                    <div class="slider-controls">
+                        <button class="slider-btn prev-btn" id="prevBtn" aria-label="Предыдущий слайд">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M14.3311 18L8.25 12L14.3311 6L15.75 7.4L11.0878 12L15.75 16.6L14.3311 18Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                        <button class="slider-btn next-btn" id="nextBtn" aria-label="Следующий слайд">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M14.3311 18L8.25 12L14.3311 6L15.75 7.4L11.0878 12L15.75 16.6L14.3311 18Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="slider-container" id="sliderContainer">
+                        <div class="slider-track" id="sliderTrack">
+                            <!-- Карточки амбассадоров будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="slider-dots" id="sliderDots">
+                        <!-- Точки навигации будут добавлены через JavaScript -->
+                    </div>
+                </div>
+
+                <div class="ambassadors-grid" id="ambassadorsGrid">
+                    <!-- Сетка амбассадоров будет добавлена через JavaScript -->
+                </div>
+
+                <div class="view-toggle">
+                    <button class="toggle-btn active" id="sliderToggle">Слайдер</button>
+                    <button class="toggle-btn" id="gridToggle">Сетка</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p class="footer-text">© 2024 Sports.ru. Все права защищены.</p>
+        </footer>
+    </div>
+
+    <script src="./data/ambassadors.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
