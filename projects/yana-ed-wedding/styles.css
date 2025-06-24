@@ -59,7 +59,7 @@ section {
     background-repeat: no-repeat;
 }
 
-/* Более яркие полупрозрачные фоны для всех секций */
+/* Еще более яркие полупрозрачные фоны для всех секций */
 section::before {
     content: '';
     position: absolute;
@@ -67,8 +67,8 @@ section::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: brightness(0.85) contrast(0.9) saturate(0.8);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: brightness(0.95) contrast(1.0) saturate(1.1);
     z-index: 0;
 }
 
@@ -532,14 +532,14 @@ section::before {
     text-justify: inter-word;
 }
 
-/* Денежная секция с адаптивным фоном chasbik */
+/* Денежная секция с адаптивным горизонтальным фоном money */
 .money-section-part {
     margin: 40px 0;
     padding: 40px;
     position: relative;
     overflow: hidden;
-    background-image: url('./images/chasbik.jpg');
-    background-size: contain;
+    background-image: url('./images/money.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     border-radius: var(--border-radius);
@@ -547,17 +547,6 @@ section::before {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.money-section-part::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8);
-    z-index: 1;
 }
 
 .money-animation {
@@ -844,6 +833,25 @@ section::before {
 .heart-message {
     font-size: 1rem;
     font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.heart-reset-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: "Poiret One", sans-serif;
+}
+
+.heart-reset-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
 }
 
 /* Анимация сердечек */
@@ -959,9 +967,15 @@ h1, h2, h3, h4, h5, h6 {
         min-width: 180px;
     }
     
-    /* Адаптивный chasbik на планшетах */
+    .heart-reset-btn {
+        font-size: 0.8rem;
+        padding: 4px 10px;
+    }
+    
+    /* Адаптивный money на планшетах */
     .money-section-part {
         background-size: cover;
+        background-position: center;
         min-height: 250px;
     }
 }
@@ -1082,7 +1096,12 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.9rem;
     }
     
-    /* Адаптивный chasbik на мобильных */
+    .heart-reset-btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
+    /* Адаптивный money на мобильных */
     .money-section-part {
         background-size: cover;
         background-position: center;
@@ -1243,9 +1262,14 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.8rem;
     }
     
-    /* Адаптивный chasbik на маленьких экранах */
+    .heart-reset-btn {
+        font-size: 0.7rem;
+        padding: 3px 6px;
+    }
+    
+    /* Адаптивный money на маленьких экранах */
     .money-section-part {
-        background-size: contain;
+        background-size: cover;
         background-position: center;
         min-height: 180px;
     }

@@ -207,7 +207,9 @@ class HeartClicker {
     constructor() {
         this.heartCount = 0;
         this.heartCountElement = document.getElementById('heart-count');
+        this.resetButton = document.getElementById('heart-reset');
         this.initClickablePhotos();
+        this.initResetButton();
         this.loadHeartCount();
     }
     
@@ -217,6 +219,12 @@ class HeartClicker {
         clickablePhotos.forEach(photo => {
             photo.addEventListener('click', (e) => this.onPhotoClick(e));
         });
+    }
+    
+    initResetButton() {
+        if (this.resetButton) {
+            this.resetButton.addEventListener('click', () => this.resetHeartCount());
+        }
     }
     
     onPhotoClick(event) {
@@ -252,6 +260,19 @@ class HeartClicker {
         this.heartCount++;
         this.heartCountElement.textContent = this.heartCount;
         this.saveHeartCount();
+    }
+    
+    resetHeartCount() {
+        this.heartCount = 0;
+        this.heartCountElement.textContent = this.heartCount;
+        this.saveHeartCount();
+        
+        // Добавляем визуальный эффект сброса
+        const resetButton = this.resetButton;
+        resetButton.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            resetButton.style.transform = 'scale(1)';
+        }, 150);
     }
     
     saveHeartCount() {
