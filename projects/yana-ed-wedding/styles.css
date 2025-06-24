@@ -46,9 +46,9 @@ body {
     width: 100%;
 }
 
-/* Общие стили секций - единая страница */
+/* Общие стили секций - компактнее на десктопе */
 section {
-    padding: 80px 0;
+    padding: 40px 0;
     margin: 0;
     width: 100%;
     background: var(--white-bg);
@@ -57,7 +57,7 @@ section {
     align-items: center;
 }
 
-/* Убираем все декорации - больше никаких детских рисунков */
+/* Убираем все декорации */
 section::before,
 section::after,
 .decoration-1,
@@ -74,6 +74,7 @@ section::after,
     background: var(--white-bg);
     color: var(--text-dark);
     min-height: 100vh;
+    padding: 60px 0;
 }
 
 .intro-content {
@@ -129,6 +130,7 @@ section::after,
     background: var(--soft-pink-bg);
     color: var(--text-dark);
     min-height: 100vh;
+    padding: 60px 0;
 }
 
 .date-content {
@@ -163,7 +165,7 @@ section::after,
     font-size: 2.4rem;
     font-weight: 600;
     color: var(--text-dark);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .love-image {
@@ -184,6 +186,7 @@ section::after,
 .location-section {
     background: var(--white-bg);
     color: var(--text-dark);
+    padding: 40px 0;
 }
 
 .location-content {
@@ -229,17 +232,18 @@ section::after,
     text-justify: inter-word;
 }
 
-/* Timeline section - фон прозрачный, текст без подложки */
+/* Timeline section - фон panel.jpg с приглушением */
 .timeline-section {
     background: var(--white-bg);
-    background-image: url('./images/time.jpg');
+    background-image: url('./images/panel.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
+    padding: 40px 0;
 }
 
-/* Прозрачный фон для читаемости */
+/* Приглушенный фон для читаемости */
 .timeline-section::before {
     content: '';
     position: absolute;
@@ -247,14 +251,14 @@ section::after,
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.7);
     z-index: 0;
 }
 
 .timeline-content {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
@@ -266,7 +270,7 @@ section::after,
     display: flex;
     align-items: center;
     gap: 30px;
-    padding: 20px;
+    padding: 15px;
     border-radius: var(--border-radius);
 }
 
@@ -275,7 +279,7 @@ section::after,
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--text-dark);
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     padding: 15px 20px;
     border-radius: var(--border-radius);
     min-width: 160px;
@@ -291,21 +295,22 @@ section::after,
     text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
 }
 
-/* Concept section - фон прозрачный, текст без подложки */
+/* Concept section - фон parents.jpg с приглушением */
 .concept-section {
     background: var(--white-bg);
-    background-image: url('./images/pov.jpg');
+    background-image: url('./images/parents.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: var(--text-dark);
     position: relative;
+    padding: 40px 0;
 }
 
-/* Прозрачный фон для читаемости */
+/* Приглушенный фон для читаемости */
 .concept-section::before {
     content: '';
     position: absolute;
@@ -313,7 +318,7 @@ section::after,
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.7);
     z-index: 0;
 }
 
@@ -350,7 +355,7 @@ section::after,
     text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .concept-text p:last-child {
@@ -360,6 +365,7 @@ section::after,
 /* Dresscode section */
 .dresscode-section {
     background: var(--white-bg);
+    padding: 40px 0;
 }
 
 .dresscode-content {
@@ -370,7 +376,7 @@ section::after,
 
 .dresscode-text {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .dresscode-text p {
@@ -398,6 +404,7 @@ section::after,
 .expectations-section {
     background: var(--white-bg);
     color: var(--text-dark);
+    padding: 40px 0;
 }
 
 .expectations-content {
@@ -408,17 +415,17 @@ section::after,
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     align-items: center;
 }
 
 .slider-group {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     width: 100%;
 }
 
 .slider-group:last-of-type {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .slider-title {
@@ -491,13 +498,14 @@ section::after,
     font-size: 1.7rem;
     font-weight: 400;
     color: var(--text-dark);
-    margin: 40px 0 80px 0;
+    margin: 20px 0 0 0;
     text-align: center;
 }
 
 /* Gifts creative section */
 .gifts-creative-section {
     background: var(--white-bg);
+    padding: 40px 0;
 }
 
 .gifts-content {
@@ -517,8 +525,8 @@ section::after,
 
 /* Денежная секция с фоном chasbik */
 .money-section-part {
-    margin: 60px 0;
-    padding: 60px 40px;
+    margin: 40px 0;
+    padding: 40px;
     position: relative;
     overflow: hidden;
     background-image: url('./images/chasbik.jpg');
@@ -622,19 +630,20 @@ section::after,
 /* Gifts alternative section */
 .gifts-alternative-section {
     background: var(--white-bg);
+    padding: 40px 0;
 }
 
 .gifts-alt-content {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
 }
 
 .gifts-alt-text {
-    padding: 40px;
+    padding: 20px;
     border-radius: var(--border-radius);
 }
 
@@ -660,7 +669,7 @@ section::after,
 }
 
 .contact-info {
-    padding: 40px;
+    padding: 20px;
     border-radius: var(--border-radius);
 }
 
@@ -711,6 +720,7 @@ section::after,
 .final-section {
     background: var(--white-bg);
     color: var(--text-dark);
+    padding: 40px 0;
 }
 
 .final-content {
@@ -722,25 +732,6 @@ section::after,
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-}
-
-/* Видео love перед финальным текстом */
-.love-video-container {
-    margin-bottom: 40px;
-    text-align: center;
-    padding: 30px;
-    border: 3px solid var(--primary-pink);
-    border-radius: var(--border-radius);
-    background: linear-gradient(45deg, #FFE4E6, #FFF0F1);
-    box-shadow: var(--shadow);
-}
-
-.love-video {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
 }
 
 .final-text {
@@ -809,7 +800,7 @@ section::after,
     font-family: "Pangolin", cursive;
     font-weight: 400;
     font-size: 2.8rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-align: center;
     color: var(--text-dark);
     line-height: 1.2;
@@ -841,6 +832,10 @@ h1, h2, h3, h4, h5, h6 {
     .container {
         max-width: 100%;
         padding: 0 30px;
+    }
+    
+    section {
+        padding: 50px 0;
     }
     
     .intro-content {
@@ -887,11 +882,12 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 60px 0;
+        padding: 40px 0;
     }
     
     .section-title {
         font-size: 2.3rem;
+        margin-bottom: 1rem;
     }
     
     .date-title {
@@ -914,7 +910,7 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: column;
         text-align: center;
         gap: 20px;
-        padding: 20px 15px;
+        padding: 15px 10px;
     }
     
     .timeline-time {
@@ -945,7 +941,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .gifts-alt-content {
-        gap: 30px;
+        gap: 25px;
     }
     
     .couple-photos {
@@ -980,14 +976,6 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.4rem;
         white-space: normal;
     }
-    
-    .love-video {
-        max-width: 350px;
-    }
-    
-    .love-video-container {
-        padding: 20px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -996,24 +984,21 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 40px 0;
+        padding: 30px 0;
     }
     
     .gifts-alt-text,
     .contact-info {
-        padding: 30px 20px;
+        padding: 15px;
     }
     
     .timeline-item {
-        padding: 15px 10px;
-    }
-    
-    .concept-content {
-        padding: 30px 20px;
+        padding: 10px 5px;
     }
     
     .section-title {
         font-size: 2rem;
+        margin-bottom: 1rem;
     }
     
     .date-title {
@@ -1099,7 +1084,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .slider-group {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
     
     .nastolki-photo,
@@ -1129,13 +1114,5 @@ h1, h2, h3, h4, h5, h6 {
     /* Фото love на маленьких экранах */
     .love-photo {
         max-width: 300px;
-    }
-    
-    .love-video {
-        max-width: 280px;
-    }
-    
-    .love-video-container {
-        padding: 20px;
     }
 } 
