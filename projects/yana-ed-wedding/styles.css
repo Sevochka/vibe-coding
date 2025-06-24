@@ -55,6 +55,9 @@ section {
     position: relative;
     display: flex;
     align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Убираем все декорации */
@@ -69,9 +72,21 @@ section::after,
     display: none !important;
 }
 
-/* Intro section */
+/* Полупрозрачные фоны для всех секций */
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 0;
+}
+
+/* Intro section - фон panelki */
 .intro-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki.jpg');
     color: var(--text-dark);
     min-height: 100vh;
     padding: 60px 0;
@@ -85,6 +100,8 @@ section::after,
     color: var(--text-dark);
     width: 100%;
     max-width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .intro-photo {
@@ -110,6 +127,12 @@ section::after,
     object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.main-couple-photo:hover {
+    transform: scale(1.02);
 }
 
 .intro-text {
@@ -125,9 +148,9 @@ section::after,
     text-justify: inter-word;
 }
 
-/* Date section - нежно-розовый фон и увеличенное фото */
+/* Date section - фон panelki2 */
 .date-section {
-    background: var(--soft-pink-bg);
+    background-image: url('./images/panelki2.jpg');
     color: var(--text-dark);
     min-height: 100vh;
     padding: 60px 0;
@@ -139,6 +162,8 @@ section::after,
     max-width: 600px;
     margin: 0 auto;
     padding: 40px 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .date-title {
@@ -180,11 +205,17 @@ section::after,
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-/* Location section */
+.love-photo:hover {
+    transform: scale(1.02);
+}
+
+/* Location section - фон panelki3 */
 .location-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki3.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
@@ -195,6 +226,8 @@ section::after,
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .venue-name {
@@ -221,6 +254,13 @@ section::after,
     object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.zal-photo:hover,
+.mondrian-photo:hover {
+    transform: scale(1.02);
 }
 
 .parking-note p {
@@ -232,27 +272,10 @@ section::after,
     text-justify: inter-word;
 }
 
-/* Timeline section - фон panel.jpg с приглушением */
+/* Timeline section - фон panelki4 */
 .timeline-section {
-    background: var(--white-bg);
-    background-image: url('./images/panel.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
+    background-image: url('./images/panelki4.jpg');
     padding: 40px 0;
-}
-
-/* Приглушенный фон для читаемости */
-.timeline-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 0;
 }
 
 .timeline-content {
@@ -288,6 +311,7 @@ section::after,
 }
 
 .timeline-desc {
+    font-family: "Poiret One", sans-serif;
     font-size: 1.4rem;
     line-height: 1.6;
     flex: 1;
@@ -295,31 +319,13 @@ section::after,
     text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
 }
 
-/* Concept section - фон parents.jpg с приглушением */
+/* Concept section - фон panelki5 */
 .concept-section {
-    background: var(--white-bg);
-    background-image: url('./images/parents.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-image: url('./images/panelki5.jpg');
     color: var(--text-dark);
-    position: relative;
     padding: 40px 0;
-}
-
-/* Приглушенный фон для читаемости */
-.concept-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 0;
 }
 
 .concept-content {
@@ -348,6 +354,7 @@ section::after,
 }
 
 .concept-text p {
+    font-family: "Poiret One", sans-serif;
     font-size: 1.5rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
@@ -355,16 +362,15 @@ section::after,
     text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.9);
 }
 
 .concept-text p:last-child {
     margin-bottom: 0;
 }
 
-/* Dresscode section */
+/* Dresscode section - фон panelki6 */
 .dresscode-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki6.jpg');
     padding: 40px 0;
 }
 
@@ -372,6 +378,8 @@ section::after,
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .dresscode-text {
@@ -398,11 +406,17 @@ section::after,
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
-/* Expectations section */
+.colors-photo:hover {
+    transform: scale(1.02);
+}
+
+/* Expectations section - фон panelki7 */
 .expectations-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki7.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
@@ -417,6 +431,8 @@ section::after,
     flex-direction: column;
     gap: 30px;
     align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .slider-group {
@@ -464,6 +480,12 @@ section::after,
     height: 100%;
     object-fit: contain;
     object-position: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.vertical-carousel .carousel-slide img:hover {
+    transform: scale(1.02);
 }
 
 .carousel-btn {
@@ -502,9 +524,9 @@ section::after,
     text-align: center;
 }
 
-/* Gifts creative section */
+/* Gifts creative section - фон panelki8 */
 .gifts-creative-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki8.jpg');
     padding: 40px 0;
 }
 
@@ -513,6 +535,8 @@ section::after,
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .gifts-text p {
@@ -531,7 +555,7 @@ section::after,
     overflow: hidden;
     background-image: url('./images/chasbik.jpg');
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-repeat: no-repeat;
     border-radius: var(--border-radius);
 }
@@ -627,9 +651,9 @@ section::after,
     }
 }
 
-/* Gifts alternative section */
+/* Gifts alternative section - фон panelki9 */
 .gifts-alternative-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki9.jpg');
     padding: 40px 0;
 }
 
@@ -640,6 +664,8 @@ section::after,
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .gifts-alt-text {
@@ -666,6 +692,12 @@ section::after,
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.nastolki-photo:hover {
+    transform: scale(1.02);
 }
 
 .contact-info {
@@ -716,9 +748,9 @@ section::after,
     font-weight: 400;
 }
 
-/* Final section */
+/* Final section - фон panelki10 */
 .final-section {
-    background: var(--white-bg);
+    background-image: url('./images/panelki10.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
@@ -732,6 +764,8 @@ section::after,
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
 }
 
 .final-text {
@@ -774,6 +808,12 @@ section::after,
     object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.couple-photo:hover {
+    transform: scale(1.02);
 }
 
 .postscript {
@@ -788,6 +828,54 @@ section::after,
     color: var(--text-gray);
     text-align: justify;
     text-justify: inter-word;
+}
+
+/* Кликер сердечек */
+.heart-clicker {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--primary-pink);
+    color: white;
+    padding: 15px 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    z-index: 1000;
+    font-family: "Poiret One", sans-serif;
+    text-align: center;
+    min-width: 200px;
+}
+
+.heart-counter {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.heart-message {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Анимация сердечек */
+.floating-heart {
+    position: fixed;
+    font-size: 2rem;
+    color: var(--heart-color);
+    pointer-events: none;
+    z-index: 999;
+    animation: floatUp 2s ease-out forwards;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
 }
 
 /* Контент поверх декораций */
@@ -873,6 +961,13 @@ h1, h2, h3, h4, h5, h6 {
     .couple-photo {
         width: 250px;
         height: 170px;
+    }
+    
+    .heart-clicker {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px 15px;
+        min-width: 180px;
     }
 }
 
@@ -975,6 +1070,26 @@ h1, h2, h3, h4, h5, h6 {
     .venue-address {
         font-size: 1.4rem;
         white-space: normal;
+    }
+    
+    /* Исправление chasbik на мобильных - показываем лицо */
+    .money-section-part {
+        background-position: center 20%;
+    }
+    
+    .heart-clicker {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px 12px;
+        min-width: 160px;
+    }
+    
+    .heart-counter {
+        font-size: 1.1rem;
+    }
+    
+    .heart-message {
+        font-size: 0.9rem;
     }
 }
 
@@ -1114,5 +1229,25 @@ h1, h2, h3, h4, h5, h6 {
     /* Фото love на маленьких экранах */
     .love-photo {
         max-width: 300px;
+    }
+    
+    /* Улучшенное позиционирование chasbik для показа лица */
+    .money-section-part {
+        background-position: center 30%;
+    }
+    
+    .heart-clicker {
+        bottom: 5px;
+        right: 5px;
+        padding: 8px 10px;
+        min-width: 140px;
+    }
+    
+    .heart-counter {
+        font-size: 1rem;
+    }
+    
+    .heart-message {
+        font-size: 0.8rem;
     }
 } 

@@ -168,6 +168,104 @@ function initColorPalette() {
     });
 }
 
+// Карусель
+class Carousel {
+    constructor(carouselId) {
+        this.carousel = document.getElementById(`carousel-${carouselId}`);
+        this.currentIndex = 0;
+        this.slides = this.carousel.querySelectorAll('.carousel-slide');
+        this.totalSlides = this.slides.length;
+        
+        // Добавляем обработчики событий для кнопок
+        const prevBtn = document.querySelector(`[data-carousel="${carouselId}"].prev`);
+        const nextBtn = document.querySelector(`[data-carousel="${carouselId}"].next`);
+        
+        if (prevBtn) prevBtn.addEventListener('click', () => this.prev());
+        if (nextBtn) nextBtn.addEventListener('click', () => this.next());
+        
+        this.updateCarousel();
+    }
+    
+    updateCarousel() {
+        const translateX = -this.currentIndex * 100;
+        this.carousel.style.transform = `translateX(${translateX}%)`;
+    }
+    
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.updateCarousel();
+    }
+    
+    prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
+    }
+}
+
+// Кликер сердечек
+class HeartClicker {
+    constructor() {
+        this.heartCount = 0;
+        this.heartCountElement = document.getElementById('heart-count');
+        this.initClickablePhotos();
+        this.loadHeartCount();
+    }
+    
+    initClickablePhotos() {
+        const clickablePhotos = document.querySelectorAll('.clickable-photo');
+        clickablePhotos.forEach(photo => {
+            photo.addEventListener('click', (e) => this.onPhotoClick(e));
+        });
+    }
+    
+    onPhotoClick(event) {
+        const rect = event.target.getBoundingClientRect();
+        const x = event.clientX;
+        const y = event.clientY;
+        
+        // Создаем летящее сердечко
+        this.createFloatingHeart(x, y);
+        
+        // Увеличиваем счетчик
+        this.incrementHeartCount();
+    }
+    
+    createFloatingHeart(x, y) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.textContent = '❤️';
+        heart.style.left = x + 'px';
+        heart.style.top = y + 'px';
+        
+        document.body.appendChild(heart);
+        
+        // Удаляем сердечко после анимации
+        setTimeout(() => {
+            if (heart.parentNode) {
+                heart.parentNode.removeChild(heart);
+            }
+        }, 2000);
+    }
+    
+    incrementHeartCount() {
+        this.heartCount++;
+        this.heartCountElement.textContent = this.heartCount;
+        this.saveHeartCount();
+    }
+    
+    saveHeartCount() {
+        localStorage.setItem('wedding-heart-count', this.heartCount.toString());
+    }
+    
+    loadHeartCount() {
+        const saved = localStorage.getItem('wedding-heart-count');
+        if (saved) {
+            this.heartCount = parseInt(saved, 10) || 0;
+            this.heartCountElement.textContent = this.heartCount;
+        }
+    }
+}
+
 // Инициализация всех функций
 document.addEventListener('DOMContentLoaded', function() {
     // Инициализация каруселей
@@ -192,4 +290,11 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.body.classList.add('loaded');
     }, 100);
+    
+    // Инициализируем карусели
+    new Carousel('girls');
+    new Carousel('boys');
+    
+    // Инициализируем кликер сердечек
+    new HeartClicker();
 }); 
