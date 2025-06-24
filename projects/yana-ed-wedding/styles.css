@@ -9,11 +9,12 @@
     --base-beige: #F5E6D3;
     --base-black: #2C2C2C;
     --base-brown: #8B4513;
+    --peach-bg: #FFF5F0;
     --text-dark: #2C2C2C;
     --text-light: #FFFFFF;
     --text-gray: #666666;
     --bg-light: #FFFFFF;
-    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --bg-overlay: rgba(0, 0, 0, 0.4);
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     --border-radius: 15px;
 }
@@ -64,10 +65,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 1 экран - Intro */
 .intro-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--text-light);
+    background: var(--peach-bg);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -83,6 +82,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--border-radius);
     color: var(--text-dark);
     width: 100%;
+    max-width: 100%;
 }
 
 .intro-photo {
@@ -100,27 +100,36 @@ h1, h2, h3, h4, h5, h6 {
 
 .main-couple-photo {
     width: 100%;
-    height: 400px;
+    height: auto;
+    aspect-ratio: 3/4;
     object-fit: cover;
+    object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
 .intro-text {
     flex: 1;
+    text-align: justify;
+    hyphens: auto;
 }
 
 .intro-text p {
     font-size: 1.3rem;
     line-height: 1.7;
     font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* 2 экран - Date */
 .date-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./images/panelki2.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    filter: blur(0.5px);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -134,6 +143,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .date-title {
@@ -147,9 +158,12 @@ h1, h2, h3, h4, h5, h6 {
 .main-date {
     font-family: "Pangolin", cursive;
     font-size: 2.5rem;
-    font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 1rem;
+}
+
+.main-date strong {
+    font-weight: 700;
 }
 
 .date-subtitle {
@@ -160,10 +174,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 3 экран - Location */
 .location-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki3.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki3.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    color: var(--text-light);
+    filter: blur(0.5px);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -177,6 +194,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--border-radius);
     text-align: center;
     width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .venue-name {
@@ -198,13 +217,18 @@ h1, h2, h3, h4, h5, h6 {
     font-style: italic;
     color: var(--text-gray);
     line-height: 1.6;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* 4 экран - Timeline */
 .timeline-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./images/panelki.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    filter: blur(0.5px);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -216,6 +240,8 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 30px;
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .timeline-item {
@@ -244,14 +270,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3rem;
     line-height: 1.6;
     flex: 1;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* 5 экран - Concept */
 .concept-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki2.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    color: var(--text-light);
+    filter: blur(0.5px);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -265,6 +296,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .concept-subtitle {
@@ -279,13 +312,18 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* 6 экран - Dresscode */
 .dresscode-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./images/panelki3.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki3.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    filter: blur(0.5px);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -298,6 +336,8 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .dresscode-text {
@@ -309,12 +349,12 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .color-palette {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+    margin: 30px 0;
 }
 
 .color-group h3 {
@@ -360,22 +400,29 @@ h1, h2, h3, h4, h5, h6 {
 .accent-blue { background: var(--primary-blue); }
 .accent-yellow { background: var(--primary-yellow); }
 .accent-green { background: var(--primary-green); }
-.base-gray { background: var(--base-gray); }
-.base-beige { background: var(--base-beige); }
-.base-black { background: var(--base-black); }
-.base-brown { background: var(--base-brown); }
 
 .color-item span {
     font-weight: 400;
     font-size: 1.1rem;
 }
 
+.palette-image {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.colors-photo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
 /* 7 экран - Expectations */
 .expectations-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--text-light);
+    background: var(--peach-bg);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -389,6 +436,8 @@ h1, h2, h3, h4, h5, h6 {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .slider-group {
@@ -407,9 +456,10 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 20px;
 }
 
-.carousel-container {
+.vertical-carousel {
     position: relative;
-    max-width: 400px;
+    width: 100%;
+    max-width: 300px;
     margin: 0 auto 2rem;
     overflow: hidden;
     border-radius: var(--border-radius);
@@ -426,10 +476,12 @@ h1, h2, h3, h4, h5, h6 {
     flex-shrink: 0;
 }
 
-.carousel-slide img {
+.vertical-carousel .carousel-slide img {
     width: 100%;
-    height: 500px;
+    height: auto;
+    aspect-ratio: 3/4;
     object-fit: cover;
+    object-position: center;
 }
 
 .carousel-btn {
@@ -469,9 +521,12 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 8 экран - Gifts Creative */
 .gifts-creative-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./images/panelki2.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    filter: blur(0.5px);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -485,24 +540,40 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: var(--shadow);
     text-align: center;
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gift-boxes {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.gift-boxes-image {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .gifts-text p {
     font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 /* 9 экран - Gifts Money */
 .gifts-money-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki3.jpg');
-    background-size: cover;
-    background-position: center;
-    color: var(--text-light);
+    background: var(--peach-bg);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .gifts-money-content {
@@ -512,6 +583,54 @@ h1, h2, h3, h4, h5, h6 {
     padding: 60px 40px;
     border-radius: var(--border-radius);
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.money-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.money-animation::before,
+.money-animation::after {
+    content: '💰 💵 💰 💵 💰';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    font-size: 2rem;
+    animation: falling 4s linear infinite;
+    opacity: 0.7;
+}
+
+.money-animation::after {
+    animation-delay: 2s;
+    content: '💵 💰 💵 💰 💵';
+}
+
+@keyframes falling {
+    0% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.7;
+    }
+    90% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px));
+        opacity: 0;
+    }
 }
 
 .gifts-money-content h2 {
@@ -520,13 +639,18 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     color: var(--text-dark);
     line-height: 1.4;
+    position: relative;
+    z-index: 2;
 }
 
 /* 10 экран - Gifts Alternative */
 .gifts-alternative-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('./images/panelki.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    filter: blur(0.5px);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -538,6 +662,8 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 40px;
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .gifts-alt-text {
@@ -551,6 +677,21 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.3rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.nastolki-image {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.nastolki-photo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .contact-info {
@@ -580,6 +721,8 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.2rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .organizer-contact {
@@ -603,10 +746,13 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 11 экран - Final */
 .final-section {
-    background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./images/panelki2.jpg');
-    background-size: cover;
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
+                url('./images/panelki2.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
-    color: var(--text-light);
+    filter: blur(0.5px);
+    color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -616,12 +762,14 @@ h1, h2, h3, h4, h5, h6 {
 .final-content {
     display: flex;
     gap: 40px;
-    align-items: center;
+    align-items: flex-start;
     background: rgba(255, 255, 255, 0.95);
     padding: 50px;
     border-radius: var(--border-radius);
     color: var(--text-dark);
     width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .final-text {
@@ -634,6 +782,8 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     margin-bottom: 2rem;
     line-height: 1.4;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .signature {
@@ -644,15 +794,23 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 2rem;
 }
 
+.postscript {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+
 .postscript p {
     font-size: 1.2rem;
     line-height: 1.6;
     font-style: italic;
     color: var(--text-gray);
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .final-photo {
-    flex: 0 0 250px;
+    flex: 0 0 200px;
 }
 
 .couple-photos {
@@ -663,8 +821,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .couple-photo {
     width: 100%;
-    height: 150px;
+    height: auto;
+    aspect-ratio: 3/4;
     object-fit: cover;
+    object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
@@ -685,12 +845,18 @@ h1, h2, h3, h4, h5, h6 {
         flex: 0 0 280px;
     }
     
-    .main-couple-photo {
-        height: 350px;
-    }
-    
     .main-title {
         font-size: 2.2rem;
+    }
+    
+    .date-content,
+    .location-content,
+    .concept-content,
+    .dresscode-content,
+    .expectations-content,
+    .gifts-content,
+    .gifts-money-content {
+        max-width: 100%;
     }
 }
 
@@ -735,10 +901,6 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0 auto;
     }
     
-    .main-couple-photo {
-        height: 300px;
-    }
-    
     .timeline-item {
         flex-direction: column;
         text-align: center;
@@ -758,10 +920,6 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.2rem;
     }
     
-    .color-palette {
-        gap: 30px;
-    }
-    
     .colors-row {
         justify-content: center;
         gap: 15px;
@@ -777,12 +935,12 @@ h1, h2, h3, h4, h5, h6 {
         height: 50px;
     }
     
-    .carousel-container {
+    .vertical-carousel {
         max-width: 100%;
     }
     
-    .carousel-slide img {
-        height: 280px;
+    .slider-title {
+        font-size: 1.8rem;
     }
     
     .carousel-btn {
@@ -803,7 +961,14 @@ h1, h2, h3, h4, h5, h6 {
     
     .couple-photo {
         width: 120px;
-        height: 120px;
+        height: auto;
+        aspect-ratio: 3/4;
+    }
+    
+    .gift-boxes-image,
+    .nastolki-photo,
+    .colors-photo {
+        max-width: 250px;
     }
 }
 
@@ -863,14 +1028,6 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2rem;
     }
     
-    .carousel-slide img {
-        height: 220px;
-    }
-    
-    .main-couple-photo {
-        height: 250px;
-    }
-    
     .couple-photos {
         flex-direction: column;
         gap: 10px;
@@ -878,7 +1035,10 @@ h1, h2, h3, h4, h5, h6 {
     
     .couple-photo {
         width: 100%;
-        height: 100px;
+        max-width: 200px;
+        height: auto;
+        aspect-ratio: 3/4;
+        margin: 0 auto;
     }
     
     .intro-text p,
@@ -942,6 +1102,25 @@ h1, h2, h3, h4, h5, h6 {
     
     .contact-info h4 {
         font-size: 1.4rem;
+    }
+    
+    .slider-title {
+        font-size: 1.6rem;
+    }
+    
+    .slider-group {
+        margin-bottom: 30px;
+    }
+    
+    .gift-boxes-image,
+    .nastolki-photo,
+    .colors-photo {
+        max-width: 200px;
+    }
+    
+    .money-animation::before,
+    .money-animation::after {
+        font-size: 1.5rem;
     }
 }
 

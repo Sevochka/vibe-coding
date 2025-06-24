@@ -95,61 +95,27 @@ function initCarousels() {
     showSlide('carousel-girls', 0);
     showSlide('carousel-boys', 0);
 
-    // Автоматическая прокрутка для девочек
-    let autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
-    
-    // Автоматическая прокрутка для мальчиков
-    let autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
-
-    // Обработчики кнопок
+    // Обработчики кнопок (только ручное управление)
     document.querySelectorAll('.carousel-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const carouselType = btn.getAttribute('data-carousel');
             const isNext = btn.classList.contains('next');
             
             if (carouselType === 'girls') {
-                clearInterval(autoSlideGirlsInterval);
                 if (isNext) {
                     nextSlide('girls');
                 } else {
                     prevSlide('girls');
                 }
-                autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
             } else if (carouselType === 'boys') {
-                clearInterval(autoSlideBоysInterval);
                 if (isNext) {
                     nextSlide('boys');
                 } else {
                     prevSlide('boys');
                 }
-                autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
             }
         });
     });
-
-    // Пауза при наведении на карусели
-    const girlsContainer = document.querySelector('#carousel-girls').closest('.carousel-container');
-    const boysContainer = document.querySelector('#carousel-boys').closest('.carousel-container');
-
-    if (girlsContainer) {
-        girlsContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideGirlsInterval);
-        });
-        
-        girlsContainer.addEventListener('mouseleave', () => {
-            autoSlideGirlsInterval = setInterval(() => nextSlide('girls'), 5000);
-        });
-    }
-
-    if (boysContainer) {
-        boysContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoSlideBоysInterval);
-        });
-        
-        boysContainer.addEventListener('mouseleave', () => {
-            autoSlideBоysInterval = setInterval(() => nextSlide('boys'), 5500);
-        });
-    }
 }
 
 // Эффекты для фотографий
