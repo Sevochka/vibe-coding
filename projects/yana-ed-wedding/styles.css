@@ -30,7 +30,7 @@ body {
     font-weight: 400;
     color: var(--text-dark);
     line-height: 1.6;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .container {
@@ -42,7 +42,7 @@ body {
 
 /* Общие стили секций */
 section {
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: auto;
     width: 100%;
     background: var(--peach-bg);
@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
 .intro-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -115,7 +115,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .intro-text p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.7;
     font-weight: 400;
     text-align: justify;
@@ -125,7 +125,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 2 экран - Date */
 .date-section {
     background: var(--peach-bg);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -158,7 +158,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .date-subtitle {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     color: var(--text-gray);
     margin-bottom: 3rem;
 }
@@ -167,7 +167,7 @@ h1, h2, h3, h4, h5, h6 {
 .location-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -190,13 +190,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .venue-address {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-bottom: 2rem;
     color: var(--text-gray);
 }
 
 .parking-note p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-style: italic;
     color: var(--text-gray);
     line-height: 1.6;
@@ -207,7 +207,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 4 экран - Timeline */
 .timeline-section {
     background: var(--peach-bg);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -226,10 +226,8 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     gap: 30px;
-    background: rgba(255, 255, 255, 0.7);
     padding: 30px;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
 }
 
 .timeline-time {
@@ -245,7 +243,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .timeline-desc {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.6;
     flex: 1;
     text-align: justify;
@@ -256,7 +254,7 @@ h1, h2, h3, h4, h5, h6 {
 .concept-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -279,7 +277,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .concept-text p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
@@ -289,17 +287,13 @@ h1, h2, h3, h4, h5, h6 {
 /* 6 экран - Dresscode */
 .dresscode-section {
     background: var(--peach-bg);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
 }
 
 .dresscode-content {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -311,64 +305,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dresscode-text p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
     text-justify: inter-word;
-}
-
-.color-palette {
-    margin: 30px 0;
-}
-
-.color-group h3 {
-    font-family: "Pangolin", cursive;
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    color: var(--text-dark);
-    font-weight: 400;
-}
-
-.colors-row {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.color-item {
-    text-align: center;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px 15px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
-    min-width: 100px;
-}
-
-.color-item:hover {
-    transform: translateY(-5px);
-}
-
-.color-swatch {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin: 0 auto 10px;
-    border: 3px solid white;
-    box-shadow: var(--shadow);
-}
-
-.accent-pink { background: var(--primary-pink); }
-.accent-blue { background: var(--primary-blue); }
-.accent-yellow { background: var(--primary-yellow); }
-.accent-green { background: var(--primary-green); }
-
-.color-item span {
-    font-weight: 400;
-    font-size: 1.1rem;
 }
 
 .palette-image {
@@ -388,7 +329,7 @@ h1, h2, h3, h4, h5, h6 {
 .expectations-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -421,7 +362,8 @@ h1, h2, h3, h4, h5, h6 {
 .vertical-carousel {
     position: relative;
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
+    height: 400px;
     margin: 0 auto 2rem;
     overflow: hidden;
     border-radius: var(--border-radius);
@@ -431,18 +373,19 @@ h1, h2, h3, h4, h5, h6 {
 .carousel-track {
     display: flex;
     transition: transform 0.5s ease;
+    height: 100%;
 }
 
 .carousel-slide {
     min-width: 100%;
     flex-shrink: 0;
+    height: 100%;
 }
 
 .vertical-carousel .carousel-slide img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 3/4;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     object-position: center;
 }
 
@@ -475,7 +418,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .reality-text {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     font-weight: 400;
     color: var(--text-dark);
     margin-top: 20px;
@@ -484,17 +427,13 @@ h1, h2, h3, h4, h5, h6 {
 /* 8 экран - Gifts Creative */
 .gifts-creative-section {
     background: var(--peach-bg);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
 }
 
 .gifts-content {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
     text-align: center;
     width: 100%;
     max-width: 600px;
@@ -515,7 +454,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gifts-text p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
@@ -526,7 +465,7 @@ h1, h2, h3, h4, h5, h6 {
 .gifts-money-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -555,19 +494,20 @@ h1, h2, h3, h4, h5, h6 {
 
 .money-animation::before,
 .money-animation::after {
-    content: '💰 💵 💰 💵 💰';
+    content: '💰 💵 💰 💵 💰 💵 💰 💵 💰 💵';
     position: absolute;
     top: -50px;
     left: 0;
     width: 100%;
-    font-size: 2rem;
-    animation: falling 4s linear infinite;
-    opacity: 0.7;
+    font-size: 2.5rem;
+    animation: falling 3s linear infinite;
+    opacity: 0.8;
+    white-space: nowrap;
 }
 
 .money-animation::after {
-    animation-delay: 2s;
-    content: '💵 💰 💵 💰 💵';
+    animation-delay: 1.5s;
+    content: '💵 💰 💵 💰 💵 💰 💵 💰 💵 💰';
 }
 
 @keyframes falling {
@@ -576,10 +516,10 @@ h1, h2, h3, h4, h5, h6 {
         opacity: 0;
     }
     10% {
-        opacity: 0.7;
+        opacity: 0.8;
     }
     90% {
-        opacity: 0.7;
+        opacity: 0.8;
     }
     100% {
         transform: translateY(calc(100vh + 100px));
@@ -600,7 +540,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 10 экран - Gifts Alternative */
 .gifts-alternative-section {
     background: var(--peach-bg);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -616,14 +556,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gifts-alt-text {
-    background: rgba(255, 255, 255, 0.7);
     padding: 40px;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
 }
 
 .gifts-alt-text p {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
@@ -644,16 +582,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .contact-info {
-    background: rgba(255, 255, 255, 0.7);
     padding: 40px;
     border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
 }
 
 .contact-info h3 {
     font-family: "Pangolin", cursive;
     font-size: 1.8rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: var(--text-dark);
     font-weight: 400;
 }
@@ -667,7 +603,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .contact-info p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.6;
     margin-bottom: 1.5rem;
     text-align: justify;
@@ -697,7 +633,7 @@ h1, h2, h3, h4, h5, h6 {
 .final-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 80px 0;
+    padding: 60px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -715,12 +651,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .final-text {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
-.final-text h2 {
+.final-text p {
     font-family: "Poiret One", sans-serif;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 400;
     margin-bottom: 2rem;
     line-height: 1.4;
@@ -733,11 +669,11 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.8rem;
     font-weight: 400;
     color: var(--primary-pink);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .final-photo {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .couple-photos {
@@ -762,7 +698,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .postscript p {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     line-height: 1.6;
     font-style: italic;
     color: var(--text-gray);
@@ -806,7 +742,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 50px 0;
+        padding: 30px 0;
         min-height: auto;
     }
     
@@ -846,26 +782,12 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .timeline-desc {
-        font-size: 1.2rem;
-    }
-    
-    .colors-row {
-        justify-content: center;
-        gap: 15px;
-    }
-    
-    .color-item {
-        padding: 15px 12px;
-        min-width: 85px;
-    }
-    
-    .color-swatch {
-        width: 50px;
-        height: 50px;
+        font-size: 1.3rem;
     }
     
     .vertical-carousel {
         max-width: 100%;
+        height: 350px;
     }
     
     .slider-title {
@@ -905,17 +827,9 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 40px 0;
+        padding: 25px 0;
     }
     
-    .intro-content,
-    .date-content,
-    .location-content,
-    .concept-content,
-    .dresscode-content,
-    .expectations-content,
-    .gifts-content,
-    .gifts-money-content,
     .gifts-alt-text,
     .contact-info {
         padding: 30px 20px;
@@ -951,7 +865,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .final-text p {
-        font-size: 1.6rem;
+        font-size: 1.7rem;
     }
     
     .gifts-money-content h2 {
@@ -973,7 +887,7 @@ h1, h2, h3, h4, h5, h6 {
     .dresscode-text p,
     .gifts-text p,
     .gifts-alt-text p {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
     
     .date-subtitle,
@@ -982,33 +896,15 @@ h1, h2, h3, h4, h5, h6 {
     .reality-text,
     .contact-info p,
     .postscript p {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .parking-note p {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .timeline-time {
         font-size: 1.4rem;
-    }
-    
-    .color-group h3 {
-        font-size: 1.4rem;
-    }
-    
-    .color-item {
-        padding: 12px 8px;
-        min-width: 75px;
-    }
-    
-    .color-swatch {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .color-item span {
-        font-size: 1rem;
     }
     
     .organizer-name {
@@ -1047,36 +943,10 @@ h1, h2, h3, h4, h5, h6 {
     
     .money-animation::before,
     .money-animation::after {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
-}
-
-.carousel-container {
-    max-width: 100%;
-}
-
-.carousel-slide img {
-    height: 280px;
-}
-
-.slider-title {
-    font-size: 1.8rem;
-}
-
-.carousel-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.3rem;
-}
-
-.carousel-slide img {
-    height: 220px;
-}
-
-.slider-title {
-    font-size: 1.6rem;
-}
-
-.slider-group {
-    margin-bottom: 30px;
+    
+    .vertical-carousel {
+        height: 300px;
+    }
 } 

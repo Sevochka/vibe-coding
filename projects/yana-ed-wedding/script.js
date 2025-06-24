@@ -1,36 +1,66 @@
 // Карусели
 let currentSlideGirls = 0;
 let currentSlideBoys = 0;
-const slidesGirls = document.querySelectorAll('#carousel-girls .carousel-slide');
-const slidesBoys = document.querySelectorAll('#carousel-boys .carousel-slide');
-const totalSlidesGirls = 8; // 8 фотографий девочек
-const totalSlidesBoys = 4; // 4 фотографии мальчиков
 
-function showSlide(carouselId, index) {
-    const carousel = document.getElementById(carouselId);
-    if (carousel) {
-        carousel.style.transform = `translateX(-${index * 100}%)`;
-    }
-}
+// Инициализация каруселей
+function initCarousels() {
+    const slidesGirls = document.querySelectorAll('#carousel-girls .carousel-slide');
+    const slidesBoys = document.querySelectorAll('#carousel-boys .carousel-slide');
+    const totalSlidesGirls = slidesGirls.length; // 8 фотографий девочек
+    const totalSlidesBoys = slidesBoys.length; // 4 фотографии мальчиков
 
-function nextSlide(type) {
-    if (type === 'girls') {
-        currentSlideGirls = (currentSlideGirls + 1) % totalSlidesGirls;
-        showSlide('carousel-girls', currentSlideGirls);
-    } else if (type === 'boys') {
-        currentSlideBoys = (currentSlideBoys + 1) % totalSlidesBoys;
-        showSlide('carousel-boys', currentSlideBoys);
+    function showSlide(carouselId, index) {
+        const carousel = document.getElementById(carouselId);
+        if (carousel) {
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
     }
-}
 
-function prevSlide(type) {
-    if (type === 'girls') {
-        currentSlideGirls = (currentSlideGirls - 1 + totalSlidesGirls) % totalSlidesGirls;
-        showSlide('carousel-girls', currentSlideGirls);
-    } else if (type === 'boys') {
-        currentSlideBoys = (currentSlideBoys - 1 + totalSlidesBoys) % totalSlidesBoys;
-        showSlide('carousel-boys', currentSlideBoys);
+    function nextSlide(type) {
+        if (type === 'girls') {
+            currentSlideGirls = (currentSlideGirls + 1) % totalSlidesGirls;
+            showSlide('carousel-girls', currentSlideGirls);
+        } else if (type === 'boys') {
+            currentSlideBoys = (currentSlideBoys + 1) % totalSlidesBoys;
+            showSlide('carousel-boys', currentSlideBoys);
+        }
     }
+
+    function prevSlide(type) {
+        if (type === 'girls') {
+            currentSlideGirls = (currentSlideGirls - 1 + totalSlidesGirls) % totalSlidesGirls;
+            showSlide('carousel-girls', currentSlideGirls);
+        } else if (type === 'boys') {
+            currentSlideBoys = (currentSlideBoys - 1 + totalSlidesBoys) % totalSlidesBoys;
+            showSlide('carousel-boys', currentSlideBoys);
+        }
+    }
+
+    // Показать первые слайды
+    showSlide('carousel-girls', 0);
+    showSlide('carousel-boys', 0);
+
+    // Обработчики кнопок (только ручное управление)
+    document.querySelectorAll('.carousel-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const carouselType = btn.getAttribute('data-carousel');
+            const isNext = btn.classList.contains('next');
+            
+            if (carouselType === 'girls') {
+                if (isNext) {
+                    nextSlide('girls');
+                } else {
+                    prevSlide('girls');
+                }
+            } else if (carouselType === 'boys') {
+                if (isNext) {
+                    nextSlide('boys');
+                } else {
+                    prevSlide('boys');
+                }
+            }
+        });
+    });
 }
 
 // Анимации при прокрутке
@@ -87,35 +117,6 @@ function createScrollToTopButton() {
     });
     
     document.body.appendChild(button);
-}
-
-// Инициализация каруселей
-function initCarousels() {
-    // Показать первые слайды
-    showSlide('carousel-girls', 0);
-    showSlide('carousel-boys', 0);
-
-    // Обработчики кнопок (только ручное управление)
-    document.querySelectorAll('.carousel-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const carouselType = btn.getAttribute('data-carousel');
-            const isNext = btn.classList.contains('next');
-            
-            if (carouselType === 'girls') {
-                if (isNext) {
-                    nextSlide('girls');
-                } else {
-                    prevSlide('girls');
-                }
-            } else if (carouselType === 'boys') {
-                if (isNext) {
-                    nextSlide('boys');
-                } else {
-                    prevSlide('boys');
-                }
-            }
-        });
-    });
 }
 
 // Эффекты для фотографий
