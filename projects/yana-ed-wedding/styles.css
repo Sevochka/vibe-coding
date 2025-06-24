@@ -10,6 +10,7 @@
     --base-black: #2C2C2C;
     --base-brown: #8B4513;
     --white-bg: #FFFFFF;
+    --soft-pink-bg: #FFE4E6;
     --text-dark: #2C2C2C;
     --text-light: #FFFFFF;
     --text-gray: #666666;
@@ -24,6 +25,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -41,188 +46,144 @@ body {
     width: 100%;
 }
 
-/* Общие стили секций - БЕЛЫЙ ФОН */
+/* Общие стили секций - единая страница */
 section {
-    padding: 0;
+    padding: 80px 0;
     margin: 0;
-    min-height: 100vh;
     width: 100%;
     background: var(--white-bg);
     position: relative;
-    overflow: hidden;
     display: flex;
     align-items: center;
 }
 
-/* Убираем отступы между экранами */
-section + section {
-    margin-top: 0;
-}
-
-/* Уменьшенные декорации - только 4 на экран, размещение вокруг контента */
+/* Убираем все декорации - больше никаких детских рисунков */
 section::before,
-section::after {
-    content: '';
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    z-index: 0;
+section::after,
+.decoration-1,
+.decoration-2,
+.decoration-3,
+.decoration-4,
+.decoration-5,
+.decoration-6 {
+    display: none !important;
 }
 
-/* Intro section - 4 декорации по углам */
+/* Intro section */
 .intro-section {
     background: var(--white-bg);
     color: var(--text-dark);
+    min-height: 100vh;
 }
 
-.intro-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 30px;
-    left: 30px;
-}
-
-.intro-section::after {
-    background-image: url('./images/like2.jpeg');
-    top: 30px;
-    right: 30px;
-}
-
-.intro-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 30px;
-    left: 30px;
-    z-index: 0;
-}
-
-.intro-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 30px;
-    right: 30px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации */
-.intro-section .decoration-3,
-.intro-section .decoration-4,
-.intro-section .decoration-5,
-.intro-section .decoration-6 {
-    display: none;
-}
-
-/* Date section - УБИРАЕМ ВСЕ ДЕКОРАЦИИ, оставляем только фон */
-.date-section {
-    background-image: url('./images/fon.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.intro-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
     color: var(--text-dark);
+    width: 100%;
+    max-width: 100%;
 }
 
-/* Убираем все декорации с экрана даты */
-.date-section::before,
-.date-section::after {
-    display: none;
+.intro-photo {
+    text-align: center;
 }
 
-.date-section .decoration-1,
-.date-section .decoration-2,
-.date-section .decoration-3,
-.date-section .decoration-4 {
-    display: none;
+.main-title {
+    font-family: "Pangolin", cursive;
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--heart-color);
+    grid-column: 1 / 3;
 }
 
-/* Улучшаем видимость текста на фоне */
+.main-couple-photo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.intro-text {
+    text-align: justify;
+    hyphens: auto;
+}
+
+.intro-text p {
+    font-size: 1.5rem;
+    line-height: 1.7;
+    font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+/* Date section - нежно-розовый фон и увеличенное фото */
+.date-section {
+    background: var(--soft-pink-bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
 .date-content {
     text-align: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 40px 20px;
+}
+
+.date-title {
+    font-family: "Pangolin", cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.main-date {
+    font-family: "Pangolin", cursive;
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    white-space: nowrap;
+}
+
+.main-date strong {
+    font-weight: 700;
 }
 
 .date-subtitle {
     font-size: 2.4rem;
     font-weight: 600;
     color: var(--text-dark);
-    margin-bottom: 2rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px 25px;
-    border-radius: 15px;
-    display: inline-block;
+    margin-bottom: 3rem;
 }
 
-/* Уменьшаем размер фото love на мобильных */
+.love-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Увеличенное фото love */
 .love-photo {
     width: 100%;
-    max-width: 300px;
+    max-width: 500px;
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-/* Location section - 4 декорации по углам */
+/* Location section */
 .location-section {
     background: var(--white-bg);
     color: var(--text-dark);
-}
-
-.location-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.location-section::after {
-    background-image: url('./images/like.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.location-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.location-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации location */
-.location-section .decoration-3,
-.location-section .decoration-4 {
-    display: none;
 }
 
 .location-content {
@@ -248,7 +209,6 @@ section::after {
     white-space: nowrap;
 }
 
-/* Location section - выравниваем размеры фотографий */
 .zal-photo,
 .mondrian-photo {
     width: 100%;
@@ -269,57 +229,26 @@ section::after {
     text-justify: inter-word;
 }
 
-/* Timeline section - фоновое изображение time и улучшенные пропорции */
+/* Timeline section - фон прозрачный, текст без подложки */
 .timeline-section {
     background: var(--white-bg);
     background-image: url('./images/time.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    position: relative;
 }
 
+/* Прозрачный фон для читаемости */
 .timeline-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.timeline-section::after {
-    background-image: url('./images/like3.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.timeline-section .decoration-1 {
+    content: '';
     position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
     z-index: 0;
-}
-
-.timeline-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации timeline */
-.timeline-section .decoration-3,
-.timeline-section .decoration-4 {
-    display: none;
 }
 
 .timeline-content {
@@ -329,9 +258,8 @@ section::after {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: var(--border-radius);
+    position: relative;
+    z-index: 1;
 }
 
 .timeline-item {
@@ -345,13 +273,14 @@ section::after {
 .timeline-time {
     font-family: "Pangolin", cursive;
     font-size: 1.6rem;
-    font-weight: 400;
-    color: var(--text-light);
-    background: var(--text-dark);
+    font-weight: 700;
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.9);
     padding: 15px 20px;
     border-radius: var(--border-radius);
     min-width: 160px;
     text-align: center;
+    box-shadow: var(--shadow);
 }
 
 .timeline-desc {
@@ -360,9 +289,12 @@ section::after {
     flex: 1;
     text-align: justify;
     text-justify: inter-word;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* Concept section - фоновое изображение pov и стилизованный подзаголовок */
+/* Concept section - фон прозрачный, текст без подложки */
 .concept-section {
     background: var(--white-bg);
     background-image: url('./images/pov.jpg');
@@ -370,50 +302,19 @@ section::after {
     background-position: center;
     background-repeat: no-repeat;
     color: var(--text-dark);
+    position: relative;
 }
 
+/* Прозрачный фон для читаемости */
 .concept-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.concept-section::after {
-    background-image: url('./images/like2.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.concept-section .decoration-1 {
+    content: '';
     position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.3);
     z-index: 0;
-}
-
-.concept-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации concept */
-.concept-section .decoration-3,
-.concept-section .decoration-4 {
-    display: none;
 }
 
 .concept-content {
@@ -422,9 +323,8 @@ section::after {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: var(--border-radius);
+    position: relative;
+    z-index: 1;
 }
 
 .concept-subtitle {
@@ -439,6 +339,7 @@ section::after {
     border-radius: var(--border-radius);
     border: 3px solid var(--text-dark);
     display: inline-block;
+    box-shadow: var(--shadow);
 }
 
 .concept-text p {
@@ -447,59 +348,18 @@ section::after {
     margin-bottom: 1.5rem;
     text-align: justify;
     text-justify: inter-word;
+    color: var(--text-dark);
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 .concept-text p:last-child {
     margin-bottom: 0;
 }
 
-/* Dresscode section - 4 декорации */
+/* Dresscode section */
 .dresscode-section {
     background: var(--white-bg);
-}
-
-.dresscode-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.dresscode-section::after {
-    background-image: url('./images/like4.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.dresscode-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
-    z-index: 0;
-}
-
-.dresscode-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации dresscode */
-.dresscode-section .decoration-3,
-.dresscode-section .decoration-4 {
-    display: none;
 }
 
 .dresscode-content {
@@ -534,54 +394,10 @@ section::after {
     box-shadow: var(--shadow);
 }
 
-/* Expectations section - 4 декорации, не пересекающиеся со слайдерами */
+/* Expectations section */
 .expectations-section {
     background: var(--white-bg);
     color: var(--text-dark);
-}
-
-.expectations-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.expectations-section::after {
-    background-image: url('./images/like.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.expectations-section .decoration-1 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.expectations-section .decoration-2 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации expectations */
-.expectations-section .decoration-3,
-.expectations-section .decoration-4 {
-    display: none;
 }
 
 .expectations-content {
@@ -679,54 +495,9 @@ section::after {
     text-align: center;
 }
 
-/* Gifts creative section - фон chasbik для денежной части */
+/* Gifts creative section */
 .gifts-creative-section {
     background: var(--white-bg);
-    min-height: auto;
-}
-
-.gifts-creative-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.gifts-creative-section::after {
-    background-image: url('./images/like3.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.gifts-creative-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации gifts creative */
-.gifts-creative-section .decoration-3,
-.gifts-creative-section .decoration-4 {
-    display: none;
 }
 
 .gifts-content {
@@ -848,58 +619,9 @@ section::after {
     }
 }
 
-/* Убираем отдельный экран gifts-money */
-.gifts-money-section {
-    display: none;
-}
-
-/* Gifts alternative section - 4 декорации */
+/* Gifts alternative section */
 .gifts-alternative-section {
     background: var(--white-bg);
-}
-
-.gifts-alternative-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.gifts-alternative-section::after {
-    background-image: url('./images/like2.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.gifts-alternative-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации gifts alternative */
-.gifts-alternative-section .decoration-3,
-.gifts-alternative-section .decoration-4 {
-    display: none;
 }
 
 .gifts-alt-content {
@@ -985,54 +707,10 @@ section::after {
     font-weight: 400;
 }
 
-/* Final section - 4 декорации */
+/* Final section */
 .final-section {
     background: var(--white-bg);
     color: var(--text-dark);
-}
-
-.final-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 50px;
-    left: 50px;
-}
-
-.final-section::after {
-    background-image: url('./images/like4.jpeg');
-    top: 50px;
-    right: 50px;
-}
-
-.final-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    left: 50px;
-    z-index: 0;
-}
-
-.final-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 50px;
-    right: 50px;
-    z-index: 0;
-}
-
-/* Убираем лишние декорации final */
-.final-section .decoration-3,
-.final-section .decoration-4 {
-    display: none;
 }
 
 .final-content {
@@ -1044,6 +722,25 @@ section::after {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+}
+
+/* Видео love перед финальным текстом */
+.love-video-container {
+    margin-bottom: 40px;
+    text-align: center;
+    padding: 30px;
+    border: 3px solid var(--primary-pink);
+    border-radius: var(--border-radius);
+    background: linear-gradient(45deg, #FFE4E6, #FFF0F1);
+    box-shadow: var(--shadow);
+}
+
+.love-video {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .final-text {
@@ -1074,14 +771,14 @@ section::after {
 
 .couple-photos {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     justify-content: center;
 }
 
+/* Увеличенные горизонтальные фотографии */
 .couple-photo {
-    width: 180px;
-    height: auto;
-    aspect-ratio: 3/4;
+    width: 300px;
+    height: 200px;
     object-fit: cover;
     object-position: center;
     border-radius: var(--border-radius);
@@ -1124,92 +821,12 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
 }
 
-/* Intro section - БЕЛЫЙ ФОН */
-.intro-section {
-    background: var(--white-bg);
-    color: var(--text-dark);
-}
-
-.intro-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    color: var(--text-dark);
-    width: 100%;
-    max-width: 100%;
-}
-
-.intro-photo {
-    text-align: center;
-}
-
-.main-title {
-    font-family: "Pangolin", cursive;
-    font-size: 4rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--heart-color);
-    grid-column: 1 / 3;
-}
-
-.main-couple-photo {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: center;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
-.intro-text {
-    text-align: justify;
-    hyphens: auto;
-}
-
-.intro-text p {
-    font-size: 1.5rem;
-    line-height: 1.7;
-    font-weight: 400;
-    text-align: justify;
-    text-justify: inter-word;
-}
-
 .photo-caption {
     text-align: center;
     font-size: 1.2rem;
     color: var(--text-gray);
     margin-top: 10px;
     font-style: italic;
-}
-
-/* Добавляем недостающие стили для экрана даты */
-.date-title {
-    font-family: "Pangolin", cursive;
-    font-size: 3.5rem;
-    font-weight: 400;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.main-date {
-    font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-    white-space: nowrap;
-}
-
-.main-date strong {
-    font-weight: 700;
-}
-
-.love-image {
-    text-align: center;
-    margin-top: 20px;
 }
 
 /* Стили для изображений локации */
@@ -1245,37 +862,6 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 500px;
     }
     
-    /* Уменьшение декораций на планшетах */
-    section::before,
-    section::after {
-        width: 50px;
-        height: 50px;
-        opacity: 0.3;
-    }
-    
-    .intro-section .decoration-1,
-    .intro-section .decoration-2,
-    .location-section .decoration-1,
-    .location-section .decoration-2,
-    .timeline-section .decoration-1,
-    .timeline-section .decoration-2,
-    .concept-section .decoration-1,
-    .concept-section .decoration-2,
-    .dresscode-section .decoration-1,
-    .dresscode-section .decoration-2,
-    .expectations-section .decoration-1,
-    .expectations-section .decoration-2,
-    .gifts-creative-section .decoration-1,
-    .gifts-creative-section .decoration-2,
-    .gifts-alternative-section .decoration-1,
-    .gifts-alternative-section .decoration-2,
-    .final-section .decoration-1,
-    .final-section .decoration-2 {
-        width: 45px;
-        height: 45px;
-        opacity: 0.3;
-    }
-    
     /* Фотографии локации на планшетах */
     .zal-photo,
     .mondrian-photo {
@@ -1285,13 +871,23 @@ h1, h2, h3, h4, h5, h6 {
     
     /* Фото love на планшетах */
     .love-photo {
-        max-width: 280px;
+        max-width: 400px;
+    }
+    
+    /* Финальные фото на планшетах */
+    .couple-photo {
+        width: 250px;
+        height: 170px;
     }
 }
 
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
+    }
+    
+    section {
+        padding: 60px 0;
     }
     
     .section-title {
@@ -1353,49 +949,19 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .couple-photos {
-        gap: 15px;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
     }
     
     .couple-photo {
-        width: 150px;
-        height: auto;
-        aspect-ratio: 3/4;
+        width: 280px;
+        height: 200px;
     }
     
     .nastolki-photo,
     .colors-photo {
         max-width: 250px;
-    }
-    
-    /* Еще меньше декораций на мобильных */
-    section::before,
-    section::after {
-        width: 40px;
-        height: 40px;
-        opacity: 0.25;
-    }
-    
-    .intro-section .decoration-1,
-    .intro-section .decoration-2,
-    .location-section .decoration-1,
-    .location-section .decoration-2,
-    .timeline-section .decoration-1,
-    .timeline-section .decoration-2,
-    .concept-section .decoration-1,
-    .concept-section .decoration-2,
-    .dresscode-section .decoration-1,
-    .dresscode-section .decoration-2,
-    .expectations-section .decoration-1,
-    .expectations-section .decoration-2,
-    .gifts-creative-section .decoration-1,
-    .gifts-creative-section .decoration-2,
-    .gifts-alternative-section .decoration-1,
-    .gifts-alternative-section .decoration-2,
-    .final-section .decoration-1,
-    .final-section .decoration-2 {
-        width: 35px;
-        height: 35px;
-        opacity: 0.25;
     }
     
     /* Фотографии локации на мобильных */
@@ -1407,18 +973,30 @@ h1, h2, h3, h4, h5, h6 {
     
     /* Фото love на мобильных */
     .love-photo {
-        max-width: 250px;
+        max-width: 350px;
     }
     
     .venue-address {
         font-size: 1.4rem;
         white-space: normal;
     }
+    
+    .love-video {
+        max-width: 350px;
+    }
+    
+    .love-video-container {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
+    }
+    
+    section {
+        padding: 40px 0;
     }
     
     .gifts-alt-text,
@@ -1428,10 +1006,6 @@ h1, h2, h3, h4, h5, h6 {
     
     .timeline-item {
         padding: 15px 10px;
-    }
-    
-    .timeline-content {
-        padding: 30px 20px;
     }
     
     .concept-content {
@@ -1471,14 +1045,9 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.7rem;
     }
     
-    .couple-photos {
-        gap: 10px;
-    }
-    
     .couple-photo {
-        width: 120px;
-        height: auto;
-        aspect-ratio: 3/4;
+        width: 250px;
+        height: 180px;
     }
     
     .intro-text p,
@@ -1550,37 +1119,6 @@ h1, h2, h3, h4, h5, h6 {
         height: 300px;
     }
     
-    /* Минимальные декорации на маленьких экранах */
-    section::before,
-    section::after {
-        width: 30px;
-        height: 30px;
-        opacity: 0.2;
-    }
-    
-    .intro-section .decoration-1,
-    .intro-section .decoration-2,
-    .location-section .decoration-1,
-    .location-section .decoration-2,
-    .timeline-section .decoration-1,
-    .timeline-section .decoration-2,
-    .concept-section .decoration-1,
-    .concept-section .decoration-2,
-    .dresscode-section .decoration-1,
-    .dresscode-section .decoration-2,
-    .expectations-section .decoration-1,
-    .expectations-section .decoration-2,
-    .gifts-creative-section .decoration-1,
-    .gifts-creative-section .decoration-2,
-    .gifts-alternative-section .decoration-1,
-    .gifts-alternative-section .decoration-2,
-    .final-section .decoration-1,
-    .final-section .decoration-2 {
-        width: 25px;
-        height: 25px;
-        opacity: 0.2;
-    }
-    
     /* Фотографии локации на маленьких экранах */
     .zal-photo,
     .mondrian-photo {
@@ -1590,6 +1128,14 @@ h1, h2, h3, h4, h5, h6 {
     
     /* Фото love на маленьких экранах */
     .love-photo {
-        max-width: 220px;
+        max-width: 300px;
+    }
+    
+    .love-video {
+        max-width: 280px;
+    }
+    
+    .love-video-container {
+        padding: 20px;
     }
 } 
