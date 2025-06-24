@@ -82,14 +82,14 @@ function animateOnScroll() {
     });
 }
 
-// Кнопка "наверх"
+// Кнопка "наверх" - перемещена влево
 function createScrollToTopButton() {
     const button = document.createElement('button');
     button.innerHTML = '↑';
     button.style.cssText = `
         position: fixed;
         bottom: 30px;
-        right: 30px;
+        left: 30px;
         width: 50px;
         height: 50px;
         border-radius: 50%;
@@ -202,7 +202,7 @@ class Carousel {
     }
 }
 
-// Кликер сердечек
+// Кликер сердечек - только для определенных фотографий
 class HeartClicker {
     constructor() {
         this.heartCount = 0;
@@ -212,6 +212,7 @@ class HeartClicker {
     }
     
     initClickablePhotos() {
+        // Только фотографии с классом clickable-photo (ed, love, me, you, yana)
         const clickablePhotos = document.querySelectorAll('.clickable-photo');
         clickablePhotos.forEach(photo => {
             photo.addEventListener('click', (e) => this.onPhotoClick(e));
@@ -274,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Анимации при прокрутке
     animateOnScroll();
     
-    // Создаем кнопку "наверх"
+    // Создаем кнопку "наверх" слева
     createScrollToTopButton();
     
     // Эффекты для фотографий

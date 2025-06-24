@@ -46,12 +46,11 @@ body {
     width: 100%;
 }
 
-/* Общие стили секций - компактнее на десктопе */
+/* Общие стили секций */
 section {
     padding: 40px 0;
     margin: 0;
     width: 100%;
-    background: var(--white-bg);
     position: relative;
     display: flex;
     align-items: center;
@@ -60,19 +59,7 @@ section {
     background-repeat: no-repeat;
 }
 
-/* Убираем все декорации */
-section::before,
-section::after,
-.decoration-1,
-.decoration-2,
-.decoration-3,
-.decoration-4,
-.decoration-5,
-.decoration-6 {
-    display: none !important;
-}
-
-/* Полупрозрачные фоны для всех секций */
+/* Затемненные полупрозрачные фоны для всех секций */
 section::before {
     content: '';
     position: absolute;
@@ -80,7 +67,8 @@ section::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: brightness(0.7) contrast(0.8) saturate(0.6);
     z-index: 0;
 }
 
@@ -254,7 +242,6 @@ section::before {
     object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    cursor: pointer;
     transition: transform 0.2s ease;
 }
 
@@ -406,7 +393,6 @@ section::before {
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    cursor: pointer;
     transition: transform 0.2s ease;
 }
 
@@ -480,7 +466,6 @@ section::before {
     height: 100%;
     object-fit: contain;
     object-position: center;
-    cursor: pointer;
     transition: transform 0.2s ease;
 }
 
@@ -547,17 +532,18 @@ section::before {
     text-justify: inter-word;
 }
 
-/* Денежная секция с фоном chasbik */
+/* Денежная секция с адаптивным фоном chasbik */
 .money-section-part {
     margin: 40px 0;
     padding: 40px;
     position: relative;
     overflow: hidden;
     background-image: url('./images/chasbik.jpg');
-    background-size: cover;
-    background-position: center top;
+    background-size: contain;
+    background-position: center;
     background-repeat: no-repeat;
     border-radius: var(--border-radius);
+    min-height: 300px;
 }
 
 .money-section-part::before {
@@ -692,7 +678,6 @@ section::before {
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    cursor: pointer;
     transition: transform 0.2s ease;
 }
 
@@ -969,6 +954,12 @@ h1, h2, h3, h4, h5, h6 {
         padding: 12px 15px;
         min-width: 180px;
     }
+    
+    /* Адаптивный chasbik на планшетах */
+    .money-section-part {
+        background-size: cover;
+        min-height: 250px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1072,11 +1063,6 @@ h1, h2, h3, h4, h5, h6 {
         white-space: normal;
     }
     
-    /* Исправление chasbik на мобильных - показываем лицо */
-    .money-section-part {
-        background-position: center 20%;
-    }
-    
     .heart-clicker {
         bottom: 10px;
         right: 10px;
@@ -1090,6 +1076,13 @@ h1, h2, h3, h4, h5, h6 {
     
     .heart-message {
         font-size: 0.9rem;
+    }
+    
+    /* Адаптивный chasbik на мобильных */
+    .money-section-part {
+        background-size: cover;
+        background-position: center;
+        min-height: 200px;
     }
 }
 
@@ -1231,11 +1224,6 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 300px;
     }
     
-    /* Улучшенное позиционирование chasbik для показа лица */
-    .money-section-part {
-        background-position: center 30%;
-    }
-    
     .heart-clicker {
         bottom: 5px;
         right: 5px;
@@ -1249,5 +1237,12 @@ h1, h2, h3, h4, h5, h6 {
     
     .heart-message {
         font-size: 0.8rem;
+    }
+    
+    /* Адаптивный chasbik на маленьких экранах */
+    .money-section-part {
+        background-size: contain;
+        background-position: center;
+        min-height: 180px;
     }
 } 
