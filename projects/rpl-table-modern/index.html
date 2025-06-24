@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Современная турнирная таблица РПЛ 2025/2026</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="https://www.sports.ru/?utm_source=special-rpl-table-modern" class="logo-link">
+                        <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+                    </a>
+                </div>
+                <div class="title-section">
+                    <h1 class="main-title">РПЛ 2025/2026</h1>
+                    <p class="subtitle">Интерактивная турнирная таблица</p>
+                </div>
+                <div class="controls-section">
+                    <button class="theme-toggle" id="themeToggle">
+                        <svg width="20" height="20" fill="currentColor">
+                            <path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                    </button>
+                    <button class="view-toggle" id="viewToggle">
+                        <svg width="20" height="20" fill="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Filter Panel -->
+        <div class="filter-panel">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-table="general">Общая таблица</button>
+                <button class="filter-tab" data-table="home">Дома</button>
+                <button class="filter-tab" data-table="away">В гостях</button>
+            </div>
+            <div class="filter-options">
+                <select class="season-select" id="seasonSelect">
+                    <option value="2025">2025/2026</option>
+                    <option value="2024">2024/2025</option>
+                    <option value="2023">2023/2024</option>
+                </select>
+                <div class="sort-options">
+                    <label>Сортировка:</label>
+                    <select id="sortSelect">
+                        <option value="position">Позиция</option>
+                        <option value="points">Очки</option>
+                        <option value="goals">Забитые голы</option>
+                        <option value="difference">Разность мячей</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="table-container" id="tableContainer">
+            <div class="table-wrapper">
+                <!-- Table will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--sports-primary-color)"></div>
+                <span>Лига чемпионов</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--sports-cyan-A700)"></div>
+                <span>Лига Европы</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--sports-yellow-A700)"></div>
+                <span>Лига конференций</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: var(--sports-red-a700)"></div>
+                <span>Вылет</span>
+            </div>
+        </div>
+
+        <!-- Team Details Modal -->
+        <div class="modal" id="teamModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTeamName"></h3>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="team-stats">
+                        <div class="stat-group">
+                            <h4>Основная статистика</h4>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <span class="stat-label">Позиция</span>
+                                    <span class="stat-value" id="modalPosition"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Очки</span>
+                                    <span class="stat-value" id="modalPoints"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Игры</span>
+                                    <span class="stat-value" id="modalGames"></span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Голы</span>
+                                    <span class="stat-value" id="modalGoals"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-group">
+                            <h4>Форма команды</h4>
+                            <div class="form-indicators" id="modalForm"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./data/teams.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
