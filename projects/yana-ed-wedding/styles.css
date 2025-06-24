@@ -54,7 +54,12 @@ section {
     align-items: center;
 }
 
-/* Множественные декоративные фоновые изображения */
+/* Убираем отступы между экранами */
+section + section {
+    margin-top: 0;
+}
+
+/* Множественные декоративные фоновые изображения - по 5 на экран */
 section::before,
 section::after {
     content: '';
@@ -63,10 +68,11 @@ section::after {
     height: 120px;
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.7;
+    opacity: 0.8;
     z-index: 0;
 }
 
+/* Intro section - 5 декораций */
 .intro-section::before {
     background-image: url('./images/like.jpeg');
     top: 20px;
@@ -79,18 +85,14 @@ section::after {
     left: 30px;
 }
 
-.intro-section {
-    position: relative;
-}
-
 .intro-section .decoration-1 {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     background-image: url('./images/like3.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.6;
+    opacity: 0.7;
     top: 50%;
     left: 10px;
     z-index: 0;
@@ -98,57 +100,87 @@ section::after {
 
 .intro-section .decoration-2 {
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     background-image: url('./images/like4.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.65;
-    top: 20%;
+    opacity: 0.75;
+    top: 15%;
     right: 50px;
     z-index: 0;
 }
 
 .intro-section .decoration-3 {
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     background-image: url('./images/like.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.5;
+    opacity: 0.6;
     bottom: 10%;
     right: 15px;
     z-index: 0;
 }
 
+.intro-section .decoration-4 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 30%;
+    left: 50%;
+    z-index: 0;
+}
+
+.intro-section .decoration-5 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 50%;
+    right: 40%;
+    z-index: 0;
+}
+
+/* Date section - восстанавливаем фон */
 .date-section {
     background-image: url('./images/fon.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    color: var(--text-dark);
 }
 
 .date-section::before {
     background-image: url('./images/like3.jpeg');
     top: 30px;
     left: 20px;
+    opacity: 0.8;
 }
 
 .date-section::after {
     background-image: url('./images/like4.jpeg');
     bottom: 20px;
     right: 30px;
+    opacity: 0.8;
 }
 
 .date-section .decoration-1 {
     position: absolute;
-    width: 95px;
-    height: 95px;
+    width: 115px;
+    height: 115px;
     background-image: url('./images/like2.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.6;
+    opacity: 0.7;
     top: 60%;
     left: 50px;
     z-index: 0;
@@ -156,419 +188,38 @@ section::after {
 
 .date-section .decoration-2 {
     position: absolute;
-    width: 110px;
-    height: 110px;
+    width: 130px;
+    height: 130px;
     background-image: url('./images/like.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.55;
+    opacity: 0.65;
     top: 10%;
     right: 60px;
     z-index: 0;
 }
 
-.location-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 40px;
-    right: 25px;
-}
-
-.location-section::after {
-    background-image: url('./images/like.jpeg');
-    bottom: 40px;
-    left: 25px;
-}
-
-.location-section .decoration-1 {
-    position: absolute;
-    width: 85px;
-    height: 85px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.65;
-    top: 15%;
-    left: 60px;
-    z-index: 0;
-}
-
-.location-section .decoration-2 {
-    position: absolute;
-    width: 105px;
-    height: 105px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    bottom: 15%;
-    right: 50px;
-    z-index: 0;
-}
-
-.timeline-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 25px;
-    left: 15px;
-}
-
-.timeline-section::after {
-    background-image: url('./images/like3.jpeg');
-    bottom: 25px;
-    right: 15px;
-}
-
-.timeline-section .decoration-1 {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.55;
-    top: 50%;
-    right: 40px;
-    z-index: 0;
-}
-
-.timeline-section .decoration-2 {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    bottom: 10%;
-    left: 40px;
-    z-index: 0;
-}
-
-.concept-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 35px;
-    right: 20px;
-}
-
-.concept-section::after {
-    background-image: url('./images/like2.jpeg');
-    bottom: 35px;
-    left: 20px;
-}
-
-.concept-section .decoration-1 {
+.date-section .decoration-3 {
     position: absolute;
     width: 95px;
     height: 95px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.65;
-    top: 20%;
-    left: 50px;
-    z-index: 0;
-}
-
-.concept-section .decoration-2 {
-    position: absolute;
-    width: 85px;
-    height: 85px;
     background-image: url('./images/like4.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.6;
-    bottom: 20%;
-    right: 45px;
+    opacity: 0.75;
+    bottom: 60%;
+    left: 70%;
     z-index: 0;
 }
 
-.dresscode-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 20px;
-    left: 30px;
-}
-
-.dresscode-section::after {
-    background-image: url('./images/like4.jpeg');
-    bottom: 30px;
-    right: 20px;
-}
-
-.dresscode-section .decoration-1 {
-    position: absolute;
-    width: 110px;
-    height: 110px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.55;
-    top: 40%;
-    right: 55px;
-    z-index: 0;
-}
-
-.dresscode-section .decoration-2 {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.7;
-    bottom: 10%;
-    left: 50px;
-    z-index: 0;
-}
-
-.expectations-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 30px;
-    right: 30px;
-}
-
-.expectations-section::after {
-    background-image: url('./images/like.jpeg');
-    bottom: 20px;
-    left: 20px;
-}
-
-.expectations-section .decoration-1 {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    top: 60%;
-    left: 40px;
-    z-index: 0;
-}
-
-.expectations-section .decoration-2 {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.65;
-    top: 15%;
-    right: 50px;
-    z-index: 0;
-}
-
-.gifts-creative-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    left: 25px;
-}
-
-.gifts-creative-section::after {
-    background-image: url('./images/like3.jpeg');
-    bottom: 40px;
-    right: 25px;
-}
-
-.gifts-creative-section .decoration-1 {
-    position: absolute;
-    width: 85px;
-    height: 85px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.7;
-    top: 20%;
-    right: 60px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-2 {
-    position: absolute;
-    width: 95px;
-    height: 95px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.55;
-    bottom: 15%;
-    left: 45px;
-    z-index: 0;
-}
-
-.gifts-alternative-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 25px;
-    right: 15px;
-}
-
-.gifts-alternative-section::after {
-    background-image: url('./images/like2.jpeg');
-    bottom: 25px;
-    left: 15px;
-}
-
-.gifts-alternative-section .decoration-1 {
-    position: absolute;
-    width: 105px;
-    height: 105px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    top: 45%;
-    right: 40px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-2 {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.65;
-    bottom: 30%;
-    left: 55px;
-    z-index: 0;
-}
-
-.final-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 35px;
-    left: 20px;
-}
-
-.final-section::after {
-    background-image: url('./images/like4.jpeg');
-    bottom: 35px;
-    right: 20px;
-}
-
-.final-section .decoration-1 {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.6;
-    top: 25%;
-    right: 50px;
-    z-index: 0;
-}
-
-.final-section .decoration-2 {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.7;
-    bottom: 20%;
-    left: 40px;
-    z-index: 0;
-}
-
-/* Контент поверх декораций */
-.container {
-    position: relative;
-    z-index: 1;
-}
-
-.section-title {
-    font-family: "Pangolin", cursive;
-    font-weight: 400;
-    font-size: 2.8rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    color: var(--text-dark);
-    line-height: 1.2;
-}
-
-/* Стили заголовков */
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Pangolin", cursive;
-    font-weight: 400;
-}
-
-/* 1 экран - Intro */
-.intro-section {
-    background: var(--peach-bg);
-    color: var(--text-dark);
-}
-
-.intro-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    color: var(--text-dark);
-    width: 100%;
-    max-width: 100%;
-}
-
-.intro-photo {
-    text-align: center;
-}
-
-.main-title {
-    font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
-    font-weight: 400;
-    text-align: left;
-    margin-bottom: 20px;
-    color: var(--heart-color);
-    grid-column: 1 / 3;
-    text-align: center;
-}
-
-.main-couple-photo {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: center;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
-.intro-text {
-    text-align: justify;
-    hyphens: auto;
-}
-
-.intro-text p {
-    font-size: 1.5rem;
-    line-height: 1.7;
-    font-weight: 400;
-    text-align: justify;
-    text-justify: inter-word;
-}
-
-.photo-caption {
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--text-gray);
-    margin-top: 10px;
-    font-style: italic;
-}
-
-/* 2 экран - Date */
-.date-section {
-    color: var(--text-dark);
-}
-
+/* 2 экран - Date - убираем белый фон */
 .date-content {
     text-align: center;
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: var(--border-radius);
+    /* Убираем белый фон и border-radius */
+    padding: 40px 20px;
 }
 
 .date-title {
@@ -635,6 +286,19 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.6rem;
     margin-bottom: 2rem;
     color: var(--text-gray);
+}
+
+.zal-image {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.zal-photo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .mondrian-image {
@@ -873,18 +537,6 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-/* 8 экран - Gifts Creative */
-.gifts-creative-section {
-    background: var(--peach-bg);
-}
-
-.gifts-content {
-    text-align: center;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
 .gift-boxes {
     text-align: center;
     margin-bottom: 30px;
@@ -906,22 +558,305 @@ h1, h2, h3, h4, h5, h6 {
     text-justify: inter-word;
 }
 
-/* 9 экран - Gifts Money */
-.gifts-money-section {
-    background: var(--peach-bg);
-    color: var(--text-dark);
-    position: relative;
+@keyframes falling-coins {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.9;
+    }
+    85% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+    }
 }
 
-.gifts-money-content {
+@keyframes falling-dollars {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.85;
+    }
+    88% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(-360deg);
+        opacity: 0;
+    }
+}
+
+/* Gifts creative section - 5 декораций + объединение с gifts money */
+.gifts-creative-section::before {
+    background-image: url('./images/like4.jpeg');
+    top: 40px;
+    left: 25px;
+    opacity: 0.8;
+}
+
+.gifts-creative-section::after {
+    background-image: url('./images/like3.jpeg');
+    bottom: 40px;
+    right: 25px;
+    opacity: 0.8;
+}
+
+.gifts-creative-section .decoration-1 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    top: 20%;
+    right: 60px;
+    z-index: 0;
+}
+
+.gifts-creative-section .decoration-2 {
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    bottom: 15%;
+    left: 45px;
+    z-index: 0;
+}
+
+.gifts-creative-section .decoration-3 {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 70%;
+    left: 75%;
+    z-index: 0;
+}
+
+/* Gifts alternative section - 5 декораций */
+.gifts-alternative-section::before {
+    background-image: url('./images/like.jpeg');
+    top: 25px;
+    right: 15px;
+    opacity: 0.8;
+}
+
+.gifts-alternative-section::after {
+    background-image: url('./images/like2.jpeg');
+    bottom: 25px;
+    left: 15px;
+    opacity: 0.8;
+}
+
+.gifts-alternative-section .decoration-1 {
+    position: absolute;
+    width: 125px;
+    height: 125px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    top: 45%;
+    right: 40px;
+    z-index: 0;
+}
+
+.gifts-alternative-section .decoration-2 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    bottom: 30%;
+    left: 55px;
+    z-index: 0;
+}
+
+.gifts-alternative-section .decoration-3 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    top: 15%;
+    left: 70%;
+    z-index: 0;
+}
+
+/* Final section - 5 декораций */
+.final-section::before {
+    background-image: url('./images/like3.jpeg');
+    top: 35px;
+    left: 20px;
+    opacity: 0.8;
+}
+
+.final-section::after {
+    background-image: url('./images/like4.jpeg');
+    bottom: 35px;
+    right: 20px;
+    opacity: 0.8;
+}
+
+.final-section .decoration-1 {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    top: 25%;
+    right: 50px;
+    z-index: 0;
+}
+
+.final-section .decoration-2 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    bottom: 20%;
+    left: 40px;
+    z-index: 0;
+}
+
+.final-section .decoration-3 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 60%;
+    left: 65%;
+    z-index: 0;
+}
+
+/* Контент поверх декораций */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    font-family: "Pangolin", cursive;
+    font-weight: 400;
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
     text-align: center;
     color: var(--text-dark);
+    line-height: 1.2;
+}
+
+/* Стили заголовков */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Pangolin", cursive;
+    font-weight: 400;
+}
+
+/* 1 экран - Intro */
+.intro-section {
+    background: var(--peach-bg);
+    color: var(--text-dark);
+}
+
+.intro-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    color: var(--text-dark);
     width: 100%;
-    max-width: 600px;
+    max-width: 100%;
+}
+
+.intro-photo {
+    text-align: center;
+}
+
+.main-title {
+    font-family: "Pangolin", cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    text-align: left;
+    margin-bottom: 20px;
+    color: var(--heart-color);
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+.main-couple-photo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.intro-text {
+    text-align: justify;
+    hyphens: auto;
+}
+
+.intro-text p {
+    font-size: 1.5rem;
+    line-height: 1.7;
+    font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.photo-caption {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* 8 экран - Gifts Creative + Money объединенный */
+.gifts-creative-section {
+    background: var(--peach-bg);
+    min-height: auto;
+}
+
+.gifts-content {
+    text-align: center;
+    width: 100%;
+    max-width: 700px;
     margin: 0 auto;
+}
+
+.money-section-part {
+    margin: 60px 0;
+    padding: 40px 20px;
     position: relative;
     overflow: hidden;
-    padding: 20px 0;
 }
 
 .money-animation {
@@ -959,41 +894,7 @@ h1, h2, h3, h4, h5, h6 {
     white-space: nowrap;
 }
 
-@keyframes falling-coins {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 0;
-    }
-    15% {
-        opacity: 0.9;
-    }
-    85% {
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(calc(100vh + 100px)) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-@keyframes falling-dollars {
-    0% {
-        transform: translateY(-100px) rotate(0deg);
-        opacity: 0;
-    }
-    12% {
-        opacity: 0.85;
-    }
-    88% {
-        opacity: 0.85;
-    }
-    100% {
-        transform: translateY(calc(100vh + 100px)) rotate(-360deg);
-        opacity: 0;
-    }
-}
-
-.gifts-money-content h2 {
+.money-text {
     font-family: "Pangolin", cursive;
     font-size: 1.2rem;
     font-weight: 400;
@@ -1004,7 +905,12 @@ h1, h2, h3, h4, h5, h6 {
     margin: 10px 0;
 }
 
-/* 10 экран - Gifts Alternative */
+/* Убираем отдельный экран gifts-money */
+.gifts-money-section {
+    display: none;
+}
+
+/* 9 экран - Gifts Alternative */
 .gifts-alternative-section {
     background: var(--peach-bg);
 }
@@ -1192,15 +1098,6 @@ h1, h2, h3, h4, h5, h6 {
     
     .expectations-content {
         max-width: 500px;
-    }
-    
-    .date-content,
-    .location-content,
-    .concept-content,
-    .dresscode-content,
-    .gifts-content,
-    .gifts-money-content {
-        max-width: 100%;
     }
     
     /* Уменьшение декораций на планшетах */
@@ -1513,4 +1410,274 @@ h1, h2, h3, h4, h5, h6 {
         height: 30px;
         opacity: 0.3;
     }
+}
+
+/* Location section - 5 декораций */
+.location-section::before {
+    background-image: url('./images/like2.jpeg');
+    top: 40px;
+    right: 25px;
+    opacity: 0.8;
+}
+
+.location-section::after {
+    background-image: url('./images/like.jpeg');
+    bottom: 40px;
+    left: 25px;
+    opacity: 0.8;
+}
+
+.location-section .decoration-1 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 15%;
+    left: 60px;
+    z-index: 0;
+}
+
+.location-section .decoration-2 {
+    position: absolute;
+    width: 125px;
+    height: 125px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 15%;
+    right: 50px;
+    z-index: 0;
+}
+
+.location-section .decoration-3 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    top: 70%;
+    left: 15%;
+    z-index: 0;
+}
+
+/* Timeline section - 5 декораций */
+.timeline-section::before {
+    background-image: url('./images/like4.jpeg');
+    top: 25px;
+    left: 15px;
+    opacity: 0.8;
+}
+
+.timeline-section::after {
+    background-image: url('./images/like3.jpeg');
+    bottom: 25px;
+    right: 15px;
+    opacity: 0.8;
+}
+
+.timeline-section .decoration-1 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 50%;
+    right: 40px;
+    z-index: 0;
+}
+
+.timeline-section .decoration-2 {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 10%;
+    left: 40px;
+    z-index: 0;
+}
+
+.timeline-section .decoration-3 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 20%;
+    left: 70%;
+    z-index: 0;
+}
+
+/* Concept section - 5 декораций */
+.concept-section::before {
+    background-image: url('./images/like.jpeg');
+    top: 35px;
+    right: 20px;
+    opacity: 0.8;
+}
+
+.concept-section::after {
+    background-image: url('./images/like2.jpeg');
+    bottom: 35px;
+    left: 20px;
+    opacity: 0.8;
+}
+
+.concept-section .decoration-1 {
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 20%;
+    left: 50px;
+    z-index: 0;
+}
+
+.concept-section .decoration-2 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 20%;
+    right: 45px;
+    z-index: 0;
+}
+
+.concept-section .decoration-3 {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    top: 60%;
+    right: 70%;
+    z-index: 0;
+}
+
+/* Dresscode section - 5 декораций */
+.dresscode-section::before {
+    background-image: url('./images/like3.jpeg');
+    top: 20px;
+    left: 30px;
+    opacity: 0.8;
+}
+
+.dresscode-section::after {
+    background-image: url('./images/like4.jpeg');
+    bottom: 30px;
+    right: 20px;
+    opacity: 0.8;
+}
+
+.dresscode-section .decoration-1 {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 40%;
+    right: 55px;
+    z-index: 0;
+}
+
+.dresscode-section .decoration-2 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    bottom: 10%;
+    left: 50px;
+    z-index: 0;
+}
+
+.dresscode-section .decoration-3 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    top: 70%;
+    left: 70%;
+    z-index: 0;
+}
+
+/* Expectations section - 5 декораций */
+.expectations-section::before {
+    background-image: url('./images/like2.jpeg');
+    top: 30px;
+    right: 30px;
+    opacity: 0.8;
+}
+
+.expectations-section::after {
+    background-image: url('./images/like.jpeg');
+    bottom: 20px;
+    left: 20px;
+    opacity: 0.8;
+}
+
+.expectations-section .decoration-1 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    top: 60%;
+    left: 40px;
+    z-index: 0;
+}
+
+.expectations-section .decoration-2 {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.75;
+    top: 15%;
+    right: 50px;
+    z-index: 0;
+}
+
+.expectations-section .decoration-3 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.8;
+    bottom: 60%;
+    right: 75%;
+    z-index: 0;
 } 
