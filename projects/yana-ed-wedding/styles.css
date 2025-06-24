@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Pangolin:wght@400&family=Poiret+One:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pangolin:wght@400;700&family=Poiret+One:wght@400;700&display=swap');
 
 :root {
     --primary-pink: #FF6B9D;
@@ -9,7 +9,7 @@
     --base-beige: #F5E6D3;
     --base-black: #2C2C2C;
     --base-brown: #8B4513;
-    --peach-bg: #FFF8F5;
+    --white-bg: #FFFFFF;
     --text-dark: #2C2C2C;
     --text-light: #FFFFFF;
     --text-gray: #666666;
@@ -41,13 +41,13 @@ body {
     width: 100%;
 }
 
-/* Общие стили секций */
+/* Общие стили секций - БЕЛЫЙ ФОН */
 section {
     padding: 0;
     margin: 0;
     min-height: 100vh;
     width: 100%;
-    background: var(--peach-bg);
+    background: var(--white-bg);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -59,110 +59,69 @@ section + section {
     margin-top: 0;
 }
 
-/* Общие стили декораций - размещение вокруг контента, не поверх */
+/* Уменьшенные декорации - только 4 на экран, размещение вокруг контента */
 section::before,
 section::after {
     content: '';
     position: absolute;
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.6;
+    opacity: 0.4;
     z-index: 0;
 }
 
-/* Intro section - 6 декораций симметрично вокруг контента */
+/* Intro section - 4 декорации по углам */
+.intro-section {
+    background: var(--white-bg);
+    color: var(--text-dark);
+}
+
 .intro-section::before {
     background-image: url('./images/like.jpeg');
-    top: 20px;
-    left: 20px;
+    top: 30px;
+    left: 30px;
 }
 
 .intro-section::after {
     background-image: url('./images/like2.jpeg');
-    top: 20px;
-    right: 20px;
+    top: 30px;
+    right: 30px;
 }
 
 .intro-section .decoration-1 {
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background-image: url('./images/like3.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 20px;
-    left: 20px;
+    opacity: 0.4;
+    bottom: 30px;
+    left: 30px;
     z-index: 0;
 }
 
 .intro-section .decoration-2 {
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background-image: url('./images/like4.jpeg');
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 20px;
-    right: 20px;
-    z-index: 0;
-}
-
-.intro-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
     opacity: 0.4;
-    top: 50%;
-    left: 5px;
+    bottom: 30px;
+    right: 30px;
     z-index: 0;
 }
 
-.intro-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 5px;
-    z-index: 0;
-}
-
-.intro-section .decoration-5 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    bottom: 50%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 0;
-}
-
+/* Убираем лишние декорации */
+.intro-section .decoration-3,
+.intro-section .decoration-4,
+.intro-section .decoration-5,
 .intro-section .decoration-6 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    top: 30%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 0;
+    display: none;
 }
 
 /* Date section - УБИРАЕМ ВСЕ ДЕКОРАЦИИ, оставляем только фон */
@@ -182,7 +141,8 @@ section::after {
 
 .date-section .decoration-1,
 .date-section .decoration-2,
-.date-section .decoration-3 {
+.date-section .decoration-3,
+.date-section .decoration-4 {
     display: none;
 }
 
@@ -196,29 +156,73 @@ section::after {
 }
 
 .date-subtitle {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     font-weight: 600;
     color: var(--text-dark);
     margin-bottom: 2rem;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px 25px;
+    border-radius: 15px;
     display: inline-block;
 }
 
-/* Увеличиваем размер фото love */
+/* Уменьшаем размер фото love на мобильных */
 .love-photo {
     width: 100%;
-    max-width: 400px;
+    max-width: 300px;
     height: auto;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 }
 
-/* 3 экран - Location */
+/* Location section - 4 декорации по углам */
 .location-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
     color: var(--text-dark);
+}
+
+.location-section::before {
+    background-image: url('./images/like2.jpeg');
+    top: 40px;
+    left: 40px;
+}
+
+.location-section::after {
+    background-image: url('./images/like.jpeg');
+    top: 40px;
+    right: 40px;
+}
+
+.location-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 40px;
+    left: 40px;
+    z-index: 0;
+}
+
+.location-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 40px;
+    right: 40px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации location */
+.location-section .decoration-3,
+.location-section .decoration-4 {
+    display: none;
 }
 
 .location-content {
@@ -241,6 +245,7 @@ section::after {
     font-size: 1.6rem;
     margin-bottom: 2rem;
     color: var(--text-gray);
+    white-space: nowrap;
 }
 
 /* Location section - выравниваем размеры фотографий */
@@ -264,9 +269,57 @@ section::after {
     text-justify: inter-word;
 }
 
-/* 4 экран - Timeline */
+/* Timeline section - фоновое изображение time и улучшенные пропорции */
 .timeline-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
+    background-image: url('./images/time.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.timeline-section::before {
+    background-image: url('./images/like4.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.timeline-section::after {
+    background-image: url('./images/like3.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.timeline-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.timeline-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации timeline */
+.timeline-section .decoration-3,
+.timeline-section .decoration-4 {
+    display: none;
 }
 
 .timeline-content {
@@ -276,40 +329,91 @@ section::after {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: var(--border-radius);
 }
 
 .timeline-item {
     display: flex;
     align-items: center;
     gap: 30px;
-    padding: 30px;
+    padding: 20px;
     border-radius: var(--border-radius);
 }
 
 .timeline-time {
     font-family: "Pangolin", cursive;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 400;
     color: var(--text-light);
     background: var(--text-dark);
-    padding: 20px 25px;
+    padding: 15px 20px;
     border-radius: var(--border-radius);
-    min-width: 180px;
+    min-width: 160px;
     text-align: center;
 }
 
 .timeline-desc {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 1.6;
     flex: 1;
     text-align: justify;
     text-justify: inter-word;
 }
 
-/* 5 экран - Concept */
+/* Concept section - фоновое изображение pov и стилизованный подзаголовок */
 .concept-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
+    background-image: url('./images/pov.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: var(--text-dark);
+}
+
+.concept-section::before {
+    background-image: url('./images/like.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.concept-section::after {
+    background-image: url('./images/like2.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.concept-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.concept-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации concept */
+.concept-section .decoration-3,
+.concept-section .decoration-4 {
+    display: none;
 }
 
 .concept-content {
@@ -318,14 +422,23 @@ section::after {
     width: 100%;
     max-width: 700px;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: var(--border-radius);
 }
 
 .concept-subtitle {
     font-family: "Pangolin", cursive;
     font-size: 2.2rem;
-    color: var(--text-dark);
+    color: var(--text-light);
     margin-bottom: 2rem;
-    font-weight: 400;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--primary-pink);
+    padding: 15px 25px;
+    border-radius: var(--border-radius);
+    border: 3px solid var(--text-dark);
+    display: inline-block;
 }
 
 .concept-text p {
@@ -337,12 +450,56 @@ section::after {
 }
 
 .concept-text p:last-child {
-    margin-bottom: 4rem;
+    margin-bottom: 0;
 }
 
-/* 6 экран - Dresscode */
+/* Dresscode section - 4 декорации */
 .dresscode-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
+}
+
+.dresscode-section::before {
+    background-image: url('./images/like3.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.dresscode-section::after {
+    background-image: url('./images/like4.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.dresscode-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.dresscode-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации dresscode */
+.dresscode-section .decoration-3,
+.dresscode-section .decoration-4 {
+    display: none;
 }
 
 .dresscode-content {
@@ -377,10 +534,54 @@ section::after {
     box-shadow: var(--shadow);
 }
 
-/* 7 экран - Expectations */
+/* Expectations section - 4 декорации, не пересекающиеся со слайдерами */
 .expectations-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
     color: var(--text-dark);
+}
+
+.expectations-section::before {
+    background-image: url('./images/like2.jpeg');
+    top: 40px;
+    left: 40px;
+}
+
+.expectations-section::after {
+    background-image: url('./images/like.jpeg');
+    top: 40px;
+    right: 40px;
+}
+
+.expectations-section .decoration-1 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    bottom: 40px;
+    left: 40px;
+    z-index: 0;
+}
+
+.expectations-section .decoration-2 {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    bottom: 40px;
+    right: 40px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации expectations */
+.expectations-section .decoration-3,
+.expectations-section .decoration-4 {
+    display: none;
 }
 
 .expectations-content {
@@ -401,7 +602,7 @@ section::after {
 }
 
 .slider-group:last-of-type {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .slider-title {
@@ -474,21 +675,65 @@ section::after {
     font-size: 1.7rem;
     font-weight: 400;
     color: var(--text-dark);
-    margin-top: 20px;
+    margin: 40px 0 80px 0;
     text-align: center;
 }
 
-.gift-boxes {
-    text-align: center;
-    margin-bottom: 30px;
+/* Gifts creative section - фон chasbik для денежной части */
+.gifts-creative-section {
+    background: var(--white-bg);
+    min-height: auto;
 }
 
-.gift-boxes-image {
+.gifts-creative-section::before {
+    background-image: url('./images/like4.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.gifts-creative-section::after {
+    background-image: url('./images/like3.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.gifts-creative-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.gifts-creative-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации gifts creative */
+.gifts-creative-section .decoration-3,
+.gifts-creative-section .decoration-4 {
+    display: none;
+}
+
+.gifts-content {
+    text-align: center;
     width: 100%;
-    max-width: 300px;
-    height: auto;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .gifts-text p {
@@ -497,6 +742,76 @@ section::after {
     margin-bottom: 1.5rem;
     text-align: justify;
     text-justify: inter-word;
+}
+
+/* Денежная секция с фоном chasbik */
+.money-section-part {
+    margin: 60px 0;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    background-image: url('./images/chasbik.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: var(--border-radius);
+}
+
+.money-section-part::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 1;
+}
+
+.money-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.money-animation::before {
+    content: '💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    font-size: 3rem;
+    animation: falling-coins 2.5s linear infinite;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+.money-animation::after {
+    content: '💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    font-size: 2.8rem;
+    animation: falling-dollars 2.8s linear infinite;
+    animation-delay: 1.2s;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+.money-text {
+    font-family: "Pangolin", cursive;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    line-height: 1.4;
+    position: relative;
+    z-index: 3;
+    margin: 10px 0;
 }
 
 @keyframes falling-coins {
@@ -533,327 +848,58 @@ section::after {
     }
 }
 
-/* Gifts creative section - 5 декораций + объединение с gifts money */
-.gifts-creative-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    left: 25px;
-    opacity: 0.8;
-}
-
-.gifts-creative-section::after {
-    background-image: url('./images/like3.jpeg');
-    bottom: 40px;
-    right: 25px;
-    opacity: 0.8;
-}
-
-.gifts-creative-section .decoration-1 {
-    position: absolute;
-    width: 105px;
-    height: 105px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.8;
-    top: 20%;
-    right: 60px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-2 {
-    position: absolute;
-    width: 115px;
-    height: 115px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.65;
-    bottom: 15%;
-    left: 45px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-3 {
-    position: absolute;
-    width: 95px;
-    height: 95px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.75;
-    top: 70%;
-    left: 75%;
-    z-index: 0;
-}
-
-/* Gifts alternative section - 5 декораций */
-.gifts-alternative-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 25px;
-    right: 15px;
-    opacity: 0.8;
-}
-
-.gifts-alternative-section::after {
-    background-image: url('./images/like2.jpeg');
-    bottom: 25px;
-    left: 15px;
-    opacity: 0.8;
-}
-
-.gifts-alternative-section .decoration-1 {
-    position: absolute;
-    width: 125px;
-    height: 125px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.7;
-    top: 45%;
-    right: 40px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-2 {
-    position: absolute;
-    width: 110px;
-    height: 110px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.75;
-    bottom: 30%;
-    left: 55px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-3 {
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.8;
-    top: 15%;
-    left: 70%;
-    z-index: 0;
-}
-
-/* Final section - 5 декораций */
-.final-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 35px;
-    left: 20px;
-    opacity: 0.8;
-}
-
-.final-section::after {
-    background-image: url('./images/like4.jpeg');
-    bottom: 35px;
-    right: 20px;
-    opacity: 0.8;
-}
-
-.final-section .decoration-1 {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.7;
-    top: 25%;
-    right: 50px;
-    z-index: 0;
-}
-
-.final-section .decoration-2 {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.8;
-    bottom: 20%;
-    left: 40px;
-    z-index: 0;
-}
-
-.final-section .decoration-3 {
-    position: absolute;
-    width: 110px;
-    height: 110px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.75;
-    top: 60%;
-    left: 65%;
-    z-index: 0;
-}
-
-/* Контент поверх декораций */
-.container {
-    position: relative;
-    z-index: 1;
-}
-
-.section-title {
-    font-family: "Pangolin", cursive;
-    font-weight: 400;
-    font-size: 2.8rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    color: var(--text-dark);
-    line-height: 1.2;
-}
-
-/* Стили заголовков */
-h1, h2, h3, h4, h5, h6 {
-    font-family: "Pangolin", cursive;
-    font-weight: 400;
-}
-
-/* 1 экран - Intro */
-.intro-section {
-    background: var(--peach-bg);
-    color: var(--text-dark);
-}
-
-.intro-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    color: var(--text-dark);
-    width: 100%;
-    max-width: 100%;
-}
-
-.intro-photo {
-    text-align: center;
-}
-
-.main-title {
-    font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
-    font-weight: 400;
-    text-align: left;
-    margin-bottom: 20px;
-    color: var(--heart-color);
-    grid-column: 1 / 3;
-    text-align: center;
-}
-
-.main-couple-photo {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: center;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
-.intro-text {
-    text-align: justify;
-    hyphens: auto;
-}
-
-.intro-text p {
-    font-size: 1.5rem;
-    line-height: 1.7;
-    font-weight: 400;
-    text-align: justify;
-    text-justify: inter-word;
-}
-
-.photo-caption {
-    text-align: center;
-    font-size: 1.2rem;
-    color: var(--text-gray);
-    margin-top: 10px;
-    font-style: italic;
-}
-
-/* 8 экран - Gifts Creative + Money объединенный */
-.gifts-creative-section {
-    background: var(--peach-bg);
-    min-height: auto;
-}
-
-.gifts-content {
-    text-align: center;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.money-section-part {
-    margin: 60px 0;
-    padding: 40px 20px;
-    position: relative;
-    overflow: hidden;
-}
-
-.money-animation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.money-animation::before {
-    content: '💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰';
-    position: absolute;
-    top: -50px;
-    left: 0;
-    width: 100%;
-    font-size: 3rem;
-    animation: falling-coins 2.5s linear infinite;
-    opacity: 0.9;
-    white-space: nowrap;
-}
-
-.money-animation::after {
-    content: '💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵';
-    position: absolute;
-    top: -50px;
-    left: 0;
-    width: 100%;
-    font-size: 2.8rem;
-    animation: falling-dollars 2.8s linear infinite;
-    animation-delay: 1.2s;
-    opacity: 0.85;
-    white-space: nowrap;
-}
-
-.money-text {
-    font-family: "Pangolin", cursive;
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--text-dark);
-    line-height: 1.4;
-    position: relative;
-    z-index: 2;
-    margin: 10px 0;
-}
-
 /* Убираем отдельный экран gifts-money */
 .gifts-money-section {
     display: none;
 }
 
-/* 9 экран - Gifts Alternative */
+/* Gifts alternative section - 4 декорации */
 .gifts-alternative-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
+}
+
+.gifts-alternative-section::before {
+    background-image: url('./images/like.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.gifts-alternative-section::after {
+    background-image: url('./images/like2.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.gifts-alternative-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.gifts-alternative-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации gifts alternative */
+.gifts-alternative-section .decoration-3,
+.gifts-alternative-section .decoration-4 {
+    display: none;
 }
 
 .gifts-alt-content {
@@ -939,10 +985,54 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
 }
 
-/* 11 экран - Final */
+/* Final section - 4 декорации */
 .final-section {
-    background: var(--peach-bg);
+    background: var(--white-bg);
     color: var(--text-dark);
+}
+
+.final-section::before {
+    background-image: url('./images/like3.jpeg');
+    top: 50px;
+    left: 50px;
+}
+
+.final-section::after {
+    background-image: url('./images/like4.jpeg');
+    top: 50px;
+    right: 50px;
+}
+
+.final-section .decoration-1 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    left: 50px;
+    z-index: 0;
+}
+
+.final-section .decoration-2 {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    bottom: 50px;
+    right: 50px;
+    z-index: 0;
+}
+
+/* Убираем лишние декорации final */
+.final-section .decoration-3,
+.final-section .decoration-4 {
+    display: none;
 }
 
 .final-content {
@@ -1012,6 +1102,123 @@ h1, h2, h3, h4, h5, h6 {
     text-justify: inter-word;
 }
 
+/* Контент поверх декораций */
+.container {
+    position: relative;
+    z-index: 1;
+}
+
+.section-title {
+    font-family: "Pangolin", cursive;
+    font-weight: 400;
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-dark);
+    line-height: 1.2;
+}
+
+/* Стили заголовков */
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Pangolin", cursive;
+    font-weight: 400;
+}
+
+/* Intro section - БЕЛЫЙ ФОН */
+.intro-section {
+    background: var(--white-bg);
+    color: var(--text-dark);
+}
+
+.intro-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    color: var(--text-dark);
+    width: 100%;
+    max-width: 100%;
+}
+
+.intro-photo {
+    text-align: center;
+}
+
+.main-title {
+    font-family: "Pangolin", cursive;
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--heart-color);
+    grid-column: 1 / 3;
+}
+
+.main-couple-photo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.intro-text {
+    text-align: justify;
+    hyphens: auto;
+}
+
+.intro-text p {
+    font-size: 1.5rem;
+    line-height: 1.7;
+    font-weight: 400;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.photo-caption {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+/* Добавляем недостающие стили для экрана даты */
+.date-title {
+    font-family: "Pangolin", cursive;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.main-date {
+    font-family: "Pangolin", cursive;
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    white-space: nowrap;
+}
+
+.main-date strong {
+    font-weight: 700;
+}
+
+.love-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Стили для изображений локации */
+.zal-image,
+.mondrian-image {
+    text-align: center;
+    margin: 30px 0;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .container {
@@ -1027,14 +1234,11 @@ h1, h2, h3, h4, h5, h6 {
     
     .main-title {
         grid-column: 1;
+        font-size: 3.5rem;
     }
     
     .main-couple-photo {
         max-width: 320px;
-    }
-    
-    .main-title {
-        font-size: 2.2rem;
     }
     
     .expectations-content {
@@ -1044,52 +1248,32 @@ h1, h2, h3, h4, h5, h6 {
     /* Уменьшение декораций на планшетах */
     section::before,
     section::after {
-        width: 60px;
-        height: 60px;
-        opacity: 0.5;
+        width: 50px;
+        height: 50px;
+        opacity: 0.3;
     }
     
     .intro-section .decoration-1,
     .intro-section .decoration-2,
-    .intro-section .decoration-3,
-    .intro-section .decoration-4,
-    .intro-section .decoration-5,
-    .intro-section .decoration-6,
     .location-section .decoration-1,
     .location-section .decoration-2,
-    .location-section .decoration-3,
-    .location-section .decoration-4,
     .timeline-section .decoration-1,
     .timeline-section .decoration-2,
-    .timeline-section .decoration-3,
-    .timeline-section .decoration-4,
     .concept-section .decoration-1,
     .concept-section .decoration-2,
-    .concept-section .decoration-3,
-    .concept-section .decoration-4,
     .dresscode-section .decoration-1,
     .dresscode-section .decoration-2,
-    .dresscode-section .decoration-3,
-    .dresscode-section .decoration-4,
     .expectations-section .decoration-1,
     .expectations-section .decoration-2,
-    .expectations-section .decoration-3,
-    .expectations-section .decoration-4,
     .gifts-creative-section .decoration-1,
     .gifts-creative-section .decoration-2,
-    .gifts-creative-section .decoration-3,
-    .gifts-creative-section .decoration-4,
     .gifts-alternative-section .decoration-1,
     .gifts-alternative-section .decoration-2,
-    .gifts-alternative-section .decoration-3,
-    .gifts-alternative-section .decoration-4,
     .final-section .decoration-1,
-    .final-section .decoration-2,
-    .final-section .decoration-3,
-    .final-section .decoration-4 {
-        width: 50px;
-        height: 50px;
-        opacity: 0.4;
+    .final-section .decoration-2 {
+        width: 45px;
+        height: 45px;
+        opacity: 0.3;
     }
     
     /* Фотографии локации на планшетах */
@@ -1099,9 +1283,9 @@ h1, h2, h3, h4, h5, h6 {
         height: 200px;
     }
     
-    /* Увеличенное фото love на планшетах */
+    /* Фото love на планшетах */
     .love-photo {
-        max-width: 350px;
+        max-width: 280px;
     }
 }
 
@@ -1123,7 +1307,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .main-title {
-        font-size: 2rem;
+        font-size: 3rem;
     }
     
     .main-couple-photo {
@@ -1134,19 +1318,19 @@ h1, h2, h3, h4, h5, h6 {
         flex-direction: column;
         text-align: center;
         gap: 20px;
-        padding: 30px 25px;
+        padding: 20px 15px;
     }
     
     .timeline-time {
         min-width: auto;
         width: 100%;
         max-width: 250px;
-        font-size: 1.6rem;
-        padding: 15px 20px;
+        font-size: 1.4rem;
+        padding: 12px 15px;
     }
     
     .timeline-desc {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     
     .vertical-carousel {
@@ -1178,7 +1362,6 @@ h1, h2, h3, h4, h5, h6 {
         aspect-ratio: 3/4;
     }
     
-    .gift-boxes-image,
     .nastolki-photo,
     .colors-photo {
         max-width: 250px;
@@ -1187,52 +1370,32 @@ h1, h2, h3, h4, h5, h6 {
     /* Еще меньше декораций на мобильных */
     section::before,
     section::after {
-        width: 45px;
-        height: 45px;
-        opacity: 0.4;
+        width: 40px;
+        height: 40px;
+        opacity: 0.25;
     }
     
     .intro-section .decoration-1,
     .intro-section .decoration-2,
-    .intro-section .decoration-3,
-    .intro-section .decoration-4,
-    .intro-section .decoration-5,
-    .intro-section .decoration-6,
     .location-section .decoration-1,
     .location-section .decoration-2,
-    .location-section .decoration-3,
-    .location-section .decoration-4,
     .timeline-section .decoration-1,
     .timeline-section .decoration-2,
-    .timeline-section .decoration-3,
-    .timeline-section .decoration-4,
     .concept-section .decoration-1,
     .concept-section .decoration-2,
-    .concept-section .decoration-3,
-    .concept-section .decoration-4,
     .dresscode-section .decoration-1,
     .dresscode-section .decoration-2,
-    .dresscode-section .decoration-3,
-    .dresscode-section .decoration-4,
     .expectations-section .decoration-1,
     .expectations-section .decoration-2,
-    .expectations-section .decoration-3,
-    .expectations-section .decoration-4,
     .gifts-creative-section .decoration-1,
     .gifts-creative-section .decoration-2,
-    .gifts-creative-section .decoration-3,
-    .gifts-creative-section .decoration-4,
     .gifts-alternative-section .decoration-1,
     .gifts-alternative-section .decoration-2,
-    .gifts-alternative-section .decoration-3,
-    .gifts-alternative-section .decoration-4,
     .final-section .decoration-1,
-    .final-section .decoration-2,
-    .final-section .decoration-3,
-    .final-section .decoration-4 {
+    .final-section .decoration-2 {
         width: 35px;
         height: 35px;
-        opacity: 0.3;
+        opacity: 0.25;
     }
     
     /* Фотографии локации на мобильных */
@@ -1242,9 +1405,14 @@ h1, h2, h3, h4, h5, h6 {
         height: 180px;
     }
     
-    /* Увеличенное фото love на мобильных */
+    /* Фото love на мобильных */
     .love-photo {
-        max-width: 300px;
+        max-width: 250px;
+    }
+    
+    .venue-address {
+        font-size: 1.4rem;
+        white-space: normal;
     }
 }
 
@@ -1259,7 +1427,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .timeline-item {
-        padding: 25px 20px;
+        padding: 15px 10px;
+    }
+    
+    .timeline-content {
+        padding: 30px 20px;
+    }
+    
+    .concept-content {
+        padding: 30px 20px;
     }
     
     .section-title {
@@ -1274,8 +1450,12 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.8rem;
     }
     
+    .date-subtitle {
+        font-size: 2rem;
+    }
+    
     .main-title {
-        font-size: 1.8rem;
+        font-size: 2.5rem;
     }
     
     .main-couple-photo {
@@ -1289,10 +1469,6 @@ h1, h2, h3, h4, h5, h6 {
     
     .final-text p {
         font-size: 1.7rem;
-    }
-    
-    .gifts-money-content h2 {
-        font-size: 1rem;
     }
     
     .couple-photos {
@@ -1313,7 +1489,6 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.3rem;
     }
     
-    .date-subtitle,
     .venue-address,
     .timeline-desc,
     .reality-text,
@@ -1327,7 +1502,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .timeline-time {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
     
     .organizer-name {
@@ -1358,7 +1533,6 @@ h1, h2, h3, h4, h5, h6 {
         margin-bottom: 30px;
     }
     
-    .gift-boxes-image,
     .nastolki-photo,
     .colors-photo {
         max-width: 200px;
@@ -1381,47 +1555,27 @@ h1, h2, h3, h4, h5, h6 {
     section::after {
         width: 30px;
         height: 30px;
-        opacity: 0.3;
+        opacity: 0.2;
     }
     
     .intro-section .decoration-1,
     .intro-section .decoration-2,
-    .intro-section .decoration-3,
-    .intro-section .decoration-4,
-    .intro-section .decoration-5,
-    .intro-section .decoration-6,
     .location-section .decoration-1,
     .location-section .decoration-2,
-    .location-section .decoration-3,
-    .location-section .decoration-4,
     .timeline-section .decoration-1,
     .timeline-section .decoration-2,
-    .timeline-section .decoration-3,
-    .timeline-section .decoration-4,
     .concept-section .decoration-1,
     .concept-section .decoration-2,
-    .concept-section .decoration-3,
-    .concept-section .decoration-4,
     .dresscode-section .decoration-1,
     .dresscode-section .decoration-2,
-    .dresscode-section .decoration-3,
-    .dresscode-section .decoration-4,
     .expectations-section .decoration-1,
     .expectations-section .decoration-2,
-    .expectations-section .decoration-3,
-    .expectations-section .decoration-4,
     .gifts-creative-section .decoration-1,
     .gifts-creative-section .decoration-2,
-    .gifts-creative-section .decoration-3,
-    .gifts-creative-section .decoration-4,
     .gifts-alternative-section .decoration-1,
     .gifts-alternative-section .decoration-2,
-    .gifts-alternative-section .decoration-3,
-    .gifts-alternative-section .decoration-4,
     .final-section .decoration-1,
-    .final-section .decoration-2,
-    .final-section .decoration-3,
-    .final-section .decoration-4 {
+    .final-section .decoration-2 {
         width: 25px;
         height: 25px;
         opacity: 0.2;
@@ -1434,560 +1588,8 @@ h1, h2, h3, h4, h5, h6 {
         height: 160px;
     }
     
-    /* Увеличенное фото love на маленьких экранах */
+    /* Фото love на маленьких экранах */
     .love-photo {
-        max-width: 280px;
+        max-width: 220px;
     }
-}
-
-/* Location section - 6 декораций симметрично */
-.location-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 30px;
-    left: 30px;
-}
-
-.location-section::after {
-    background-image: url('./images/like.jpeg');
-    top: 30px;
-    right: 30px;
-}
-
-.location-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 30px;
-    left: 30px;
-    z-index: 0;
-}
-
-.location-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 30px;
-    right: 30px;
-    z-index: 0;
-}
-
-.location-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 10px;
-    z-index: 0;
-}
-
-.location-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 10px;
-    z-index: 0;
-}
-
-/* Timeline section - 6 декораций симметрично */
-.timeline-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.timeline-section::after {
-    background-image: url('./images/like3.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.timeline-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.timeline-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.timeline-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.timeline-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Concept section - 6 декораций симметрично */
-.concept-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.concept-section::after {
-    background-image: url('./images/like2.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.concept-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.concept-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.concept-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.concept-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Dresscode section - 6 декораций симметрично */
-.dresscode-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.dresscode-section::after {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.dresscode-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.dresscode-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.dresscode-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.dresscode-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Expectations section - 6 декораций симметрично, НЕ пересекающихся со слайдерами */
-.expectations-section::before {
-    background-image: url('./images/like2.jpeg');
-    top: 30px;
-    left: 30px;
-}
-
-.expectations-section::after {
-    background-image: url('./images/like.jpeg');
-    top: 30px;
-    right: 30px;
-}
-
-.expectations-section .decoration-1 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 30px;
-    left: 30px;
-    z-index: 0;
-}
-
-.expectations-section .decoration-2 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    bottom: 30px;
-    right: 30px;
-    z-index: 0;
-}
-
-.expectations-section .decoration-3 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    top: 50%;
-    left: 5px;
-    z-index: 0;
-}
-
-.expectations-section .decoration-4 {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.3;
-    top: 50%;
-    right: 5px;
-    z-index: 0;
-}
-
-/* Gifts creative section - 6 декораций симметрично */
-.gifts-creative-section::before {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.gifts-creative-section::after {
-    background-image: url('./images/like3.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.gifts-creative-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.gifts-creative-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Gifts alternative section - 6 декораций симметрично */
-.gifts-alternative-section::before {
-    background-image: url('./images/like.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.gifts-alternative-section::after {
-    background-image: url('./images/like2.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.gifts-alternative-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.gifts-alternative-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Final section - 6 декораций симметрично */
-.final-section::before {
-    background-image: url('./images/like3.jpeg');
-    top: 40px;
-    left: 40px;
-}
-
-.final-section::after {
-    background-image: url('./images/like4.jpeg');
-    top: 40px;
-    right: 40px;
-}
-
-.final-section .decoration-1 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    left: 40px;
-    z-index: 0;
-}
-
-.final-section .decoration-2 {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background-image: url('./images/like2.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.5;
-    bottom: 40px;
-    right: 40px;
-    z-index: 0;
-}
-
-.final-section .decoration-3 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like4.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    left: 15px;
-    z-index: 0;
-}
-
-.final-section .decoration-4 {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    background-image: url('./images/like3.jpeg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    top: 50%;
-    right: 15px;
-    z-index: 0;
-}
-
-/* Добавляем недостающие стили для экрана даты */
-.date-title {
-    font-family: "Pangolin", cursive;
-    font-size: 3.5rem;
-    font-weight: 400;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.main-date {
-    font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
-    color: var(--text-dark);
-    margin-bottom: 1rem;
-}
-
-.main-date strong {
-    font-weight: 700;
-}
-
-.love-image {
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Стили для изображений локации */
-.zal-image,
-.mondrian-image {
-    text-align: center;
-    margin: 30px 0;
 } 
