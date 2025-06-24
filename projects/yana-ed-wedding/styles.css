@@ -42,10 +42,160 @@ body {
 
 /* Общие стили секций */
 section {
-    padding: 40px 0;
+    padding: 20px 0;
     min-height: auto;
     width: 100%;
     background: var(--peach-bg);
+    position: relative;
+}
+
+/* Декоративные фоновые изображения */
+section::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+section::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.25;
+    z-index: 0;
+}
+
+.intro-section::before {
+    background-image: url('./images/like.jpg');
+    top: 20px;
+    right: 20px;
+}
+
+.intro-section::after {
+    background-image: url('./images/like2.jpg');
+    bottom: 30px;
+    left: 30px;
+}
+
+.date-section::before {
+    background-image: url('./images/like3.jpg');
+    top: 30px;
+    left: 20px;
+}
+
+.date-section::after {
+    background-image: url('./images/like4.jpg');
+    bottom: 20px;
+    right: 30px;
+}
+
+.location-section::before {
+    background-image: url('./images/like2.jpg');
+    top: 40px;
+    right: 25px;
+}
+
+.location-section::after {
+    background-image: url('./images/like.jpg');
+    bottom: 40px;
+    left: 25px;
+}
+
+.timeline-section::before {
+    background-image: url('./images/like4.jpg');
+    top: 25px;
+    left: 15px;
+}
+
+.timeline-section::after {
+    background-image: url('./images/like3.jpg');
+    bottom: 25px;
+    right: 15px;
+}
+
+.concept-section::before {
+    background-image: url('./images/like.jpg');
+    top: 35px;
+    right: 20px;
+}
+
+.concept-section::after {
+    background-image: url('./images/like2.jpg');
+    bottom: 35px;
+    left: 20px;
+}
+
+.dresscode-section::before {
+    background-image: url('./images/like3.jpg');
+    top: 20px;
+    left: 30px;
+}
+
+.dresscode-section::after {
+    background-image: url('./images/like4.jpg');
+    bottom: 30px;
+    right: 20px;
+}
+
+.expectations-section::before {
+    background-image: url('./images/like2.jpg');
+    top: 30px;
+    right: 30px;
+}
+
+.expectations-section::after {
+    background-image: url('./images/like.jpg');
+    bottom: 20px;
+    left: 20px;
+}
+
+.gifts-creative-section::before {
+    background-image: url('./images/like4.jpg');
+    top: 40px;
+    left: 25px;
+}
+
+.gifts-creative-section::after {
+    background-image: url('./images/like3.jpg');
+    bottom: 40px;
+    right: 25px;
+}
+
+.gifts-alternative-section::before {
+    background-image: url('./images/like.jpg');
+    top: 25px;
+    right: 15px;
+}
+
+.gifts-alternative-section::after {
+    background-image: url('./images/like2.jpg');
+    bottom: 25px;
+    left: 15px;
+}
+
+.final-section::before {
+    background-image: url('./images/like3.jpg');
+    top: 35px;
+    left: 20px;
+}
+
+.final-section::after {
+    background-image: url('./images/like4.jpg');
+    bottom: 35px;
+    right: 20px;
+}
+
+/* Контент поверх декораций */
+.container {
+    position: relative;
+    z-index: 1;
 }
 
 .section-title {
@@ -68,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 .intro-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -125,7 +275,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 2 экран - Date */
 .date-section {
     background: var(--peach-bg);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -167,7 +317,7 @@ h1, h2, h3, h4, h5, h6 {
 .location-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -207,7 +357,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 4 экран - Timeline */
 .timeline-section {
     background: var(--peach-bg);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -254,7 +404,7 @@ h1, h2, h3, h4, h5, h6 {
 .concept-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -287,7 +437,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 6 экран - Dresscode */
 .dresscode-section {
     background: var(--peach-bg);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -329,7 +479,7 @@ h1, h2, h3, h4, h5, h6 {
 .expectations-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -427,7 +577,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 8 экран - Gifts Creative */
 .gifts-creative-section {
     background: var(--peach-bg);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -465,7 +615,7 @@ h1, h2, h3, h4, h5, h6 {
 .gifts-money-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -492,37 +642,61 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1;
 }
 
-.money-animation::before,
-.money-animation::after {
-    content: '💰 💵 💰 💵 💰 💵 💰 💵 💰 💵';
+.money-animation::before {
+    content: '💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰 💰';
     position: absolute;
     top: -50px;
     left: 0;
     width: 100%;
-    font-size: 2.5rem;
-    animation: falling 3s linear infinite;
-    opacity: 0.8;
+    font-size: 3rem;
+    animation: falling-coins 2.5s linear infinite;
+    opacity: 0.9;
     white-space: nowrap;
 }
 
 .money-animation::after {
-    animation-delay: 1.5s;
-    content: '💵 💰 💵 💰 💵 💰 💵 💰 💵 💰';
+    content: '💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵 💵';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    font-size: 2.8rem;
+    animation: falling-dollars 2.8s linear infinite;
+    animation-delay: 1.2s;
+    opacity: 0.85;
+    white-space: nowrap;
 }
 
-@keyframes falling {
+@keyframes falling-coins {
     0% {
-        transform: translateY(-100px);
+        transform: translateY(-100px) rotate(0deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.8;
+    15% {
+        opacity: 0.9;
     }
-    90% {
-        opacity: 0.8;
+    85% {
+        opacity: 0.9;
     }
     100% {
-        transform: translateY(calc(100vh + 100px));
+        transform: translateY(calc(100vh + 100px)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes falling-dollars {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    12% {
+        opacity: 0.85;
+    }
+    88% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateY(calc(100vh + 100px)) rotate(-360deg);
         opacity: 0;
     }
 }
@@ -540,7 +714,7 @@ h1, h2, h3, h4, h5, h6 {
 /* 10 экран - Gifts Alternative */
 .gifts-alternative-section {
     background: var(--peach-bg);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -633,7 +807,7 @@ h1, h2, h3, h4, h5, h6 {
 .final-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 60px 0;
+    padding: 40px 0;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -734,6 +908,14 @@ h1, h2, h3, h4, h5, h6 {
     .gifts-money-content {
         max-width: 100%;
     }
+    
+    /* Уменьшение декораций на планшетах */
+    section::before,
+    section::after {
+        width: 45px;
+        height: 45px;
+        opacity: 0.2;
+    }
 }
 
 @media (max-width: 768px) {
@@ -742,7 +924,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 30px 0;
+        padding: 15px 0;
         min-height: auto;
     }
     
@@ -819,6 +1001,14 @@ h1, h2, h3, h4, h5, h6 {
     .colors-photo {
         max-width: 250px;
     }
+    
+    /* Еще меньше декораций на мобильных */
+    section::before,
+    section::after {
+        width: 35px;
+        height: 35px;
+        opacity: 0.15;
+    }
 }
 
 @media (max-width: 480px) {
@@ -827,7 +1017,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     section {
-        padding: 25px 0;
+        padding: 10px 0;
     }
     
     .gifts-alt-text,
@@ -941,12 +1131,23 @@ h1, h2, h3, h4, h5, h6 {
         max-width: 200px;
     }
     
-    .money-animation::before,
+    .money-animation::before {
+        font-size: 2.5rem;
+    }
+    
     .money-animation::after {
-        font-size: 2rem;
+        font-size: 2.3rem;
     }
     
     .vertical-carousel {
         height: 300px;
+    }
+    
+    /* Минимальные декорации на маленьких экранах */
+    section::before,
+    section::after {
+        width: 25px;
+        height: 25px;
+        opacity: 0.1;
     }
 } 
