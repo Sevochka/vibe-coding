@@ -59,7 +59,7 @@ section {
     background-repeat: no-repeat;
 }
 
-/* Затемненные полупрозрачные фоны для всех секций */
+/* Более яркие полупрозрачные фоны для всех секций */
 section::before {
     content: '';
     position: absolute;
@@ -67,8 +67,8 @@ section::before {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: brightness(0.7) contrast(0.8) saturate(0.6);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: brightness(0.85) contrast(0.9) saturate(0.8);
     z-index: 0;
 }
 
@@ -259,9 +259,9 @@ section::before {
     text-justify: inter-word;
 }
 
-/* Timeline section - фон panelki4 */
+/* Timeline section - фон panelki2 */
 .timeline-section {
-    background-image: url('./images/panelki4.jpg');
+    background-image: url('./images/panelki2.jpg');
     padding: 40px 0;
 }
 
@@ -308,9 +308,9 @@ section::before {
     font-weight: 600;
 }
 
-/* Concept section - фон panelki5 */
+/* Concept section - фон panelki3 */
 .concept-section {
-    background-image: url('./images/panelki5.jpg');
+    background-image: url('./images/panelki3.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
@@ -355,9 +355,9 @@ section::before {
     margin-bottom: 0;
 }
 
-/* Dresscode section - фон panelki6 */
+/* Dresscode section - фон panelki2 */
 .dresscode-section {
-    background-image: url('./images/panelki6.jpg');
+    background-image: url('./images/panelki2.jpg');
     padding: 40px 0;
 }
 
@@ -400,9 +400,9 @@ section::before {
     transform: scale(1.02);
 }
 
-/* Expectations section - фон panelki7 */
+/* Expectations section - фон panelki3 */
 .expectations-section {
-    background-image: url('./images/panelki7.jpg');
+    background-image: url('./images/panelki3.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
@@ -509,9 +509,9 @@ section::before {
     text-align: center;
 }
 
-/* Gifts creative section - фон panelki8 */
+/* Gifts creative section - фон panelki2 */
 .gifts-creative-section {
-    background-image: url('./images/panelki8.jpg');
+    background-image: url('./images/panelki2.jpg');
     padding: 40px 0;
 }
 
@@ -544,6 +544,9 @@ section::before {
     background-repeat: no-repeat;
     border-radius: var(--border-radius);
     min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .money-section-part::before {
@@ -601,6 +604,7 @@ section::before {
     position: relative;
     z-index: 3;
     margin: 10px 0;
+    text-align: center;
 }
 
 @keyframes falling-coins {
@@ -637,9 +641,9 @@ section::before {
     }
 }
 
-/* Gifts alternative section - фон panelki9 */
+/* Gifts alternative section - фон panelki3 */
 .gifts-alternative-section {
-    background-image: url('./images/panelki9.jpg');
+    background-image: url('./images/panelki3.jpg');
     padding: 40px 0;
 }
 
@@ -733,9 +737,9 @@ section::before {
     font-weight: 400;
 }
 
-/* Final section - фон panelki10 */
+/* Final section - фон panelki2 */
 .final-section {
-    background-image: url('./images/panelki10.jpg');
+    background-image: url('./images/panelki2.jpg');
     color: var(--text-dark);
     padding: 40px 0;
 }
