@@ -3,8 +3,8 @@ let currentSlideGirls = 0;
 let currentSlideBoys = 0;
 const slidesGirls = document.querySelectorAll('#carousel-girls .carousel-slide');
 const slidesBoys = document.querySelectorAll('#carousel-boys .carousel-slide');
-const totalSlidesGirls = slidesGirls.length;
-const totalSlidesBoys = slidesBoys.length;
+const totalSlidesGirls = 8; // 8 фотографий девочек
+const totalSlidesBoys = 4; // 4 фотографии мальчиков
 
 function showSlide(carouselId, index) {
     const carousel = document.getElementById(carouselId);

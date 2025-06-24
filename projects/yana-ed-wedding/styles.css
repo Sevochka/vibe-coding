@@ -9,7 +9,7 @@
     --base-beige: #F5E6D3;
     --base-black: #2C2C2C;
     --base-brown: #8B4513;
-    --peach-bg: #FFF5F0;
+    --peach-bg: #FFF8F5;
     --text-dark: #2C2C2C;
     --text-light: #FFFFFF;
     --text-gray: #666666;
@@ -45,6 +45,7 @@ section {
     padding: 60px 0;
     min-height: auto;
     width: 100%;
+    background: var(--peach-bg);
 }
 
 .section-title {
@@ -75,18 +76,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .intro-content {
     display: flex;
-    gap: 40px;
+    flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px;
-    border-radius: var(--border-radius);
+    text-align: center;
     color: var(--text-dark);
     width: 100%;
     max-width: 100%;
 }
 
 .intro-photo {
-    flex: 0 0 300px;
+    margin-bottom: 40px;
 }
 
 .main-title {
@@ -100,6 +99,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .main-couple-photo {
     width: 100%;
+    max-width: 350px;
     height: auto;
     aspect-ratio: 3/4;
     object-fit: cover;
@@ -109,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .intro-text {
-    flex: 1;
+    max-width: 600px;
     text-align: justify;
     hyphens: auto;
 }
@@ -124,12 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 2 экран - Date */
 .date-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki2.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -138,10 +133,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .date-content {
     text-align: center;
-    background: var(--bg-light);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
@@ -174,12 +165,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 3 экран - Location */
 .location-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki3.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
@@ -188,10 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .location-content {
-    background: rgba(255, 255, 255, 0.95);
     color: var(--text-dark);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
     text-align: center;
     width: 100%;
     max-width: 500px;
@@ -223,12 +206,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 4 экран - Timeline */
 .timeline-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -248,7 +226,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     gap: 30px;
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.7);
     padding: 30px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -276,12 +254,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 5 экран - Concept */
 .concept-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki2.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
@@ -291,10 +264,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .concept-content {
     text-align: center;
-    background: rgba(255, 255, 255, 0.95);
     color: var(--text-dark);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -318,12 +288,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 6 экран - Dresscode */
 .dresscode-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki3.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -331,7 +296,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .dresscode-content {
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.7);
     padding: 60px 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -431,10 +396,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .expectations-content {
     text-align: center;
-    background: rgba(255, 255, 255, 0.95);
     color: var(--text-dark);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -521,12 +483,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 8 экран - Gifts Creative */
 .gifts-creative-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki2.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -534,7 +491,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gifts-content {
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.7);
     padding: 60px 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -578,10 +535,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .gifts-money-content {
     text-align: center;
-    background: rgba(255, 255, 255, 0.95);
     color: var(--text-dark);
-    padding: 60px 40px;
-    border-radius: var(--border-radius);
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
@@ -645,12 +599,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 10 экран - Gifts Alternative */
 .gifts-alternative-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     padding: 80px 0;
     min-height: 100vh;
     display: flex;
@@ -667,7 +616,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .gifts-alt-text {
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.7);
     padding: 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -695,7 +644,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .contact-info {
-    background: var(--bg-light);
+    background: rgba(255, 255, 255, 0.7);
     padding: 40px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -746,12 +695,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 11 экран - Final */
 .final-section {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), 
-                url('./images/panelki2.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: blur(0.5px);
+    background: var(--peach-bg);
     color: var(--text-dark);
     padding: 80px 0;
     min-height: 100vh;
@@ -761,11 +705,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .final-content {
     display: flex;
-    gap: 40px;
-    align-items: flex-start;
-    background: rgba(255, 255, 255, 0.95);
-    padding: 50px;
-    border-radius: var(--border-radius);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     color: var(--text-dark);
     width: 100%;
     max-width: 600px;
@@ -773,12 +715,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .final-text {
-    flex: 1;
+    margin-bottom: 40px;
 }
 
 .final-text h2 {
-    font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
+    font-family: "Poiret One", sans-serif;
+    font-size: 1.8rem;
     font-weight: 400;
     margin-bottom: 2rem;
     line-height: 1.4;
@@ -794,10 +736,29 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 2rem;
 }
 
+.final-photo {
+    margin-bottom: 30px;
+}
+
+.couple-photos {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.couple-photo {
+    width: 180px;
+    height: auto;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
 .postscript {
-    border-top: 1px solid #eee;
+    border-top: 1px solid #ddd;
     padding-top: 1rem;
-    margin-top: 2rem;
 }
 
 .postscript p {
@@ -809,26 +770,6 @@ h1, h2, h3, h4, h5, h6 {
     text-justify: inter-word;
 }
 
-.final-photo {
-    flex: 0 0 200px;
-}
-
-.couple-photos {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.couple-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    object-position: center;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
     .container {
@@ -836,13 +777,12 @@ h1, h2, h3, h4, h5, h6 {
         padding: 0 30px;
     }
     
-    .intro-content,
-    .final-content {
+    .intro-content {
         gap: 30px;
     }
     
-    .intro-photo {
-        flex: 0 0 280px;
+    .main-couple-photo {
+        max-width: 320px;
     }
     
     .main-title {
@@ -886,19 +826,8 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2rem;
     }
     
-    .intro-content,
-    .final-content {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 30px;
-    }
-    
-    .intro-photo,
-    .final-photo {
-        flex: none;
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
+    .main-couple-photo {
+        max-width: 280px;
     }
     
     .timeline-item {
@@ -954,13 +883,11 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .couple-photos {
-        flex-direction: row;
-        justify-content: center;
         gap: 15px;
     }
     
     .couple-photo {
-        width: 120px;
+        width: 150px;
         height: auto;
         aspect-ratio: 3/4;
     }
@@ -990,8 +917,7 @@ h1, h2, h3, h4, h5, h6 {
     .gifts-content,
     .gifts-money-content,
     .gifts-alt-text,
-    .contact-info,
-    .final-content {
+    .contact-info {
         padding: 30px 20px;
     }
     
@@ -1015,13 +941,17 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.8rem;
     }
     
+    .main-couple-photo {
+        max-width: 250px;
+    }
+    
     .concept-subtitle,
     .venue-name {
         font-size: 1.8rem;
     }
     
-    .final-text h2 {
-        font-size: 2rem;
+    .final-text p {
+        font-size: 1.6rem;
     }
     
     .gifts-money-content h2 {
@@ -1029,16 +959,13 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .couple-photos {
-        flex-direction: column;
         gap: 10px;
     }
     
     .couple-photo {
-        width: 100%;
-        max-width: 200px;
+        width: 120px;
         height: auto;
         aspect-ratio: 3/4;
-        margin: 0 auto;
     }
     
     .intro-text p,
