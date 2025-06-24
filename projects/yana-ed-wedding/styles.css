@@ -17,6 +17,7 @@
     --bg-overlay: rgba(0, 0, 0, 0.4);
     --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     --border-radius: 15px;
+    --heart-color: #e91e63;
 }
 
 * {
@@ -34,7 +35,7 @@ body {
 }
 
 .container {
-    max-width: 660px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
     width: 100%;
@@ -42,33 +43,27 @@ body {
 
 /* Общие стили секций */
 section {
-    padding: 10px 0;
-    min-height: auto;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
     width: 100%;
     background: var(--peach-bg);
     position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-/* Декоративные фоновые изображения */
-section::before {
-    content: '';
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.4;
-    z-index: 0;
-}
-
+/* Множественные декоративные фоновые изображения */
+section::before,
 section::after {
     content: '';
     position: absolute;
-    width: 70px;
-    height: 70px;
+    width: 120px;
+    height: 120px;
     background-size: contain;
     background-repeat: no-repeat;
-    opacity: 0.35;
+    opacity: 0.7;
     z-index: 0;
 }
 
@@ -84,6 +79,56 @@ section::after {
     left: 30px;
 }
 
+.intro-section {
+    position: relative;
+}
+
+.intro-section .decoration-1 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    top: 50%;
+    left: 10px;
+    z-index: 0;
+}
+
+.intro-section .decoration-2 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 20%;
+    right: 50px;
+    z-index: 0;
+}
+
+.intro-section .decoration-3 {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    bottom: 10%;
+    right: 15px;
+    z-index: 0;
+}
+
+.date-section {
+    background-image: url('./images/fon.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .date-section::before {
     background-image: url('./images/like3.jpeg');
     top: 30px;
@@ -94,6 +139,32 @@ section::after {
     background-image: url('./images/like4.jpeg');
     bottom: 20px;
     right: 30px;
+}
+
+.date-section .decoration-1 {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    top: 60%;
+    left: 50px;
+    z-index: 0;
+}
+
+.date-section .decoration-2 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.55;
+    top: 10%;
+    right: 60px;
+    z-index: 0;
 }
 
 .location-section::before {
@@ -108,6 +179,32 @@ section::after {
     left: 25px;
 }
 
+.location-section .decoration-1 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 15%;
+    left: 60px;
+    z-index: 0;
+}
+
+.location-section .decoration-2 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    bottom: 15%;
+    right: 50px;
+    z-index: 0;
+}
+
 .timeline-section::before {
     background-image: url('./images/like4.jpeg');
     top: 25px;
@@ -118,6 +215,32 @@ section::after {
     background-image: url('./images/like3.jpeg');
     bottom: 25px;
     right: 15px;
+}
+
+.timeline-section .decoration-1 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.55;
+    top: 50%;
+    right: 40px;
+    z-index: 0;
+}
+
+.timeline-section .decoration-2 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    bottom: 10%;
+    left: 40px;
+    z-index: 0;
 }
 
 .concept-section::before {
@@ -132,6 +255,32 @@ section::after {
     left: 20px;
 }
 
+.concept-section .decoration-1 {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 20%;
+    left: 50px;
+    z-index: 0;
+}
+
+.concept-section .decoration-2 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    bottom: 20%;
+    right: 45px;
+    z-index: 0;
+}
+
 .dresscode-section::before {
     background-image: url('./images/like3.jpeg');
     top: 20px;
@@ -142,6 +291,32 @@ section::after {
     background-image: url('./images/like4.jpeg');
     bottom: 30px;
     right: 20px;
+}
+
+.dresscode-section .decoration-1 {
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.55;
+    top: 40%;
+    right: 55px;
+    z-index: 0;
+}
+
+.dresscode-section .decoration-2 {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 10%;
+    left: 50px;
+    z-index: 0;
 }
 
 .expectations-section::before {
@@ -156,6 +331,32 @@ section::after {
     left: 20px;
 }
 
+.expectations-section .decoration-1 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    top: 60%;
+    left: 40px;
+    z-index: 0;
+}
+
+.expectations-section .decoration-2 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    top: 15%;
+    right: 50px;
+    z-index: 0;
+}
+
 .gifts-creative-section::before {
     background-image: url('./images/like4.jpeg');
     top: 40px;
@@ -166,6 +367,32 @@ section::after {
     background-image: url('./images/like3.jpeg');
     bottom: 40px;
     right: 25px;
+}
+
+.gifts-creative-section .decoration-1 {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    top: 20%;
+    right: 60px;
+    z-index: 0;
+}
+
+.gifts-creative-section .decoration-2 {
+    position: absolute;
+    width: 95px;
+    height: 95px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.55;
+    bottom: 15%;
+    left: 45px;
+    z-index: 0;
 }
 
 .gifts-alternative-section::before {
@@ -180,6 +407,32 @@ section::after {
     left: 15px;
 }
 
+.gifts-alternative-section .decoration-1 {
+    position: absolute;
+    width: 105px;
+    height: 105px;
+    background-image: url('./images/like3.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    top: 45%;
+    right: 40px;
+    z-index: 0;
+}
+
+.gifts-alternative-section .decoration-2 {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background-image: url('./images/like4.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.65;
+    bottom: 30%;
+    left: 55px;
+    z-index: 0;
+}
+
 .final-section::before {
     background-image: url('./images/like3.jpeg');
     top: 35px;
@@ -190,6 +443,32 @@ section::after {
     background-image: url('./images/like4.jpeg');
     bottom: 35px;
     right: 20px;
+}
+
+.final-section .decoration-1 {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('./images/like.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.6;
+    top: 25%;
+    right: 50px;
+    z-index: 0;
+}
+
+.final-section .decoration-2 {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-image: url('./images/like2.jpeg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    bottom: 20%;
+    left: 40px;
+    z-index: 0;
 }
 
 /* Контент поверх декораций */
@@ -218,33 +497,31 @@ h1, h2, h3, h4, h5, h6 {
 .intro-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .intro-content {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     align-items: center;
-    text-align: center;
     color: var(--text-dark);
     width: 100%;
     max-width: 100%;
 }
 
 .intro-photo {
-    margin-bottom: 40px;
+    text-align: center;
 }
 
 .main-title {
     font-family: "Pangolin", cursive;
     font-size: 2.5rem;
     font-weight: 400;
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
-    color: var(--text-dark);
+    color: var(--heart-color);
+    grid-column: 1 / 3;
+    text-align: center;
 }
 
 .main-couple-photo {
@@ -259,7 +536,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .intro-text {
-    max-width: 600px;
     text-align: justify;
     hyphens: auto;
 }
@@ -272,13 +548,17 @@ h1, h2, h3, h4, h5, h6 {
     text-justify: inter-word;
 }
 
+.photo-caption {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-top: 10px;
+    font-style: italic;
+}
+
 /* 2 экран - Date */
 .date-section {
-    background: var(--peach-bg);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+    color: var(--text-dark);
 }
 
 .date-content {
@@ -286,6 +566,9 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     max-width: 500px;
     margin: 0 auto;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: var(--border-radius);
 }
 
 .date-title {
@@ -310,17 +593,26 @@ h1, h2, h3, h4, h5, h6 {
 .date-subtitle {
     font-size: 1.6rem;
     color: var(--text-gray);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+}
+
+.love-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.love-photo {
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 /* 3 экран - Location */
 .location-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .location-content {
@@ -345,6 +637,19 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-gray);
 }
 
+.mondrian-image {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.mondrian-photo {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
 .parking-note p {
     font-size: 1.4rem;
     font-style: italic;
@@ -357,10 +662,6 @@ h1, h2, h3, h4, h5, h6 {
 /* 4 экран - Timeline */
 .timeline-section {
     background: var(--peach-bg);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .timeline-content {
@@ -368,7 +669,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 30px;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -404,17 +705,13 @@ h1, h2, h3, h4, h5, h6 {
 .concept-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .concept-content {
     text-align: center;
     color: var(--text-dark);
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -434,18 +731,18 @@ h1, h2, h3, h4, h5, h6 {
     text-justify: inter-word;
 }
 
+.concept-text p:last-child {
+    margin-bottom: 4rem;
+}
+
 /* 6 экран - Dresscode */
 .dresscode-section {
     background: var(--peach-bg);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .dresscode-content {
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -479,22 +776,23 @@ h1, h2, h3, h4, h5, h6 {
 .expectations-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .expectations-content {
     text-align: center;
     color: var(--text-dark);
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
 }
 
 .slider-group {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .slider-group:last-of-type {
@@ -572,21 +870,18 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 400;
     color: var(--text-dark);
     margin-top: 20px;
+    text-align: center;
 }
 
 /* 8 экран - Gifts Creative */
 .gifts-creative-section {
     background: var(--peach-bg);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .gifts-content {
     text-align: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -615,10 +910,6 @@ h1, h2, h3, h4, h5, h6 {
 .gifts-money-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
     position: relative;
 }
 
@@ -630,6 +921,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     position: relative;
     overflow: hidden;
+    padding: 20px 0;
 }
 
 .money-animation {
@@ -703,21 +995,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .gifts-money-content h2 {
     font-family: "Pangolin", cursive;
-    font-size: 2.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     color: var(--text-dark);
     line-height: 1.4;
     position: relative;
     z-index: 2;
+    margin: 10px 0;
 }
 
 /* 10 экран - Gifts Alternative */
 .gifts-alternative-section {
     background: var(--peach-bg);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .gifts-alt-content {
@@ -725,7 +1014,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     gap: 40px;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -763,7 +1052,7 @@ h1, h2, h3, h4, h5, h6 {
 .contact-info h3 {
     font-family: "Pangolin", cursive;
     font-size: 1.8rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     color: var(--text-dark);
     font-weight: 400;
 }
@@ -807,10 +1096,6 @@ h1, h2, h3, h4, h5, h6 {
 .final-section {
     background: var(--peach-bg);
     color: var(--text-dark);
-    padding: 20px 0;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
 }
 
 .final-content {
@@ -820,7 +1105,7 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     color: var(--text-dark);
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
@@ -888,7 +1173,13 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .intro-content {
+        grid-template-columns: 1fr;
         gap: 30px;
+        text-align: center;
+    }
+    
+    .main-title {
+        grid-column: 1;
     }
     
     .main-couple-photo {
@@ -899,11 +1190,14 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 2.2rem;
     }
     
+    .expectations-content {
+        max-width: 500px;
+    }
+    
     .date-content,
     .location-content,
     .concept-content,
     .dresscode-content,
-    .expectations-content,
     .gifts-content,
     .gifts-money-content {
         max-width: 100%;
@@ -912,20 +1206,41 @@ h1, h2, h3, h4, h5, h6 {
     /* Уменьшение декораций на планшетах */
     section::before,
     section::after {
+        width: 80px;
+        height: 80px;
+        opacity: 0.6;
+    }
+    
+    .intro-section .decoration-1,
+    .intro-section .decoration-2,
+    .intro-section .decoration-3,
+    .date-section .decoration-1,
+    .date-section .decoration-2,
+    .location-section .decoration-1,
+    .location-section .decoration-2,
+    .timeline-section .decoration-1,
+    .timeline-section .decoration-2,
+    .concept-section .decoration-1,
+    .concept-section .decoration-2,
+    .dresscode-section .decoration-1,
+    .dresscode-section .decoration-2,
+    .expectations-section .decoration-1,
+    .expectations-section .decoration-2,
+    .gifts-creative-section .decoration-1,
+    .gifts-creative-section .decoration-2,
+    .gifts-alternative-section .decoration-1,
+    .gifts-alternative-section .decoration-2,
+    .final-section .decoration-1,
+    .final-section .decoration-2 {
         width: 60px;
         height: 60px;
-        opacity: 0.3;
+        opacity: 0.5;
     }
 }
 
 @media (max-width: 768px) {
     .container {
         padding: 0 20px;
-    }
-    
-    section {
-        padding: 5px 0;
-        min-height: auto;
     }
     
     .section-title {
@@ -1005,19 +1320,41 @@ h1, h2, h3, h4, h5, h6 {
     /* Еще меньше декораций на мобильных */
     section::before,
     section::after {
-        width: 50px;
-        height: 50px;
-        opacity: 0.25;
+        width: 60px;
+        height: 60px;
+        opacity: 0.5;
+    }
+    
+    .intro-section .decoration-1,
+    .intro-section .decoration-2,
+    .intro-section .decoration-3,
+    .date-section .decoration-1,
+    .date-section .decoration-2,
+    .location-section .decoration-1,
+    .location-section .decoration-2,
+    .timeline-section .decoration-1,
+    .timeline-section .decoration-2,
+    .concept-section .decoration-1,
+    .concept-section .decoration-2,
+    .dresscode-section .decoration-1,
+    .dresscode-section .decoration-2,
+    .expectations-section .decoration-1,
+    .expectations-section .decoration-2,
+    .gifts-creative-section .decoration-1,
+    .gifts-creative-section .decoration-2,
+    .gifts-alternative-section .decoration-1,
+    .gifts-alternative-section .decoration-2,
+    .final-section .decoration-1,
+    .final-section .decoration-2 {
+        width: 40px;
+        height: 40px;
+        opacity: 0.4;
     }
 }
 
 @media (max-width: 480px) {
     .container {
         padding: 0 15px;
-    }
-    
-    section {
-        padding: 5px 0;
     }
     
     .gifts-alt-text,
@@ -1059,7 +1396,7 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .gifts-money-content h2 {
-        font-size: 2rem;
+        font-size: 1rem;
     }
     
     .couple-photos {
@@ -1148,6 +1485,32 @@ h1, h2, h3, h4, h5, h6 {
     section::after {
         width: 40px;
         height: 40px;
-        opacity: 0.2;
+        opacity: 0.4;
+    }
+    
+    .intro-section .decoration-1,
+    .intro-section .decoration-2,
+    .intro-section .decoration-3,
+    .date-section .decoration-1,
+    .date-section .decoration-2,
+    .location-section .decoration-1,
+    .location-section .decoration-2,
+    .timeline-section .decoration-1,
+    .timeline-section .decoration-2,
+    .concept-section .decoration-1,
+    .concept-section .decoration-2,
+    .dresscode-section .decoration-1,
+    .dresscode-section .decoration-2,
+    .expectations-section .decoration-1,
+    .expectations-section .decoration-2,
+    .gifts-creative-section .decoration-1,
+    .gifts-creative-section .decoration-2,
+    .gifts-alternative-section .decoration-1,
+    .gifts-alternative-section .decoration-2,
+    .final-section .decoration-1,
+    .final-section .decoration-2 {
+        width: 30px;
+        height: 30px;
+        opacity: 0.3;
     }
 } 
