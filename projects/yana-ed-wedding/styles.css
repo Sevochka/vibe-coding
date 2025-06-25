@@ -37,6 +37,7 @@ body {
     color: var(--text-dark);
     line-height: 1.6;
     font-size: 20px;
+    hyphens: none;
 }
 
 .container {
@@ -125,7 +126,6 @@ section::before {
 
 .intro-text {
     text-align: justify;
-    hyphens: auto;
 }
 
 .intro-text p {
@@ -133,7 +133,7 @@ section::before {
     line-height: 1.7;
     font-weight: 400;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 /* Date section - фон panelki2 */
@@ -256,7 +256,7 @@ section::before {
     color: var(--text-gray);
     line-height: 1.6;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 /* Timeline section - фон panelki2 */
@@ -303,9 +303,9 @@ section::before {
     line-height: 1.6;
     flex: 1;
     text-align: justify;
-    text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
+    hyphens: none;
 }
 
 /* Concept section - фон panelki3 */
@@ -346,9 +346,9 @@ section::before {
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
-    text-justify: inter-word;
     color: var(--text-dark);
     font-weight: 600;
+    hyphens: none;
 }
 
 .concept-text p:last-child {
@@ -379,7 +379,7 @@ section::before {
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 .palette-image {
@@ -529,10 +529,32 @@ section::before {
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
-/* Денежная секция с адаптивным горизонтальным фоном money */
+/* Изображения boy и girl после творческого абзаца */
+.creative-images {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.creative-photo {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+}
+
+.creative-photo:hover {
+    transform: scale(1.05);
+}
+
+/* Денежная секция с полупрозрачным белым слоем */
 .money-section-part {
     margin: 40px 0;
     padding: 40px;
@@ -547,6 +569,17 @@ section::before {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.money-section-part::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 1;
 }
 
 .money-animation {
@@ -657,7 +690,7 @@ section::before {
     line-height: 1.7;
     margin-bottom: 1.5rem;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 .nastolki-image {
@@ -704,7 +737,7 @@ section::before {
     line-height: 1.6;
     margin-bottom: 1.5rem;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 .organizer-contact {
@@ -757,7 +790,7 @@ section::before {
     margin-bottom: 2rem;
     line-height: 1.4;
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 .signature {
@@ -797,6 +830,7 @@ section::before {
 .postscript {
     border-top: 1px solid #ddd;
     padding-top: 1rem;
+    padding-bottom: 120px;
 }
 
 .postscript p {
@@ -805,7 +839,7 @@ section::before {
     font-style: italic;
     color: var(--text-gray);
     text-align: justify;
-    text-justify: inter-word;
+    hyphens: none;
 }
 
 /* Кликер сердечек */
@@ -1107,6 +1141,17 @@ h1, h2, h3, h4, h5, h6 {
         background-position: center;
         min-height: 200px;
     }
+    
+    .creative-images {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .creative-photo {
+        width: 120px;
+        height: 120px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1172,6 +1217,7 @@ h1, h2, h3, h4, h5, h6 {
     .gifts-text p,
     .gifts-alt-text p {
         font-size: 1.3rem;
+        hyphens: none;
     }
     
     .venue-address,
@@ -1180,10 +1226,12 @@ h1, h2, h3, h4, h5, h6 {
     .contact-info p,
     .postscript p {
         font-size: 1.2rem;
+        hyphens: none;
     }
     
     .parking-note p {
         font-size: 1.1rem;
+        hyphens: none;
     }
     
     .timeline-time {
@@ -1272,5 +1320,10 @@ h1, h2, h3, h4, h5, h6 {
         background-size: cover;
         background-position: center;
         min-height: 180px;
+    }
+    
+    .creative-photo {
+        width: 100px;
+        height: 100px;
     }
 } 
