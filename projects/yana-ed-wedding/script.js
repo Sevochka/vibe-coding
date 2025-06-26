@@ -1,66 +1,84 @@
-// Карусели
-let currentSlideGirls = 0;
-let currentSlideBoys = 0;
-
-// Инициализация каруселей
-function initCarousels() {
-    const slidesGirls = document.querySelectorAll('#carousel-girls .carousel-slide');
-    const slidesBoys = document.querySelectorAll('#carousel-boys .carousel-slide');
-    const totalSlidesGirls = slidesGirls.length; // 8 фотографий девочек
-    const totalSlidesBoys = slidesBoys.length; // 4 фотографии мальчиков
-
-    function showSlide(carouselId, index) {
-        const carousel = document.getElementById(carouselId);
-        if (carousel) {
-            carousel.style.transform = `translateX(-${index * 100}%)`;
+// Современная логика каруселей
+class ModernCarousel {
+    constructor(carouselType) {
+        this.carouselType = carouselType;
+        this.currentIndex = 0;
+        this.carouselContainer = document.querySelector(`[data-carousel="${carouselType}"]`).closest('.vertical-carousel');
+        this.track = document.getElementById(`carousel-${carouselType}`);
+        this.slides = this.track.querySelectorAll('.carousel-slide');
+        this.totalSlides = this.slides.length;
+        this.prevBtn = document.querySelector(`[data-carousel="${carouselType}"].prev`);
+        this.nextBtn = document.querySelector(`[data-carousel="${carouselType}"].next`);
+        
+        this.init();
+    }
+    
+    init() {
+        // Устанавливаем начальное положение
+        this.updateCarousel();
+        
+        // Добавляем обработчики событий
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.prev();
+            });
+        }
+        
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.next();
+            });
+        }
+        
+        // Добавляем поддержку свайпов на мобильных
+        this.addTouchSupport();
+    }
+    
+    updateCarousel() {
+        if (this.track && this.totalSlides > 0) {
+            const translateX = -this.currentIndex * 100;
+            this.track.style.transform = `translateX(${translateX}%)`;
         }
     }
-
-    function nextSlide(type) {
-        if (type === 'girls') {
-            currentSlideGirls = (currentSlideGirls + 1) % totalSlidesGirls;
-            showSlide('carousel-girls', currentSlideGirls);
-        } else if (type === 'boys') {
-            currentSlideBoys = (currentSlideBoys + 1) % totalSlidesBoys;
-            showSlide('carousel-boys', currentSlideBoys);
-        }
+    
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.updateCarousel();
     }
-
-    function prevSlide(type) {
-        if (type === 'girls') {
-            currentSlideGirls = (currentSlideGirls - 1 + totalSlidesGirls) % totalSlidesGirls;
-            showSlide('carousel-girls', currentSlideGirls);
-        } else if (type === 'boys') {
-            currentSlideBoys = (currentSlideBoys - 1 + totalSlidesBoys) % totalSlidesBoys;
-            showSlide('carousel-boys', currentSlideBoys);
-        }
+    
+    prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.updateCarousel();
     }
-
-    // Показать первые слайды
-    showSlide('carousel-girls', 0);
-    showSlide('carousel-boys', 0);
-
-    // Обработчики кнопок (только ручное управление)
-    document.querySelectorAll('.carousel-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const carouselType = btn.getAttribute('data-carousel');
-            const isNext = btn.classList.contains('next');
-            
-            if (carouselType === 'girls') {
-                if (isNext) {
-                    nextSlide('girls');
-                } else {
-                    prevSlide('girls');
-                }
-            } else if (carouselType === 'boys') {
-                if (isNext) {
-                    nextSlide('boys');
-                } else {
-                    prevSlide('boys');
-                }
-            }
+    
+    addTouchSupport() {
+        let startX = 0;
+        let endX = 0;
+        
+        this.carouselContainer.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
         });
-    });
+        
+        this.carouselContainer.addEventListener('touchend', (e) => {
+            endX = e.changedTouches[0].clientX;
+            this.handleSwipe();
+        });
+    }
+    
+    handleSwipe() {
+        const swipeThreshold = 50;
+        const swipeDistance = endX - startX;
+        
+        if (Math.abs(swipeDistance) > swipeThreshold) {
+            if (swipeDistance > 0) {
+                this.prev(); // Свайп вправо - предыдущий слайд
+            } else {
+                this.next(); // Свайп влево - следующий слайд
+            }
+        }
+    }
 }
 
 // Анимации при прокрутке
@@ -168,40 +186,6 @@ function initColorPalette() {
     });
 }
 
-// Карусель
-class Carousel {
-    constructor(carouselId) {
-        this.carousel = document.getElementById(`carousel-${carouselId}`);
-        this.currentIndex = 0;
-        this.slides = this.carousel.querySelectorAll('.carousel-slide');
-        this.totalSlides = this.slides.length;
-        
-        // Добавляем обработчики событий для кнопок
-        const prevBtn = document.querySelector(`[data-carousel="${carouselId}"].prev`);
-        const nextBtn = document.querySelector(`[data-carousel="${carouselId}"].next`);
-        
-        if (prevBtn) prevBtn.addEventListener('click', () => this.prev());
-        if (nextBtn) nextBtn.addEventListener('click', () => this.next());
-        
-        this.updateCarousel();
-    }
-    
-    updateCarousel() {
-        const translateX = -this.currentIndex * 100;
-        this.carousel.style.transform = `translateX(${translateX}%)`;
-    }
-    
-    next() {
-        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
-        this.updateCarousel();
-    }
-    
-    prev() {
-        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
-        this.updateCarousel();
-    }
-}
-
 // Кликер сердечек - только для определенных фотографий
 class HeartClicker {
     constructor() {
@@ -290,9 +274,6 @@ class HeartClicker {
 
 // Инициализация всех функций
 document.addEventListener('DOMContentLoaded', function() {
-    // Инициализация каруселей
-    initCarousels();
-    
     // Анимации при прокрутке
     animateOnScroll();
     
@@ -313,9 +294,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('loaded');
     }, 100);
     
-    // Инициализируем карусели
-    new Carousel('girls');
-    new Carousel('boys');
+    // Инициализируем карусели с новой логикой
+    new ModernCarousel('girls');
+    new ModernCarousel('boys');
     
     // Инициализируем кликер сердечек
     new HeartClicker();
