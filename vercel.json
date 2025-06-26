@@ -1,0 +1,11 @@
+{
+  "buildCommand": "echo 'No build needed'",
+  "outputDirectory": "projects/yana-ed-wedding",
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/projects/yana-ed-wedding/(.*)",
+      "destination": "/projects/yana-ed-wedding/$1"
+    }
+  ]
+} 
