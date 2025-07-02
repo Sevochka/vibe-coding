@@ -1,0 +1,727 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+:root {
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--sports-grey-900);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Поп-ап с инструкцией */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    opacity: 1;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+    background: white;
+    margin: auto;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.4s ease-out;
+}
+
+.modal-header {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    padding: 25px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    margin: 0;
+}
+
+.close-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.instruction-step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    animation: slideInLeft 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.instruction-step:nth-child(1) { animation-delay: 0.1s; }
+.instruction-step:nth-child(2) { animation-delay: 0.2s; }
+.instruction-step:nth-child(3) { animation-delay: 0.3s; }
+.instruction-step:nth-child(4) { animation-delay: 0.4s; }
+
+.step-number {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.step-content h3 {
+    color: var(--sports-grey-900);
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.step-content p {
+    color: var(--sports-grey-600);
+    font-size: 14px;
+}
+
+.modal-footer {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.start-btn {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 199, 139, 0.3);
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(0, 199, 139, 0.4);
+}
+
+/* Шапка */
+.header {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+.title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 28px;
+    color: var(--sports-grey-900);
+    margin: 0;
+    flex: 1;
+    text-align: center;
+}
+
+.header-stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    text-transform: uppercase;
+}
+
+/* Навигация туров */
+.tour-navigation {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tour-selector {
+    display: flex;
+    gap: 10px;
+}
+
+.tour-btn {
+    background: var(--sports-grey-50);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--sports-grey-600);
+}
+
+.tour-btn.active {
+    background: var(--sports-primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.tour-btn:hover:not(.active) {
+    background: var(--sports-primary-light-color-hover);
+    color: var(--sports-primary-color);
+}
+
+.tour-deadline {
+    color: var(--sports-grey-600);
+    font-size: 14px;
+}
+
+.tour-deadline strong {
+    color: var(--sports-red-a700);
+}
+
+/* Матчи */
+.matches-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.match-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.match-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.match-card.selected {
+    border-color: var(--sports-primary-color);
+    box-shadow: 0 10px 30px rgba(0, 199, 139, 0.2);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.match-time {
+    background: var(--sports-grey-50);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--sports-grey-600);
+}
+
+.match-status {
+    background: var(--sports-green-50);
+    color: var(--sports-primary-color);
+    padding: 8px 15px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.match-status.live {
+    background: var(--sports-red-50);
+    color: var(--sports-red-a700);
+    animation: pulse 2s infinite;
+}
+
+.match-teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.team {
+    text-align: center;
+    flex: 1;
+}
+
+.team-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--sports-grey-900);
+    margin-bottom: 5px;
+}
+
+.team-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sports-grey-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 20px;
+}
+
+.vs-separator {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--sports-grey-400);
+    margin: 0 20px;
+}
+
+.match-score {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+}
+
+/* Панель прогнозирования */
+.prediction-panel {
+    border-top: 2px solid var(--sports-grey-50);
+    padding-top: 20px;
+}
+
+.prediction-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--sports-grey-600);
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.outcome-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.outcome-btn {
+    background: white;
+    border: 2px solid var(--sports-grey-100);
+    padding: 15px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--sports-grey-600);
+    position: relative;
+    overflow: hidden;
+}
+
+.outcome-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.outcome-btn:hover:before {
+    left: 100%;
+}
+
+.outcome-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.outcome-btn.win {
+    background: linear-gradient(45deg, var(--sports-primary-color), #00e5a0);
+    border-color: var(--sports-primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.outcome-btn.draw {
+    background: linear-gradient(45deg, var(--sports-yellow-A700), #ffdb4d);
+    border-color: var(--sports-yellow-A700);
+    color: white;
+    transform: scale(1.05);
+}
+
+.outcome-btn.lose {
+    background: linear-gradient(45deg, var(--sports-red-a700), #ff4d6d);
+    border-color: var(--sports-red-a700);
+    color: white;
+    transform: scale(1.05);
+}
+
+.outcome-label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.outcome-odds {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.total-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.total-btn {
+    background: white;
+    border: 2px solid var(--sports-grey-100);
+    padding: 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-weight: bold;
+    color: var(--sports-grey-600);
+}
+
+.total-btn:hover {
+    border-color: var(--sports-cyan-A700);
+    background: var(--sports-blue-50);
+}
+
+.total-btn.selected {
+    background: linear-gradient(45deg, var(--sports-cyan-A700), var(--sports-blue-A400));
+    border-color: var(--sports-cyan-A700);
+    color: white;
+    transform: scale(1.05);
+}
+
+.stake-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stake-input label {
+    font-weight: bold;
+    color: var(--sports-grey-600);
+    min-width: 80px;
+}
+
+.stake-input input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--sports-grey-100);
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.stake-input input:focus {
+    outline: none;
+    border-color: var(--sports-primary-color);
+}
+
+.confirm-btn {
+    width: 100%;
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.confirm-btn.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.confirm-btn.active:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 199, 139, 0.3);
+}
+
+/* Итоговая панель */
+.summary-panel {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--sports-primary-color);
+    animation: slideInUp 0.5s ease-out;
+}
+
+.summary-content h3 {
+    color: var(--sports-grey-900);
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: var(--ui-font-family-heading);
+}
+
+.selected-bets {
+    margin-bottom: 20px;
+}
+
+.bet-item {
+    background: var(--sports-grey-50);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-stake {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--sports-grey-900);
+}
+
+.total-stake span {
+    color: var(--sports-primary-color);
+}
+
+.submit-all-btn {
+    width: 100%;
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 199, 139, 0.3);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .header-stats {
+        justify-content: center;
+    }
+    
+    .tour-navigation {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .match-teams {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .vs-separator {
+        margin: 10px 0;
+    }
+    
+    .outcome-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .total-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        margin: 20px;
+        width: auto;
+    }
+} 

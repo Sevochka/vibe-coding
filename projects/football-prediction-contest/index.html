@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конкурс прогнозов - Sports</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <!-- Поп-ап с инструкцией -->
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏆 Добро пожаловать в Конкурс прогнозов!</h2>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="instruction-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Выберите матчи</h3>
+                        <p>Просмотрите список матчей и выберите те, на которые хотите сделать прогноз</p>
+                    </div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Сделайте прогноз</h3>
+                        <p>Нажмите на яркие кнопки "П1", "Ничья" или "П2" для выбора исхода матча</p>
+                    </div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Выберите тотал</h3>
+                        <p>Определите будет ли в матче больше (ТБ) или меньше (ТМ) 2.5 голов</p>
+                    </div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Подтвердите ставку</h3>
+                        <p>Укажите размер виртуальной ставки и нажмите "Подтвердить прогноз"</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="start-btn" id="startPlaying">Начать играть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Шапка -->
+        <header class="header">
+            <div class="logo">
+                <a href="https://www.sports.ru/?utm_source=special-football-prediction-contest" target="_blank">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo-img">
+                </a>
+            </div>
+            <h1 class="title">Конкурс прогнозов</h1>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="totalPoints">0</span>
+                    <span class="stat-label">Очки</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="totalBets">0</span>
+                    <span class="stat-label">Ставки</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="winRate">0%</span>
+                    <span class="stat-label">Процент</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Навигация туров -->
+        <div class="tour-navigation">
+            <div class="tour-selector">
+                <button class="tour-btn active" data-tour="1">Тур 1</button>
+                <button class="tour-btn" data-tour="2">Тур 2</button>
+                <button class="tour-btn" data-tour="3">Тур 3</button>
+            </div>
+            <div class="tour-info">
+                <span class="tour-deadline">Прием ставок до: <strong>03 июля, 16:00</strong></span>
+            </div>
+        </div>
+
+        <!-- Список матчей -->
+        <div class="matches-container" id="matchesContainer">
+            <!-- Матчи будут добавлены через JavaScript -->
+        </div>
+
+        <!-- Итоговая панель -->
+        <div class="summary-panel" id="summaryPanel" style="display: none;">
+            <div class="summary-content">
+                <h3>Ваши прогнозы</h3>
+                <div class="selected-bets" id="selectedBets"></div>
+                <div class="total-stake">
+                    <label>Общая сумма ставки:</label>
+                    <span id="totalStake">0</span>
+                </div>
+                <button class="submit-all-btn" id="submitAllBets">Подтвердить все прогнозы</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов -->
+    <script src="./data/matches.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
