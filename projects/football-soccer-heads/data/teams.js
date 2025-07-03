@@ -3,10 +3,11 @@ const teams = [
     id: 'sales',
     name: 'Продажи',
     color: '#ff6b6b',
+    employee: 'kotl',
     players: [
       {
-        name: 'Команда продаж',
-        image: './images/default-player.png',
+        name: 'Котл',
+        image: './images/kotl.jpg',
         stats: {
           speed: 8,
           jump: 9,
@@ -87,6 +88,7 @@ const teams = [
 
 // Временные URL для изображений, пока не будут загружены настоящие
 const defaultPlayerImages = {
+  'kotl': './images/kotl.jpg',
   'stepan': './images/stepan.jpg',
   'ark': './images/ark.jpg', 
   'vlad': './images/vlad.jpg',

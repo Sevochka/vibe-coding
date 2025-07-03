@@ -509,17 +509,16 @@ class SoccerHeadsGame {
   
   drawGoals() {
     const goalY = (this.fieldHeight - this.goalHeight) / 2;
-    const goalDepth = 15;
+    const goalDepth = 20; // Увеличенная глубина ворот
     
     // Левые ворота
-    this.ctx.strokeStyle = '#ffffff';
-    this.ctx.lineWidth = 4;
-    
-    // Фон ворот
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    // Фон ворот (темнее)
+    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
     this.ctx.fillRect(-goalDepth, goalY, goalDepth, this.goalHeight);
     
-    // Каркас левых ворот
+    // Каркас левых ворот (толще)
+    this.ctx.strokeStyle = '#ffffff';
+    this.ctx.lineWidth = 6;
     this.ctx.beginPath();
     this.ctx.moveTo(0, goalY);
     this.ctx.lineTo(-goalDepth, goalY);
@@ -539,27 +538,65 @@ class SoccerHeadsGame {
     this.ctx.lineTo(this.fieldWidth, goalY + this.goalHeight);
     this.ctx.stroke();
     
-    // Сетка ворот
-    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-    this.ctx.lineWidth = 1;
+    // Детальная сетка ворот
+    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+    this.ctx.lineWidth = 2;
     
-    // Сетка левых ворот
-    for (let i = 1; i < 4; i++) {
-      const y = goalY + (this.goalHeight / 4) * i;
+    // Сетка левых ворот - горизонтальные линии
+    for (let i = 1; i < 6; i++) {
+      const y = goalY + (this.goalHeight / 6) * i;
       this.ctx.beginPath();
       this.ctx.moveTo(-goalDepth, y);
       this.ctx.lineTo(0, y);
       this.ctx.stroke();
     }
     
-    // Сетка правых ворот
+    // Сетка левых ворот - вертикальные линии
     for (let i = 1; i < 4; i++) {
-      const y = goalY + (this.goalHeight / 4) * i;
+      const x = -(goalDepth / 4) * i;
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, goalY);
+      this.ctx.lineTo(x, goalY + this.goalHeight);
+      this.ctx.stroke();
+    }
+    
+    // Сетка правых ворот - горизонтальные линии
+    for (let i = 1; i < 6; i++) {
+      const y = goalY + (this.goalHeight / 6) * i;
       this.ctx.beginPath();
       this.ctx.moveTo(this.fieldWidth, y);
       this.ctx.lineTo(this.fieldWidth + goalDepth, y);
       this.ctx.stroke();
     }
+    
+    // Сетка правых ворот - вертикальные линии
+    for (let i = 1; i < 4; i++) {
+      const x = this.fieldWidth + (goalDepth / 4) * i;
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, goalY);
+      this.ctx.lineTo(x, goalY + this.goalHeight);
+      this.ctx.stroke();
+    }
+    
+    // Дополнительная рамка вокруг ворот
+    this.ctx.strokeStyle = '#cccccc';
+    this.ctx.lineWidth = 2;
+    
+    // Рамка левых ворот
+    this.ctx.beginPath();
+    this.ctx.moveTo(-2, goalY - 5);
+    this.ctx.lineTo(-goalDepth - 2, goalY - 5);
+    this.ctx.lineTo(-goalDepth - 2, goalY + this.goalHeight + 5);
+    this.ctx.lineTo(-2, goalY + this.goalHeight + 5);
+    this.ctx.stroke();
+    
+    // Рамка правых ворот
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.fieldWidth + 2, goalY - 5);
+    this.ctx.lineTo(this.fieldWidth + goalDepth + 2, goalY - 5);
+    this.ctx.lineTo(this.fieldWidth + goalDepth + 2, goalY + this.goalHeight + 5);
+    this.ctx.lineTo(this.fieldWidth + 2, goalY + this.goalHeight + 5);
+    this.ctx.stroke();
   }
   
   endGame() {
@@ -655,12 +692,30 @@ class Player {
     this.y = y;
     this.velocityX = 0;
     this.velocityY = 0;
-    this.radius = 25;
+    this.radius = 35; // Увеличенный размер головы
     this.team = team;
     this.isPlayer = isPlayer;
     this.onGround = false;
     this.speed = 3;
     this.jumpPower = 12;
+    this.image = null;
+    this.imageLoaded = false;
+    
+    // Загружаем изображение игрока
+    if (team && team.employee) {
+      this.loadImage(defaultPlayerImages[team.employee]);
+    }
+  }
+  
+  loadImage(src) {
+    this.image = new Image();
+    this.image.onload = () => {
+      this.imageLoaded = true;
+    };
+    this.image.onerror = () => {
+      this.imageLoaded = false;
+    };
+    this.image.src = src;
   }
   
   update(keys, deltaTime) {
@@ -735,35 +790,64 @@ class Player {
     // Тело (овал)
     ctx.fillStyle = this.team.color;
     ctx.beginPath();
-    ctx.ellipse(this.x, this.y + 15, this.radius * 0.6, this.radius * 0.8, 0, 0, Math.PI * 2);
+    ctx.ellipse(this.x, this.y + 20, this.radius * 0.5, this.radius * 0.7, 0, 0, Math.PI * 2);
     ctx.fill();
     
-    // Голова (большой круг)
+    // Голова с изображением
+    const headX = this.x - this.radius;
+    const headY = this.y - this.radius - 10;
+    const headSize = this.radius * 2;
+    
+    // Рисуем фон головы
     ctx.fillStyle = '#ffdbac';
     ctx.beginPath();
     ctx.arc(this.x, this.y - 10, this.radius, 0, Math.PI * 2);
     ctx.fill();
     
-    // Глаза
-    ctx.fillStyle = '#000000';
+    // Рисуем обводку головы
+    ctx.strokeStyle = this.team.color;
+    ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.arc(this.x - 8, this.y - 15, 3, 0, Math.PI * 2);
-    ctx.arc(this.x + 8, this.y - 15, 3, 0, Math.PI * 2);
-    ctx.fill();
-    
-    // Рот
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y - 5, 8, 0, Math.PI);
+    ctx.arc(this.x, this.y - 10, this.radius, 0, Math.PI * 2);
     ctx.stroke();
+    
+    // Рисуем изображение если загружено
+    if (this.imageLoaded && this.image) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y - 10, this.radius - 2, 0, Math.PI * 2);
+      ctx.clip();
+      
+      // Масштабируем изображение под круг
+      const scale = (this.radius * 2) / Math.min(this.image.width, this.image.height);
+      const scaledWidth = this.image.width * scale;
+      const scaledHeight = this.image.height * scale;
+      
+      ctx.drawImage(
+        this.image,
+        this.x - scaledWidth / 2,
+        this.y - 10 - scaledHeight / 2,
+        scaledWidth,
+        scaledHeight
+      );
+      
+      ctx.restore();
+    }
     
     // Ноги
     ctx.fillStyle = this.team.color;
     ctx.beginPath();
-    ctx.ellipse(this.x - 10, this.y + 35, 5, 10, 0, 0, Math.PI * 2);
-    ctx.ellipse(this.x + 10, this.y + 35, 5, 10, 0, 0, Math.PI * 2);
+    ctx.ellipse(this.x - 12, this.y + 40, 6, 12, 0, 0, Math.PI * 2);
+    ctx.ellipse(this.x + 12, this.y + 40, 6, 12, 0, 0, Math.PI * 2);
     ctx.fill();
+    
+    // Обводка ног
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(this.x - 12, this.y + 40, 6, 12, 0, 0, Math.PI * 2);
+    ctx.ellipse(this.x + 12, this.y + 40, 6, 12, 0, 0, Math.PI * 2);
+    ctx.stroke();
   }
 }
 
