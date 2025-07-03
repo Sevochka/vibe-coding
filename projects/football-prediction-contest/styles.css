@@ -307,49 +307,129 @@ body {
 .matches-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .match-card {
     background: white;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.match-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.8s;
+}
+
+.match-card:hover::before {
+    left: 100%;
 }
 
 .match-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
 }
 
 .match-card.selected {
     border-color: var(--sports-primary-color);
-    box-shadow: 0 10px 30px rgba(0, 199, 139, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 199, 139, 0.3);
+}
+
+.match-card.hot {
+    background: linear-gradient(145deg, #fff 0%, #fff5f5 100%);
+    border-color: var(--sports-red-a700);
+}
+
+.match-card.cold {
+    background: linear-gradient(145deg, #fff 0%, #f0f8ff 100%);
+    border-color: var(--sports-cyan-A700);
+}
+
+.match-card.rivalry {
+    position: relative;
+}
+
+.match-card.rivalry::after {
+    content: '⚔️';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    animation: glow 2s infinite alternate;
 }
 
 .match-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.match-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .match-time {
     background: var(--sports-grey-50);
-    padding: 8px 15px;
-    border-radius: 15px;
+    padding: 10px 18px;
+    border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
     color: var(--sports-grey-600);
+    display: inline-block;
+}
+
+.match-temperature {
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.match-temperature.hot {
+    background: var(--sports-red-50);
+    color: var(--sports-red-a700);
+}
+
+.match-temperature.cold {
+    background: var(--sports-blue-50);
+    color: var(--sports-cyan-A700);
+}
+
+.match-temperature.normal {
+    background: var(--sports-green-50);
+    color: var(--sports-primary-color);
+}
+
+.rivalry-badge {
+    background: var(--sports-yellow-A700);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
 }
 
 .match-status {
     background: var(--sports-green-50);
     color: var(--sports-primary-color);
-    padding: 8px 15px;
-    border-radius: 15px;
+    padding: 10px 18px;
+    border-radius: 20px;
     font-size: 14px;
     font-weight: bold;
 }
@@ -361,62 +441,718 @@ body {
 }
 
 .match-teams {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 20px;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 
 .team {
-    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.team:hover {
+    background: var(--sports-green-50);
+    border-color: var(--sports-primary-color);
+    transform: scale(1.02);
+}
+
+.team.selected {
+    background: var(--sports-primary-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+.home-team {
+    flex-direction: row;
+}
+
+.away-team {
+    flex-direction: row-reverse;
+}
+
+.team-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--sports-grey-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    transition: transform 0.3s ease;
+}
+
+.team:hover .team-logo {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.team-info {
     flex: 1;
+    text-align: center;
 }
 
 .team-name {
     font-size: 18px;
     font-weight: bold;
     color: var(--sports-grey-900);
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-family: var(--ui-font-family-heading);
 }
 
-.team-logo {
-    width: 40px;
-    height: 40px;
+.team.selected .team-name {
+    color: white;
+}
+
+.team-stats {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.position, .goals {
+    background: var(--sports-grey-100);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.team.selected .position,
+.team.selected .goals {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.team-form {
+    display: flex;
+    gap: 3px;
+    justify-content: center;
+}
+
+.form-dot {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: var(--sports-grey-50);
+    font-size: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 10px;
-    font-size: 20px;
 }
 
-.vs-separator {
+.form-dot.green {
+    background: var(--sports-primary-color);
+    color: white;
+}
+
+.form-dot.yellow {
+    background: var(--sports-yellow-A700);
+    color: white;
+}
+
+.form-dot.red {
+    background: var(--sports-red-a700);
+    color: white;
+}
+
+.team-odds {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.odds-value {
     font-size: 24px;
-    font-weight: bold;
-    color: var(--sports-grey-400);
-    margin: 0 20px;
-}
-
-.match-score {
-    font-size: 28px;
     font-weight: bold;
     color: var(--sports-primary-color);
     font-family: var(--ui-font-family-heading);
 }
 
-/* Панель прогнозирования */
-.prediction-panel {
-    border-top: 2px solid var(--sports-grey-50);
-    padding-top: 20px;
+.team.selected .odds-value {
+    color: white;
 }
 
-.prediction-title {
-    text-align: center;
-    margin-bottom: 20px;
+.odds-label {
+    font-size: 12px;
     color: var(--sports-grey-600);
+    font-weight: bold;
+}
+
+.team.selected .odds-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.vs-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.vs-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.animated-ball {
+    font-size: 32px;
+    animation: bounce 2s infinite;
+}
+
+.vs-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--sports-grey-400);
+    font-family: var(--ui-font-family-heading);
+}
+
+.draw-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.draw-option:hover {
+    background: var(--sports-yellow-50);
+    border-color: var(--sports-yellow-A700);
+    transform: scale(1.05);
+}
+
+.draw-option.selected {
+    background: var(--sports-yellow-A700);
+    color: white;
+    transform: scale(1.1);
+}
+
+.draw-odds {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--sports-yellow-A700);
+    font-family: var(--ui-font-family-heading);
+}
+
+.draw-option.selected .draw-odds {
+    color: white;
+}
+
+.draw-label {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    font-weight: bold;
+}
+
+.draw-option.selected .draw-label {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.match-score {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+    text-align: center;
+}
+
+/* Революционная панель прогнозирования */
+.prediction-panel {
+    border-top: 3px solid var(--sports-grey-50);
+    padding-top: 30px;
+    background: linear-gradient(145deg, #f8f9fa 0%, #ffffff 100%);
+    border-radius: 0 0 25px 25px;
+    margin: 20px -30px -30px -30px;
+    padding: 30px;
+}
+
+.prediction-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.prediction-header h3 {
+    color: var(--sports-grey-900);
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-family: var(--ui-font-family-heading);
+}
+
+.match-multiplier {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.multiplier-label {
+    color: var(--sports-grey-600);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.multiplier-value {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: var(--ui-font-family-heading);
+}
+
+.bonus-tag {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+}
+
+.bonus-tag.hot {
+    background: var(--sports-red-a700);
+    animation: pulse 2s infinite;
+}
+
+.bonus-tag.rivalry {
+    background: var(--sports-yellow-A700);
+}
+
+.prediction-game {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.prediction-step {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    border: 2px solid var(--sports-grey-100);
+    transition: all 0.3s ease;
+    opacity: 0.6;
+    transform: scale(0.98);
+}
+
+.prediction-step.active {
+    opacity: 1;
+    transform: scale(1);
+    border-color: var(--sports-primary-color);
+    box-shadow: 0 5px 20px rgba(0, 199, 139, 0.2);
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.step-number {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.step-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--sports-grey-900);
+    font-family: var(--ui-font-family-heading);
+}
+
+/* Интерактивное поле */
+.interactive-field {
+    position: relative;
+    height: 200px;
+    background: linear-gradient(90deg, var(--sports-green-50) 0%, var(--sports-green-50) 100%);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid var(--sports-primary-color);
+}
+
+.field-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 100%;
+    background: white;
+    opacity: 0.7;
+}
+
+.prediction-ball {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    z-index: 10;
+    animation: float 3s ease-in-out infinite;
+}
+
+.goal-areas {
+    display: flex;
+    height: 100%;
+}
+
+.goal-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    margin: 5px;
+    border-radius: 10px;
+}
+
+.goal-area:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: var(--sports-primary-color);
+    transform: scale(1.05);
+}
+
+.goal-area.selected {
+    background: var(--sports-primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.goal-area.left.selected {
+    background: linear-gradient(45deg, var(--sports-primary-color), #00e5a0);
+}
+
+.goal-area.center.selected {
+    background: linear-gradient(45deg, var(--sports-yellow-A700), #ffdb4d);
+}
+
+.goal-area.right.selected {
+    background: linear-gradient(45deg, var(--sports-red-a700), #ff4d6d);
+}
+
+.goal-post {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.draw-zone {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.team-selection {
+    text-align: center;
+}
+
+.team-selection .team-name {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.odds-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+}
+
+.goal-area.selected .odds-display {
+    color: white;
+}
+
+/* Предиктор голов */
+.goals-predictor {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.goals-slider {
+    position: relative;
+}
+
+.slider-track {
+    height: 6px;
+    background: var(--sports-grey-100);
+    border-radius: 3px;
+    position: relative;
+    margin: 20px 0;
+}
+
+.slider-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sports-cyan-A700), var(--sports-primary-color));
+    border-radius: 3px;
+    width: 50%;
+    transition: width 0.3s ease;
+}
+
+.goals-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goal-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.goal-option:hover {
+    border-color: var(--sports-cyan-A700);
+    background: var(--sports-blue-50);
+    transform: scale(1.05);
+}
+
+.goal-option.selected {
+    background: linear-gradient(45deg, var(--sports-cyan-A700), var(--sports-blue-A400));
+    color: white;
+    transform: scale(1.1);
+}
+
+.goal-icon {
+    font-size: 24px;
+}
+
+.goal-text {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.goal-odds {
     font-size: 16px;
     font-weight: bold;
+    color: var(--sports-cyan-A700);
+    font-family: var(--ui-font-family-heading);
+}
+
+.goal-option.selected .goal-odds {
+    color: white;
+}
+
+.goal-center {
+    text-align: center;
+}
+
+.goals-display {
+    font-size: 36px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+    display: block;
+}
+
+.goals-label {
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    font-weight: bold;
+}
+
+/* Селектор уверенности */
+.confidence-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.confidence-scale {
+    position: relative;
+}
+
+.confidence-slider {
+    width: 100%;
+    height: 8px;
+    background: var(--sports-grey-100);
+    border-radius: 4px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.confidence-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 199, 139, 0.3);
+}
+
+.confidence-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0, 199, 139, 0.3);
+}
+
+.confidence-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--sports-grey-600);
+    font-weight: bold;
+}
+
+.stake-display {
+    text-align: center;
+    padding: 15px;
+    background: var(--sports-green-50);
+    border-radius: 15px;
+}
+
+.stake-amount {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+}
+
+.stake-currency {
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    font-weight: bold;
+}
+
+.potential-win {
+    text-align: center;
+    padding: 10px;
+}
+
+.win-label {
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    display: block;
+    margin-bottom: 5px;
+}
+
+.win-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--sports-yellow-A700);
+    font-family: var(--ui-font-family-heading);
+}
+
+.win-currency {
+    font-size: 12px;
+    color: var(--sports-grey-600);
+}
+
+/* Итоговая панель прогноза */
+.prediction-summary {
+    background: linear-gradient(145deg, var(--sports-green-50), var(--sports-blue-50));
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 2px solid var(--sports-primary-color);
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.final-multiplier {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--sports-primary-color);
+    font-family: var(--ui-font-family-heading);
+}
+
+/* Мега-кнопка подтверждения */
+.mega-confirm-btn {
+    width: 100%;
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+    opacity: 0.5;
+    pointer-events: none;
+    font-family: var(--ui-font-family-heading);
+}
+
+.mega-confirm-btn:not([disabled]) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mega-confirm-btn:not([disabled]):hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 199, 139, 0.4);
+}
+
+.mega-confirm-btn:not([disabled]):active {
+    transform: translateY(-1px) scale(1.01);
+}
+
+.btn-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+}
+
+.mega-confirm-btn:not([disabled]):hover .btn-glow {
+    left: 100%;
+}
+
+.btn-icon {
+    margin-right: 10px;
+}
+
+.btn-text {
+    flex: 1;
 }
 
 .outcome-buttons {
@@ -679,8 +1415,94 @@ body {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-10px);
+    }
+}
+
+@keyframes glow {
+    0% {
+        filter: brightness(1);
+    }
+    100% {
+        filter: brightness(1.3) drop-shadow(0 0 10px rgba(255, 193, 7, 0.8));
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Дополнительные утилиты */
+.animate-slideInUp {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-zoomIn {
+    animation: zoomIn 0.4s ease-out forwards;
+}
+
+.text-gradient {
+    background: linear-gradient(45deg, var(--sports-primary-color), var(--sports-cyan-A700));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.neon-border {
+    box-shadow: 
+        0 0 5px var(--sports-primary-color),
+        0 0 10px var(--sports-primary-color),
+        0 0 15px var(--sports-primary-color),
+        0 0 20px var(--sports-primary-color);
 }
 
 /* Адаптивный дизайн */

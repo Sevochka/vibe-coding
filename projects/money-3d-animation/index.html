@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Денежная 3D Анимация</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        @import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+        @import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Основное изображение money.png -->
+        <div class="money-background">
+            <img src="../sports-3d-animation/images/money.png" alt="Money Background" class="money-image">
+        </div>
+        
+        <!-- 3D Сцена -->
+        <div class="scene">
+            <!-- Скачущий футбольный мяч -->
+            <div class="football-container">
+                <div class="football">
+                    <div class="football-pattern">
+                        <div class="pentagon"></div>
+                        <div class="pentagon"></div>
+                        <div class="pentagon"></div>
+                        <div class="pentagon"></div>
+                        <div class="pentagon"></div>
+                    </div>
+                    <div class="football-shine"></div>
+                </div>
+                <div class="football-shadow"></div>
+            </div>
+            
+            <!-- Летающие деньги -->
+            <div class="money-particles">
+                <div class="money-bill" style="--delay: 0s; --x: 15%; --y: 20%">💰</div>
+                <div class="money-bill" style="--delay: 0.5s; --x: 85%; --y: 30%">💸</div>
+                <div class="money-bill" style="--delay: 1s; --x: 25%; --y: 70%">💵</div>
+                <div class="money-bill" style="--delay: 1.5s; --x: 75%; --y: 80%">💴</div>
+                <div class="money-bill" style="--delay: 2s; --x: 45%; --y: 15%">💶</div>
+                <div class="money-bill" style="--delay: 2.5s; --x: 65%; --y: 60%">💷</div>
+                <div class="money-bill" style="--delay: 3s; --x: 35%; --y: 45%">🪙</div>
+                <div class="money-bill" style="--delay: 3.5s; --x: 55%; --y: 85%">💰</div>
+            </div>
+            
+            <!-- 3D Текст -->
+            <div class="text-container">
+                <div class="text-3d main-title" data-text="MONEY">
+                    <span class="letter" style="--delay: 0s">M</span>
+                    <span class="letter" style="--delay: 0.1s">O</span>
+                    <span class="letter" style="--delay: 0.2s">N</span>
+                    <span class="letter" style="--delay: 0.3s">E</span>
+                    <span class="letter" style="--delay: 0.4s">Y</span>
+                </div>
+                
+                <div class="text-3d subtitle" data-text="SPORTS">
+                    <span class="letter" style="--delay: 0.5s">S</span>
+                    <span class="letter" style="--delay: 0.6s">P</span>
+                    <span class="letter" style="--delay: 0.7s">O</span>
+                    <span class="letter" style="--delay: 0.8s">R</span>
+                    <span class="letter" style="--delay: 0.9s">T</span>
+                    <span class="letter" style="--delay: 1.0s">S</span>
+                </div>
+                
+                <div class="text-3d bonus-text">
+                    <span class="letter" style="--delay: 1.1s">Б</span>
+                    <span class="letter" style="--delay: 1.2s">О</span>
+                    <span class="letter" style="--delay: 1.3s">Н</span>
+                    <span class="letter" style="--delay: 1.4s">У</span>
+                    <span class="letter" style="--delay: 1.5s">С</span>
+                </div>
+            </div>
+            
+            <!-- Золотые частицы -->
+            <div class="gold-particles">
+                <div class="gold-particle" style="--delay: 0s; --x: 10%; --y: 25%"></div>
+                <div class="gold-particle" style="--delay: 0.3s; --x: 90%; --y: 35%"></div>
+                <div class="gold-particle" style="--delay: 0.6s; --x: 20%; --y: 65%"></div>
+                <div class="gold-particle" style="--delay: 0.9s; --x: 80%; --y: 75%"></div>
+                <div class="gold-particle" style="--delay: 1.2s; --x: 50%; --y: 15%"></div>
+                <div class="gold-particle" style="--delay: 1.5s; --x: 70%; --y: 55%"></div>
+                <div class="gold-particle" style="--delay: 1.8s; --x: 30%; --y: 85%"></div>
+                <div class="gold-particle" style="--delay: 2.1s; --x: 60%; --y: 25%"></div>
+            </div>
+            
+            <!-- Денежный дождь -->
+            <div class="money-rain">
+                <div class="rain-drop" style="--delay: 0s; --x: 5%">💰</div>
+                <div class="rain-drop" style="--delay: 0.2s; --x: 15%">💸</div>
+                <div class="rain-drop" style="--delay: 0.4s; --x: 25%">💵</div>
+                <div class="rain-drop" style="--delay: 0.6s; --x: 35%">💴</div>
+                <div class="rain-drop" style="--delay: 0.8s; --x: 45%">💶</div>
+                <div class="rain-drop" style="--delay: 1.0s; --x: 55%">💷</div>
+                <div class="rain-drop" style="--delay: 1.2s; --x: 65%">🪙</div>
+                <div class="rain-drop" style="--delay: 1.4s; --x: 75%">💰</div>
+                <div class="rain-drop" style="--delay: 1.6s; --x: 85%">💸</div>
+                <div class="rain-drop" style="--delay: 1.8s; --x: 95%">💵</div>
+            </div>
+        </div>
+        
+        <!-- Логотип -->
+        <div class="logo">
+            <a href="https://www.sports.ru/?utm_source=special-money-3d-animation" target="_blank">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" />
+            </a>
+        </div>
+        
+        <!-- Кнопка действия -->
+        <div class="action-button">
+            <button class="cta-btn">
+                <span>💰 ПОЛУЧИТЬ ДЕНЬГИ 💰</span>
+                <div class="btn-glow"></div>
+            </button>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 

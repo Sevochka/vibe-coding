@@ -5,8 +5,8 @@ const teams = [
     color: '#ff6b6b',
     players: [
       {
-        name: 'Криштиану Роналду',
-        image: './images/players/ronaldo.png',
+        name: 'Команда продаж',
+        image: './images/default-player.png',
         stats: {
           speed: 8,
           jump: 9,
@@ -19,10 +19,11 @@ const teams = [
     id: 'markoffice',
     name: 'Маркофис',
     color: '#48dbfb',
+    employee: 'stepan',
     players: [
       {
-        name: 'Лионель Месси',
-        image: './images/players/messi.png',
+        name: 'Степан',
+        image: './images/stepan.jpg',
         stats: {
           speed: 9,
           jump: 7,
@@ -35,10 +36,11 @@ const teams = [
     id: 'sirena',
     name: 'Сирена',
     color: '#feca57',
+    employee: 'ark',
     players: [
       {
-        name: 'Килиан Мбаппе',
-        image: './images/players/mbappe.png',
+        name: 'Арк',
+        image: './images/ark.jpg',
         stats: {
           speed: 9,
           jump: 8,
@@ -51,10 +53,11 @@ const teams = [
     id: 'editorial',
     name: 'Редакция',
     color: '#1dd1a1',
+    employee: 'vlad',
     players: [
       {
-        name: 'Эрлинг Холанд',
-        image: './images/players/haaland.png',
+        name: 'Влад',
+        image: './images/vlad.jpg',
         stats: {
           speed: 8,
           jump: 8,
@@ -64,29 +67,14 @@ const teams = [
     ]
   },
   {
-    id: 'product',
-    name: 'Продукт',
+    id: 'product-dev',
+    name: 'Продукт и разработка',
     color: '#c56cf0',
+    employee: 'makarenko',
     players: [
       {
-        name: 'Неймар',
-        image: './images/players/neymar.png',
-        stats: {
-          speed: 9,
-          jump: 8,
-          power: 7
-        }
-      }
-    ]
-  },
-  {
-    id: 'development',
-    name: 'Разработка',
-    color: '#ff9f43',
-    players: [
-      {
-        name: 'Роберт Левандовски',
-        image: './images/players/lewandowski.png',
+        name: 'Макаренко',
+        image: './images/makarenko.jpg',
         stats: {
           speed: 7,
           jump: 8,
@@ -99,10 +87,9 @@ const teams = [
 
 // Временные URL для изображений, пока не будут загружены настоящие
 const defaultPlayerImages = {
-  'ronaldo': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png',
-  'messi': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png',
-  'mbappe': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png',
-  'haaland': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png',
-  'neymar': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png',
-  'lewandowski': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png'
+  'stepan': './images/stepan.jpg',
+  'ark': './images/ark.jpg', 
+  'vlad': './images/vlad.jpg',
+  'makarenko': './images/makarenko.jpg',
+  'default': 'https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png'
 }; 

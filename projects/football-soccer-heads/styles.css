@@ -138,8 +138,14 @@ button:disabled {
 .teams-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: 15px;
   margin-bottom: 30px;
+  justify-items: center;
+}
+
+.teams-grid .team-card:nth-child(5) {
+  grid-column: 2;
 }
 
 .team-card {
@@ -304,6 +310,19 @@ button:disabled {
 
 .score-separator {
   color: var(--sports-grey-400);
+}
+
+.game-timer {
+  font-family: var(--ui-font-family-heading);
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--sports-grey-600);
+  background-color: var(--sports-grey-50);
+  padding: 5px 12px;
+  border-radius: 15px;
+  border: 2px solid var(--sports-grey-100);
+  min-width: 45px;
+  text-align: center;
 }
 
 /* Игровое поле */
