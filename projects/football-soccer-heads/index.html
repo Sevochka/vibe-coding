@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Новые заминки - Корпоративный турнир Sports</title>
+  
+  <!-- Подключение шрифтов Sports -->
+  <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css">
+  <link rel="stylesheet" href="https://senoval.cdn.sports.ru/static-resources/fonts/sports.css">
+  
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <!-- Главный экран -->
+  <div class="screen" id="start-screen">
+    <div class="logo">
+      <a href="https://www.sports.ru/?utm_source=special-football-soccer-heads" target="_blank">
+        <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports Logo">
+      </a>
+    </div>
+    
+    <div class="game-title">
+      <h1>НОВЫЕ ЗАМИНКИ</h1>
+      <h2>Корпоративный турнир</h2>
+    </div>
+
+    <div class="team-selection">
+      <div class="team-selection-container">
+        <div class="selection-title">Выберите команды</div>
+        
+        <div class="teams-grid">
+          <!-- Команды будут добавлены через JavaScript -->
+        </div>
+        
+        <div class="selected-teams">
+          <div class="selected-team player-team">
+            <div class="team-label">Ваша команда</div>
+            <div class="team-placeholder">Выберите команду</div>
+          </div>
+          <div class="vs">VS</div>
+          <div class="selected-team ai-team">
+            <div class="team-label">Соперник</div>
+            <div class="team-placeholder">Выберите команду</div>
+          </div>
+        </div>
+
+        <button id="start-game" disabled>Начать матч</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Игровой экран -->
+  <div class="screen" id="game-screen" style="display: none;">
+    <div class="game-container">
+      <div class="game-header">
+        <div class="team-info team1-info">
+          <div class="team-name"></div>
+          <div class="team-icon"></div>
+        </div>
+        
+        <div class="game-score">
+          <span class="score-team1">0</span>
+          <span class="score-separator">:</span>
+          <span class="score-team2">0</span>
+        </div>
+        
+        <div class="team-info team2-info">
+          <div class="team-icon"></div>
+          <div class="team-name"></div>
+        </div>
+      </div>
+      
+      <div class="game-field">
+        <canvas id="game-canvas" width="640" height="360"></canvas>
+      </div>
+      
+      <div class="game-controls">
+        <div class="control-info">
+          <div class="control-item">
+            <div class="control-key">←→</div>
+            <div class="control-desc">Перемещение</div>
+          </div>
+          <div class="control-item">
+            <div class="control-key">↑</div>
+            <div class="control-desc">Прыжок</div>
+          </div>
+          <div class="control-item">
+            <div class="control-key">Space</div>
+            <div class="control-desc">Удар</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <button id="back-to-menu" class="back-button">Вернуться в меню</button>
+  </div>
+
+  <!-- Экран результатов -->
+  <div class="screen" id="result-screen" style="display: none;">
+    <div class="result-container">
+      <h2>Матч завершен!</h2>
+      
+      <div class="match-result">
+        <div class="final-team-info team1-result">
+          <div class="team-name"></div>
+          <div class="team-icon"></div>
+          <div class="final-score"></div>
+        </div>
+        
+        <div class="vs">:</div>
+        
+        <div class="final-team-info team2-result">
+          <div class="team-icon"></div>
+          <div class="team-name"></div>
+          <div class="final-score"></div>
+        </div>
+      </div>
+      
+      <div class="result-message"></div>
+      
+      <div class="result-buttons">
+        <button id="rematch">Реванш</button>
+        <button id="new-match">Новый матч</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Подключение скриптов -->
+  <script src="./data/teams.js"></script>
+  <script src="./script.js"></script>
+  <script src="./resize.js"></script>
+</body>
+</html> 
