@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная спортивная новость - Sports.ru</title>
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Хедер в стиле Sports.ru -->
+        <header class="header">
+            <div class="header-content">
+                <a href="https://www.sports.ru/?utm_source=special-interactive-sports-news" class="logo">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo-img">
+                </a>
+                <div class="header-title">Интерактивная новость</div>
+            </div>
+        </header>
+
+        <!-- Основной контент новости -->
+        <main class="news-article">
+            <div class="news-header">
+                <h1 class="news-title">«Фламенго» предложил 10 миллионов евро за Барко. «Спартак» не готов отпускать хавбека</h1>
+                <div class="news-meta">
+                    <span class="news-date">15 января 2025, 14:30</span>
+                    <span class="news-author">Никита Надёжин</span>
+                </div>
+            </div>
+
+            <div class="news-content">
+                <div class="news-content__first-paragraph">
+                    «Фламенго» предлагал 10 миллионов евро за Эсекиэля 
+                    <span class="interactive-word" data-entity="barco" data-question="Сколько голов забил Барко в последних трех сезонах?">Барко</span>.
+                </div>
+                
+                <div class="structured-body-wrapper">
+                    <p class="sb-paragraph">
+                        По данным Metaratings, последнее предложение от бразильского клуба за полузащитника 
+                        <span class="interactive-word" data-entity="spartak" data-question="Какое место занял Спартак в последних 5 сезонах РПЛ?">«Спартака»</span> 
+                        составило 10 миллионов евро.
+                    </p>
+                    
+                    <p class="sb-paragraph">
+                        Отмечается, что 
+                        <span class="interactive-word" data-entity="spartak" data-question="Какое место занял Спартак в последних 5 сезонах РПЛ?">«Спартак»</span> 
+                        не готов отпускать футболиста за такую сумму, а сам аргентинец не изъявлял желание сменить клуб.
+                    </p>
+                    
+                    <p class="sb-paragraph">
+                        Эсекиэль <span class="interactive-word" data-entity="barco" data-question="Сколько голов забил Барко в последних трех сезонах?">Барко</span> 
+                        провел 27 матчей в прошлом сезоне РПЛ, забил 12 голов и отдал 7 голевых передач.
+                    </p>
+                </div>
+
+                <div class="news-source">
+                    <div class="news-source__publisher">
+                        <span class="news-source__key">Опубликовал: </span>
+                        <span class="news-source__value">Никита Надёжин</span>
+                    </div>
+                    <div class="news-source__source">
+                        <span class="news-source__key">Источник: </span>
+                        <a href="https://metaratings.ru/" target="_blank" rel="nofollow" class="news-source__value">Metaratings</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Модальное окно для поиска статистики -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">Статистический поиск</h3>
+                    <button class="modal-close" id="modalClose">&times;</button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="search-container">
+                        <div class="search-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M15 15L19 19" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <input type="text" class="search-input" id="searchInput" placeholder="Введите ваш вопрос...">
+                        <button class="search-button" id="searchButton">
+                            <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Поиск" class="search-logo">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Виджет с результатами статистики -->
+        <div class="stats-widget" id="statsWidget">
+            <div class="widget-header">
+                <h4 class="widget-title" id="widgetTitle">Статистика</h4>
+                <button class="widget-close" id="widgetClose">&times;</button>
+            </div>
+            <div class="widget-content" id="widgetContent">
+                <!-- Контент генерируется динамически -->
+            </div>
+        </div>
+    </div>
+
+    <script src="./data/stats.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
