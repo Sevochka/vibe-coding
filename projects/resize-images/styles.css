@@ -1,0 +1,221 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+    /* Branded Colors for Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI elements and typography */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: var(--ui-font-family-body);
+    background-color: var(--ui-bg);
+    color: var(--sports-black);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    height: 40px;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.title {
+    font-family: var(--ui-font-family-heading);
+    font-size: 32px;
+    color: var(--sports-black);
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.image-section {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.image-section h2 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 24px;
+    color: var(--sports-primary-color);
+    margin-bottom: 20px;
+}
+
+.image-section h3 {
+    font-family: var(--ui-font-family-heading-secondary);
+    font-size: 18px;
+    color: var(--sports-grey-700);
+    margin-bottom: 15px;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    border: 2px solid var(--sports-grey-100);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.image-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 199, 139, 0.2);
+}
+
+.image {
+    display: block;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+/* Исходное изображение */
+.image-container.original {
+    width: 300px;
+    height: 300px;
+}
+
+/* Ресайзнутые форматы */
+.image-container.format-640x360 {
+    width: 640px;
+    height: 360px;
+    max-width: 100%;
+}
+
+.image-container.format-300x600 {
+    width: 300px;
+    height: 600px;
+}
+
+.image-container.format-320x480 {
+    width: 320px;
+    height: 480px;
+}
+
+.size-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 199, 139, 0.9), transparent);
+    color: white;
+    padding: 10px;
+    font-family: var(--ui-font-family-heading-secondary);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.resized-images {
+    margin-top: 50px;
+}
+
+.resized-images h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .title {
+        font-size: 28px;
+    }
+    
+    .image-container.format-640x360 {
+        width: 100%;
+        height: calc(100vw * 360 / 640);
+        max-height: 360px;
+    }
+    
+    .image-container.format-300x600 {
+        width: 250px;
+        height: 500px;
+    }
+    
+    .image-container.format-320x480 {
+        width: 280px;
+        height: 420px;
+    }
+    
+    .image-container.original {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .image-container.format-300x600 {
+        width: 200px;
+        height: 400px;
+    }
+    
+    .image-container.format-320x480 {
+        width: 240px;
+        height: 360px;
+    }
+    
+    .image-container.original {
+        width: 200px;
+        height: 200px;
+    }
+} 

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ресайз изображений</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Логотип Sports.ru -->
+        <div class="header">
+            <a href="https://www.sports.ru/?utm_source=special-resize-images" target="_blank">
+                <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" 
+                     alt="Sports.ru" 
+                     class="logo">
+            </a>
+        </div>
+
+        <h1 class="title">Ресайз изображений</h1>
+        
+        <!-- Исходное изображение 1080x1080 -->
+        <div class="image-section">
+            <h2>Исходное изображение (1080x1080)</h2>
+            <div class="image-container original">
+                <img src="./1080x1080.jpg" alt="Исходное изображение" class="image original-image">
+                <div class="size-label">1080 × 1080</div>
+            </div>
+        </div>
+
+        <!-- Ресайзнутые изображения -->
+        <div class="resized-images">
+            <h2>Ресайзнутые версии</h2>
+            
+            <!-- 640x360 -->
+            <div class="image-section">
+                <h3>Формат 640×360 (16:9)</h3>
+                <div class="image-container format-640x360">
+                    <img src="./1080x1080.jpg" alt="Изображение 640x360" class="image resized-image">
+                    <div class="size-label">640 × 360</div>
+                </div>
+            </div>
+
+            <!-- 300x600 -->
+            <div class="image-section">
+                <h3>Формат 300×600 (1:2)</h3>
+                <div class="image-container format-300x600">
+                    <img src="./1080x1080.jpg" alt="Изображение 300x600" class="image resized-image">
+                    <div class="size-label">300 × 600</div>
+                </div>
+            </div>
+
+            <!-- 320x480 -->
+            <div class="image-section">
+                <h3>Формат 320×480 (2:3)</h3>
+                <div class="image-container format-320x480">
+                    <img src="./1080x1080.jpg" alt="Изображение 320x480" class="image resized-image">
+                    <div class="size-label">320 × 480</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./resize.js"></script>
+</body>
+</html> 
