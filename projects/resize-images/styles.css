@@ -118,12 +118,33 @@ body {
     box-shadow: 0 8px 24px rgba(0, 199, 139, 0.2);
 }
 
-.image {
+.image-bg {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: fill;
     border-radius: 6px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+/* Специальное позиционирование для каждого формата */
+.image-bg.horizontal {
+    /* Для горизонтального формата 16:9 - фокус на центре с небольшим смещением вверх */
+    background-position: center 40%;
+    background-size: cover;
+}
+
+.image-bg.vertical {
+    /* Для вертикального формата 1:2 - центр изображения */
+    background-position: center center;
+    background-size: cover;
+}
+
+.image-bg.portrait {
+    /* Для портретного формата 2:3 - фокус на верхней части */
+    background-position: center 35%;
+    background-size: cover;
 }
 
 /* Исходное изображение */
