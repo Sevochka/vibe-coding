@@ -112,69 +112,55 @@ class InteractiveNews {
         const stats = statsData.barco;
         
         this.widgetContent.innerHTML = `
-            <div class="stats-chart">
-                <h3 class="chart-title">Голы по сезонам</h3>
-                <div class="chart-bars">
-                    ${stats.goals.map(season => `
-                        <div class="chart-bar">
-                            <div class="bar-label">${season.season}</div>
-                            <div class="bar-container">
-                                <div class="bar-fill" style="width: ${(season.goals / 15) * 100}%">
-                                    ${season.goals}
+            <div class="infographic-container">
+                <h3 class="infographic-title">Голы Барко по сезонам</h3>
+                <div class="infographic-cards">
+                    ${stats.goals.map((season, index) => `
+                        <div class="infographic-card" style="animation-delay: ${index * 0.2}s">
+                            <div class="card-header">
+                                <div class="season-badge">${season.season}</div>
+                                <div class="spartak-logo">
+                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                        <circle cx="20" cy="20" r="20" fill="#dc143c"/>
+                                        <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
+                                    </svg>
                                 </div>
+                            </div>
+                            <div class="goals-display">
+                                <div class="goals-number">${season.goals}</div>
+                                <div class="goals-label">голов</div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="matches-info">${stats.detailed[index].matches} матчей</div>
                             </div>
                         </div>
                     `).join('')}
                 </div>
-            </div>
-            
-            <div class="stats-chart">
-                <h3 class="chart-title">Голевые передачи по сезонам</h3>
-                <div class="chart-bars">
-                    ${stats.assists.map(season => `
-                        <div class="chart-bar">
-                            <div class="bar-label">${season.season}</div>
-                            <div class="bar-container">
-                                <div class="bar-fill" style="width: ${(season.assists / 10) * 100}%">
-                                    ${season.assists}
-                                </div>
-                            </div>
+                
+                <div class="total-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">⚽</div>
+                        <div class="summary-content">
+                            <div class="summary-number">${stats.goals.reduce((sum, s) => sum + s.goals, 0)}</div>
+                            <div class="summary-text">Всего голов за 3 сезона</div>
                         </div>
-                    `).join('')}
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">🎯</div>
+                        <div class="summary-content">
+                            <div class="summary-number">${(stats.goals.reduce((sum, s) => sum + s.goals, 0) / stats.detailed.reduce((sum, s) => sum + s.matches, 0)).toFixed(2)}</div>
+                            <div class="summary-text">Голов за матч</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <table class="stats-table">
-                <thead>
-                    <tr>
-                        <th>Сезон</th>
-                        <th>Матчи</th>
-                        <th>Голы</th>
-                        <th>Передачи</th>
-                        <th>Г+П</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${stats.detailed.map(season => `
-                        <tr>
-                            <td><strong>${season.season}</strong></td>
-                            <td>${season.matches}</td>
-                            <td>${season.goals}</td>
-                            <td>${season.assists}</td>
-                            <td><strong>${season.goals + season.assists}</strong></td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
         `;
         
-        // Анимация появления баров
+        // Анимация появления карточек
         setTimeout(() => {
-            const bars = this.widgetContent.querySelectorAll('.bar-fill');
-            bars.forEach((bar, index) => {
-                setTimeout(() => {
-                    bar.style.width = bar.style.width;
-                }, index * 100);
+            const cards = this.widgetContent.querySelectorAll('.infographic-card');
+            cards.forEach(card => {
+                card.classList.add('animate-in');
             });
         }, 100);
     }
@@ -185,64 +171,73 @@ class InteractiveNews {
         const stats = statsData.spartak;
         
         this.widgetContent.innerHTML = `
-            <div class="stats-chart">
-                <h3 class="chart-title">Места в турнирной таблице РПЛ</h3>
-                <div class="chart-bars">
-                    ${stats.positions.map(season => `
-                        <div class="chart-bar">
-                            <div class="bar-label">${season.season}</div>
-                            <div class="bar-container">
-                                <div class="bar-fill" style="width: ${100 - ((season.position - 1) / 15) * 100}%">
-                                    ${season.position} место
+            <div class="infographic-container">
+                <h3 class="infographic-title">Места Спартака в турнирной таблице РПЛ</h3>
+                <div class="infographic-cards spartak-positions">
+                    ${stats.positions.map((season, index) => {
+                        const positionClass = season.position <= 3 ? 'top-position' : season.position <= 6 ? 'mid-position' : 'low-position';
+                        const positionIcon = season.position === 1 ? '🥇' : season.position === 2 ? '🥈' : season.position === 3 ? '🥉' : '📍';
+                        return `
+                        <div class="infographic-card position-card ${positionClass}" style="animation-delay: ${index * 0.2}s">
+                            <div class="card-header">
+                                <div class="season-badge">${season.season}</div>
+                                <div class="spartak-logo">
+                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                        <circle cx="20" cy="20" r="20" fill="#dc143c"/>
+                                        <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
+                                    </svg>
                                 </div>
                             </div>
+                            <div class="position-display">
+                                <div class="position-icon">${positionIcon}</div>
+                                <div class="position-number">${season.position}</div>
+                                <div class="position-label">место</div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="points-info">${stats.detailed[index].points} очков</div>
+                            </div>
                         </div>
-                    `).join('')}
+                    `}).join('')}
                 </div>
-            </div>
-            
-            <table class="stats-table">
-                <thead>
-                    <tr>
-                        <th>Сезон</th>
-                        <th>Место</th>
-                        <th>Очки</th>
-                        <th>И</th>
-                        <th>В</th>
-                        <th>Н</th>
-                        <th>П</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${stats.detailed.map(season => `
-                        <tr>
-                            <td><strong>${season.season}</strong></td>
-                            <td class="position-cell position-${season.position}">${season.position}</td>
-                            <td><strong>${season.points}</strong></td>
-                            <td>${season.matches}</td>
-                            <td>${season.wins}</td>
-                            <td>${season.draws}</td>
-                            <td>${season.losses}</td>
-                        </tr>
-                    `).join('')}
-                </tbody>
-            </table>
-            
-            <div class="stats-summary">
-                <h3 class="chart-title">Краткая сводка</h3>
-                <p>За последние 5 сезонов «Спартак» в среднем занимал <strong>${this.calculateAveragePosition(stats.detailed)} место</strong> в РПЛ.</p>
-                <p>Лучший результат: <strong>${Math.min(...stats.detailed.map(s => s.position))} место</strong> (${stats.detailed.find(s => s.position === Math.min(...stats.detailed.map(s => s.position))).season})</p>
-                <p>Худший результат: <strong>${Math.max(...stats.detailed.map(s => s.position))} место</strong> (${stats.detailed.find(s => s.position === Math.max(...stats.detailed.map(s => s.position))).season})</p>
+                
+                <div class="total-summary spartak-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">🏆</div>
+                        <div class="summary-content">
+                            <div class="summary-number">${this.calculateAveragePosition(stats.detailed)}</div>
+                            <div class="summary-text">Среднее место за 5 сезонов</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">⭐</div>
+                        <div class="summary-content">
+                            <div class="summary-number">${Math.min(...stats.detailed.map(s => s.position))}</div>
+                            <div class="summary-text">Лучший результат (${stats.detailed.find(s => s.position === Math.min(...stats.detailed.map(s => s.position))).season})</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="season-timeline">
+                    <h4 class="timeline-title">Динамика результатов</h4>
+                    <div class="timeline-track">
+                        ${stats.positions.map((season, index) => `
+                            <div class="timeline-point position-${season.position}" style="left: ${(index / (stats.positions.length - 1)) * 100}%">
+                                <div class="timeline-tooltip">
+                                    <div class="tooltip-season">${season.season}</div>
+                                    <div class="tooltip-position">${season.position} место</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
             </div>
         `;
         
-        // Анимация появления баров
+        // Анимация появления карточек
         setTimeout(() => {
-            const bars = this.widgetContent.querySelectorAll('.bar-fill');
-            bars.forEach((bar, index) => {
-                setTimeout(() => {
-                    bar.style.width = bar.style.width;
-                }, index * 100);
+            const cards = this.widgetContent.querySelectorAll('.infographic-card');
+            cards.forEach(card => {
+                card.classList.add('animate-in');
             });
         }, 100);
     }
