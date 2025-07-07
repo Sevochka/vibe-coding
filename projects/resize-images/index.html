@@ -19,24 +19,27 @@
 
         <h1 class="title">Ресайз изображений</h1>
         
+        <!-- Исходное изображение (скрытое для загрузки) -->
+        <img id="sourceImage" src="./1080x1080 (1).png" style="display: none;" crossorigin="anonymous">
+        
         <!-- Исходное изображение 1080x1080 -->
         <div class="image-section">
             <h2>Исходное изображение (1080x1080)</h2>
             <div class="image-container original">
-                <img src="./1080x1080.jpg" alt="Исходное изображение" class="image original-image">
-                <div class="size-label">1080 × 1080</div>
+                <canvas id="originalCanvas" width="320" height="320"></canvas>
+                <div class="size-label">1080 × 1080 (отображается как 320×320)</div>
             </div>
         </div>
 
         <!-- Ресайзнутые изображения -->
         <div class="resized-images">
-            <h2>Ресайзнутые версии</h2>
+            <h2>Программно ресайзнутые версии</h2>
             
             <!-- 640x360 -->
             <div class="image-section">
                 <h3>Формат 640×360 (16:9)</h3>
                 <div class="image-container format-640x360">
-                    <img src="./1080x1080.jpg" alt="Изображение 640x360" class="image resized-image">
+                    <canvas id="canvas640x360" width="640" height="360"></canvas>
                     <div class="size-label">640 × 360</div>
                 </div>
             </div>
@@ -45,7 +48,7 @@
             <div class="image-section">
                 <h3>Формат 300×600 (1:2)</h3>
                 <div class="image-container format-300x600">
-                    <img src="./1080x1080.jpg" alt="Изображение 300x600" class="image resized-image">
+                    <canvas id="canvas300x600" width="300" height="600"></canvas>
                     <div class="size-label">300 × 600</div>
                 </div>
             </div>
@@ -54,13 +57,79 @@
             <div class="image-section">
                 <h3>Формат 320×480 (2:3)</h3>
                 <div class="image-container format-320x480">
-                    <img src="./1080x1080.jpg" alt="Изображение 320x480" class="image resized-image">
+                    <canvas id="canvas320x480" width="320" height="480"></canvas>
                     <div class="size-label">320 × 480</div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        // Функция для качественного ресайза изображения
+        function resizeImage(sourceImage, targetWidth, targetHeight, canvas) {
+            const ctx = canvas.getContext('2d');
+            
+            // Устанавливаем размеры canvas
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            
+            // Очищаем canvas
+            ctx.clearRect(0, 0, targetWidth, targetHeight);
+            
+            // Настраиваем качество рендеринга
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+            
+            // Получаем размеры исходного изображения
+            const sourceWidth = sourceImage.naturalWidth;
+            const sourceHeight = sourceImage.naturalHeight;
+            
+            // Вычисляем масштабирование для сохранения пропорций
+            const scaleX = targetWidth / sourceWidth;
+            const scaleY = targetHeight / sourceHeight;
+            const scale = Math.min(scaleX, scaleY);
+            
+            // Вычисляем размеры масштабированного изображения
+            const scaledWidth = sourceWidth * scale;
+            const scaledHeight = sourceHeight * scale;
+            
+            // Вычисляем позицию для центрирования
+            const x = (targetWidth - scaledWidth) / 2;
+            const y = (targetHeight - scaledHeight) / 2;
+            
+            // Заливаем фон белым цветом
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, targetWidth, targetHeight);
+            
+            // Рисуем изображение с сохранением пропорций
+            ctx.drawImage(sourceImage, x, y, scaledWidth, scaledHeight);
+        }
+        
+        // Загружаем и обрабатываем изображение
+        const sourceImage = document.getElementById('sourceImage');
+        
+        sourceImage.onload = function() {
+            // Исходное изображение (уменьшенная версия для предпросмотра)
+            const originalCanvas = document.getElementById('originalCanvas');
+            resizeImage(sourceImage, 320, 320, originalCanvas);
+            
+            // Ресайзнутые версии
+            const canvas640x360 = document.getElementById('canvas640x360');
+            resizeImage(sourceImage, 640, 360, canvas640x360);
+            
+            const canvas300x600 = document.getElementById('canvas300x600');
+            resizeImage(sourceImage, 300, 600, canvas300x600);
+            
+            const canvas320x480 = document.getElementById('canvas320x480');
+            resizeImage(sourceImage, 320, 480, canvas320x480);
+            
+            console.log('Все изображения успешно ресайзнуты!');
+        };
+        
+        sourceImage.onerror = function() {
+            console.error('Ошибка загрузки изображения');
+        };
+    </script>
     <script src="./resize.js"></script>
 </body>
 </html> 
