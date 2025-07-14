@@ -23,26 +23,16 @@ class FantasyBannerGenerator {
         this.init();
     }
     
-    // Функция для создания цветного фона
-    createColoredBackground(ctx, width, height) {
-        // Создаем современный градиент с зеленого в белый
-        const gradient = ctx.createLinearGradient(0, 0, width, 0);
-        gradient.addColorStop(0, this.colors.green);
-        gradient.addColorStop(0.7, this.colors.white);
-        gradient.addColorStop(1, this.colors.white);
-        
-        ctx.fillStyle = gradient;
+    // Функция для создания точного фона как в референсе
+    createReferenceBackground(ctx, width, height) {
+        // Заливаем белым фоном
+        ctx.fillStyle = this.colors.white;
         ctx.fillRect(0, 0, width, height);
         
-        // Добавляем акцентные элементы
-        ctx.fillStyle = this.colors.black;
-        ctx.globalAlpha = 0.1;
-        // Декоративные полосы
-        for (let i = 0; i < 3; i++) {
-            const stripeY = (height / 4) * (i + 1);
-            ctx.fillRect(0, stripeY, width, 2);
+        // Добавляем Rectangle 281 как основу
+        if (this.images['Rectangle 281.png']) {
+            ctx.drawImage(this.images['Rectangle 281.png'], 0, 0, width, height);
         }
-        ctx.globalAlpha = 1.0;
     }
     
     init() {
@@ -122,78 +112,76 @@ class FantasyBannerGenerator {
         // Очищаем canvas
         ctx.clearRect(0, 0, width, height);
         
-        // Создаем цветной фон с новой палитрой
-        this.createColoredBackground(ctx, width, height);
+        // Создаем точный фон как в референсе
+        this.createReferenceBackground(ctx, width, height);
         
-        // Добавляем Rectangle 281 как overlay при наличии
-        if (this.images['Rectangle 281.png']) {
-            ctx.globalAlpha = 0.3;
-            ctx.drawImage(this.images['Rectangle 281.png'], 0, 0, width, height);
-            ctx.globalAlpha = 1.0;
-        }
+        // ЛЕВАЯ ЧАСТЬ - Текстовый блок
+        const leftMargin = 60;
+        const textAreaWidth = 500;
         
-        // Логотип Fantasy (верхний левый угол)
+        // Логотип Fantasy (верхний левый)
         if (this.images['LOGO_FANTASY.png']) {
-            const logoScale = 0.8;
+            const logoScale = 1.0;
             const logoW = this.images['LOGO_FANTASY.png'].width * logoScale;
             const logoH = this.images['LOGO_FANTASY.png'].height * logoScale;
-            ctx.drawImage(this.images['LOGO_FANTASY.png'], 60, 60, logoW, logoH);
+            ctx.drawImage(this.images['LOGO_FANTASY.png'], leftMargin, 50, logoW, logoH);
         }
         
         // Текст "Новый сезон" (под логотипом)
         if (this.images['Новый сезон.png']) {
-            const seasonScale = 1.2;
+            const seasonScale = 1.5;
             const seasonW = this.images['Новый сезон.png'].width * seasonScale;
             const seasonH = this.images['Новый сезон.png'].height * seasonScale;
-            ctx.drawImage(this.images['Новый сезон.png'], 60, 150, seasonW, seasonH);
+            ctx.drawImage(this.images['Новый сезон.png'], leftMargin, 120, seasonW, seasonH);
         }
         
-        // Основной текст (центр слева)
+        // Основной текст (под "Новый сезон")
         if (this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png']) {
-            const textScale = 1.5;
-            const textW = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale;
+            const textScale = 1.2;
+            const textW = Math.min(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale, textAreaWidth);
             const textH = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].height * textScale;
             ctx.drawImage(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'], 
-                         60, 240, textW, textH);
+                         leftMargin, 200, textW, textH);
         }
         
-        // Игроки (3 игрока справа, сохраняем пропорции)
-        const playersScale = 1.8;
-        const playerSpacing = 200;
-        const playersStartX = width - (3 * playerSpacing + 50);
-        const playersY = 150;
+        // ПРАВАЯ ЧАСТЬ - Игроки (снизу, не перекрывая текст)
+        const playersScale = 1.0;
+        const playerWidth = 180;
+        const playersY = height - 280; // От низа вверх
+        const playersRightMargin = 60;
         
-        if (this.images['MOSTOVOY.png']) {
-            const pw = this.images['MOSTOVOY.png'].width * playersScale;
-            const ph = this.images['MOSTOVOY.png'].height * playersScale;
-            ctx.drawImage(this.images['MOSTOVOY.png'], playersStartX, playersY, pw, ph);
+        // Три игрока справа налево
+        if (this.images['CORDOBA.png']) {
+            const pw = playerWidth;
+            const ph = this.images['CORDOBA.png'].height * (playerWidth / this.images['CORDOBA.png'].width);
+            ctx.drawImage(this.images['CORDOBA.png'], width - playersRightMargin - pw, playersY, pw, ph);
         }
         
         if (this.images['BABIC.png']) {
-            const pw = this.images['BABIC.png'].width * playersScale;
-            const ph = this.images['BABIC.png'].height * playersScale;
-            ctx.drawImage(this.images['BABIC.png'], playersStartX + playerSpacing, playersY, pw, ph);
+            const pw = playerWidth;
+            const ph = this.images['BABIC.png'].height * (playerWidth / this.images['BABIC.png'].width);
+            ctx.drawImage(this.images['BABIC.png'], width - playersRightMargin - pw - 200, playersY, pw, ph);
         }
         
-        if (this.images['CORDOBA.png']) {
-            const pw = this.images['CORDOBA.png'].width * playersScale;
-            const ph = this.images['CORDOBA.png'].height * playersScale;
-            ctx.drawImage(this.images['CORDOBA.png'], playersStartX + playerSpacing * 2, playersY, pw, ph);
+        if (this.images['MOSTOVOY.png']) {
+            const pw = playerWidth;
+            const ph = this.images['MOSTOVOY.png'].height * (playerWidth / this.images['MOSTOVOY.png'].width);
+            ctx.drawImage(this.images['MOSTOVOY.png'], width - playersRightMargin - pw - 400, playersY, pw, ph);
         }
         
-        // Декоративные элементы (сохраняем пропорции)
+        // Декоративные элементы (по краям, не мешают основному контенту)
         if (this.images['Vector-3.png']) {
-            const v3Scale = 1.0;
+            const v3Scale = 0.8;
             const v3W = this.images['Vector-3.png'].width * v3Scale;
             const v3H = this.images['Vector-3.png'].height * v3Scale;
-            ctx.drawImage(this.images['Vector-3.png'], width - v3W - 40, 40, v3W, v3H);
+            ctx.drawImage(this.images['Vector-3.png'], width - v3W - 20, 20, v3W, v3H);
         }
         
         if (this.images['Vector-4.png']) {
-            const v4Scale = 0.8;
+            const v4Scale = 0.6;
             const v4W = this.images['Vector-4.png'].width * v4Scale;
             const v4H = this.images['Vector-4.png'].height * v4Scale;
-            ctx.drawImage(this.images['Vector-4.png'], 40, height - v4H - 40, v4W, v4H);
+            ctx.drawImage(this.images['Vector-4.png'], 20, height - v4H - 20, v4W, v4H);
         }
     }
     
@@ -206,72 +194,69 @@ class FantasyBannerGenerator {
         // Очищаем canvas
         ctx.clearRect(0, 0, width, height);
         
-        // Создаем цветной фон с новой палитрой
-        this.createColoredBackground(ctx, width, height);
+        // Создаем точный фон как в референсе
+        this.createReferenceBackground(ctx, width, height);
         
-        // Добавляем Rectangle 281 как overlay при наличии
-        if (this.images['Rectangle 281.png']) {
-            ctx.globalAlpha = 0.3;
-            ctx.drawImage(this.images['Rectangle 281.png'], 0, 0, width, height);
-            ctx.globalAlpha = 1.0;
-        }
+        // ЛЕВАЯ ЧАСТЬ - Текстовый блок (пропорционально уменьшенный)
+        const leftMargin = 30;
+        const textAreaWidth = 250;
         
-        // Логотип Fantasy (верхний левый угол)
+        // Логотип Fantasy (верхний левый)
         if (this.images['LOGO_FANTASY.png']) {
-            const logoScale = 0.5;
+            const logoScale = 0.6;
             const logoW = this.images['LOGO_FANTASY.png'].width * logoScale;
             const logoH = this.images['LOGO_FANTASY.png'].height * logoScale;
-            ctx.drawImage(this.images['LOGO_FANTASY.png'], 30, 30, logoW, logoH);
+            ctx.drawImage(this.images['LOGO_FANTASY.png'], leftMargin, 30, logoW, logoH);
         }
         
         // Текст "Новый сезон" (под логотипом)
         if (this.images['Новый сезон.png']) {
-            const seasonScale = 0.8;
+            const seasonScale = 1.0;
             const seasonW = this.images['Новый сезон.png'].width * seasonScale;
             const seasonH = this.images['Новый сезон.png'].height * seasonScale;
-            ctx.drawImage(this.images['Новый сезон.png'], 30, 80, seasonW, seasonH);
+            ctx.drawImage(this.images['Новый сезон.png'], leftMargin, 80, seasonW, seasonH);
         }
         
-        // Основной текст (центр слева)
+        // Основной текст (под "Новый сезон")
         if (this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png']) {
-            const textScale = 0.9;
-            const textW = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale;
+            const textScale = 0.8;
+            const textW = Math.min(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale, textAreaWidth);
             const textH = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].height * textScale;
             ctx.drawImage(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'], 
-                         30, 130, textW, textH);
+                         leftMargin, 130, textW, textH);
         }
         
-        // Игроки (2 игрока справа, сохраняем пропорции)
-        const playersScale = 1.2;
-        const playerSpacing = 130;
-        const playersStartX = width - (2 * playerSpacing + 30);
-        const playersY = 100;
+        // ПРАВАЯ ЧАСТЬ - Игроки (снизу, не перекрывая текст)
+        const playerWidth = 110;
+        const playersY = height - 200; // От низа вверх
+        const playersRightMargin = 30;
+        
+        // Два игрока справа налево
+        if (this.images['BABIC.png']) {
+            const pw = playerWidth;
+            const ph = this.images['BABIC.png'].height * (playerWidth / this.images['BABIC.png'].width);
+            ctx.drawImage(this.images['BABIC.png'], width - playersRightMargin - pw, playersY, pw, ph);
+        }
         
         if (this.images['MOSTOVOY.png']) {
-            const pw = this.images['MOSTOVOY.png'].width * playersScale;
-            const ph = this.images['MOSTOVOY.png'].height * playersScale;
-            ctx.drawImage(this.images['MOSTOVOY.png'], playersStartX, playersY, pw, ph);
+            const pw = playerWidth;
+            const ph = this.images['MOSTOVOY.png'].height * (playerWidth / this.images['MOSTOVOY.png'].width);
+            ctx.drawImage(this.images['MOSTOVOY.png'], width - playersRightMargin - pw - 130, playersY, pw, ph);
         }
         
-        if (this.images['BABIC.png']) {
-            const pw = this.images['BABIC.png'].width * playersScale;
-            const ph = this.images['BABIC.png'].height * playersScale;
-            ctx.drawImage(this.images['BABIC.png'], playersStartX + playerSpacing, playersY, pw, ph);
-        }
-        
-        // Декоративные элементы (сохраняем пропорции)
+        // Декоративные элементы (по краям, не мешают основному контенту)
         if (this.images['Vector-3.png']) {
-            const v3Scale = 0.6;
+            const v3Scale = 0.5;
             const v3W = this.images['Vector-3.png'].width * v3Scale;
             const v3H = this.images['Vector-3.png'].height * v3Scale;
-            ctx.drawImage(this.images['Vector-3.png'], width - v3W - 25, 25, v3W, v3H);
+            ctx.drawImage(this.images['Vector-3.png'], width - v3W - 15, 15, v3W, v3H);
         }
         
         if (this.images['Vector-4.png']) {
-            const v4Scale = 0.5;
+            const v4Scale = 0.4;
             const v4W = this.images['Vector-4.png'].width * v4Scale;
             const v4H = this.images['Vector-4.png'].height * v4Scale;
-            ctx.drawImage(this.images['Vector-4.png'], 25, height - v4H - 25, v4W, v4H);
+            ctx.drawImage(this.images['Vector-4.png'], 15, height - v4H - 15, v4W, v4H);
         }
     }
     
@@ -284,55 +269,60 @@ class FantasyBannerGenerator {
         // Очищаем canvas
         ctx.clearRect(0, 0, width, height);
         
-        // Создаем цветной фон с новой палитрой
-        this.createColoredBackground(ctx, width, height);
+        // Создаем точный фон как в референсе
+        this.createReferenceBackground(ctx, width, height);
         
-        // Добавляем Rectangle 281 как overlay при наличии
-        if (this.images['Rectangle 281.png']) {
-            ctx.globalAlpha = 0.3;
-            ctx.drawImage(this.images['Rectangle 281.png'], 0, 0, width, height);
-            ctx.globalAlpha = 1.0;
-        }
+        // ЛЕВАЯ ЧАСТЬ - Только основные элементы (компактно)
+        const leftMargin = 15;
+        const textAreaWidth = 150;
         
-        // Логотип Fantasy (верхний левый угол)
+        // Логотип Fantasy (верхний левый, очень маленький)
         if (this.images['LOGO_FANTASY.png']) {
-            const logoScale = 0.25;
+            const logoScale = 0.3;
             const logoW = this.images['LOGO_FANTASY.png'].width * logoScale;
             const logoH = this.images['LOGO_FANTASY.png'].height * logoScale;
-            ctx.drawImage(this.images['LOGO_FANTASY.png'], 15, 15, logoW, logoH);
+            ctx.drawImage(this.images['LOGO_FANTASY.png'], leftMargin, 10, logoW, logoH);
         }
         
-        // Текст "Новый сезон" (под логотипом)
+        // Текст "Новый сезон" (рядом с логотипом или под ним)
         if (this.images['Новый сезон.png']) {
-            const seasonScale = 0.4;
+            const seasonScale = 0.5;
             const seasonW = this.images['Новый сезон.png'].width * seasonScale;
             const seasonH = this.images['Новый сезон.png'].height * seasonScale;
-            ctx.drawImage(this.images['Новый сезон.png'], 15, 40, seasonW, seasonH);
+            ctx.drawImage(this.images['Новый сезон.png'], leftMargin, 35, seasonW, seasonH);
         }
         
-        // Основной текст (компактно)
+        // Основной текст (очень компактно)
         if (this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png']) {
-            const textScale = 0.5;
-            const textW = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale;
+            const textScale = 0.35;
+            const textW = Math.min(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].width * textScale, textAreaWidth);
             const textH = this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'].height * textScale;
             ctx.drawImage(this.images['Вступайте в разные фэнтези-лиги или создавайте собственный турнир.png'], 
-                         15, 60, textW, textH);
+                         leftMargin, 60, textW, textH);
         }
         
-        // Один игрок справа (сохраняем пропорции)
+        // ПРАВАЯ ЧАСТЬ - Один игрок (не перекрывая текст)
+        const playerWidth = 70;
+        const playersY = 10; // Сверху
+        const playersRightMargin = 15;
+        
+        // Один игрок справа
         if (this.images['MOSTOVOY.png']) {
-            const playerScale = 0.8;
-            const pw = this.images['MOSTOVOY.png'].width * playerScale;
-            const ph = this.images['MOSTOVOY.png'].height * playerScale;
-            ctx.drawImage(this.images['MOSTOVOY.png'], width - pw - 15, 20, pw, ph);
+            const pw = playerWidth;
+            const ph = this.images['MOSTOVOY.png'].height * (playerWidth / this.images['MOSTOVOY.png'].width);
+            // Убеждаемся что игрок помещается по высоте
+            const maxHeight = height - 20;
+            const finalHeight = Math.min(ph, maxHeight);
+            const finalWidth = pw * (finalHeight / ph);
+            ctx.drawImage(this.images['MOSTOVOY.png'], width - playersRightMargin - finalWidth, playersY, finalWidth, finalHeight);
         }
         
-        // Декоративный элемент (очень маленький)
+        // Декоративные элементы (минимальные)
         if (this.images['Vector-4.png']) {
-            const v4Scale = 0.3;
+            const v4Scale = 0.2;
             const v4W = this.images['Vector-4.png'].width * v4Scale;
             const v4H = this.images['Vector-4.png'].height * v4Scale;
-            ctx.drawImage(this.images['Vector-4.png'], 10, height - v4H - 10, v4W, v4H);
+            ctx.drawImage(this.images['Vector-4.png'], 5, height - v4H - 5, v4W, v4H);
         }
     }
 }
