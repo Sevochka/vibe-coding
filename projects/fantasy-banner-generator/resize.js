@@ -1,10 +1,8 @@
-const projectSlug = 'rpl-table-modern';
-
 const resize = () => {
     const dataUTILS = {
         for: 'BASIC_TEST',
         action: 'resizeIframe',
-        selector: `iframe[src*=\\/projects\\/${projectSlug}]`,
+        selector: `iframe[src*=\\/projects\\/fantasy-banner-generator]`,
         sizes: {
             height: 2 * Math.floor(document.body.scrollHeight / 2) + 10,
         },

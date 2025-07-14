@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор баннеров Fantasy</title>
+    <link href="https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css" rel="stylesheet">
+    <link href="https://senoval.cdn.sports.ru/static-resources/fonts/sports.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <a href="https://www.sports.ru/?utm_source=special-fantasy-banner-generator" target="_blank">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" height="32">
+                </a>
+            </div>
+            <h1>Генератор баннеров Fantasy</h1>
+        </header>
+
+        <main>
+            <div class="reference-section">
+                <h2>Референсное изображение</h2>
+                <img id="reference" src="../desighn_resize/sports_1080x1080.png" alt="Референс" class="reference-image">
+            </div>
+
+            <div class="controls">
+                <h2>Управление</h2>
+                <button id="generateAll" class="generate-btn">Сгенерировать все размеры</button>
+                <div class="progress" id="progress" style="display: none;">
+                    <div class="progress-bar"></div>
+                    <span class="progress-text">Загрузка...</span>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <h2>Результаты</h2>
+                
+                <div class="output-item">
+                    <h3>1575×600</h3>
+                    <canvas id="canvas1575" width="1575" height="600"></canvas>
+                    <button onclick="downloadCanvas('canvas1575', 'fantasy_banner_1575x600.png')" class="download-btn">Скачать</button>
+                </div>
+
+                <div class="output-item">
+                    <h3>522×400</h3>
+                    <canvas id="canvas522" width="522" height="400"></canvas>
+                    <button onclick="downloadCanvas('canvas522', 'fantasy_banner_522x400.png')" class="download-btn">Скачать</button>
+                </div>
+
+                <div class="output-item">
+                    <h3>300×100</h3>
+                    <canvas id="canvas300" width="300" height="100"></canvas>
+                    <button onclick="downloadCanvas('canvas300', 'fantasy_banner_300x100.png')" class="download-btn">Скачать</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
