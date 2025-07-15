@@ -109,136 +109,127 @@ class InteractiveNews {
     renderBarcoStats() {
         this.widgetTitle.textContent = 'Статистика Эсекиэля Барко';
         
-        const stats = statsData.barco;
-        
         this.widgetContent.innerHTML = `
-            <div class="infographic-container">
-                <h3 class="infographic-title">Голы Барко по сезонам</h3>
-                <div class="infographic-cards">
-                    ${stats.goals.map((season, index) => `
-                        <div class="infographic-card" style="animation-delay: ${index * 0.2}s">
-                            <div class="card-header">
-                                <div class="season-badge">${season.season}</div>
-                                <div class="spartak-logo">
-                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                                        <circle cx="20" cy="20" r="20" fill="#dc143c"/>
-                                        <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="goals-display">
-                                <div class="goals-number">${season.goals}</div>
-                                <div class="goals-label">голов</div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="matches-info">${stats.detailed[index].matches} матчей</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="total-summary">
-                    <div class="summary-card">
-                        <div class="summary-icon">⚽</div>
-                        <div class="summary-content">
-                            <div class="summary-number">${stats.goals.reduce((sum, s) => sum + s.goals, 0)}</div>
-                            <div class="summary-text">Всего голов за 3 сезона</div>
+            <div class="stats-image-container">
+                <div class="stats-image placeholder-image">
+                    <div class="placeholder-content">
+                        <div class="player-photo">
+                            <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                                <circle cx="60" cy="60" r="60" fill="#dc143c"/>
+                                <circle cx="60" cy="45" r="20" fill="white"/>
+                                <path d="M25 95 Q60 75 95 95" stroke="white" stroke-width="8" fill="white"/>
+                                <text x="60" y="110" text-anchor="middle" fill="white" font-size="12" font-weight="bold">БАРКО</text>
+                            </svg>
                         </div>
                     </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">🎯</div>
-                        <div class="summary-content">
-                            <div class="summary-number">${(stats.goals.reduce((sum, s) => sum + s.goals, 0) / stats.detailed.reduce((sum, s) => sum + s.matches, 0)).toFixed(2)}</div>
-                            <div class="summary-text">Голов за матч</div>
+                </div>
+                <div class="stats-overlay">
+                    <div class="stats-badge">
+                        <div class="player-name">Эсекиэль Барко</div>
+                        <div class="team-badge">
+                            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+                                <circle cx="20" cy="20" r="20" fill="#dc143c"/>
+                                <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
+                            </svg>
+                            Спартак
                         </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">2022/23</div>
+                            <div class="stat-value">12 голов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2023/24</div>
+                            <div class="stat-value">8 голов</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2024/25</div>
+                            <div class="stat-value">5 голов</div>
+                        </div>
+                    </div>
+                    
+                    <div class="total-stats">
+                        <span class="total-goals">25 голов за 3 сезона</span>
                     </div>
                 </div>
             </div>
         `;
         
-        // Анимация появления карточек
+        // Анимация появления
         setTimeout(() => {
-            const cards = this.widgetContent.querySelectorAll('.infographic-card');
-            cards.forEach(card => {
-                card.classList.add('animate-in');
-            });
+            const image = this.widgetContent.querySelector('.stats-image');
+            const overlay = this.widgetContent.querySelector('.stats-overlay');
+            if (image) image.classList.add('loaded');
+            if (overlay) overlay.classList.add('show');
         }, 100);
     }
     
     renderSpartakStats() {
         this.widgetTitle.textContent = 'Результаты Спартака в РПЛ';
         
-        const stats = statsData.spartak;
-        
         this.widgetContent.innerHTML = `
-            <div class="infographic-container">
-                <h3 class="infographic-title">Места Спартака в турнирной таблице РПЛ</h3>
-                <div class="infographic-cards spartak-positions">
-                    ${stats.positions.map((season, index) => {
-                        const positionClass = season.position <= 3 ? 'top-position' : season.position <= 6 ? 'mid-position' : 'low-position';
-                        const positionIcon = season.position === 1 ? '🥇' : season.position === 2 ? '🥈' : season.position === 3 ? '🥉' : '📍';
-                        return `
-                        <div class="infographic-card position-card ${positionClass}" style="animation-delay: ${index * 0.2}s">
-                            <div class="card-header">
-                                <div class="season-badge">${season.season}</div>
-                                <div class="spartak-logo">
-                                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                                        <circle cx="20" cy="20" r="20" fill="#dc143c"/>
-                                        <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="position-display">
-                                <div class="position-icon">${positionIcon}</div>
-                                <div class="position-number">${season.position}</div>
-                                <div class="position-label">место</div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="points-info">${stats.detailed[index].points} очков</div>
-                            </div>
-                        </div>
-                    `}).join('')}
-                </div>
-                
-                <div class="total-summary spartak-summary">
-                    <div class="summary-card">
-                        <div class="summary-icon">🏆</div>
-                        <div class="summary-content">
-                            <div class="summary-number">${this.calculateAveragePosition(stats.detailed)}</div>
-                            <div class="summary-text">Среднее место за 5 сезонов</div>
-                        </div>
-                    </div>
-                    <div class="summary-card">
-                        <div class="summary-icon">⭐</div>
-                        <div class="summary-content">
-                            <div class="summary-number">${Math.min(...stats.detailed.map(s => s.position))}</div>
-                            <div class="summary-text">Лучший результат (${stats.detailed.find(s => s.position === Math.min(...stats.detailed.map(s => s.position))).season})</div>
+            <div class="stats-image-container">
+                <div class="stats-image placeholder-image spartak-image">
+                    <div class="placeholder-content">
+                        <div class="team-logo">
+                            <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+                                <circle cx="60" cy="60" r="60" fill="#dc143c"/>
+                                <text x="60" y="75" text-anchor="middle" fill="white" font-size="32" font-weight="bold">S</text>
+                                <text x="60" y="95" text-anchor="middle" fill="white" font-size="10" font-weight="bold">СПАРТАК</text>
+                            </svg>
                         </div>
                     </div>
                 </div>
-                
-                <div class="season-timeline">
-                    <h4 class="timeline-title">Динамика результатов</h4>
-                    <div class="timeline-track">
-                        ${stats.positions.map((season, index) => `
-                            <div class="timeline-point position-${season.position}" style="left: ${(index / (stats.positions.length - 1)) * 100}%">
-                                <div class="timeline-tooltip">
-                                    <div class="tooltip-season">${season.season}</div>
-                                    <div class="tooltip-position">${season.position} место</div>
-                                </div>
-                            </div>
-                        `).join('')}
+                <div class="stats-overlay">
+                    <div class="stats-badge">
+                        <div class="player-name">ФК Спартак</div>
+                        <div class="team-badge">
+                            <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+                                <circle cx="20" cy="20" r="20" fill="#dc143c"/>
+                                <text x="20" y="26" text-anchor="middle" fill="white" font-size="14" font-weight="bold">S</text>
+                            </svg>
+                            РПЛ
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">2020/21</div>
+                            <div class="stat-value">2 место</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2021/22</div>
+                            <div class="stat-value">10 место</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2022/23</div>
+                            <div class="stat-value">4 место</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2023/24</div>
+                            <div class="stat-value">3 место</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">2024/25</div>
+                            <div class="stat-value">6 место</div>
+                        </div>
+                    </div>
+                    
+                    <div class="total-stats">
+                        <span class="total-goals">Среднее место: 5.0</span>
                     </div>
                 </div>
             </div>
         `;
         
-        // Анимация появления карточек
+        // Анимация появления
         setTimeout(() => {
-            const cards = this.widgetContent.querySelectorAll('.infographic-card');
-            cards.forEach(card => {
-                card.classList.add('animate-in');
-            });
+            const image = this.widgetContent.querySelector('.stats-image');
+            const overlay = this.widgetContent.querySelector('.stats-overlay');
+            if (image) image.classList.add('loaded');
+            if (overlay) overlay.classList.add('show');
         }, 100);
     }
     
