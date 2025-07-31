@@ -1,0 +1,400 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+    /* Branded Colors for Sports */
+    --sports-primary-color: #00c78b;
+    --sports-primary-color-hover: #21a67e;
+    --sports-primary-light-color-hover: #d8f7e5;
+    --sports-green-850: #1f6650;
+    --sports-green-900: #003d2b;
+    --sports-green-50: #d8f7e5;
+    --sports-yellow-A700: #ffc300;
+    --sports-yellow-100: #f2f2f0;
+    --sports-yellow-50: #f9f9f7;
+    --sports-red-a700: #ff003c;
+    --sports-red-50: #ffe7eb;
+    --sports-orange-900: #d26e00;
+    --sports-orange-50: #fff1d9;
+    --sports-cyan-A700: #00a0f0;
+    --sports-cyan-900: #006496;
+    --sports-blue-A700: #0040fc;
+    --sports-blue-A400: #235bff;
+    --sports-blue-50: #dfe7ff;
+    --sports-purple-500: #964ba0;
+    --sports-purple-50: #aaa9aa;
+    --sports-black: #000;
+    --sports-grey-1050: #1a1a1a;
+    --sports-grey-1000: #171717;
+    --sports-grey-900: #222;
+    --sports-grey-850: #323232;
+    --sports-grey-800: #4a4a4a;
+    --sports-grey-700: #4c4c4c;
+    --sports-grey-600: #757575;
+    --sports-grey-500: #7f7f7f;
+    --sports-grey-400: #9b9b9b;
+    --sports-grey-100: #d8d8d8;
+    --sports-grey-50: #efefef;
+
+    /* UI elements and typography */
+    --ui-bg: #fff;
+    --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+    --ui-font-family-heading: "Sports", sans-serif;
+    --ui-font-family-heading-primary: "Sports", sans-serif;
+    --ui-font-family-heading-secondary: "Neoris", "Roboto", sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    word-break: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--ui-font-family-body);
+    background: linear-gradient(135deg, var(--sports-green-50) 0%, var(--sports-blue-50) 100%);
+    color: var(--sports-black);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.presentation-container {
+    max-width: 660px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Header */
+.presentation-header {
+    background: var(--ui-bg);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    border-bottom: 3px solid var(--sports-primary-color);
+}
+
+.logo-container {
+    margin-bottom: 15px;
+}
+
+.logo {
+    height: 32px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.presentation-header h1 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 32px;
+    color: var(--sports-primary-color);
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 4px rgba(0, 199, 139, 0.1);
+}
+
+.subtitle {
+    font-size: 16px;
+    color: var(--sports-grey-600);
+    font-weight: 500;
+}
+
+/* Slides */
+.slide {
+    display: none;
+    flex: 1;
+    padding: 40px 20px;
+    text-align: center;
+    animation: slideIn 0.6s ease-out;
+}
+
+.slide.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.slide-content {
+    background: var(--ui-bg);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 2px solid var(--sports-primary-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--sports-primary-color), var(--sports-blue-A700));
+}
+
+/* Title slide */
+.title-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: bounce 2s infinite;
+}
+
+.title-slide h2 {
+    font-family: var(--ui-font-family-heading);
+    font-size: 36px;
+    color: var(--sports-primary-color);
+    margin-bottom: 15px;
+}
+
+.title-description {
+    font-size: 18px;
+    color: var(--sports-grey-600);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.total-questions {
+    display: inline-block;
+    background: var(--sports-green-50);
+    color: var(--sports-green-850);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Question slides */
+.question-slide .slide-content {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.question-number {
+    background: var(--sports-primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 15px rgba(0, 199, 139, 0.3);
+}
+
+.question-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+.question-text {
+    font-size: 20px;
+    color: var(--sports-black);
+    line-height: 1.4;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+/* Final slide */
+.final-slide .slide-content {
+    background: linear-gradient(135deg, var(--sports-green-50) 0%, var(--sports-yellow-50) 100%);
+    border-color: var(--sports-yellow-A700);
+}
+
+.final-description {
+    font-size: 18px;
+    color: var(--sports-grey-700);
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.start-btn,
+.restart-btn {
+    background: linear-gradient(135deg, var(--sports-primary-color), var(--sports-primary-color-hover));
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 199, 139, 0.3);
+    font-family: var(--ui-font-family-body);
+}
+
+.start-btn:hover,
+.restart-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 199, 139, 0.4);
+    background: linear-gradient(135deg, var(--sports-primary-color-hover), var(--sports-green-850));
+}
+
+/* Navigation */
+.navigation {
+    background: var(--ui-bg);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--sports-primary-color);
+}
+
+.nav-btn {
+    background: var(--sports-grey-50);
+    border: 2px solid var(--sports-grey-100);
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--ui-font-family-body);
+    font-weight: 500;
+}
+
+.nav-btn:hover {
+    background: var(--sports-primary-color);
+    color: white;
+    border-color: var(--sports-primary-color);
+    transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-btn:disabled:hover {
+    background: var(--sports-grey-50);
+    color: inherit;
+    border-color: var(--sports-grey-100);
+}
+
+.nav-icon {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 6px;
+    background: var(--sports-grey-100);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sports-primary-color), var(--sports-blue-A700));
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.slide-counter {
+    font-size: 14px;
+    color: var(--sports-grey-600);
+    font-weight: 600;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .presentation-container {
+        max-width: 100%;
+    }
+    
+    .slide-content {
+        padding: 30px 20px;
+        margin: 0 10px;
+    }
+    
+    .question-text {
+        font-size: 18px;
+    }
+    
+    .navigation {
+        padding: 15px;
+    }
+    
+    .nav-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .progress-bar {
+        width: 120px;
+    }
+    
+    .presentation-header h1 {
+        font-size: 28px;
+    }
+} 

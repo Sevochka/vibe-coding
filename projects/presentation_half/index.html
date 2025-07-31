@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свадебная викторина - Детские воспоминания</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Заголовок презентации -->
+        <header class="presentation-header">
+            <div class="logo-container">
+                <a href="https://www.sports.ru/?utm_source=special-presentation-half" target="_blank">
+                    <img src="https://dumpster.cdn.sports.ru/e/01/b6a5c8d6223d46030fe91d0aa70cc.png" alt="Sports.ru" class="logo">
+                </a>
+            </div>
+            <h1>Детские воспоминания</h1>
+            <p class="subtitle">Свадебная викторина о молодых</p>
+        </header>
+
+        <!-- Титульный слайд -->
+        <div class="slide title-slide active" id="slide-0">
+            <div class="slide-content">
+                <div class="title-icon">💝</div>
+                <h2>Детские воспоминания</h2>
+                <p class="title-description">Викторина о детстве жениха и невесты</p>
+                <div class="question-counter">
+                    <span class="total-questions">19 вопросов</span>
+                </div>
+                <button class="start-btn" onclick="nextSlide()">Начать викторину</button>
+            </div>
+        </div>
+
+        <!-- Слайды с вопросами -->
+        <div class="slides-container" id="slides-container">
+            <!-- Слайды будут созданы JavaScript -->
+        </div>
+
+        <!-- Финальный слайд -->
+        <div class="slide final-slide" id="slide-final">
+            <div class="slide-content">
+                <div class="title-icon">🎉</div>
+                <h2>Викторина завершена!</h2>
+                <p class="final-description">Спасибо за участие в нашей викторине о детских воспоминаниях!</p>
+                <button class="restart-btn" onclick="restartPresentation()">Начать заново</button>
+            </div>
+        </div>
+
+        <!-- Навигация -->
+        <div class="navigation">
+            <button class="nav-btn prev-btn" onclick="prevSlide()">
+                <span class="nav-icon">←</span>
+                <span class="nav-text">Назад</span>
+            </button>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="slide-counter">
+                    <span id="current-slide">1</span> / <span id="total-slides">20</span>
+                </span>
+            </div>
+            
+            <button class="nav-btn next-btn" onclick="nextSlide()">
+                <span class="nav-text">Далее</span>
+                <span class="nav-icon">→</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="./data/questions.js"></script>
+    <script src="./script.js"></script>
+    <script src="./resize.js"></script>
+</body>
+</html> 
