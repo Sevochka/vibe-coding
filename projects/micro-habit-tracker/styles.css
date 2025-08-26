@@ -1,0 +1,183 @@
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/roboto.css";
+@import "https://senoval.cdn.sports.ru/static-resources/fonts/sports.css";
+
+:root {
+  --sports-primary-color: #00c78b;
+  --sports-primary-color-hover: #21a67e;
+  --sports-primary-light-color-hover: #d8f7e5;
+  --sports-green-850: #1f6650;
+  --sports-green-900: #003d2b;
+  --sports-green-50: #d8f7e5;
+  --sports-yellow-A700: #ffc300;
+  --sports-yellow-100: #f2f2f0;
+  --sports-yellow-50: #f9f9f7;
+  --sports-red-a700: #ff003c;
+  --sports-red-50: #ffe7eb;
+  --sports-cyan-A700: #00a0f0;
+  --sports-cyan-900: #006496;
+  --sports-blue-A700: #0040fc;
+  --sports-blue-A400: #235bff;
+  --sports-blue-50: #dfe7ff;
+  --sports-purple-500: #964ba0;
+  --sports-purple-50: #aaa9aa;
+  --sports-black: #000;
+  --sports-grey-1050: #1a1a1a;
+  --sports-grey-1000: #171717;
+  --sports-grey-900: #222;
+  --sports-grey-850: #323232;
+  --sports-grey-800: #4a4a4a;
+  --sports-grey-700: #4c4c4c;
+  --sports-grey-600: #757575;
+  --sports-grey-500: #7f7f7f;
+  --sports-grey-400: #9b9b9b;
+  --sports-grey-100: #d8d8d8;
+  --sports-grey-50: #efefef;
+
+  --ui-bg: #fff;
+  --ui-font-family-body: "Neoris", "Roboto", sans-serif;
+  --ui-font-family-heading: "Sports", sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  word-break: normal;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  font-family: var(--ui-font-family-body);
+  color: var(--sports-grey-1000);
+  background: linear-gradient(180deg, #f7faf9, #ffffff);
+}
+
+.container {
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--sports-grey-50);
+  background: var(--ui-bg);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand-logo { height: 28px; width: auto; display: block; }
+.titles { display: flex; flex-direction: column; }
+.h-title {
+  font-family: var(--ui-font-family-heading);
+  font-size: 32px;
+  line-height: 1.1;
+  margin: 0;
+}
+.h-sub { margin: 2px 0 0; color: var(--sports-grey-700); font-size: 14px; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0 8px;
+}
+.spacer { flex: 1 1 auto; }
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--sports-grey-100);
+  background: #fff;
+  color: var(--sports-grey-1000);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .06s ease;
+}
+.btn:hover { background: var(--sports-yellow-50); }
+.btn:active { transform: translateY(1px); }
+.btn.primary {
+  background: var(--sports-primary-color);
+  color: #fff;
+  border-color: var(--sports-primary-color);
+}
+.btn.primary:hover { background: var(--sports-primary-color-hover); }
+.btn.danger { border-color: var(--sports-red-a700); color: var(--sports-red-a700); }
+.btn.danger:hover { background: var(--sports-red-50); }
+
+.legend {
+  background: #fff;
+  border: 1px solid var(--sports-grey-50);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+}
+.legend-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.badge { width: 14px; height: 14px; border-radius: 4px; display: inline-block; border: 1px solid var(--sports-grey-100); }
+.badge.done { background: var(--sports-primary-color); border-color: var(--sports-primary-color); }
+.badge.skipped { background: var(--sports-yellow-100); }
+.badge.missed { background: #fff; }
+.hint { margin: 6px 0 0; color: var(--sports-grey-700); font-size: 12px; }
+
+.habit-list { display: flex; flex-direction: column; gap: 12px; }
+
+.habit-row {
+  background: #fff;
+  border: 1px solid var(--sports-grey-50);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+}
+.habit-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sports-primary-color); box-shadow: 0 0 0 3px var(--sports-primary-light-color-hover) inset; }
+.habit-name { background: transparent; border: 0; font-weight: 700; cursor: pointer; padding: 6px 8px; border-radius: 8px; }
+.habit-name:hover { background: var(--sports-yellow-50); }
+.streak { margin-left: auto; color: var(--sports-green-900); font-weight: 700; }
+
+.habit-grid { display: grid; grid-template-columns: repeat(14, minmax(24px, 1fr)); gap: 6px; align-items: end; }
+.cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  border: 1px solid var(--sports-grey-100);
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  user-select: none;
+  cursor: pointer;
+  transition: transform .06s ease, background .15s ease, border-color .15s ease;
+}
+.cell:active { transform: translateY(1px); }
+.cell.done { background: var(--sports-primary-color); color: #fff; border-color: var(--sports-primary-color); }
+.cell.skipped { background: var(--sports-yellow-100); }
+.cell.missed { background: #fff; }
+.cell.today { outline: 2px dashed var(--sports-grey-100); outline-offset: 2px; }
+
+.mini-chart { width: 100%; height: 36px; display: block; margin-top: 10px; }
+
+/* Dialog */
+.dialog { padding: 0; border: 0; }
+.dialog-card { background: #fff; border: 1px solid var(--sports-grey-50); border-radius: 14px; padding: 14px; width: min(480px, 92vw); }
+.h3 { font-family: var(--ui-font-family-heading); font-size: 24px; margin: 0 0 8px; }
+.field { display: grid; gap: 6px; margin: 8px 0; }
+.field input[type="text"], .field input:not([type]) , .field input[type="color"], .field input { 
+  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--sports-grey-100);
+}
+.dialog-actions { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+
+@media (max-width: 720px) {
+  .h-title { font-size: 26px; }
+  .habit-grid { grid-template-columns: repeat(14, 1fr); }
+}
+
