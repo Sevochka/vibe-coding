@@ -52,6 +52,12 @@
   const addBtn = document.getElementById('addHabitBtn');
   const exportBtn = document.getElementById('exportBtn');
   const importInput = document.getElementById('importInput');
+  const daysHeader = document.getElementById('daysHeader');
+  const todayPill = document.getElementById('todayPill');
+  const selectedDatePill = document.getElementById('selectedDatePill');
+  const skipDayToggle = document.getElementById('skipDayToggle');
+  const jumpTodayBtn = document.getElementById('jumpTodayBtn');
+  const clearSelectedBtn = document.getElementById('clearSelectedBtn');
 
   // Dialog elements
   const dialog = document.getElementById('habitDialog');
@@ -64,6 +70,7 @@
 
   let state = loadState();
   saveState(state);
+  let selectedDate = todayISO();
 
   function render(){
     listEl.innerHTML = '';
@@ -88,7 +95,7 @@
         cell.dataset.date = d.date;
         applyCellState(cell, d.value, habit.color);
         cell.addEventListener('click', () => {
-          const newVal = nextState(d.value);
+          const newVal = (skipDayToggle && skipDayToggle.checked) ? 2 : nextState(d.value);
           d.value = newVal;
           applyCellState(cell, newVal, habit.color);
           updateHabit(habit.id, { days });
@@ -108,6 +115,7 @@
 
       listEl.appendChild(node);
     });
+    renderHeader();
   }
 
   function applyCellState(cell, v, color){
@@ -115,6 +123,23 @@
     if (v === 1) { cell.classList.add('done'); cell.style.borderColor = color; }
     else if (v === 2) { cell.classList.add('skipped'); }
     else { cell.classList.add('missed'); }
+  }
+
+  function renderHeader(){
+    // Today and selected pills
+    if (todayPill) todayPill.textContent = `Сегодня: ${todayISO()}`;
+    if (selectedDatePill) selectedDatePill.textContent = `Selected: ${selectedDate}`;
+    if (!daysHeader) return;
+    daysHeader.innerHTML = '';
+    for (let i = DAYS_VISIBLE - 1; i >= 0; i--) {
+      const d = isoFor(i);
+      const el = document.createElement('button');
+      el.className = 'dayh' + (d === selectedDate ? ' selected' : '');
+      el.textContent = new Date(d).getDate().toString().padStart(2,'0');
+      el.title = d;
+      el.addEventListener('click', () => { selectedDate = d; renderHeader(); });
+      daysHeader.appendChild(el);
+    }
   }
 
   function drawSparkline(canvas, days, color){
@@ -221,6 +246,18 @@
     } else {
       render();
     }
+  }
+
+  // Mass actions
+  if (clearSelectedBtn) {
+    clearSelectedBtn.addEventListener('click', () => {
+      const d = selectedDate; if (!d) return;
+      state.habits.forEach(h => { const item = h.days.find(x => x.date === d); if (item) item.value = 0; });
+      saveState(state); render();
+    });
+  }
+  if (jumpTodayBtn) {
+    jumpTodayBtn.addEventListener('click', () => { selectedDate = todayISO(); renderHeader(); });
   }
 
   /** Export / Import **/
